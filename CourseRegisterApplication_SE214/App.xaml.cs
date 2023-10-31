@@ -1,4 +1,5 @@
 ﻿using CourseRegisterApplication_SE214.Views;
+using CourseRegisterApplication_SE214.Views.AdminViews;
 
 namespace CourseRegisterApplication_SE214
 {

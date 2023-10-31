@@ -39,13 +39,36 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Images\bank.svg" />
+	  <None Remove="Resources\Images\book.svg" />
+	  <None Remove="Resources\Images\bx_support.svg" />
+	  <None Remove="Resources\Images\call_box.svg" />
+	  <None Remove="Resources\Images\chart.svg" />
+	  <None Remove="Resources\Images\chart_square.svg" />
+	  <None Remove="Resources\Images\check.svg" />
+	  <None Remove="Resources\Images\demo_avatar.png" />
+	  <None Remove="Resources\Images\demo_icon.png" />
+	  <None Remove="Resources\Images\demo_user_image.jpg" />
+	  <None Remove="Resources\Images\dollar_icon.svg" />
+	  <None Remove="Resources\Images\dotnet_bot.svg" />
+	  <None Remove="Resources\Images\home.svg" />
+	  <None Remove="Resources\Images\info_box.svg" />
+	  <None Remove="Resources\Images\message_box.svg" />
+	  <None Remove="Resources\Images\search_icon.svg" />
+	  <None Remove="Resources\Images\setting.svg" />
+	  <None Remove="Resources\Images\student.svg" />
+	  <None Remove="Resources\Images\vector_down.svg" />
+	  <None Remove="Resources\Images\vector_right.svg" />
+	  <None Remove="Resources\Images\vector_up.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
