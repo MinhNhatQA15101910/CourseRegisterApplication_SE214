@@ -2,6 +2,8 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace CourseRegisterApplication.Server.Migrations
 {
     /// <inheritdoc />
@@ -43,6 +45,29 @@ namespace CourseRegisterApplication.Server.Migrations
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "RoleName" },
+                values: new object[,]
+                {
+                    { 1, "Admin" },
+                    { 2, "Accountant" },
+                    { 3, "Student" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "Password", "RoleId", "Username" },
+                values: new object[,]
+                {
+                    { 1, "admin1.uit@gmail.com", "FA585D89C851DD338A70DCF535AA2A92FEE7836DD6AFF1226583E88E0996293F16BC009C652826E0FC5C706695A03CDDCE372F139EFF4D13959DA6F1F5D3EABE", 1, "admin1" },
+                    { 2, "teacher1.uit@gmail.com", "FA585D89C851DD338A70DCF535AA2A92FEE7836DD6AFF1226583E88E0996293F16BC009C652826E0FC5C706695A03CDDCE372F139EFF4D13959DA6F1F5D3EABE", 2, "teacher1" },
+                    { 3, "21522415@gm.uit.edu.vn", "FA585D89C851DD338A70DCF535AA2A92FEE7836DD6AFF1226583E88E0996293F16BC009C652826E0FC5C706695A03CDDCE372F139EFF4D13959DA6F1F5D3EABE", 3, "SV21522415" },
+                    { 4, "21522217@gm.uit.edu.vn", "FA585D89C851DD338A70DCF535AA2A92FEE7836DD6AFF1226583E88E0996293F16BC009C652826E0FC5C706695A03CDDCE372F139EFF4D13959DA6F1F5D3EABE", 3, "SV21522217" },
+                    { 5, "21522819@gm.uit.edu.vn", "FA585D89C851DD338A70DCF535AA2A92FEE7836DD6AFF1226583E88E0996293F16BC009C652826E0FC5C706695A03CDDCE372F139EFF4D13959DA6F1F5D3EABE", 3, "SV21522819" },
+                    { 6, "21521682@gm.uit.edu.vn", "FA585D89C851DD338A70DCF535AA2A92FEE7836DD6AFF1226583E88E0996293F16BC009C652826E0FC5C706695A03CDDCE372F139EFF4D13959DA6F1F5D3EABE", 3, "SV21521682" }
                 });
 
             migrationBuilder.CreateIndex(

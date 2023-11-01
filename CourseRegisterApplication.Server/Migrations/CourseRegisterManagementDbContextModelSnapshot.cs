@@ -39,6 +39,23 @@ namespace CourseRegisterApplication.Server.Migrations
                         .HasFilter("[RoleName] IS NOT NULL");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            RoleName = "Accountant"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            RoleName = "Student"
+                        });
                 });
 
             modelBuilder.Entity("CourseRegisterApplication.Shared.User", b =>
@@ -74,6 +91,56 @@ namespace CourseRegisterApplication.Server.Migrations
                         .HasFilter("[Username] IS NOT NULL");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "admin1.uit@gmail.com",
+                            Password = "FA585D89C851DD338A70DCF535AA2A92FEE7836DD6AFF1226583E88E0996293F16BC009C652826E0FC5C706695A03CDDCE372F139EFF4D13959DA6F1F5D3EABE",
+                            RoleId = 1,
+                            Username = "admin1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "teacher1.uit@gmail.com",
+                            Password = "FA585D89C851DD338A70DCF535AA2A92FEE7836DD6AFF1226583E88E0996293F16BC009C652826E0FC5C706695A03CDDCE372F139EFF4D13959DA6F1F5D3EABE",
+                            RoleId = 2,
+                            Username = "teacher1"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "21522415@gm.uit.edu.vn",
+                            Password = "FA585D89C851DD338A70DCF535AA2A92FEE7836DD6AFF1226583E88E0996293F16BC009C652826E0FC5C706695A03CDDCE372F139EFF4D13959DA6F1F5D3EABE",
+                            RoleId = 3,
+                            Username = "SV21522415"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "21522217@gm.uit.edu.vn",
+                            Password = "FA585D89C851DD338A70DCF535AA2A92FEE7836DD6AFF1226583E88E0996293F16BC009C652826E0FC5C706695A03CDDCE372F139EFF4D13959DA6F1F5D3EABE",
+                            RoleId = 3,
+                            Username = "SV21522217"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "21522819@gm.uit.edu.vn",
+                            Password = "FA585D89C851DD338A70DCF535AA2A92FEE7836DD6AFF1226583E88E0996293F16BC009C652826E0FC5C706695A03CDDCE372F139EFF4D13959DA6F1F5D3EABE",
+                            RoleId = 3,
+                            Username = "SV21522819"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Email = "21521682@gm.uit.edu.vn",
+                            Password = "FA585D89C851DD338A70DCF535AA2A92FEE7836DD6AFF1226583E88E0996293F16BC009C652826E0FC5C706695A03CDDCE372F139EFF4D13959DA6F1F5D3EABE",
+                            RoleId = 3,
+                            Username = "SV21521682"
+                        });
                 });
 
             modelBuilder.Entity("CourseRegisterApplication.Shared.User", b =>
