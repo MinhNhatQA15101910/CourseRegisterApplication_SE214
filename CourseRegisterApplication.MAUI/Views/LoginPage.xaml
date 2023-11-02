@@ -73,13 +73,14 @@
             WidthRequest="250" />
         </Frame>
         <Button
+          Margin="0,48,0,0"
           BackgroundColor="#2D88D4"
+          Command="{Binding LoginEmployeeCommand}"
           FontFamily="OpenSans-Semibold"
           FontSize="14"
           HeightRequest="40"
           Text="Login"
-          WidthRequest="250" Margin="0,48,0,0" 
-          Command="{Binding LoginEmployeeCommand}"/>
+          WidthRequest="250" />
         <ActivityIndicator IsRunning="{Binding IsLoading}" />
       </VerticalStackLayout>
     </VerticalStackLayout>
