@@ -3,7 +3,7 @@ using CourseRegisterApplication.MAUI.Views.AdminViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels
 {
-    public partial class LoginViewModel : ObservableObject
+	public partial class LoginViewModel : ObservableObject
 	{
 		#region Services
 		private readonly IServiceProvider _serviceProvider;
@@ -16,7 +16,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
         #endregion
 
         #region Binding Data
-        [ObservableProperty]
+		[ObservableProperty]
 		[NotifyCanExecuteChangedFor(nameof(LoginUserCommand))]
 		private string username;
 
@@ -26,7 +26,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
         #endregion
 
         #region Binding UI
-        [ObservableProperty]
+		[ObservableProperty]
         private string usernameMessage;
 
         [ObservableProperty]
@@ -47,17 +47,17 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 		{
 			_serviceProvider = serviceProvider;
 			_userService = serviceProvider.GetService<IUserService>();
-        }
+		}
         #endregion
 
         #region LoginUserCommand
-        [RelayCommand(CanExecute = nameof(CanLoginUser))]
+		[RelayCommand(CanExecute = nameof(CanLoginUser))]
 		public async Task LoginUser()
 		{
 			IsLoading = true;
 			User user = await _userService.LoginUser(Username, Helpers.EncryptData(Password));
 			IsLoading = false;
-            if (user != null)
+			if (user != null)
 			{
 				Username = "";
 				Password = "";
@@ -79,7 +79,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
                         // TODO: Navigate to Accountant Page
                         Clear();
                         break;
-                }
+			}
 			}
 			else
 			{
@@ -143,7 +143,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 					index2++;
 				}
                 else
-                {
+			{
                     PasswordMessageColor = Color.FromArgb("#007D3A");
                     PasswordMessage = "Valid Password.";
 					index2 = 0;
@@ -166,5 +166,5 @@ namespace CourseRegisterApplication.MAUI.ViewModels
             Password = "";
         }
         #endregion
-    }
+	}
 }
