@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CourseRegisterApplication_SE214.Models;
-using CourseRegisterApplication_SE214.Services;
-using CourseRegisterApplication_SE214.Views;
-using CourseRegisterApplication_SE214.Views.AdminViews;
+﻿using CourseRegisterApplication.MAUI.IServices;
+using CourseRegisterApplication.MAUI.Services;
+using CourseRegisterApplication.MAUI.Views;
+using CourseRegisterApplication.MAUI.Views.AdminViews;
 
-namespace CourseRegisterApplication_SE214.ViewModels
+namespace CourseRegisterApplication.MAUI.ViewModels
 {
-	public partial class LoginViewModel : ObservableObject
+    public partial class LoginViewModel : ObservableObject
 	{
 		private readonly LoginPage _loginPage;
-		private readonly ILoginServices _loginService = new LoginServices();
+		private readonly IUserServices _loginService = new UserService();
 
 		[ObservableProperty]
 		[NotifyCanExecuteChangedFor(nameof(LoginUserCommand))]

@@ -33,8 +33,7 @@
           ItemsSource="{Binding AdminFlyoutItems}" />
       </ScrollView>
     </Grid>
-    <StackLayout
-      Grid.Row="2">
+    <StackLayout Grid.Row="2">
       <BoxView
         Margin="36,12,36,0"
         HeightRequest="0.5"
@@ -46,11 +45,11 @@
         Text="Vesion:"
         TextColor="White" />
       <Label
+        Margin="0,0,0,12"
         FontSize="14"
         HorizontalOptions="Center"
         Text="1.0.0"
-        TextColor="White" 
-        Margin="0,0,0,12"/>
+        TextColor="White" />
     </StackLayout>
   </Grid>
 </ContentPage>

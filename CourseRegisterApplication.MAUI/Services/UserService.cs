@@ -45,7 +45,7 @@ namespace CourseRegisterApplication.MAUI.Services
 
 			var response = await _httpClient.GetAsync(new Uri(apiUrl));
 			if (response.IsSuccessStatusCode)
-			{
+	{
 				string jsonResponse = await response.Content.ReadAsStringAsync();
 				return JsonConvert.DeserializeObject<User>(jsonResponse);
 			}
@@ -54,8 +54,8 @@ namespace CourseRegisterApplication.MAUI.Services
 		}
 
         Task<User> IUserService.ChangePassword(int id, User user)
-        {
-            throw new NotImplementedException();
-        }
-    }
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

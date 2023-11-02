@@ -20,11 +20,11 @@ public partial class AdminMenuItem : ContentPage
 
 			if (selectedItem != null)
 			{
-				selectedItem.Color = Color.FromHex("#152259");
+				selectedItem.Color = Color.FromArgb("#152259");
 				OnPropertyChanged("Color");
 			}
 
-			newSelectedItem.Color = Color.FromHex("#509CDB");
+			newSelectedItem.Color = Color.FromArgb("#509CDB");
 			OnPropertyChanged("Color");
 
 			selectedItem = newSelectedItem;

@@ -82,9 +82,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\AdminViews\AdminEmployeeAccountManagementPage.xaml.cs">
-	    <DependentUpon>AdminEmployeeAccountManagementPage.xaml</DependentUpon>
-	  </Compile>
+	  <ProjectReference Include="..\CourseRegisterApplication.Shared\CourseRegisterApplication.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
