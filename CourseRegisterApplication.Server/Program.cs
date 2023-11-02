@@ -17,17 +17,6 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 
 var app = builder.Build();
 
-//Initialize the database
-//var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
-//using (var scope = scopeFactory.CreateScope())
-//{
-//    var db = scope.ServiceProvider.GetRequiredService<CourseRegisterManagementDbContext>();
-//    if (db.Database.EnsureCreated())
-//    {
-//        SeedData.Initialize(db);
-//    }
-//}
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

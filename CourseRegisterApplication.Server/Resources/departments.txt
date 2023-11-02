@@ -1,0 +1,6 @@
+﻿KHMT, Khoa Học Máy Tính,
+CNPM, Công Nghệ Phần Mềm,
+KTMT, Kỹ Thuật Máy Tính,
+HTTT, Hệ Thống Thông Tin,
+MMT&TT, Mạng máy tính và Truyền thông,
+KH&KTTT, Khoa Học và Kỹ thuật thông tin
