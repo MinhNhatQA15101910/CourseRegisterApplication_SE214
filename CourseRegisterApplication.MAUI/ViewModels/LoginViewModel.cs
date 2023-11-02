@@ -8,7 +8,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
     public partial class LoginViewModel : ObservableObject
 	{
 		private readonly LoginPage _loginPage;
-		private readonly IUserService _loginService = new UserService();
+		private readonly IUserService _userService = new UserService();
 
 		[ObservableProperty]
 		[NotifyCanExecuteChangedFor(nameof(LoginUserCommand))]
@@ -30,7 +30,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 		public async Task LoginUser()
 		{
 			IsLoading = true;
-			User user = await _loginService.LoginUser(Username, Helpers.EncryptData(Password));
+			User user = await _userService.LoginUser(Username, Helpers.EncryptData(Password));
 			IsLoading = false;
 			if (user != null)
 			{
