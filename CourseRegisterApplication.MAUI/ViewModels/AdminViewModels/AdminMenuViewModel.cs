@@ -33,6 +33,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 	public class AdminFlyoutItem
 	{
 		public ObservableCollection<MenuItems> AdminFlyoutItems { get; } = new ObservableCollection<MenuItems>();
+
 		public AdminFlyoutItem()
 		{
 			AdminFlyoutItems.Add(new MenuItems { Title = "Dashboard", Icon = "home.png", Color = Color.FromArgb("#152259") });
