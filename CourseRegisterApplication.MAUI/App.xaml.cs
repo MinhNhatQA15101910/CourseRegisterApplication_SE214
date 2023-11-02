@@ -1,7 +1,6 @@
-﻿using CourseRegisterApplication_SE214.Views;
-using CourseRegisterApplication_SE214.Views.AdminViews;
+﻿using CourseRegisterApplication.MAUI.Views;
 
-namespace CourseRegisterApplication_SE214
+namespace CourseRegisterApplication.MAUI
 {
     public partial class App : Application
     {
@@ -9,7 +8,7 @@ namespace CourseRegisterApplication_SE214
         {
             InitializeComponent();
 
-            MainPage = new AdminFlyoutPage();
+            MainPage = new LoginPage();
         }
     }
 }

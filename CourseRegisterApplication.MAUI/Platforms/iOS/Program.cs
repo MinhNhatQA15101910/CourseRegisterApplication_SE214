@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace CourseRegisterApplication_SE214
+namespace CourseRegisterApplication.MAUI
 {
     public class Program
     {
