@@ -20,11 +20,11 @@ public partial class AdminMenuItem : ContentPage
 
 			if (selectedItem != null)
 			{
-				selectedItem.Color = Color.FromArgb("#152259");
+				selectedItem.Color = Color.FromHex("#152259");
 				OnPropertyChanged("Color");
 			}
 
-			newSelectedItem.Color = Color.FromArgb("#509CDB");
+			newSelectedItem.Color = Color.FromHex("#509CDB");
 			OnPropertyChanged("Color");
 
 			selectedItem = newSelectedItem;
@@ -33,13 +33,17 @@ public partial class AdminMenuItem : ContentPage
 			{
 				pageType = typeof(AdminDashboardPage);
 			}
-			else if (newSelectedItem.Title == "Admin / Accountant account")
+			else if (newSelectedItem.Title == "Accountant account")
 			{
 				pageType = typeof(AdminEmployeeAccountManagementPage);
 			}
 			else if (newSelectedItem.Title == "Student account")
 			{
 				pageType = typeof(StudentAccountManagementPage);
+			}
+			else if (newSelectedItem.Title == "Admin account")
+			{
+				pageType = typeof(AdminAccountManagementPage);
 			}
 			PageChanged?.Invoke(this, pageType);
 		}
