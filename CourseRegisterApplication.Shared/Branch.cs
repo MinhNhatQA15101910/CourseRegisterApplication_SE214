@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CourseRegisterApplication.Shared
+﻿namespace CourseRegisterApplication.Shared
 {
     public class Branch
     {
