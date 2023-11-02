@@ -5,61 +5,52 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   Title="AdminMenuItem"
   BackgroundColor="#152259">
-  <ScrollView>
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="*" />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
-      <VerticalStackLayout HorizontalOptions="Center">
-        <StackLayout Grid.Row="0">
-          <StackLayout HeightRequest="170">
-            <Image
-              Margin="0,26,0,0"
-              HeightRequest="65"
-              Source="demo_icon.png"
-              VerticalOptions="Start"
-              WidthRequest="65" />
-            <Label
-              Margin="0,12,0,0"
-              FontAttributes="Bold"
-              FontSize="14"
-              HorizontalOptions="Center"
-              Text="Phòng tài vụ"
-              TextColor="White" />
-          </StackLayout>
-          <BoxView
-            HeightRequest="0.5"
-            WidthRequest="240"
-            Color="#BDBDBD" />
-        </StackLayout>
-
-        <ScrollView Grid.Row="1">
-          <ListView
-            ItemTapped="OnItemTapped"
-            ItemTemplate="{StaticResource ItemTemplate}"
-            ItemsSource="{Binding AdminFlyoutItems}" />
-        </ScrollView>
-
-        <StackLayout
-          Grid.Row="2"
-          HeightRequest="80"
-          VerticalOptions="End">
-          <BoxView HeightRequest="0.5" Color="#BDBDBD" />
-          <Label
-            Margin="0,12,0,0"
-            FontSize="20"
-            HorizontalOptions="Center"
-            Text="Vesion:"
-            TextColor="White" />
-          <Label
-            FontSize="14"
-            HorizontalOptions="Center"
-            Text="1.0.0"
-            TextColor="White" />
-        </StackLayout>
-      </VerticalStackLayout>
+  <Grid RowDefinitions="Auto,*,Auto">
+    <StackLayout Grid.Row="0">
+      <Image
+        Margin="0,24,0,0"
+        HeightRequest="65"
+        Source="demo_icon.png"
+        VerticalOptions="Start"
+        WidthRequest="65" />
+      <Label
+        Margin="0,12,0,0"
+        FontAttributes="Bold"
+        FontSize="14"
+        HorizontalOptions="Center"
+        Text="Phòng tài vụ"
+        TextColor="White" />
+      <BoxView
+        Margin="36,24,36,4"
+        HeightRequest="0.5"
+        Color="#BDBDBD" />
+    </StackLayout>
+    <Grid Grid.Row="1">
+      <ScrollView VerticalOptions="StartAndExpand">
+        <ListView
+          ItemTapped="OnItemTapped"
+          ItemTemplate="{StaticResource ItemTemplate}"
+          ItemsSource="{Binding AdminFlyoutItems}" />
+      </ScrollView>
     </Grid>
-  </ScrollView>
+    <StackLayout
+      Grid.Row="2">
+      <BoxView
+        Margin="36,12,36,0"
+        HeightRequest="0.5"
+        Color="#BDBDBD" />
+      <Label
+        Margin="0,12,0,0"
+        FontSize="20"
+        HorizontalOptions="Center"
+        Text="Vesion:"
+        TextColor="White" />
+      <Label
+        FontSize="14"
+        HorizontalOptions="Center"
+        Text="1.0.0"
+        TextColor="White" 
+        Margin="0,0,0,12"/>
+    </StackLayout>
+  </Grid>
 </ContentPage>
