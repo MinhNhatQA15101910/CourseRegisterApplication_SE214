@@ -8,7 +8,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
     public partial class LoginViewModel : ObservableObject
 	{
 		private readonly LoginPage _loginPage;
-		private readonly IUserServices _loginService = new UserService();
+		private readonly IUserService _loginService = new UserService();
 
 		[ObservableProperty]
 		[NotifyCanExecuteChangedFor(nameof(LoginUserCommand))]
