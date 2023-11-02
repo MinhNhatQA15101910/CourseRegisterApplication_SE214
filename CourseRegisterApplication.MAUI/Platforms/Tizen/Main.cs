@@ -2,7 +2,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using System;
 
-namespace CourseRegisterApplication_SE214
+namespace CourseRegisterApplication.MAUI
 {
     internal class Program : MauiApplication
     {

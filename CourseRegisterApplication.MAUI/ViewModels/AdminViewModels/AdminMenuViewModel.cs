@@ -1,9 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
-namespace CourseRegisterApplication_SE214.ViewModels.AdminViewModels
+namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 {
-	public class MenuItems : INotifyPropertyChanged
+    public class MenuItems : INotifyPropertyChanged
 	{
 		private Color color;
 		public string Title { get; set; }

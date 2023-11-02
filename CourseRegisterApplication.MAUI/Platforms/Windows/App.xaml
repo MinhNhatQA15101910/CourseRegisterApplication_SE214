@@ -1,8 +1,6 @@
 ﻿<maui:MauiWinUIApplication
-    x:Class="CourseRegisterApplication_SE214.WinUI.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:maui="using:Microsoft.Maui"
-    xmlns:local="using:CourseRegisterApplication_SE214.WinUI">
-
-</maui:MauiWinUIApplication>
+  x:Class="CourseRegisterApplication.MAUI.WinUI.App"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="using:CourseRegisterApplication.MAUI.WinUI"
+  xmlns:maui="using:Microsoft.Maui" />

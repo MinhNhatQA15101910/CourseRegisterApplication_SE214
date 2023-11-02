@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace CourseRegisterApplication_SE214
+namespace CourseRegisterApplication.MAUI
 {
     [Application]
     public class MainApplication : MauiApplication

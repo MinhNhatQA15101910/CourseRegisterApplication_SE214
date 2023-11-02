@@ -1,5 +1,5 @@
-using CourseRegisterApplication_SE214.ViewModels;
-namespace CourseRegisterApplication_SE214.Views;
+using CourseRegisterApplication.MAUI.ViewModels;
+namespace CourseRegisterApplication.MAUI.Views;
 
 public partial class LoginPage : ContentPage
 {

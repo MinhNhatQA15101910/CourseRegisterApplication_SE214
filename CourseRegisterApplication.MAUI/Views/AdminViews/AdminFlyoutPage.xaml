@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <FlyoutPage
-  x:Class="CourseRegisterApplication_SE214.Views.AdminViews.AdminFlyoutPage"
+  x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminFlyoutPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:local="clr-namespace:CourseRegisterApplication_SE214.Views.AdminViews"
+  xmlns:local="clr-namespace:CourseRegisterApplication.MAUI.Views.AdminViews"
   Title="AdminFlyoutPage">
   <FlyoutPage.Flyout>
     <local:AdminMenuItem x:Name="adminFlyoutPgae" />
