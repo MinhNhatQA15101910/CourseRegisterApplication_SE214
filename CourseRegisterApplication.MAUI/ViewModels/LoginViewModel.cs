@@ -3,7 +3,7 @@ using CourseRegisterApplication.MAUI.Views.AdminViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels
 {
-	public partial class LoginViewModel : ObservableObject
+    public partial class LoginViewModel : ObservableObject
 	{
 		#region Services
 		private readonly IServiceProvider _serviceProvider;

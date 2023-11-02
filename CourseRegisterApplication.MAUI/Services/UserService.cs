@@ -45,12 +45,12 @@ namespace CourseRegisterApplication.MAUI.Services
         }
 
         public async Task<User> LoginUser(string username, string password)
-		{
+	{
 			string apiUrl = $"{_baseUrl}{username}/{password}";
 
 			var response = await _httpClient.GetAsync(new Uri(apiUrl));
 			if (response.IsSuccessStatusCode)
-	{
+		{
 				string jsonResponse = await response.Content.ReadAsStringAsync();
 				return JsonConvert.DeserializeObject<User>(jsonResponse);
 			}
