@@ -9,7 +9,7 @@ namespace CourseRegisterApplication_SE214
         {
             InitializeComponent();
 
-            MainPage = new LoginPage();
+            MainPage = new AdminFlyoutPage();
         }
     }
 }

@@ -14,27 +14,29 @@
       <DataTemplate x:Key="ItemTemplate">
         <ViewCell>
           <Frame
-          BackgroundColor="{Binding Color}"
-          BorderColor="{Binding Color}"
-          CornerRadius="10"
-          HasShadow="False"
-          HorizontalOptions="Fill" Margin="0,2,0,2">
+            Margin="36,8,36,0"
+            BackgroundColor="{Binding Color}"
+            BorderColor="{Binding Color}"
+            CornerRadius="8"
+            HasShadow="False"
+            HorizontalOptions="Fill"
+            VerticalOptions="Center">
             <HorizontalStackLayout VerticalOptions="Center">
               <Image
-              HeightRequest="16"
-              Source="{Binding Icon}"
-              VerticalOptions="Center" />
+                HeightRequest="16"
+                Source="{Binding Icon}"
+                VerticalOptions="Center" />
               <Label
-              Margin="8,0,0,0"
-              FontFamily="OpenSans-Semibold"
-              FontSize="16"
-              Text="{Binding Title}"
-              TextColor="White" />
+                Margin="8,0,0,0"
+                FontFamily="OpenSans-Semibold"
+                FontSize="14"
+                Text="{Binding Title}"
+                TextColor="White" />
             </HorizontalStackLayout>
           </Frame>
         </ViewCell>
       </DataTemplate>
-      
+
     </ResourceDictionary>
   </Application.Resources>
 </Application>

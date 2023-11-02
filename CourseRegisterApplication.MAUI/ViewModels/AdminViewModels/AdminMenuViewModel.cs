@@ -1,12 +1,35 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+
 namespace CourseRegisterApplication_SE214.ViewModels.AdminViewModels
 {
-	public class MenuItems
+	public class MenuItems : INotifyPropertyChanged
 	{
+		private Color color;
 		public string Title { get; set; }
 		public string Icon { get; set; }
-		public Color Color { get; set; }
+
+		public Color Color
+		{
+			get { return color; }
+			set
+			{
+				if (color != value)
+				{
+					color = value;
+					OnPropertyChanged("Color");
+				}
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void OnPropertyChanged(string propertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 	}
+
 
 	public class AdminFlyoutItem
 	{
