@@ -75,16 +75,13 @@
         <Button
           Margin="0,48,0,0"
           BackgroundColor="#2D88D4"
-          Command="{Binding LoginUserCommand}"
+          Command="{Binding LoginEmployeeCommand}"
           FontFamily="OpenSans-Semibold"
           FontSize="14"
           HeightRequest="40"
           Text="Login"
           WidthRequest="250" />
-        <ActivityIndicator
-          IsEnabled="{Binding IsLoading}"
-          IsRunning="{Binding IsLoading}"
-          IsVisible="{Binding IsLoading}" />
+        <ActivityIndicator IsRunning="{Binding IsLoading}" />
       </VerticalStackLayout>
     </VerticalStackLayout>
   </ScrollView>
