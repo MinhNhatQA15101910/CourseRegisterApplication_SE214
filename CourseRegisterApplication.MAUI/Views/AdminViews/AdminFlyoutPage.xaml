@@ -5,6 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:local="clr-namespace:CourseRegisterApplication.MAUI.Views.AdminViews"
   Title="AdminFlyoutPage">
+<<<<<<< HEAD
   <FlyoutPage.Flyout>
     <local:AdminMenuItem x:Name="adminFlyoutPgae" />
   </FlyoutPage.Flyout>
@@ -15,4 +16,6 @@
       </x:Arguments>
     </NavigationPage>
   </FlyoutPage.Detail>
+=======
+>>>>>>> a49543f85fa7dd442c5bd1c935369537482f6a13
 </FlyoutPage>

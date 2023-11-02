@@ -1,0 +1,4 @@
+﻿Không thuộc đối tượng ưu tiên, 0,
+Vùng sâu vùng xa, 0.3,
+Con thương binh, 0.5,
+Con liệt sĩ, 0.8,
