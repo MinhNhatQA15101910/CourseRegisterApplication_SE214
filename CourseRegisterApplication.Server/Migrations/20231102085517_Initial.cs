@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -18,12 +19,26 @@ namespace CourseRegisterApplication.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DepartmentNameId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DepartmentSpecificId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DepartmentName = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Departments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PriorityTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PriorityName = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TuitionDiscountRate = table.Column<float>(type: "real", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PriorityTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,7 +73,7 @@ namespace CourseRegisterApplication.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BranchNameId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    BranchSpecificId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     BranchName = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -116,9 +131,63 @@ namespace CourseRegisterApplication.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Students",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentSpecificId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    DistrictId = table.Column<int>(type: "int", nullable: false),
+                    BranchId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Students_Branches_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Students_Districts_DistrictId",
+                        column: x => x.DistrictId,
+                        principalTable: "Districts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StudentPriorityTypes",
+                columns: table => new
+                {
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    PriorityTypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentPriorityTypes", x => new { x.StudentId, x.PriorityTypeId });
+                    table.ForeignKey(
+                        name: "FK_StudentPriorityTypes_PriorityTypes_PriorityTypeId",
+                        column: x => x.PriorityTypeId,
+                        principalTable: "PriorityTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StudentPriorityTypes_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Departments",
-                columns: new[] { "Id", "DepartmentName", "DepartmentNameId" },
+                columns: new[] { "Id", "DepartmentName", "DepartmentSpecificId" },
                 values: new object[,]
                 {
                     { 1, " Khoa Học Máy Tính", "KHMT" },
@@ -127,6 +196,17 @@ namespace CourseRegisterApplication.Server.Migrations
                     { 4, " Hệ Thống Thông Tin", "HTTT" },
                     { 5, " Mạng máy tính và Truyền thông", "MMT&TT" },
                     { 6, " Khoa Học và Kỹ thuật thông tin", "KH&KTTT" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PriorityTypes",
+                columns: new[] { "Id", "PriorityName", "TuitionDiscountRate" },
+                values: new object[,]
+                {
+                    { 1, "Không thuộc đối tượng ưu tiên", 0f },
+                    { 2, "Vùng sâu vùng xa", 0.3f },
+                    { 3, "Con thương binh", 0.5f },
+                    { 4, "Con liệt sĩ", 0.8f }
                 });
 
             migrationBuilder.InsertData(
@@ -211,7 +291,7 @@ namespace CourseRegisterApplication.Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "Branches",
-                columns: new[] { "Id", "BranchName", "BranchNameId", "DepartmentId" },
+                columns: new[] { "Id", "BranchName", "BranchSpecificId", "DepartmentId" },
                 values: new object[,]
                 {
                     { 1, " Khoa học máy tính", "KHMT", 1 },
@@ -953,6 +1033,115 @@ namespace CourseRegisterApplication.Server.Migrations
                     { 8, " 21522217@gm.uit.edu.vn", " MTIzNDU2Nzg=", 3, "SV21522217" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Students",
+                columns: new[] { "Id", "BranchId", "DateOfBirth", "DistrictId", "FullName", "Gender", "StudentSpecificId" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2003, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 700, "Võ Thanh Bình", 0, "SV21520007" },
+                    { 2, 1, new DateTime(2003, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 693, "Trương Bá Cường", 0, "SV21520013" },
+                    { 3, 2, new DateTime(2003, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 567, "Đôn Khánh Duy", 0, "SV21520032" },
+                    { 4, 7, new DateTime(2003, 12, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 252, "Nguyễn Hoàng Khánh Duy", 0, "SV21520035" },
+                    { 5, 1, new DateTime(2003, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), 686, "Nguyễn Hữu Hiếu", 0, "SV21520053" },
+                    { 6, 3, new DateTime(2003, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 560, "Trần Hoàng Long", 0, "SV21520093" },
+                    { 7, 5, new DateTime(2003, 12, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 420, "Trần Xuân Mạnh", 0, "SV21520099" },
+                    { 8, 7, new DateTime(2003, 11, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), 245, "Phạm Nhật Minh", 0, "SV21520102" },
+                    { 9, 7, new DateTime(2003, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 238, "Nguyễn Thị Phương", 1, "SV21520135" },
+                    { 10, 5, new DateTime(2003, 6, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 385, "Huỳnh Bá Anh Quân", 0, "SV21520136" },
+                    { 11, 6, new DateTime(2003, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 301, "Vũ Quí San", 0, "SV21520143" },
+                    { 12, 1, new DateTime(2003, 8, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 679, "Phan Huy Tiến", 0, "SV21520167" },
+                    { 13, 1, new DateTime(2003, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 672, "Nguyễn Thành Trung", 0, "SV21520179" },
+                    { 14, 4, new DateTime(2003, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 476, "Nguyễn Quang Trường", 0, "SV21520182" },
+                    { 15, 5, new DateTime(2003, 11, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 392, "Bùi Thúy Vi", 1, "SV21520190" },
+                    { 16, 1, new DateTime(2003, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 665, "Nguyễn Minh Đức", 0, "SV21520210" },
+                    { 17, 2, new DateTime(2003, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 581, "Nguyễn Đình Tuấn Anh", 0, "SV21520251" },
+                    { 18, 4, new DateTime(2003, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 462, "Phù Hữu Đạt", 0, "SV21520262" },
+                    { 19, 2, new DateTime(2003, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 574, "Nguyễn Minh Đức", 0, "SV21520266" },
+                    { 20, 7, new DateTime(2003, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 231, "Hoàng Thị Ánh Dương", 1, "SV21520270" },
+                    { 21, 6, new DateTime(2003, 2, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 294, "Nguyễn Lê Hoàng Hùng", 0, "SV21520285" },
+                    { 22, 7, new DateTime(2003, 4, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 224, "Liêu Gia Khánh", 0, "SV21520291" },
+                    { 23, 1, new DateTime(2003, 8, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 658, "Bế Hải Long", 0, "SV21520302" },
+                    { 24, 1, new DateTime(2003, 4, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 651, "Phan Quốc An", 0, "SV21520438" },
+                    { 25, 1, new DateTime(2003, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 644, "Võ Minh Đông", 0, "SV21520608" },
+                    { 26, 1, new DateTime(2003, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 637, "Trương Hữu Minh Đức", 0, "SV21520626" },
+                    { 27, 2, new DateTime(2003, 7, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), 630, "Nguyễn Xuân Luân", 0, "SV21521066" },
+                    { 28, 2, new DateTime(2003, 12, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 623, "Nguyễn Thị Khánh Ly", 1, "SV21521079" },
+                    { 29, 2, new DateTime(2003, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 616, "Đào Duy Từ", 0, "SV21521117" },
+                    { 30, 2, new DateTime(2003, 3, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 609, "Nguyễn Hữu Trí", 0, "SV21521528" },
+                    { 31, 2, new DateTime(2003, 11, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 602, "Nguyễn Xuân Tú", 0, "SV21521585" },
+                    { 32, 2, new DateTime(2003, 8, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 595, "Nguyễn Thanh Tuấn", 0, "SV21521604" },
+                    { 33, 2, new DateTime(2003, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 588, "Lê Xuân Tùng", 0, "SV21521616" },
+                    { 34, 3, new DateTime(2003, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 553, "Lê Minh Thông", 0, "SV21521457" },
+                    { 35, 3, new DateTime(2003, 2, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 546, "Nguyễn Thị Thúy", 1, "SV21521477" },
+                    { 36, 3, new DateTime(2003, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 539, "Nguyễn Thị Thủy Tiên", 1, "SV21520378" },
+                    { 37, 3, new DateTime(2003, 6, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 532, "Trương Thảo Tiên", 1, "SV21521495" },
+                    { 38, 3, new DateTime(2003, 7, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 525, "Trần Nguyễn Quang Trường", 0, "SV21521572" },
+                    { 39, 3, new DateTime(2003, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 518, "Đào Trung Nguyên", 1, "SV21521156" },
+                    { 40, 3, new DateTime(2003, 9, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 511, "Dương Hoài Phong", 0, "SV21521236" },
+                    { 41, 3, new DateTime(2003, 3, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 504, "Đặng Xuân Sang", 0, "SV21521332" },
+                    { 42, 3, new DateTime(2003, 9, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 497, "Văn Duy Thanh", 1, "SV21521415" },
+                    { 43, 4, new DateTime(2003, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 490, "Trần Chí Thiện", 0, "SV21520365" },
+                    { 44, 4, new DateTime(2003, 11, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 483, "Bùi Chí Trung", 0, "SV21521544" },
+                    { 45, 4, new DateTime(2003, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 469, "Huỳnh Ngọc Thiên Ân", 0, "SV21520423" },
+                    { 46, 4, new DateTime(2003, 8, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), 455, "Nguyễn Thị Thùy Dương", 1, "SV21520648" },
+                    { 47, 4, new DateTime(2003, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 448, "Nguyễn Hải Hưng", 0, "SV21520800" },
+                    { 48, 4, new DateTime(2003, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 441, "Nguyễn Thị Thu Huyền", 1, "SV21520863" },
+                    { 49, 4, new DateTime(2003, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 434, "Hồ Công Huynh", 0, "SV21520866" },
+                    { 50, 4, new DateTime(2003, 3, 16, 0, 0, 0, 0, DateTimeKind.Unspecified), 427, "Phan Tấn Nhất Khâm", 0, "SV21520879" },
+                    { 51, 5, new DateTime(2003, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 413, "Phạm Hồ Anh Quân", 0, "SV21521286" },
+                    { 52, 5, new DateTime(2003, 11, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), 406, "Nguyễn Trần Thị Bích Trâm", 1, "SV21521520" },
+                    { 53, 5, new DateTime(2003, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 399, "Vòng Thủy Thùy Trang", 1, "SV21521525" },
+                    { 54, 5, new DateTime(2003, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 378, "Lê Nguyễn Công Toại", 0, "SV21520381" },
+                    { 55, 5, new DateTime(2003, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 371, "Trần Tiến Đạt", 0, "SV21520591" },
+                    { 56, 5, new DateTime(2003, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 364, "Nguyễn Thị Ngọc Diễm", 1, "SV21520597" },
+                    { 57, 5, new DateTime(2003, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 357, "Đào Quang Linh", 0, "SV21520984" },
+                    { 58, 6, new DateTime(2003, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), 350, "Đinh Phạm Thiên Long", 0, "SV21521021" },
+                    { 59, 6, new DateTime(2003, 11, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 343, "Nguyễn Tiến Luận", 0, "SV21521065" },
+                    { 60, 6, new DateTime(2003, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 336, "Nguyễn Thành Nhân", 0, "SV21521178" },
+                    { 61, 6, new DateTime(2003, 4, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 329, "Phạm Tân Nhật", 0, "SV21521197" },
+                    { 62, 6, new DateTime(2003, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 322, "Trần Hoàng Thiên Phú", 0, "SV21521250" },
+                    { 63, 6, new DateTime(2003, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 315, "Phạm Công Thịnh", 0, "SV21521449" },
+                    { 64, 6, new DateTime(2003, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 308, "Trần Minh Tuấn", 0, "SV21521608" },
+                    { 65, 6, new DateTime(2003, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 287, "Nguyễn Thị Hà", 1, "SV21520691" },
+                    { 66, 6, new DateTime(2003, 9, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 280, "Dương Lê Tường Khang", 0, "SV21520882" },
+                    { 67, 7, new DateTime(2003, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 273, "Phan Lê Phú", 0, "SV21521247" },
+                    { 68, 7, new DateTime(2003, 9, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), 266, "Nguyễn Hoàng Thắng", 0, "SV21521394" },
+                    { 69, 7, new DateTime(2003, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 259, "Huỳnh Minh Tuấn", 0, "SV21521596" },
+                    { 70, 7, new DateTime(2003, 8, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 217, "Nguyễn Quốc Đạt", 0, "SV21520574" },
+                    { 71, 7, new DateTime(2003, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 210, "Nguyễn Thị Bích Diễm", 1, "SV21520596" },
+                    { 72, 7, new DateTime(2003, 5, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 203, "Nguyễn Thị Thu Hiền", 1, "SV21520723" },
+                    { 73, 8, new DateTime(2003, 9, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), 196, "Nguyễn Minh Hiếu", 0, "SV21520747" },
+                    { 74, 8, new DateTime(2003, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 189, "Lê Quốc Huy", 0, "SV21520834" },
+                    { 75, 8, new DateTime(2003, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 182, "Nguyễn Thịnh Khang", 0, "SV21520894" },
+                    { 76, 8, new DateTime(2003, 9, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 175, "Ngân Văn Luyện", 0, "SV21521074" },
+                    { 77, 8, new DateTime(2003, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 168, "Đinh Ngọc Phúc", 0, "SV21521251" },
+                    { 78, 8, new DateTime(2003, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 161, "Đoàn Minh Quang", 0, "SV21521292" },
+                    { 79, 8, new DateTime(2003, 11, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 154, "Nguyễn Nhật Quang", 0, "SV21521300" },
+                    { 80, 8, new DateTime(2003, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 147, "Tống Đình Quốc", 0, "SV21521312" },
+                    { 81, 8, new DateTime(2003, 9, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 140, "Trần Quốc Thắng", 0, "SV21521399" },
+                    { 82, 8, new DateTime(2003, 11, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 133, "Nguyễn Hữu Tiến", 0, "SV21521487" },
+                    { 83, 8, new DateTime(2003, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 126, "Phạm Đức Toàn", 0, "SV21521511" },
+                    { 84, 9, new DateTime(2003, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 119, "Vũ Đức Tới", 0, "SV21521514" },
+                    { 85, 9, new DateTime(2003, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 112, "Mai Xuân Tú", 0, "SV21521581" },
+                    { 86, 9, new DateTime(2003, 8, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 105, "Phạm Anh Tú", 0, "SV21521586" },
+                    { 87, 9, new DateTime(2003, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 98, "Đỗ Quốc Vinh", 0, "SV21521645" },
+                    { 88, 9, new DateTime(2003, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), 91, "Trần Huy Thắng", 0, "SV21521695" },
+                    { 89, 9, new DateTime(2003, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 84, "Lê Phan Thành Đạt", 0, "SV21520570" },
+                    { 90, 9, new DateTime(2003, 5, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 77, "Võ Thành Trung Dũng", 0, "SV21520641" },
+                    { 91, 9, new DateTime(2003, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 70, "Dương Thị Hồng Hạnh", 1, "SV21520711" },
+                    { 92, 9, new DateTime(2003, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 63, "Huỳnh Nhật Hào", 0, "SV21520714" },
+                    { 93, 10, new DateTime(2003, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 56, "Trần Trung Hiếu", 0, "SV21520754" },
+                    { 94, 10, new DateTime(2003, 11, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 49, "Võ Trung Hiếu", 0, "SV21520758" },
+                    { 95, 10, new DateTime(2003, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 42, "Võ Kiều Hoa", 1, "SV21520767" },
+                    { 96, 10, new DateTime(2003, 2, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 35, "Trần Nguyễn Anh Khoa", 0, "SV21520938" },
+                    { 97, 10, new DateTime(2003, 11, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 28, "Nguyễn Thiên Long", 0, "SV21521046" },
+                    { 98, 10, new DateTime(2003, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 21, "Nguyễn Hoàng Nhân", 0, "SV21521176" },
+                    { 99, 10, new DateTime(2003, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 14, "Trịnh Ngọc Pháp", 0, "SV21521227" },
+                    { 100, 10, new DateTime(2003, 11, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 7, "Nguyễn Thị Thắm", 1, "SV21521384" },
+                    { 101, 10, new DateTime(2003, 4, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 443, "Nguyễn Quang Thuận", 0, "SV21521470" },
+                    { 102, 10, new DateTime(2003, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 668, "Nguyễn Thanh Tường Vi", 1, "SV21521636" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Branches_BranchName",
                 table: "Branches",
@@ -961,11 +1150,11 @@ namespace CourseRegisterApplication.Server.Migrations
                 filter: "[BranchName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Branches_BranchNameId",
+                name: "IX_Branches_BranchSpecificId",
                 table: "Branches",
-                column: "BranchNameId",
+                column: "BranchSpecificId",
                 unique: true,
-                filter: "[BranchNameId] IS NOT NULL");
+                filter: "[BranchSpecificId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Branches_DepartmentId",
@@ -980,16 +1169,23 @@ namespace CourseRegisterApplication.Server.Migrations
                 filter: "[DepartmentName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Departments_DepartmentNameId",
+                name: "IX_Departments_DepartmentSpecificId",
                 table: "Departments",
-                column: "DepartmentNameId",
+                column: "DepartmentSpecificId",
                 unique: true,
-                filter: "[DepartmentNameId] IS NOT NULL");
+                filter: "[DepartmentSpecificId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Districts_ProvinceId",
                 table: "Districts",
                 column: "ProvinceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PriorityTypes_PriorityName",
+                table: "PriorityTypes",
+                column: "PriorityName",
+                unique: true,
+                filter: "[PriorityName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Provinces_ProvinceName",
@@ -1004,6 +1200,28 @@ namespace CourseRegisterApplication.Server.Migrations
                 column: "RoleName",
                 unique: true,
                 filter: "[RoleName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentPriorityTypes_PriorityTypeId",
+                table: "StudentPriorityTypes",
+                column: "PriorityTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_BranchId",
+                table: "Students",
+                column: "BranchId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_DistrictId",
+                table: "Students",
+                column: "DistrictId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_StudentSpecificId",
+                table: "Students",
+                column: "StudentSpecificId",
+                unique: true,
+                filter: "[StudentSpecificId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
@@ -1029,22 +1247,31 @@ namespace CourseRegisterApplication.Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "StudentPriorityTypes");
+
+            migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "PriorityTypes");
+
+            migrationBuilder.DropTable(
+                name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
+
+            migrationBuilder.DropTable(
                 name: "Branches");
 
             migrationBuilder.DropTable(
                 name: "Districts");
 
             migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
                 name: "Departments");
 
             migrationBuilder.DropTable(
                 name: "Provinces");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
         }
     }
 }

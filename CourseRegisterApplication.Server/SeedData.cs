@@ -1,4 +1,6 @@
-﻿namespace CourseRegisterApplication.Server
+﻿using System.Globalization;
+
+namespace CourseRegisterApplication.Server
 {
     public static class SeedData
     {
@@ -8,6 +10,9 @@
         private static string DISTRICTS_FILE_PATH = "Resources/districts.txt";
         private static string DEPARTMENTS_FILE_PATH = "Resources/departments.txt";
         private static string BRANCHES_FILE_PATH = "Resources/branches.txt";
+        private static string PRIORITY_TYPES_FILE_PATH = "Resources/priority-types.txt";
+        private static string STUDENTS_FILE_PATH = "Resources/students.txt";
+        private static string STUDENT_PRIORITY_TYPES_FILE_PATH = "Resources/student-priority-types.txt";
 
         public static void Initialize(ModelBuilder modelBuilder)
         {
@@ -17,6 +22,95 @@
             InitializeDistricts(modelBuilder);
             InitializeDepartments(modelBuilder);
             InitializeBranches(modelBuilder);
+            InitializePriorityTypes(modelBuilder);
+            InitializeStudents(modelBuilder);
+            InitializeStudentPriorityTypes(modelBuilder);
+        }
+
+        private static void InitializeStudentPriorityTypes(ModelBuilder modelBuilder)
+        {
+            var studentPriorityTypes = new List<StudentPriorityType>();
+
+            if (File.Exists(STUDENT_PRIORITY_TYPES_FILE_PATH))
+            {
+                using (StreamReader sr = new StreamReader(STUDENT_PRIORITY_TYPES_FILE_PATH))
+                {
+                    string? studentPriorityTypeLine;
+
+                    while ((studentPriorityTypeLine = sr.ReadLine()) != null)
+                    {
+                        string[]? studentPriorityTypeData = studentPriorityTypeLine!.Split(',');
+
+                        studentPriorityTypes.Add(new StudentPriorityType
+                        {
+                            StudentId = int.Parse(studentPriorityTypeData[0].Trim()),
+                            PriorityTypeId = int.Parse(studentPriorityTypeData[1].Trim()),
+                        });
+                    }
+
+                    modelBuilder.Entity<StudentPriorityType>().HasData(studentPriorityTypes);
+                }
+            }
+        }
+
+        private static void InitializeStudents(ModelBuilder modelBuilder)
+        {
+            var students = new List<Student>();
+
+            if (File.Exists(STUDENTS_FILE_PATH))
+            {
+                using (StreamReader sr = new StreamReader(STUDENTS_FILE_PATH))
+                {
+                    int studentId = 1;
+                    string? studentLine;
+
+                    while ((studentLine = sr.ReadLine()) != null)
+                    {
+                        string[]? studentData = studentLine!.Split(',');
+
+                        students.Add(new Student
+                        {
+                            Id = studentId++,
+                            StudentSpecificId = studentData[0].Trim(),
+                            FullName = studentData[1].Trim(),
+                            DateOfBirth = DateTime.ParseExact(studentData[2].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            Gender = (studentData[3].Trim() == "Nam") ? Gender.Male : Gender.Female,
+                            DistrictId = int.Parse(studentData[4].Trim()),
+                            BranchId = int.Parse(studentData[5].Trim())
+                        });
+                    }
+
+                    modelBuilder.Entity<Student>().HasData(students);
+                }
+            }
+        }
+
+        private static void InitializePriorityTypes(ModelBuilder modelBuilder)
+        {
+            var priorityTypes = new List<PriorityType>();
+
+            if (File.Exists(PRIORITY_TYPES_FILE_PATH))
+            {
+                using (StreamReader sr = new StreamReader(PRIORITY_TYPES_FILE_PATH))
+                {
+                    int priorityTypeId = 1;
+                    string? priorityTypeLine;
+
+                    while ((priorityTypeLine = sr.ReadLine()) != null)
+                    {
+                        string[]? priorityTypeData = priorityTypeLine!.Split(',');
+
+                        priorityTypes.Add(new PriorityType
+                        {
+                            Id = priorityTypeId++,
+                            PriorityName = priorityTypeData[0],
+                            TuitionDiscountRate = float.Parse(priorityTypeData[1])
+                        });
+                    }
+
+                    modelBuilder.Entity<PriorityType>().HasData(priorityTypes);
+                }
+            }
         }
 
         private static void InitializeBranches(ModelBuilder modelBuilder)
@@ -37,7 +131,7 @@
                         branchs.Add(new Branch
                         {
                             Id = branchId++,
-                            BranchNameId = branchData[0],
+                            BranchSpecificId = branchData[0],
                             BranchName = branchData[1],
                             DepartmentId = int.Parse(branchData[2])
                         });
@@ -66,7 +160,7 @@
                         departments.Add(new Department
                         {
                             Id = departmentId++,
-                            DepartmentNameId = departmentData[0],
+                            DepartmentSpecificId = departmentData[0],
                             DepartmentName = departmentData[1]
                         });
                     }

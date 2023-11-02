@@ -1,6 +1,8 @@
 ﻿namespace CourseRegisterApplication.Shared
 {
-    internal class StudentPriorityObject
+    public enum Gender
     {
+        Male,
+        Female
     }
 }
