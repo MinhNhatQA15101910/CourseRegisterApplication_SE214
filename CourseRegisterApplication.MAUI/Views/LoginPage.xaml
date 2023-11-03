@@ -75,7 +75,7 @@
         <Button
           Margin="0,48,0,0"
           BackgroundColor="#2D88D4"
-          Command="{Binding LoginEmployeeCommand}"
+          Command="{Binding LoginUserCommand}"
           FontFamily="OpenSans-Semibold"
           FontSize="14"
           HeightRequest="40"

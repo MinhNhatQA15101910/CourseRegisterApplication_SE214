@@ -190,12 +190,12 @@ namespace CourseRegisterApplication.Server.Migrations
                 columns: new[] { "Id", "DepartmentName", "DepartmentSpecificId" },
                 values: new object[,]
                 {
-                    { 1, " Khoa Học Máy Tính", "KHMT" },
-                    { 2, " Công Nghệ Phần Mềm", "CNPM" },
-                    { 3, " Kỹ Thuật Máy Tính", "KTMT" },
-                    { 4, " Hệ Thống Thông Tin", "HTTT" },
-                    { 5, " Mạng máy tính và Truyền thông", "MMT&TT" },
-                    { 6, " Khoa Học và Kỹ thuật thông tin", "KH&KTTT" }
+                    { 1, "Khoa Học Máy Tính", "KHMT" },
+                    { 2, "Công Nghệ Phần Mềm", "CNPM" },
+                    { 3, "Kỹ Thuật Máy Tính", "KTMT" },
+                    { 4, "Hệ Thống Thông Tin", "HTTT" },
+                    { 5, "Mạng máy tính và Truyền thông", "MMT&TT" },
+                    { 6, "Khoa Học và Kỹ thuật thông tin", "KH&KTTT" }
                 });
 
             migrationBuilder.InsertData(
@@ -294,16 +294,16 @@ namespace CourseRegisterApplication.Server.Migrations
                 columns: new[] { "Id", "BranchName", "BranchSpecificId", "DepartmentId" },
                 values: new object[,]
                 {
-                    { 1, " Khoa học máy tính", "KHMT", 1 },
-                    { 2, " Trí tuệ nhân tạo", "TTNT", 1 },
-                    { 3, " Kĩ thuật phần mềm", "KTPM", 2 },
-                    { 4, " Kỹ thuật máy tính", "KTMT", 3 },
-                    { 5, " Hệ thống thông tin", "HTTT", 4 },
-                    { 6, " Thương mại điện tử", "TMDT", 4 },
-                    { 7, " Mạng máy tính", "MMT", 5 },
-                    { 8, " An toàn thông tin", "ATTT", 5 },
-                    { 9, " Công nghệ thông tin", "CNTT", 6 },
-                    { 10, " Khoa học dữ liệu", "KHDL", 6 }
+                    { 1, "Khoa học máy tính", "KHMT", 1 },
+                    { 2, "Trí tuệ nhân tạo", "TTNT", 1 },
+                    { 3, "Kĩ thuật phần mềm", "KTPM", 2 },
+                    { 4, "Kỹ thuật máy tính", "KTMT", 3 },
+                    { 5, "Hệ thống thông tin", "HTTT", 4 },
+                    { 6, "Thương mại điện tử", "TMDT", 4 },
+                    { 7, "Mạng máy tính", "MMT", 5 },
+                    { 8, "An toàn thông tin", "ATTT", 5 },
+                    { 9, "Công nghệ thông tin", "CNTT", 6 },
+                    { 10, "Khoa học dữ liệu", "KHDL", 6 }
                 });
 
             migrationBuilder.InsertData(
@@ -1023,14 +1023,14 @@ namespace CourseRegisterApplication.Server.Migrations
                 columns: new[] { "Id", "Email", "Password", "RoleId", "Username" },
                 values: new object[,]
                 {
-                    { 1, " admin1.uit@gmail.com", " MTIzNDU2Nzg=", 1, "admin1" },
-                    { 2, " admin2.uit@gmail.com", " MTIzNDU2Nzg=", 1, "admin2" },
-                    { 3, " teacher1.uit@gmail.com", " MTIzNDU2Nzg=", 2, "teacher1" },
-                    { 4, " teacher2.uit@gmail.com", " MTIzNDU2Nzg=", 2, "teacher2" },
-                    { 5, " 21522415@gm.uit.edu.vn", " MTIzNDU2Nzg=", 3, "SV21522415" },
-                    { 6, " 21521682@gm.uit.edu.vn", " MTIzNDU2Nzg=", 3, "SV21521682" },
-                    { 7, " 21522819@gm.uit.edu.vn", " MTIzNDU2Nzg=", 3, "SV21522819" },
-                    { 8, " 21522217@gm.uit.edu.vn", " MTIzNDU2Nzg=", 3, "SV21522217" }
+                    { 1, "admin1.uit@gmail.com", "MTIzNDU2Nzg=", 1, "admin1" },
+                    { 2, "admin2.uit@gmail.com", "MTIzNDU2Nzg=", 1, "admin2" },
+                    { 3, "teacher1.uit@gmail.com", "MTIzNDU2Nzg=", 2, "teacher1" },
+                    { 4, "teacher2.uit@gmail.com", "MTIzNDU2Nzg=", 2, "teacher2" },
+                    { 5, "21522415@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21522415" },
+                    { 6, "21521682@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21521682" },
+                    { 7, "21522819@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21522819" },
+                    { 8, "21522217@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21522217" }
                 });
 
             migrationBuilder.InsertData(

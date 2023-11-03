@@ -37,9 +37,20 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 				Username = "";
 				Password = "";
 
-				var navParam = new Dictionary<string, object>();
-				navParam.Add("CurrentUser", user);
-				await _loginPage.Navigation.PushAsync(new AdminFlyoutPage());
+				switch (user.Role.RoleName)
+				{
+					case "Admin":
+                        var navParam = new Dictionary<string, object>();
+                        navParam.Add("CurrentUser", user);
+                        await _loginPage.Navigation.PushAsync(new AdminFlyoutPage());
+						break;
+					case "Accountant":
+						// TODO: Navigate to Accountant Page
+						break;
+                    case "Student":
+                        // TODO: Navigate to Accountant Page
+                        break;
+                }
 			}
 			else
 			{

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseRegisterApplication.Server.Migrations
 {
     [DbContext(typeof(CourseRegisterManagementDbContext))]
-    [Migration("20231102085517_Initial")]
+    [Migration("20231103035000_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -60,70 +60,70 @@ namespace CourseRegisterApplication.Server.Migrations
                         new
                         {
                             Id = 1,
-                            BranchName = " Khoa học máy tính",
+                            BranchName = "Khoa học máy tính",
                             BranchSpecificId = "KHMT",
                             DepartmentId = 1
                         },
                         new
                         {
                             Id = 2,
-                            BranchName = " Trí tuệ nhân tạo",
+                            BranchName = "Trí tuệ nhân tạo",
                             BranchSpecificId = "TTNT",
                             DepartmentId = 1
                         },
                         new
                         {
                             Id = 3,
-                            BranchName = " Kĩ thuật phần mềm",
+                            BranchName = "Kĩ thuật phần mềm",
                             BranchSpecificId = "KTPM",
                             DepartmentId = 2
                         },
                         new
                         {
                             Id = 4,
-                            BranchName = " Kỹ thuật máy tính",
+                            BranchName = "Kỹ thuật máy tính",
                             BranchSpecificId = "KTMT",
                             DepartmentId = 3
                         },
                         new
                         {
                             Id = 5,
-                            BranchName = " Hệ thống thông tin",
+                            BranchName = "Hệ thống thông tin",
                             BranchSpecificId = "HTTT",
                             DepartmentId = 4
                         },
                         new
                         {
                             Id = 6,
-                            BranchName = " Thương mại điện tử",
+                            BranchName = "Thương mại điện tử",
                             BranchSpecificId = "TMDT",
                             DepartmentId = 4
                         },
                         new
                         {
                             Id = 7,
-                            BranchName = " Mạng máy tính",
+                            BranchName = "Mạng máy tính",
                             BranchSpecificId = "MMT",
                             DepartmentId = 5
                         },
                         new
                         {
                             Id = 8,
-                            BranchName = " An toàn thông tin",
+                            BranchName = "An toàn thông tin",
                             BranchSpecificId = "ATTT",
                             DepartmentId = 5
                         },
                         new
                         {
                             Id = 9,
-                            BranchName = " Công nghệ thông tin",
+                            BranchName = "Công nghệ thông tin",
                             BranchSpecificId = "CNTT",
                             DepartmentId = 6
                         },
                         new
                         {
                             Id = 10,
-                            BranchName = " Khoa học dữ liệu",
+                            BranchName = "Khoa học dữ liệu",
                             BranchSpecificId = "KHDL",
                             DepartmentId = 6
                         });
@@ -159,37 +159,37 @@ namespace CourseRegisterApplication.Server.Migrations
                         new
                         {
                             Id = 1,
-                            DepartmentName = " Khoa Học Máy Tính",
+                            DepartmentName = "Khoa Học Máy Tính",
                             DepartmentSpecificId = "KHMT"
                         },
                         new
                         {
                             Id = 2,
-                            DepartmentName = " Công Nghệ Phần Mềm",
+                            DepartmentName = "Công Nghệ Phần Mềm",
                             DepartmentSpecificId = "CNPM"
                         },
                         new
                         {
                             Id = 3,
-                            DepartmentName = " Kỹ Thuật Máy Tính",
+                            DepartmentName = "Kỹ Thuật Máy Tính",
                             DepartmentSpecificId = "KTMT"
                         },
                         new
                         {
                             Id = 4,
-                            DepartmentName = " Hệ Thống Thông Tin",
+                            DepartmentName = "Hệ Thống Thông Tin",
                             DepartmentSpecificId = "HTTT"
                         },
                         new
                         {
                             Id = 5,
-                            DepartmentName = " Mạng máy tính và Truyền thông",
+                            DepartmentName = "Mạng máy tính và Truyền thông",
                             DepartmentSpecificId = "MMT&TT"
                         },
                         new
                         {
                             Id = 6,
-                            DepartmentName = " Khoa Học và Kỹ thuật thông tin",
+                            DepartmentName = "Khoa Học và Kỹ thuật thông tin",
                             DepartmentSpecificId = "KH&KTTT"
                         });
                 });
@@ -6692,64 +6692,64 @@ namespace CourseRegisterApplication.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Email = " admin1.uit@gmail.com",
-                            Password = " MTIzNDU2Nzg=",
+                            Email = "admin1.uit@gmail.com",
+                            Password = "MTIzNDU2Nzg=",
                             RoleId = 1,
                             Username = "admin1"
                         },
                         new
                         {
                             Id = 2,
-                            Email = " admin2.uit@gmail.com",
-                            Password = " MTIzNDU2Nzg=",
+                            Email = "admin2.uit@gmail.com",
+                            Password = "MTIzNDU2Nzg=",
                             RoleId = 1,
                             Username = "admin2"
                         },
                         new
                         {
                             Id = 3,
-                            Email = " teacher1.uit@gmail.com",
-                            Password = " MTIzNDU2Nzg=",
+                            Email = "teacher1.uit@gmail.com",
+                            Password = "MTIzNDU2Nzg=",
                             RoleId = 2,
                             Username = "teacher1"
                         },
                         new
                         {
                             Id = 4,
-                            Email = " teacher2.uit@gmail.com",
-                            Password = " MTIzNDU2Nzg=",
+                            Email = "teacher2.uit@gmail.com",
+                            Password = "MTIzNDU2Nzg=",
                             RoleId = 2,
                             Username = "teacher2"
                         },
                         new
                         {
                             Id = 5,
-                            Email = " 21522415@gm.uit.edu.vn",
-                            Password = " MTIzNDU2Nzg=",
+                            Email = "21522415@gm.uit.edu.vn",
+                            Password = "MTIzNDU2Nzg=",
                             RoleId = 3,
                             Username = "SV21522415"
                         },
                         new
                         {
                             Id = 6,
-                            Email = " 21521682@gm.uit.edu.vn",
-                            Password = " MTIzNDU2Nzg=",
+                            Email = "21521682@gm.uit.edu.vn",
+                            Password = "MTIzNDU2Nzg=",
                             RoleId = 3,
                             Username = "SV21521682"
                         },
                         new
                         {
                             Id = 7,
-                            Email = " 21522819@gm.uit.edu.vn",
-                            Password = " MTIzNDU2Nzg=",
+                            Email = "21522819@gm.uit.edu.vn",
+                            Password = "MTIzNDU2Nzg=",
                             RoleId = 3,
                             Username = "SV21522819"
                         },
                         new
                         {
                             Id = 8,
-                            Email = " 21522217@gm.uit.edu.vn",
-                            Password = " MTIzNDU2Nzg=",
+                            Email = "21522217@gm.uit.edu.vn",
+                            Password = "MTIzNDU2Nzg=",
                             RoleId = 3,
                             Username = "SV21522217"
                         });
