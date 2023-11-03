@@ -6,16 +6,16 @@
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
-		<RootNamespace>CourseRegisterApplication_SE214</RootNamespace>
+		<RootNamespace>CourseRegisterApplication.MAUI</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>CourseRegisterApplication_SE214</ApplicationTitle>
+		<ApplicationTitle>CourseRegisterApplication.MAUI</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.courseregisterapplication_se214</ApplicationId>
+		<ApplicationId>com.companyname.courseregisterapplication.maui</ApplicationId>
 		<ApplicationIdGuid>860d25b5-281a-499c-a258-3d0eba5cfc04</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -39,7 +39,6 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -49,12 +48,37 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	  <None Remove="Resources\Images\bank.svg" />
+	  <None Remove="Resources\Images\book.svg" />
+	  <None Remove="Resources\Images\bx_support.svg" />
+	  <None Remove="Resources\Images\call_box.svg" />
+	  <None Remove="Resources\Images\chart.svg" />
+	  <None Remove="Resources\Images\chart_square.svg" />
+	  <None Remove="Resources\Images\check.svg" />
+	  <None Remove="Resources\Images\demo_avatar.png" />
+	  <None Remove="Resources\Images\demo_icon.png" />
+	  <None Remove="Resources\Images\demo_user_image.jpg" />
+	  <None Remove="Resources\Images\dollar_icon.svg" />
+	  <None Remove="Resources\Images\dotnet_bot.svg" />
+	  <None Remove="Resources\Images\home.svg" />
+	  <None Remove="Resources\Images\info_box.svg" />
+	  <None Remove="Resources\Images\message_box.svg" />
+	  <None Remove="Resources\Images\search_icon.svg" />
+	  <None Remove="Resources\Images\setting.svg" />
+	  <None Remove="Resources\Images\student.svg" />
+	  <None Remove="Resources\Images\vector_down.svg" />
+	  <None Remove="Resources\Images\vector_right.svg" />
+	  <None Remove="Resources\Images\vector_up.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Models\" />
-	  <Folder Include="Services\" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\CourseRegisterApplication.Shared\CourseRegisterApplication.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

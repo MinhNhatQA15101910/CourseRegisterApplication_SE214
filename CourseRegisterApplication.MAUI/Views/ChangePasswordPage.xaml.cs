@@ -1,4 +1,4 @@
-namespace CourseRegisterApplication_SE214.Views;
+namespace CourseRegisterApplication.MAUI.Views;
 
 public partial class ChangePasswordPage : ContentPage
 {

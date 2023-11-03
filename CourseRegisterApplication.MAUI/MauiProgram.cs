@@ -1,6 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CourseRegisterApplication.MAUI.IServices;
+using CourseRegisterApplication.MAUI.Services;
+using CourseRegisterApplication.MAUI.ViewModels;
+using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
+using CourseRegisterApplication.MAUI.Views;
+using CourseRegisterApplication.MAUI.Views.AdminViews;
 
-namespace CourseRegisterApplication_SE214
+namespace CourseRegisterApplication.MAUI
 {
     public static class MauiProgram
     {
@@ -18,6 +23,20 @@ namespace CourseRegisterApplication_SE214
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
+
+            // Services
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IRoleService, RoleService>();
+
+            // Views
+            builder.Services.AddSingleton<LoginPage>();
+            builder.Services.AddTransient<AdminMenuItem>();
+            builder.Services.AddTransient<AdminFlyoutPage>();
+            builder.Services.AddTransient<AdminDashboardPage>();
+
+            // ViewModels
+            builder.Services.AddSingleton<LoginViewModel>();
+            builder.Services.AddTransient<AdminFlyoutItem>();
 
             return builder.Build();
         }

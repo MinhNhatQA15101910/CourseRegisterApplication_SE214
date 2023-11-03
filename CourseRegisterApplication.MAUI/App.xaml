@@ -1,17 +1,42 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Application
-  x:Class="CourseRegisterApplication_SE214.App"
+  x:Class="CourseRegisterApplication.MAUI.App"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:local="clr-namespace:CourseRegisterApplication_SE214">
+  xmlns:local="clr-namespace:CourseRegisterApplication.MAUI">
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
         <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
       </ResourceDictionary.MergedDictionaries>
-      
-      
+
+      <DataTemplate x:Key="ItemTemplate">
+        <ViewCell>
+          <Frame
+            Margin="36,8,36,0"
+            BackgroundColor="{Binding Color}"
+            BorderColor="{Binding Color}"
+            CornerRadius="8"
+            HasShadow="False"
+            HorizontalOptions="Fill"
+            VerticalOptions="Center">
+            <HorizontalStackLayout VerticalOptions="Center">
+              <Image
+                HeightRequest="16"
+                Source="{Binding Icon}"
+                VerticalOptions="Center" />
+              <Label
+                Margin="8,0,0,0"
+                FontFamily="OpenSans-Semibold"
+                FontSize="14"
+                Text="{Binding Title}"
+                TextColor="White" />
+            </HorizontalStackLayout>
+          </Frame>
+        </ViewCell>
+      </DataTemplate>
+
     </ResourceDictionary>
   </Application.Resources>
 </Application>

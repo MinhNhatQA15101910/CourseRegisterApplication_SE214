@@ -1,4 +1,4 @@
-namespace CourseRegisterApplication_SE214.Views.AdminViews;
+namespace CourseRegisterApplication.MAUI.Views.AdminViews;
 
 public partial class EmployeeAccountManagementPage : ContentPage
 {
