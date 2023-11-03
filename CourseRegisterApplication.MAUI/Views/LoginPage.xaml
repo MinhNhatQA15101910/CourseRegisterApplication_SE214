@@ -81,7 +81,10 @@
           HeightRequest="40"
           Text="Login"
           WidthRequest="250" />
-        <ActivityIndicator IsRunning="{Binding IsLoading}" />
+        <ActivityIndicator
+          IsEnabled="{Binding IsLoading}"
+          IsRunning="{Binding IsLoading}"
+          IsVisible="{Binding IsLoading}" />
       </VerticalStackLayout>
     </VerticalStackLayout>
   </ScrollView>

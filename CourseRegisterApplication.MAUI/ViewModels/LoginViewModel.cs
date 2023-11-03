@@ -31,11 +31,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 		{
 			IsLoading = true;
 			User user = await _userService.LoginUser(Username, Helpers.EncryptData(Password));
-			IsLoading = false;
 			if (user != null)
 			{
-				Username = "";
-				Password = "";
+				await _loginPage.DisplayAlert("Success!", "Login Successfully", "OK");
 
 				switch (user.Role.RoleName)
 				{
@@ -43,12 +41,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels
                         var navParam = new Dictionary<string, object>();
                         navParam.Add("CurrentUser", user);
                         await _loginPage.Navigation.PushAsync(new AdminFlyoutPage());
-						break;
+                        Clear();
+                        break;
 					case "Accountant":
-						// TODO: Navigate to Accountant Page
-						break;
+                        // TODO: Navigate to Accountant Page
+                        Clear();
+                        break;
                     case "Student":
                         // TODO: Navigate to Accountant Page
+                        Clear();
                         break;
                 }
 			}
@@ -72,5 +73,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 
 			return true;
 		}
+
+		private void Clear()
+		{
+			IsLoading = false;
+            Username = "";
+            Password = "";
+        }
 	}
 }
