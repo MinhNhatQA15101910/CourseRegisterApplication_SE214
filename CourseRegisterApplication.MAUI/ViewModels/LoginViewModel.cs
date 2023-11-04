@@ -37,17 +37,17 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 
 				switch (user.Role.RoleName)
 				{
-					case "Admin":
+					case RoleName.Admin:
                         var navParam = new Dictionary<string, object>();
                         navParam.Add("CurrentUser", user);
                         await _loginPage.Navigation.PushAsync(new AdminFlyoutPage());
                         Clear();
                         break;
-					case "Accountant":
+					case RoleName.Accountant:
                         // TODO: Navigate to Accountant Page
                         Clear();
                         break;
-                    case "Student":
+                    case RoleName.Student:
                         // TODO: Navigate to Accountant Page
                         Clear();
                         break;

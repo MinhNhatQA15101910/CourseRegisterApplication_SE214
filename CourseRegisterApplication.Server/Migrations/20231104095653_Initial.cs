@@ -60,7 +60,7 @@ namespace CourseRegisterApplication.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleName = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    RoleName = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +94,7 @@ namespace CourseRegisterApplication.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DistrictName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DistrictName = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsPriority = table.Column<bool>(type: "bit", nullable: false),
                     ProvinceId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -284,9 +284,9 @@ namespace CourseRegisterApplication.Server.Migrations
                 columns: new[] { "Id", "RoleName" },
                 values: new object[,]
                 {
-                    { 1, "Admin" },
-                    { 2, "Accountant" },
-                    { 3, "Student" }
+                    { 1, 0 },
+                    { 2, 1 },
+                    { 3, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -1027,10 +1027,10 @@ namespace CourseRegisterApplication.Server.Migrations
                     { 2, "admin2.uit@gmail.com", "MTIzNDU2Nzg=", 1, "admin2" },
                     { 3, "teacher1.uit@gmail.com", "MTIzNDU2Nzg=", 2, "teacher1" },
                     { 4, "teacher2.uit@gmail.com", "MTIzNDU2Nzg=", 2, "teacher2" },
-                    { 5, "21522415@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21522415" },
-                    { 6, "21521682@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21521682" },
-                    { 7, "21522819@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21522819" },
-                    { 8, "21522217@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21522217" }
+                    { 5, "21520007@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21520007" },
+                    { 6, "21520013@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21520013" },
+                    { 7, "21520032@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21520032" },
+                    { 8, "21520035@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21520035" }
                 });
 
             migrationBuilder.InsertData(
@@ -1176,6 +1176,13 @@ namespace CourseRegisterApplication.Server.Migrations
                 filter: "[DepartmentSpecificId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Districts_DistrictName_ProvinceId",
+                table: "Districts",
+                columns: new[] { "DistrictName", "ProvinceId" },
+                unique: true,
+                filter: "[DistrictName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Districts_ProvinceId",
                 table: "Districts",
                 column: "ProvinceId");
@@ -1198,8 +1205,7 @@ namespace CourseRegisterApplication.Server.Migrations
                 name: "IX_Roles_RoleName",
                 table: "Roles",
                 column: "RoleName",
-                unique: true,
-                filter: "[RoleName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentPriorityTypes_PriorityTypeId",

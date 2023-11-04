@@ -185,10 +185,24 @@ namespace CourseRegisterApplication.Server
                     {
                         string[]? roleData = roleLine!.Split(',');
 
+                        RoleName roleName = RoleName.Admin;
+                        switch (roleData[0].Trim())
+                        {
+                            case "Admin":
+                                roleName = RoleName.Admin;
+                                break;
+                            case "Accountant":
+                                roleName = RoleName.Accountant;
+                                break;
+                            case "Student":
+                                roleName = RoleName.Student;
+                                break;
+                        }
+
                         roles.Add(new Role
                         {
                             Id = roleId++,
-                            RoleName = roleData[0].Trim()
+                            RoleName = roleName
                         });
                     }
 

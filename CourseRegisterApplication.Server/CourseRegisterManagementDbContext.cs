@@ -36,6 +36,9 @@ public class CourseRegisterManagementDbContext : DbContext
         // Province
         modelBuilder.Entity<Province>(entity => entity.HasIndex(e => e.ProvinceName).IsUnique());
 
+        // District
+        modelBuilder.Entity<District>(entity => entity.HasIndex(e => new { e.DistrictName, e.ProvinceId }).IsUnique());
+
         // Department
         modelBuilder.Entity<Department>(entity => entity.HasIndex(e => e.DepartmentSpecificId).IsUnique());
         modelBuilder.Entity<Department>(entity => entity.HasIndex(e => e.DepartmentName).IsUnique());

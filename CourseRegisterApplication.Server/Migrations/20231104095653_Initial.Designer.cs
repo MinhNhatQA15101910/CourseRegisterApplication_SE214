@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseRegisterApplication.Server.Migrations
 {
     [DbContext(typeof(CourseRegisterManagementDbContext))]
-    [Migration("20231103035000_Initial")]
+    [Migration("20231104095653_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -203,7 +203,7 @@ namespace CourseRegisterApplication.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DistrictName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsPriority")
                         .HasColumnType("bit");
@@ -214,6 +214,10 @@ namespace CourseRegisterApplication.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProvinceId");
+
+                    b.HasIndex("DistrictName", "ProvinceId")
+                        .IsUnique()
+                        .HasFilter("[DistrictName] IS NOT NULL");
 
                     b.ToTable("Districts");
 
@@ -5549,14 +5553,13 @@ namespace CourseRegisterApplication.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("RoleName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("RoleName")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoleName")
-                        .IsUnique()
-                        .HasFilter("[RoleName] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Roles");
 
@@ -5564,17 +5567,17 @@ namespace CourseRegisterApplication.Server.Migrations
                         new
                         {
                             Id = 1,
-                            RoleName = "Admin"
+                            RoleName = 0
                         },
                         new
                         {
                             Id = 2,
-                            RoleName = "Accountant"
+                            RoleName = 1
                         },
                         new
                         {
                             Id = 3,
-                            RoleName = "Student"
+                            RoleName = 2
                         });
                 });
 
@@ -6724,34 +6727,34 @@ namespace CourseRegisterApplication.Server.Migrations
                         new
                         {
                             Id = 5,
-                            Email = "21522415@gm.uit.edu.vn",
+                            Email = "21520007@gm.uit.edu.vn",
                             Password = "MTIzNDU2Nzg=",
                             RoleId = 3,
-                            Username = "SV21522415"
+                            Username = "SV21520007"
                         },
                         new
                         {
                             Id = 6,
-                            Email = "21521682@gm.uit.edu.vn",
+                            Email = "21520013@gm.uit.edu.vn",
                             Password = "MTIzNDU2Nzg=",
                             RoleId = 3,
-                            Username = "SV21521682"
+                            Username = "SV21520013"
                         },
                         new
                         {
                             Id = 7,
-                            Email = "21522819@gm.uit.edu.vn",
+                            Email = "21520032@gm.uit.edu.vn",
                             Password = "MTIzNDU2Nzg=",
                             RoleId = 3,
-                            Username = "SV21522819"
+                            Username = "SV21520032"
                         },
                         new
                         {
                             Id = 8,
-                            Email = "21522217@gm.uit.edu.vn",
+                            Email = "21520035@gm.uit.edu.vn",
                             Password = "MTIzNDU2Nzg=",
                             RoleId = 3,
-                            Username = "SV21522217"
+                            Username = "SV21520035"
                         });
                 });
 
