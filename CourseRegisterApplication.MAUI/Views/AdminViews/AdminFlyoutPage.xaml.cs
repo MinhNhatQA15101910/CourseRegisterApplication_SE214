@@ -6,7 +6,7 @@ public partial class AdminFlyoutPage : FlyoutPage
 	{
 		InitializeComponent();
 		Detail = new NavigationPage(new AdminDashboardPage());
-		(adminFlyoutPgae as AdminMenuItem).PageChanged += OnPageChanged;
+		adminFlyoutPage.PageChanged += OnPageChanged;
 	}
 	private void OnPageChanged(object sender, Type pageType)
 	{

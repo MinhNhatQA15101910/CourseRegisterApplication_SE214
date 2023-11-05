@@ -103,8 +103,8 @@ namespace CourseRegisterApplication.Server
                         priorityTypes.Add(new PriorityType
                         {
                             Id = priorityTypeId++,
-                            PriorityName = priorityTypeData[0],
-                            TuitionDiscountRate = float.Parse(priorityTypeData[1])
+                            PriorityName = priorityTypeData[0].Trim(),
+                            TuitionDiscountRate = float.Parse(priorityTypeData[1].Trim())
                         });
                     }
 
@@ -131,8 +131,8 @@ namespace CourseRegisterApplication.Server
                         branchs.Add(new Branch
                         {
                             Id = branchId++,
-                            BranchSpecificId = branchData[0],
-                            BranchName = branchData[1],
+                            BranchSpecificId = branchData[0].Trim(),
+                            BranchName = branchData[1].Trim(),
                             DepartmentId = int.Parse(branchData[2])
                         });
                     }
@@ -160,8 +160,8 @@ namespace CourseRegisterApplication.Server
                         departments.Add(new Department
                         {
                             Id = departmentId++,
-                            DepartmentSpecificId = departmentData[0],
-                            DepartmentName = departmentData[1]
+                            DepartmentSpecificId = departmentData[0].Trim(),
+                            DepartmentName = departmentData[1].Trim()
                         });
                     }
 
@@ -185,10 +185,24 @@ namespace CourseRegisterApplication.Server
                     {
                         string[]? roleData = roleLine!.Split(',');
 
+                        RoleName roleName = RoleName.Admin;
+                        switch (roleData[0].Trim())
+                        {
+                            case "Admin":
+                                roleName = RoleName.Admin;
+                                break;
+                            case "Accountant":
+                                roleName = RoleName.Accountant;
+                                break;
+                            case "Student":
+                                roleName = RoleName.Student;
+                                break;
+                        }
+
                         roles.Add(new Role
                         {
                             Id = roleId++,
-                            RoleName = roleData[0]
+                            RoleName = roleName
                         });
                     }
 
@@ -215,10 +229,10 @@ namespace CourseRegisterApplication.Server
                         users.Add(new User
                         {
                             Id = userId++,
-                            Username = userData[0],
-                            Password = userData[1],
-                            Email = userData[2],
-                            RoleId = int.Parse(userData[3])
+                            Username = userData[0].Trim(),
+                            Password = userData[1].Trim(),
+                            Email = userData[2].Trim(),
+                            RoleId = int.Parse(userData[3].Trim())
                         });
                     }
 
@@ -245,7 +259,7 @@ namespace CourseRegisterApplication.Server
                         provinces.Add(new Province
                         {
                             Id = provinceId++,
-                            ProvinceName = provinceData[0]
+                            ProvinceName = provinceData[0].Trim()
                         });
                     }
 
@@ -272,9 +286,9 @@ namespace CourseRegisterApplication.Server
                         districts.Add(new District
                         {
                             Id = districtId++,
-                            DistrictName = districtData[0],
-                            IsPriority = districtData[1] == " 1",
-                            ProvinceId = int.Parse(districtData[2])
+                            DistrictName = districtData[0].Trim(),
+                            IsPriority = districtData[1].Trim() == "1",
+                            ProvinceId = int.Parse(districtData[2].Trim())
                         });
                     }
 
