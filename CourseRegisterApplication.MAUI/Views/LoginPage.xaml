@@ -3,7 +3,8 @@
   x:Class="CourseRegisterApplication.MAUI.Views.LoginPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  BackgroundColor="#FCFAFA">
+  BackgroundColor="#FCFAFA"
+  NavigationPage.HasNavigationBar="False">
   <ScrollView>
     <VerticalStackLayout
       HeightRequest="500"
