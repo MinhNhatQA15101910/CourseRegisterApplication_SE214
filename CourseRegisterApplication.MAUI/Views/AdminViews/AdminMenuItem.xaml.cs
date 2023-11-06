@@ -48,5 +48,4 @@ public partial class AdminMenuItem : ContentPage
 			PageChanged?.Invoke(this, pageType);
 		}
 	}
-
 }

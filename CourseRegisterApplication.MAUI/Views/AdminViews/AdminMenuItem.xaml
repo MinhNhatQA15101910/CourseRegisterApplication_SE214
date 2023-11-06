@@ -15,8 +15,8 @@
         WidthRequest="65" />
       <Label
         Margin="0,12,0,0"
-        FontAttributes="Bold"
-        FontSize="14"
+        FontFamily="RobotoBold"
+        FontSize="16"
         HorizontalOptions="Center"
         Text="Phòng tài vụ"
         TextColor="White" />

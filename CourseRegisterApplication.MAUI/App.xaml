@@ -28,8 +28,8 @@
                 VerticalOptions="Center" />
               <Label
                 Margin="8,0,0,0"
-                FontFamily="OpenSans-Semibold"
-                FontSize="14"
+                FontFamily="RobotoMedium"
+                FontSize="16"
                 Text="{Binding Title}"
                 TextColor="White" />
             </HorizontalStackLayout>
