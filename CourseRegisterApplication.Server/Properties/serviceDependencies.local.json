@@ -4,10 +4,11 @@
       "type": "secrets.user"
     },
     "mssql1": {
-      "secretStore": "LocalSecretsFile",
+      "serviceConnectorResourceId": "",
+      "secretStore": null,
+      "resourceId": null,
       "type": "mssql.local",
-      "connectionId": "ConnectionStrings:CourseRegisterManagementCS",
-      "dynamicId": null
+      "connectionId": "ConnectionStrings:CourseRegisterManagementCS"
     }
   }
 }

@@ -5,8 +5,7 @@
     },
     "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:CourseRegisterManagementCS",
-      "dynamicId": null
+      "connectionId": "ConnectionStrings:CourseRegisterManagementCS"
     }
   }
 }
