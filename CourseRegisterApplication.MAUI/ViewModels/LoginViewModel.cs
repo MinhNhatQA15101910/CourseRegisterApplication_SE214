@@ -8,7 +8,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
     public partial class LoginViewModel : ObservableObject
 	{
 		private readonly LoginPage _loginPage;
-		private readonly IUserService _loginService = new UserService();
+		private readonly IUserService _userService = new UserService();
 
 		[ObservableProperty]
 		[NotifyCanExecuteChangedFor(nameof(LoginUserCommand))]
@@ -30,16 +30,28 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 		public async Task LoginUser()
 		{
 			IsLoading = true;
-			User user = await _loginService.LoginUser(Username, Helpers.EncryptData(Password));
-			IsLoading = false;
+			User user = await _userService.LoginUser(Username, Helpers.EncryptData(Password));
 			if (user != null)
 			{
-				Username = "";
-				Password = "";
+				await _loginPage.DisplayAlert("Success!", "Login Successfully", "OK");
 
-				var navParam = new Dictionary<string, object>();
-				navParam.Add("CurrentUser", user);
-				await _loginPage.Navigation.PushAsync(new AdminFlyoutPage());
+				switch (user.Role.RoleName)
+				{
+					case "Admin":
+                        var navParam = new Dictionary<string, object>();
+                        navParam.Add("CurrentUser", user);
+                        await _loginPage.Navigation.PushAsync(new AdminFlyoutPage());
+                        Clear();
+                        break;
+					case "Accountant":
+                        // TODO: Navigate to Accountant Page
+                        Clear();
+                        break;
+                    case "Student":
+                        // TODO: Navigate to Accountant Page
+                        Clear();
+                        break;
+                }
 			}
 			else
 			{
@@ -61,5 +73,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 
 			return true;
 		}
+
+		private void Clear()
+		{
+			IsLoading = false;
+            Username = "";
+            Password = "";
+        }
 	}
 }
