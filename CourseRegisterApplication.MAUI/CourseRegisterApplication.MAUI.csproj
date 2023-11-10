@@ -48,7 +48,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\Roboto-Thin.ttf" />
+	  <None Remove="Resources\Images\admin_image_1.svg" />
+	  <None Remove="Resources\Images\admin_image_2.svg" />
+	  <None Remove="Resources\Images\admin_image_3.svg" />
 	  <None Remove="Resources\Images\bank.svg" />
+	  <None Remove="Resources\Images\bell_notification.svg" />
 	  <None Remove="Resources\Images\book.svg" />
 	  <None Remove="Resources\Images\bx_support.svg" />
 	  <None Remove="Resources\Images\call_box.svg" />
@@ -67,6 +72,7 @@
 	  <None Remove="Resources\Images\setting.svg" />
 	  <None Remove="Resources\Images\student.svg" />
 	  <None Remove="Resources\Images\vector_down.svg" />
+	  <None Remove="Resources\Images\vector_left.svg" />
 	  <None Remove="Resources\Images\vector_right.svg" />
 	  <None Remove="Resources\Images\vector_up.svg" />
 	</ItemGroup>
@@ -104,6 +110,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ChangePasswordPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ContentViews\NavigationTopBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
