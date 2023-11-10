@@ -3,63 +3,96 @@
   x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminDashboardPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  Title="AdminMenuItem"
-  BackgroundColor="#152259">
-  <ScrollView>
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="*" />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
-      <VerticalStackLayout HorizontalOptions="Center">
-        <StackLayout Grid.Row="0">
-          <StackLayout HeightRequest="170">
-            <Image
-              Margin="0,26,0,0"
-              HeightRequest="65"
-              Source="demo_icon.png"
-              VerticalOptions="Start"
-              WidthRequest="65" />
+  xmlns:controls="clr-namespace:CourseRegisterApplication.MAUI.Views.ContentViews"
+  Title="AdminDashboardPage"
+  NavigationPage.HasNavigationBar="False">
+  <Grid RowDefinitions="Auto,*">
+    <controls:NavigationTopBar
+      Title="Welcome back admin!"
+      Grid.Row="0"
+      Description="Today is Friday, October 13th, 2023"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      VerticalOptions="Start" />
+    <ScrollView Grid.Row="1">
+      <StackLayout Margin="200,100,0,0">
+        <Label
+          FontFamily="RobotoMedium"
+          FontSize="24"
+          Text="What would  you do?"
+          TextColor="#4F4F4F" />
+        <StackLayout Margin="0,48,0,0">
+          <Grid
+            ColumnDefinitions="Auto,*"
+            HorizontalOptions="Start"
+            RowDefinitions="Auto,*"
+            WidthRequest="600">
+            <Image HeightRequest="36" Source="admin_image_1.png" />
             <Label
-              Margin="0,12,0,0"
+              Grid.Column="1"
+              Margin="24,0,0,0"
+              FontSize="24"
+              Text="Add other admin account"
+              TextColor="#4F4F4F"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Row="1"
+              Grid.Column="1"
+              Margin="24,12,0,0"
               FontAttributes="Bold"
-              FontSize="14"
-              HorizontalOptions="Center"
-              Text="Phòng tài vụ"
-              TextColor="White" />
-          </StackLayout>
-          <BoxView
-            HeightRequest="0.5"
-            WidthRequest="240"
-            Color="#BDBDBD" />
+              FontFamily="RobotoThin"
+              Text="This feature allows you to give certain individuals elevated privileges for system management."
+              TextColor="#4F4F4F" />
+          </Grid>
+          <Grid
+            Margin="0,48,0,0"
+            ColumnDefinitions="Auto,*"
+            HorizontalOptions="Start"
+            RowDefinitions="Auto,*"
+            WidthRequest="600">
+            <Image HeightRequest="36" Source="admin_image_1.png" />
+            <Label
+              Grid.Column="1"
+              Margin="24,0,0,0"
+              FontSize="24"
+              Text="Add accountant account"
+              TextColor="#4F4F4F"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Row="1"
+              Grid.Column="1"
+              Margin="24,12,0,0"
+              FontAttributes="Bold"
+              FontFamily="RobotoThin"
+              Text="Create specialized accounts for financial professionals to manage financial transactions."
+              TextColor="#4F4F4F" />
+          </Grid>
+          <Grid
+            Margin="0,48,0,0"
+            ColumnDefinitions="Auto,*"
+            HorizontalOptions="Start"
+            RowDefinitions="Auto,*"
+            WidthRequest="600">
+            <Image HeightRequest="36" Source="admin_image_1.png" />
+            <Label
+              Grid.Column="1"
+              Margin="24,0,0,0"
+              FontSize="24"
+              Text="Add student account"
+              TextColor="#4F4F4F"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Row="1"
+              Grid.Column="1"
+              Margin="24,12,0,0"
+              FontAttributes="Bold"
+              FontFamily="RobotoThin"
+              Text="Register students on your educational platform to grant them access to course materials and resources."
+              TextColor="#4F4F4F" />
+          </Grid>
         </StackLayout>
-
-        <ScrollView Grid.Row="1">
-          <ListView
-            ItemTapped="OnItemTapped"
-            ItemTemplate="{StaticResource ItemTemplate}"
-            ItemsSource="{Binding AdminFlyoutItems}" />
-        </ScrollView>
-
-        <StackLayout
-          Grid.Row="2"
-          HeightRequest="80"
-          VerticalOptions="End">
-          <BoxView HeightRequest="0.5" Color="#BDBDBD" />
-          <Label
-            Margin="0,12,0,0"
-            FontSize="20"
-            HorizontalOptions="Center"
-            Text="Vesion:"
-            TextColor="White" />
-          <Label
-            FontSize="14"
-            HorizontalOptions="Center"
-            Text="1.0.0"
-            TextColor="White" />
-        </StackLayout>
-      </VerticalStackLayout>
-    </Grid>
-  </ScrollView>
+      </StackLayout>
+    </ScrollView>
+  </Grid>
 </ContentPage>
