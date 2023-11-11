@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseRegisterApplication.Server.Migrations
 {
     [DbContext(typeof(CourseRegisterManagementDbContext))]
-    [Migration("20231104095653_Initial")]
+    [Migration("20231111015858_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -6639,6 +6639,46 @@ namespace CourseRegisterApplication.Server.Migrations
                             FullName = "Nguyễn Thanh Tường Vi",
                             Gender = 1,
                             StudentSpecificId = "SV21521636"
+                        },
+                        new
+                        {
+                            Id = 103,
+                            BranchId = 3,
+                            DateOfBirth = new DateTime(2003, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 647,
+                            FullName = "Trần Trọng Khiêm",
+                            Gender = 0,
+                            StudentSpecificId = "SV21522217"
+                        },
+                        new
+                        {
+                            Id = 104,
+                            BranchId = 3,
+                            DateOfBirth = new DateTime(2003, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 396,
+                            FullName = "Nguyễn Văn Vũ",
+                            Gender = 0,
+                            StudentSpecificId = "SV21521682"
+                        },
+                        new
+                        {
+                            Id = 105,
+                            BranchId = 3,
+                            DateOfBirth = new DateTime(2003, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 537,
+                            FullName = "Mai Hoàng Nhật Duy",
+                            Gender = 0,
+                            StudentSpecificId = "SV21522819"
+                        },
+                        new
+                        {
+                            Id = 106,
+                            BranchId = 3,
+                            DateOfBirth = new DateTime(2003, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 595,
+                            FullName = "Đỗ Minh Nhật",
+                            Gender = 0,
+                            StudentSpecificId = "SV21522415"
                         });
                 });
 

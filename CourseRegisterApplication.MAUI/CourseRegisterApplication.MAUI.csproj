@@ -82,10 +82,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\AdminViews\AdminEmployeeAccountManagementPage.xaml.cs">
+	    <DependentUpon>AdminEmployeeAccountManagementPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Views\AdminViews\AddUpdateAccountPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AdminViews\AdminAccountManagementPage.xaml">
+	  <MauiXaml Update="Views\AdminViews\AdminEmployeeAccountManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\AdminDashboardPage.xaml">
@@ -95,9 +101,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\AdminMenuItem.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\AdminViews\EmployeeAccountManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\StudentAccountManagementPage.xaml">

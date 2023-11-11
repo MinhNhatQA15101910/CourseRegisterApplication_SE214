@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -1139,7 +1138,11 @@ namespace CourseRegisterApplication.Server.Migrations
                     { 99, 10, new DateTime(2003, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 14, "Trịnh Ngọc Pháp", 0, "SV21521227" },
                     { 100, 10, new DateTime(2003, 11, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 7, "Nguyễn Thị Thắm", 1, "SV21521384" },
                     { 101, 10, new DateTime(2003, 4, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 443, "Nguyễn Quang Thuận", 0, "SV21521470" },
-                    { 102, 10, new DateTime(2003, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 668, "Nguyễn Thanh Tường Vi", 1, "SV21521636" }
+                    { 102, 10, new DateTime(2003, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 668, "Nguyễn Thanh Tường Vi", 1, "SV21521636" },
+                    { 103, 3, new DateTime(2003, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), 647, "Trần Trọng Khiêm", 0, "SV21522217" },
+                    { 104, 3, new DateTime(2003, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 396, "Nguyễn Văn Vũ", 0, "SV21521682" },
+                    { 105, 3, new DateTime(2003, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 537, "Mai Hoàng Nhật Duy", 0, "SV21522819" },
+                    { 106, 3, new DateTime(2003, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 595, "Đỗ Minh Nhật", 0, "SV21522415" }
                 });
 
             migrationBuilder.CreateIndex(
