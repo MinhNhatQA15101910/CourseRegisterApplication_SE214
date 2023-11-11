@@ -37,9 +37,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 		public AdminFlyoutItem()
 		{
 			AdminFlyoutItems.Add(new MenuItems { Title = "Dashboard", Icon = "home.png", Color = Color.FromArgb("#152259") });
-			AdminFlyoutItems.Add(new MenuItems { Title = "Accountant account", Icon = "student.png", Color = Color.FromArgb("#152259") });
+			AdminFlyoutItems.Add(new MenuItems { Title = "Admin / Accountant account", Icon = "student.png", Color = Color.FromArgb("#152259") });
 			AdminFlyoutItems.Add(new MenuItems { Title = "Student account", Icon = "student.png", Color = Color.FromArgb("#152259") });
-			AdminFlyoutItems.Add(new MenuItems { Title = "Admin account", Icon = "book.png", Color = Color.FromArgb("#152259") });
 		}
 
 	}

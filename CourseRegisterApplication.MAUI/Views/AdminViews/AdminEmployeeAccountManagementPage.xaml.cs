@@ -1,8 +1,8 @@
 namespace CourseRegisterApplication.MAUI.Views.AdminViews;
 
-public partial class AdminAccountManagementPage : ContentPage
+public partial class AdminEmployeeAccountManagementPage : ContentPage
 {
-	public AdminAccountManagementPage()
+	public AdminEmployeeAccountManagementPage()
 	{
 		InitializeComponent();
 	}
