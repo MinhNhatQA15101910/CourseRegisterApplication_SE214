@@ -10,6 +10,6 @@ namespace CourseRegisterApplication.Shared
 
         [ForeignKey("Role")]
         public int RoleId { get; set; }
-        public Role Role { get; set; } = null!;
+        public Role? Role { get; set; }
     }
 }

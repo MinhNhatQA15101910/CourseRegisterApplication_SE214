@@ -5,7 +5,6 @@
         public int Id { get; set; }
         public string? PriorityName { get; set; }
         public float TuitionDiscountRate { get; set; }
-
-        public ICollection<StudentPriorityType> Students { get; } = new List<StudentPriorityType>();
+        public ICollection<StudentPriorityType>? Students { get; } 
     }
 }

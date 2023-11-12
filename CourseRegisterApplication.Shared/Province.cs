@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public string? ProvinceName { get; set; }
-
-        public ICollection<District> Districts { get; } = new List<District>();
+        public ICollection<District>? Districts { get; } 
     }
 }

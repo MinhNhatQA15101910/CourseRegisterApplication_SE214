@@ -10,12 +10,12 @@
 
         [ForeignKey("District")]
         public int DistrictId { get; set; }
-        public District District { get; set; } = null!;
+        public District? District { get; set; }
 
         [ForeignKey("Branch")]
         public int BranchId { get; set; }
-        public Branch Branch { get; set; } = null!;
+        public Branch? Branch { get; set; }
 
-        public ICollection<StudentPriorityType> PriorityTypes { get; } = new List<StudentPriorityType>();
+        public ICollection<StudentPriorityType>? PriorityTypes { get; }
     }
 }

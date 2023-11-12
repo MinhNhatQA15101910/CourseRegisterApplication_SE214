@@ -10,6 +10,6 @@ namespace CourseRegisterApplication.Shared
 
         [ForeignKey("Province")]
         public int ProvinceId { get; set; }
-        public Province Province { get; set; } = null!;
+        public Province? Province { get; set; } 
     }
 }
