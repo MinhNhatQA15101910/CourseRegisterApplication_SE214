@@ -65,11 +65,14 @@
 	  <None Remove="Resources\Images\demo_user_image.jpg" />
 	  <None Remove="Resources\Images\dollar_icon.svg" />
 	  <None Remove="Resources\Images\dotnet_bot.svg" />
+	  <None Remove="Resources\Images\eye_close_icon.svg" />
+	  <None Remove="Resources\Images\eye_open_icon.svg" />
 	  <None Remove="Resources\Images\home.svg" />
 	  <None Remove="Resources\Images\info_box.svg" />
 	  <None Remove="Resources\Images\message_box.svg" />
 	  <None Remove="Resources\Images\search_icon.svg" />
 	  <None Remove="Resources\Images\setting.svg" />
+	  <None Remove="Resources\Images\setting_White.svg" />
 	  <None Remove="Resources\Images\student.svg" />
 	  <None Remove="Resources\Images\vector_down.svg" />
 	  <None Remove="Resources\Images\vector_left.svg" />
@@ -88,14 +91,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\CourseRegisterApplication.Shared\CourseRegisterApplication.Shared.csproj" />
+	  <Compile Update="Views\AdminViews\AdminEmployeeAccountManagementPage.xaml.cs">
+	    <DependentUpon>AdminEmployeeAccountManagementPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="Views\AdminViews\AddUpdateAccountPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\AdminViews\AdminEmployeeAccountManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\AdminDashboardPage.xaml">
@@ -107,13 +109,16 @@
 	  <MauiXaml Update="Views\AdminViews\AdminMenuItem.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AdminViews\AdminEmployeeAccountManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\StudentAccountManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ChangePasswordPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ContentViews\NavigationTopBar.xaml">
+	  <MauiXaml Update="ContentViews\NavigationTopBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
