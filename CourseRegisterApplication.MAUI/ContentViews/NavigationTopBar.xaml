@@ -32,6 +32,7 @@
       x:Name="TitleGroup"
       Grid.Column="1"
       Margin="100,0,0,0"
+      IsVisible="{Binding IsTitleVisible}"
       VerticalOptions="Center">
       <Label x:Name="Title" FontFamily="RobotoMedium" />
       <Label x:Name="Description" />
@@ -56,6 +57,7 @@
           HeightRequest="40"
           HorizontalOptions="Center"
           Text="Log Out"
+          Clicked="OnLogoutTapped"
           VerticalOptions="Center"
           WidthRequest="120" />
       </HorizontalStackLayout>

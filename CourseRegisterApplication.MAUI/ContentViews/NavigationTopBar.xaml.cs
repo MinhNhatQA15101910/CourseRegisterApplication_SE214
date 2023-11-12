@@ -1,4 +1,7 @@
-﻿namespace CourseRegisterApplication.MAUI.ContentViews;
+﻿using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
+using CourseRegisterApplication.MAUI.Views;
+using Microsoft.Maui;
+namespace CourseRegisterApplication.MAUI.ContentViews;
 
 public partial class NavigationTopBar : ContentView
 {
@@ -60,11 +63,11 @@ public partial class NavigationTopBar : ContentView
         control.NavigateBackGroup.IsVisible = (bool)newValue;
     }
 
-    public bool IsBackVisible
-    {
-        get => (bool)GetValue(IsBackVisibleProperty);
-        set => SetValue(IsBackVisibleProperty, value);
-    }
+	public bool IsBackVisible
+	{
+		get => (bool)GetValue(IsBackVisibleProperty);
+		set => SetValue(IsBackVisibleProperty, value);
+	}
     #endregion
 
     #region IsTitleVisible
@@ -82,11 +85,11 @@ public partial class NavigationTopBar : ContentView
         control.TitleGroup.IsVisible = (bool)newValue;
     }
 
-    public bool IsTitleVisible
-    {
-        get => (bool)GetValue(IsTitleVisibleProperty);
-        set => SetValue(IsTitleVisibleProperty, value);
-    }
+	public bool IsTitleVisible
+	{
+		get => (bool)GetValue(IsTitleVisibleProperty);
+		set => SetValue(IsTitleVisibleProperty, value);
+	}
     #endregion
 
     #region IsControlVisible
@@ -104,11 +107,11 @@ public partial class NavigationTopBar : ContentView
         control.Control.IsVisible = (bool)newValue;
     }
 
-    public bool IsControlVisible
-    {
-        get => (bool)GetValue(IsControlVisibleProperty);
-        set => SetValue(IsControlVisibleProperty, value);
-    }
+	public bool IsControlVisible
+	{
+		get => (bool)GetValue(IsControlVisibleProperty);
+		set => SetValue(IsControlVisibleProperty, value);
+	}
     #endregion
 
     #region LogoutCommand
@@ -121,16 +124,16 @@ public partial class NavigationTopBar : ContentView
             propertyChanged: LogoutCommandPropertyChanged);
 
     private static void LogoutCommandPropertyChanged(BindableObject bindable, object oldValue, object newValue)
-    {
+	{
         var control = (NavigationTopBar)bindable;
         control.LogoutButton.Command = (ICommand)newValue;
-    }
+	}
 
     public ICommand LogoutCommand
-    {
+	{
         get => (ICommand)GetValue(LogoutCommandProperty);
         set => SetValue(LogoutCommandProperty, value);
-    }
+	}
     #endregion
 
     #region NavigateBackCommand
@@ -143,23 +146,23 @@ public partial class NavigationTopBar : ContentView
             propertyChanged: NavigateBackCommandPropertyChanged);
 
     private static void NavigateBackCommandPropertyChanged(BindableObject bindable, object oldValue, object newValue)
-    {
+	{
         var control = (NavigationTopBar)bindable;
         control.OnTapBackImage.Command = (ICommand)newValue;
         control.OnTapBackLabel.Command = (ICommand)newValue;
-    }
+	}
 
     public ICommand NavigateBackCommand
-    {
+	{
         get => (ICommand)GetValue(NavigateBackCommandProperty);
         set => SetValue(NavigateBackCommandProperty, value);
-    }
+	}
     #endregion
 
     #region Constructor
     public NavigationTopBar()
-    {
+	{
         InitializeComponent();
-    }
+	}
     #endregion
 }
