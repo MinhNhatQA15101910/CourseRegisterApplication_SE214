@@ -3,7 +3,7 @@
   x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminDashboardPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:controls="clr-namespace:CourseRegisterApplication.MAUI.Views.ContentViews"
+  xmlns:controls="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
   Title="AdminDashboardPage"
   NavigationPage.HasNavigationBar="False">
   <Grid RowDefinitions="Auto,*">
@@ -51,7 +51,7 @@
             HorizontalOptions="Start"
             RowDefinitions="Auto,*"
             WidthRequest="600">
-            <Image HeightRequest="36" Source="admin_image_1.png" />
+            <Image HeightRequest="36" Source="admin_image_2.png" />
             <Label
               Grid.Column="1"
               Margin="24,0,0,0"
@@ -74,7 +74,7 @@
             HorizontalOptions="Start"
             RowDefinitions="Auto,*"
             WidthRequest="600">
-            <Image HeightRequest="36" Source="admin_image_1.png" />
+            <Image HeightRequest="36" Source="admin_image_3.png" />
             <Label
               Grid.Column="1"
               Margin="24,0,0,0"

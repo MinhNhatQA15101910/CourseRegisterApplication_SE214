@@ -1,6 +1,7 @@
+﻿using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
+using CourseRegisterApplication.MAUI.Views;
 using Microsoft.Maui;
-
-namespace CourseRegisterApplication.MAUI.Views.ContentViews;
+namespace CourseRegisterApplication.MAUI.ContentViews;
 
 public partial class NavigationTopBar : ContentView
 {
@@ -40,5 +41,15 @@ public partial class NavigationTopBar : ContentView
 	public NavigationTopBar()
 	{
 		InitializeComponent();
+	}
+
+	private void OnChangePasswordTapped(object sender, EventArgs e)
+	{
+		App.Current.MainPage=new ChangePasswordPage();
+	}
+
+	private void OnLogoutTapped(object sender, EventArgs e)
+	{
+		App.Current.MainPage = new LoginPage();
 	}
 }

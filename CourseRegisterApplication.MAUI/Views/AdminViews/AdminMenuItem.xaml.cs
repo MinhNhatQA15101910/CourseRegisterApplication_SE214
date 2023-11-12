@@ -33,19 +33,19 @@ public partial class AdminMenuItem : ContentPage
 			{
 				pageType = typeof(AdminDashboardPage);
 			}
-			else if (newSelectedItem.Title == "Accountant account")
+			else if (newSelectedItem.Title == "Admin / Accountant account")
 			{
-				pageType = typeof(EmployeeAccountManagementPage);
+				pageType = typeof(AdminEmployeeAccountManagementPage);
 			}
 			else if (newSelectedItem.Title == "Student account")
 			{
 				pageType = typeof(StudentAccountManagementPage);
 			}
-			else if (newSelectedItem.Title == "Admin account")
-			{
-				pageType = typeof(AdminAccountManagementPage);
-			}
 			PageChanged?.Invoke(this, pageType);
 		}
+	}
+	private void OnChangePasswordTapped(object sender, EventArgs e)
+	{
+		App.Current.MainPage = new ChangePasswordPage();
 	}
 }
