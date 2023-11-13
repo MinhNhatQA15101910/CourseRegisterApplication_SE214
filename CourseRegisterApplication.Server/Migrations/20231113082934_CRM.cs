@@ -55,16 +55,19 @@ namespace CourseRegisterApplication.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleName = table.Column<int>(type: "int", nullable: false)
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Role = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -105,28 +108,6 @@ namespace CourseRegisterApplication.Server.Migrations
                         name: "FK_Districts_Provinces_ProvinceId",
                         column: x => x.ProvinceId,
                         principalTable: "Provinces",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -280,13 +261,18 @@ namespace CourseRegisterApplication.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Roles",
-                columns: new[] { "Id", "RoleName" },
+                table: "Users",
+                columns: new[] { "Id", "Email", "Password", "Role", "Username" },
                 values: new object[,]
                 {
-                    { 1, 0 },
-                    { 2, 1 },
-                    { 3, 2 }
+                    { 1, "admin1.uit@gmail.com", "MTIzNDU2Nzg=", 0, "admin1" },
+                    { 2, "admin2.uit@gmail.com", "MTIzNDU2Nzg=", 0, "admin2" },
+                    { 3, "teacher1.uit@gmail.com", "MTIzNDU2Nzg=", 1, "teacher1" },
+                    { 4, "teacher2.uit@gmail.com", "MTIzNDU2Nzg=", 1, "teacher2" },
+                    { 5, "21520007@gm.uit.edu.vn", "MTIzNDU2Nzg=", 2, "SV21520007" },
+                    { 6, "21520013@gm.uit.edu.vn", "MTIzNDU2Nzg=", 2, "SV21520013" },
+                    { 7, "21520032@gm.uit.edu.vn", "MTIzNDU2Nzg=", 2, "SV21520032" },
+                    { 8, "21520035@gm.uit.edu.vn", "MTIzNDU2Nzg=", 2, "SV21520035" }
                 });
 
             migrationBuilder.InsertData(
@@ -1019,21 +1005,6 @@ namespace CourseRegisterApplication.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Email", "Password", "RoleId", "Username" },
-                values: new object[,]
-                {
-                    { 1, "admin1.uit@gmail.com", "MTIzNDU2Nzg=", 1, "admin1" },
-                    { 2, "admin2.uit@gmail.com", "MTIzNDU2Nzg=", 1, "admin2" },
-                    { 3, "teacher1.uit@gmail.com", "MTIzNDU2Nzg=", 2, "teacher1" },
-                    { 4, "teacher2.uit@gmail.com", "MTIzNDU2Nzg=", 2, "teacher2" },
-                    { 5, "21520007@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21520007" },
-                    { 6, "21520013@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21520013" },
-                    { 7, "21520032@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21520032" },
-                    { 8, "21520035@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21520035" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Students",
                 columns: new[] { "Id", "BranchId", "DateOfBirth", "DistrictId", "FullName", "Gender", "StudentSpecificId" },
                 values: new object[,]
@@ -1202,12 +1173,6 @@ namespace CourseRegisterApplication.Server.Migrations
                 filter: "[ProvinceName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Roles_RoleName",
-                table: "Roles",
-                column: "RoleName",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_StudentPriorityTypes_PriorityTypeId",
                 table: "StudentPriorityTypes",
                 column: "PriorityTypeId");
@@ -1237,11 +1202,6 @@ namespace CourseRegisterApplication.Server.Migrations
                 filter: "[Email] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId",
-                table: "Users",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Users_Username",
                 table: "Users",
                 column: "Username",
@@ -1263,9 +1223,6 @@ namespace CourseRegisterApplication.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Students");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Branches");

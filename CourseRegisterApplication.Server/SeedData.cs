@@ -16,7 +16,6 @@ namespace CourseRegisterApplication.Server
 
         public static void Initialize(ModelBuilder modelBuilder)
         {
-            InitializeRoles(modelBuilder);
             InitializeUsers(modelBuilder);
             InitializeProvinces(modelBuilder);
             InitializeDistricts(modelBuilder);
@@ -170,47 +169,6 @@ namespace CourseRegisterApplication.Server
             }
         }
 
-        public static void InitializeRoles(ModelBuilder modelBuilder) 
-        {
-            var roles = new List<Role>();
-
-            if (File.Exists(ROLES_FILE_PATH))
-            {
-                using (StreamReader sr = new StreamReader(ROLES_FILE_PATH))
-                {
-                    int roleId = 1;
-                    string? roleLine;
-
-                    while ((roleLine = sr.ReadLine()) != null)
-                    {
-                        string[]? roleData = roleLine!.Split(',');
-
-                        RoleName roleName = RoleName.Admin;
-                        switch (roleData[0].Trim())
-                        {
-                            case "Admin":
-                                roleName = RoleName.Admin;
-                                break;
-                            case "Accountant":
-                                roleName = RoleName.Accountant;
-                                break;
-                            case "Student":
-                                roleName = RoleName.Student;
-                                break;
-                        }
-
-                        roles.Add(new Role
-                        {
-                            Id = roleId++,
-                            RoleName = roleName
-                        });
-                    }
-
-                    modelBuilder.Entity<Role>().HasData(roles);
-                }
-            }
-        }
-
         public static void InitializeUsers(ModelBuilder modelBuilder)
         {
             var users = new List<User>();
@@ -221,10 +179,27 @@ namespace CourseRegisterApplication.Server
                 {
                     int userId = 1;
                     string? userLine;
-                    
+
                     while ((userLine = sr.ReadLine()) != null)
                     {
                         string[]? userData = userLine!.Split(',');
+
+                        Role role = Role.Admin;
+                        switch (userData[3].Trim())
+                        {
+                            case "admin":
+                                role = Role.Admin;
+
+                                break;
+                            case "accountant":
+                                role = Role.Accountant;
+
+                                break;
+                            case "student":
+                                role = Role.Student;
+
+                                break;
+                        }
 
                         users.Add(new User
                         {
@@ -232,7 +207,7 @@ namespace CourseRegisterApplication.Server
                             Username = userData[0].Trim(),
                             Password = userData[1].Trim(),
                             Email = userData[2].Trim(),
-                            RoleId = int.Parse(userData[3].Trim())
+                            Role = role
                         });
                     }
 

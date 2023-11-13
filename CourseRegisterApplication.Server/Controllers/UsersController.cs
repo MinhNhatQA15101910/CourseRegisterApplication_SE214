@@ -72,11 +72,11 @@ namespace CourseRegisterApplication.Server.Controllers
             {
                 var query = _context.Users.Where(u => true);
 
-                // RoleId param check
-                if (roleId == 1 || roleId == 2 || roleId == 3)
-                {
-                    query = _context.Users.Where(u => u.RoleId == roleId);
-                }
+                //// RoleId param check
+                //if (roleId == 1 || roleId == 2 || roleId == 3)
+                //{
+                //    query = _context.Users.Where(u => u.RoleId == roleId);
+                //}
 
                 // Filter param check
                 if (!string.IsNullOrEmpty(filter))

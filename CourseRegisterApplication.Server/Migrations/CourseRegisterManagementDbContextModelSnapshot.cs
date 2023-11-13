@@ -5542,42 +5542,6 @@ namespace CourseRegisterApplication.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CourseRegisterApplication.Shared.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("RoleName")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleName")
-                        .IsUnique();
-
-                    b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            RoleName = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            RoleName = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            RoleName = 2
-                        });
-                });
-
             modelBuilder.Entity("CourseRegisterApplication.Shared.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -6668,7 +6632,7 @@ namespace CourseRegisterApplication.Server.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
@@ -6679,8 +6643,6 @@ namespace CourseRegisterApplication.Server.Migrations
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
-
-                    b.HasIndex("RoleId");
 
                     b.HasIndex("Username")
                         .IsUnique()
@@ -6694,7 +6656,7 @@ namespace CourseRegisterApplication.Server.Migrations
                             Id = 1,
                             Email = "admin1.uit@gmail.com",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 1,
+                            Role = 0,
                             Username = "admin1"
                         },
                         new
@@ -6702,7 +6664,7 @@ namespace CourseRegisterApplication.Server.Migrations
                             Id = 2,
                             Email = "admin2.uit@gmail.com",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 1,
+                            Role = 0,
                             Username = "admin2"
                         },
                         new
@@ -6710,7 +6672,7 @@ namespace CourseRegisterApplication.Server.Migrations
                             Id = 3,
                             Email = "teacher1.uit@gmail.com",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 2,
+                            Role = 1,
                             Username = "teacher1"
                         },
                         new
@@ -6718,7 +6680,7 @@ namespace CourseRegisterApplication.Server.Migrations
                             Id = 4,
                             Email = "teacher2.uit@gmail.com",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 2,
+                            Role = 1,
                             Username = "teacher2"
                         },
                         new
@@ -6726,7 +6688,7 @@ namespace CourseRegisterApplication.Server.Migrations
                             Id = 5,
                             Email = "21520007@gm.uit.edu.vn",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 3,
+                            Role = 2,
                             Username = "SV21520007"
                         },
                         new
@@ -6734,7 +6696,7 @@ namespace CourseRegisterApplication.Server.Migrations
                             Id = 6,
                             Email = "21520013@gm.uit.edu.vn",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 3,
+                            Role = 2,
                             Username = "SV21520013"
                         },
                         new
@@ -6742,7 +6704,7 @@ namespace CourseRegisterApplication.Server.Migrations
                             Id = 7,
                             Email = "21520032@gm.uit.edu.vn",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 3,
+                            Role = 2,
                             Username = "SV21520032"
                         },
                         new
@@ -6750,7 +6712,7 @@ namespace CourseRegisterApplication.Server.Migrations
                             Id = 8,
                             Email = "21520035@gm.uit.edu.vn",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 3,
+                            Role = 2,
                             Username = "SV21520035"
                         });
                 });
@@ -6815,17 +6777,6 @@ namespace CourseRegisterApplication.Server.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("CourseRegisterApplication.Shared.User", b =>
-                {
-                    b.HasOne("CourseRegisterApplication.Shared.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
             modelBuilder.Entity("CourseRegisterApplication.Shared.Department", b =>
                 {
                     b.Navigation("Branches");
@@ -6839,11 +6790,6 @@ namespace CourseRegisterApplication.Server.Migrations
             modelBuilder.Entity("CourseRegisterApplication.Shared.Province", b =>
                 {
                     b.Navigation("Districts");
-                });
-
-            modelBuilder.Entity("CourseRegisterApplication.Shared.Role", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("CourseRegisterApplication.Shared.Student", b =>

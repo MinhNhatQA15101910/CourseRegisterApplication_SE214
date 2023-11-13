@@ -26,7 +26,6 @@ namespace CourseRegisterApplication.MAUI
 
             // Services
             builder.Services.AddScoped<IUserService, UserService>();
-            builder.Services.AddScoped<IRoleService, RoleService>();
 
             // Views
             builder.Services.AddSingleton<LoginPage>();
