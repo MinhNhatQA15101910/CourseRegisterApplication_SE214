@@ -60,7 +60,7 @@ namespace CourseRegisterApplication.Server.Controllers
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Student>> CreateStudent([FromBody] Student student)
+        public async Task<ActionResult> CreateStudent([FromBody] Student student)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace CourseRegisterApplication.Server.Controllers
                 await _context.SaveChangesAsync();
 
                 // Assuming you have a route named "GetStudent" to retrieve the created student by ID
-                return Ok(student);
+                return CreatedAtAction("GetStudentBySpecificID", new { studentSpecificId = student.StudentSpecificId }, student);
             }
             catch (Exception ex)
             {
