@@ -1,7 +1,8 @@
 ﻿using CourseRegisterApplication.Shared;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-#pragma warning disable CS8600 
+using System.Drawing.Printing;
+#pragma warning disable CS8600
 
 namespace CourseRegisterApplication.Server.Controllers
 {
@@ -59,43 +60,31 @@ namespace CourseRegisterApplication.Server.Controllers
             }
         }
 
-        /* 
-         * Get all users if there is no given params
-         * roleId: 0 - all, 1 - admin, 2 - accountant, 3 - student.
-         * filter: based on username and email
-         * NOTE: roleId = 0 is init for dev mode, Database contains 1, 2, 3.
-         */
-        [HttpGet()]
-        public async Task<ActionResult<User[]>> GetUsersOptionalByRoleFilter([FromQuery] int roleId = 0, [FromQuery] string filter = "")
+        // Get all users
+        // Can query to account types by role
+        [HttpGet]
+        public async Task<ActionResult<User[]>> GetUsers([FromQuery] int role = -1)
         {
             try
             {
-                var query = _context.Users.Where(u => true);
+                var query = _context.Users;
+                var users = await query.ToListAsync();
 
-                //// RoleId param check
-                //if (roleId == 1 || roleId == 2 || roleId == 3)
-                //{
-                //    query = _context.Users.Where(u => u.RoleId == roleId);
-                //}
-
-                // Filter param check
-                if (!string.IsNullOrEmpty(filter))
+                if (int.IsPositive(role))
                 {
-                    query = query.Where(u => (u.Username != null && u.Username.Contains(filter)) || (u.Email != null && u.Email.Contains(filter)));
+                    users = await query.Where(u => (int)u.Role == role).ToListAsync();
                 }
 
-                var accounts = await query.ToListAsync();
-
-                if (accounts.Count == 0)
+                if (users == null)
                 {
-                    return NotFound("No accounts found!");
+                    return NotFound("Something went wrong.");
                 }
 
-                return Ok(accounts);
+                return Ok(users);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex}");
             }
         }
 
