@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-  x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.StudentAccountManagementPage"
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  Title="StudentAccountManagementPage"
-  NavigationPage.HasNavigationBar="False">
-  <VerticalStackLayout>
-    <Label
-      HorizontalOptions="Center"
-      Text="Welcome to .NET MAUI!"
-      VerticalOptions="Center" />
-  </VerticalStackLayout>
+    x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.StudentAccountManagementPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:CourseRegisterApplication.MAUI.Views.ContentsViews"
+    Title="StudentAccountManagementPage"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto, Auto, *">
+        <controls:AccountManagementHeader
+            Title="Student account management page"
+            Grid.Row="0"
+            Description="Student account page simplifies academic and personal data management"
+            IsBackVisible="True"
+            IsControlVisible="True"
+            IsTitleVisible="True"
+            SearchPlaceHolder="Search for a student by name, email or id"
+            VerticalOptions="Start" />
+
+        <Grid Grid.Row="1" ColumnDefinitions="Auto, *">
+            <CollectionView ItemsSource="{Binding Students}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding Name}" Grid.Column="0"/>
+                            <Label Text="{Binding StudentID}" Grid.Column="1"/>
+                            <Label Text="{Binding Email}" Grid.Column="2"/>
+                            <CheckBox IsChecked="{Binding IsActive}" Grid.Column="3"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+    </Grid>
 </ContentPage>
