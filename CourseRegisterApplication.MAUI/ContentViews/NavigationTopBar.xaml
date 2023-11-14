@@ -62,6 +62,6 @@
           WidthRequest="120" />
       </HorizontalStackLayout>
 
-    </StackLayout>
-  </Grid>
+        </StackLayout>
+    </Grid>
 </ContentView>
