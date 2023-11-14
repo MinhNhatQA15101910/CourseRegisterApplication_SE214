@@ -1,4 +1,5 @@
 ﻿using CourseRegisterApplication.MAUI.Views;
+using CourseRegisterApplication.MAUI.Views.AdminViews;
 
 namespace CourseRegisterApplication.MAUI
 {
@@ -8,7 +9,8 @@ namespace CourseRegisterApplication.MAUI
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new LoginPage();
         }
+
     }
 }

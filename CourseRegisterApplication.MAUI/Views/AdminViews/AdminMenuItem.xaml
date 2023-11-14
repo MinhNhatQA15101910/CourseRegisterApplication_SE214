@@ -15,8 +15,8 @@
         WidthRequest="65" />
       <Label
         Margin="0,12,0,0"
-        FontAttributes="Bold"
-        FontSize="14"
+        FontFamily="RobotoBold"
+        FontSize="16"
         HorizontalOptions="Center"
         Text="Phòng tài vụ"
         TextColor="White" />
@@ -38,18 +38,20 @@
         Margin="36,12,36,0"
         HeightRequest="0.5"
         Color="#BDBDBD" />
-      <Label
-        Margin="0,12,0,0"
-        FontSize="20"
-        HorizontalOptions="Center"
-        Text="Vesion:"
-        TextColor="White" />
-      <Label
-        Margin="0,0,0,12"
-        FontSize="14"
-        HorizontalOptions="Center"
-        Text="1.0.0"
-        TextColor="White" />
+      <HorizontalStackLayout Margin="0,16,0,16" HorizontalOptions="Center">
+        <Image HeightRequest="20" Source="setting_white.png" />
+        <Label
+          Margin="16,0,0,0"
+          FontFamily="RobotoMedium"
+          FontSize="16"
+          HorizontalOptions="Center"
+          Text="Change Password"
+          TextColor="White" />
+        <HorizontalStackLayout.GestureRecognizers>
+          <TapGestureRecognizer Tapped="OnChangePasswordTapped" />
+        </HorizontalStackLayout.GestureRecognizers>
+      </HorizontalStackLayout>
+
     </StackLayout>
   </Grid>
 </ContentPage>
