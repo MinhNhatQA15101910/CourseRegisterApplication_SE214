@@ -30,11 +30,11 @@
     </StackLayout>
     <StackLayout
       Grid.Column="2"
-      Margin="0,0,40,0"
+      Margin="0,0,40,0" VerticalOptions="Center"
       HorizontalOptions="EndAndExpand"
       IsVisible="{Binding IsControlVisible}">
 
-      <HorizontalStackLayout Margin="0,28,0,0" HorizontalOptions="End">
+      <HorizontalStackLayout HorizontalOptions="End">
         <Image
           Margin="0,0,40,0"
           HeightRequest="28"

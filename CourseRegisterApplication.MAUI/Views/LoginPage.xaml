@@ -54,26 +54,11 @@
             WidthRequest="250" />
         </Frame>
         <Label
-          x:Name="EmptyUsernameLabel"
+          x:Name="UsernameLabel"
           Margin="124,4,0,0"
           FontSize="12"
-          IsVisible="{Binding EmptyUsernameMessage}"
-          Text="Username cannot be empty."
-          TextColor="{Binding Color}" />
-        <Label
-          x:Name="ShortUsernameLabel"
-          Margin="124,4,0,0"
-          FontSize="12"
-          IsVisible="{Binding ShortUsernameMessage}"
-          Text="Your username must be at least 3 characters."
-          TextColor="#BF1D28" />
-        <Label
-          x:Name="ValidUsernameLabel"
-          Margin="124,4,0,0"
-          FontSize="12"
-          IsVisible="{Binding ValidUsernameMessage}"
-          Text="Valid username."
-          TextColor="#007D3A" />
+          Text="{Binding UsernameLoginMessageText}"
+          TextColor="{Binding UsernameLoginColor}" />
         <Grid
           Margin="0,12,0,0"
           HeightRequest="40"
@@ -111,32 +96,17 @@
               Source="eye_close_icon.png"
               VerticalOptions="Center">
               <Image.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnEyeTapped"/>
+                <TapGestureRecognizer Tapped="OnEyeTapped" />
               </Image.GestureRecognizers>
             </Image>
           </Grid>
         </Grid>
         <Label
-          x:Name="EmptyPasswordLabel"
+          x:Name="PasswordLabel"
           Margin="124,4,0,0"
           FontSize="12"
-          IsVisible="{Binding EmptyPasswordMessage}"
-          Text="Password cannot be empty."
-          TextColor="{Binding Color2}" />
-        <Label
-          x:Name="ShortPasswordLabel"
-          Margin="124,4,0,0"
-          FontSize="12"
-          IsVisible="{Binding ShortPasswordMessage}"
-          Text="Your password must be at least 8 characters."
-          TextColor="#BF1D28" />
-        <Label
-          x:Name="ValidPasswordLabel"
-          Margin="124,4,0,0"
-          FontSize="12"
-          IsVisible="{Binding ValidPasswordMessage}"
-          Text="Valid password."
-          TextColor="#007D3A" />
+          Text="{Binding PasswordLoginMessageText}"
+          TextColor="{Binding PasswordLoginColor}" />
         <Button
           Margin="0,36,0,0"
           BackgroundColor="#2D88D4"
