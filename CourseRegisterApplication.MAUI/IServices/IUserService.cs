@@ -3,6 +3,7 @@
     public interface IUserService
     {
         Task<User> LoginUser(string username, string password);
-        Task<User> ChangePassword(string newPassword);
+        Task<User> ChangePassword(int id, User user);
+        Task<User> AddUser(User user);
     }
 }

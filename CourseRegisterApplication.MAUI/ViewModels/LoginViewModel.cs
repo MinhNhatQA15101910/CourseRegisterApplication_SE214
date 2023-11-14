@@ -33,13 +33,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 			User user = await _userService.LoginUser(Username, Helpers.EncryptData(Password));
 			if (user != null)
 			{
+				GlobalConfig.CurrentUser = user;
+
 				await _loginPage.DisplayAlert("Success!", "Login Successfully", "OK");
 
 				switch (user.Role)
 				{
 					case Role.Admin:
-                        var navParam = new Dictionary<string, object>();
-                        navParam.Add("CurrentUser", user);
                         await _loginPage.Navigation.PushAsync(new AdminFlyoutPage());
                         Clear();
                         break;
