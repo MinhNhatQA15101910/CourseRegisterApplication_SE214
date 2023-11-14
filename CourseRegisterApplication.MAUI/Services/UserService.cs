@@ -1,5 +1,4 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using Newtonsoft.Json;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
@@ -8,9 +7,12 @@ namespace CourseRegisterApplication.MAUI.Services
 		private readonly string _baseUrl = "https://localhost:7182/api/Users/";
         private readonly HttpClient _httpClient = new HttpClient();
 
-		private readonly IRoleService _roleService = new RoleService();
+        public Task<User> ChangePassword(string newPassword)
+        {
+            throw new NotImplementedException();
+        }
 
-		public async Task<User> LoginUser(string username, string password)
+        public async Task<User> LoginUser(string username, string password)
 		{
 			string apiUrl = $"{_baseUrl}{username}/{password}";
 
@@ -18,12 +20,7 @@ namespace CourseRegisterApplication.MAUI.Services
 			if (response.IsSuccessStatusCode)
 			{
 				string jsonResponse = await response.Content.ReadAsStringAsync();
-				var user = JsonConvert.DeserializeObject<User>(jsonResponse);
-				if (user != null)
-				{
-					user.Role = await _roleService.GetRole(user.RoleId);
-				}
-				return user;
+				return JsonConvert.DeserializeObject<User>(jsonResponse);
 			}
 			else
 			{

@@ -4,7 +4,6 @@ namespace CourseRegisterApplication.Server
 {
     public static class SeedData
     {
-        private static string ROLES_FILE_PATH = "Resources/roles.txt";
         private static string USERS_FILE_PATH = "Resources/users.txt";
         private static string PROVINCES_FILE_PATH = "Resources/provinces.txt";
         private static string DISTRICTS_FILE_PATH = "Resources/districts.txt";
@@ -16,7 +15,6 @@ namespace CourseRegisterApplication.Server
 
         public static void Initialize(ModelBuilder modelBuilder)
         {
-            InitializeRoles(modelBuilder);
             InitializeUsers(modelBuilder);
             InitializeProvinces(modelBuilder);
             InitializeDistricts(modelBuilder);
@@ -170,47 +168,6 @@ namespace CourseRegisterApplication.Server
             }
         }
 
-        public static void InitializeRoles(ModelBuilder modelBuilder) 
-        {
-            var roles = new List<Role>();
-
-            if (File.Exists(ROLES_FILE_PATH))
-            {
-                using (StreamReader sr = new StreamReader(ROLES_FILE_PATH))
-                {
-                    int roleId = 1;
-                    string? roleLine;
-
-                    while ((roleLine = sr.ReadLine()) != null)
-                    {
-                        string[]? roleData = roleLine!.Split(',');
-
-                        RoleName roleName = RoleName.Admin;
-                        switch (roleData[0].Trim())
-                        {
-                            case "Admin":
-                                roleName = RoleName.Admin;
-                                break;
-                            case "Accountant":
-                                roleName = RoleName.Accountant;
-                                break;
-                            case "Student":
-                                roleName = RoleName.Student;
-                                break;
-                        }
-
-                        roles.Add(new Role
-                        {
-                            Id = roleId++,
-                            RoleName = roleName
-                        });
-                    }
-
-                    modelBuilder.Entity<Role>().HasData(roles);
-                }
-            }
-        }
-
         public static void InitializeUsers(ModelBuilder modelBuilder)
         {
             var users = new List<User>();
@@ -226,13 +183,23 @@ namespace CourseRegisterApplication.Server
                     {
                         string[]? userData = userLine!.Split(',');
 
+                        Role role = Role.Admin;
+                        if (int.Parse(userData[3].Trim()) == 2)
+                        {
+                            role = Role.Accountant;
+                        }
+                        else if (int.Parse(userData[3].Trim()) == 3)
+                        {
+                            role = Role.Student;
+                        }
+
                         users.Add(new User
                         {
                             Id = userId++,
                             Username = userData[0].Trim(),
                             Password = userData[1].Trim(),
                             Email = userData[2].Trim(),
-                            RoleId = int.Parse(userData[3].Trim())
+                            Role = role
                         });
                     }
 
