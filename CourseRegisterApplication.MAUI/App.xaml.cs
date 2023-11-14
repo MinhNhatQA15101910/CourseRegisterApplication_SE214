@@ -9,7 +9,7 @@ namespace CourseRegisterApplication.MAUI
         {
             InitializeComponent();
 
-            MainPage = new LoginPage();
+            MainPage = new AdminFlyoutPage();
         }
 
     }

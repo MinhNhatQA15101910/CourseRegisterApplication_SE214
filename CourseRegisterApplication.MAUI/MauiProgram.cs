@@ -28,8 +28,10 @@ namespace CourseRegisterApplication.MAUI
 		builder.Logging.AddDebug();
 #endif
 
-            // Services
-            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddSingleton<GlobalConfig>();
+
+			// Services
+			builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IRoleService, RoleService>();
 
             // Views

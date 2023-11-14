@@ -30,5 +30,10 @@ namespace CourseRegisterApplication.MAUI.Services
 				return null;
 			}
 		}
+
+		public Task<User> ChangePassword(string newPassword)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -34,13 +34,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 			User user = await _userService.LoginUser(Username, Helpers.EncryptData(Password));
 			if (user != null)
 			{
+				GlobalConfig.CurrentUser = user;
 				await _loginPage.DisplayAlert("Success!", "Login Successfully", "OK");
 
 				switch (user.Role.RoleName)
 				{
 					case "Admin":
-                        var navParam = new Dictionary<string, object>();
-                        navParam.Add("CurrentUser", user);
                         await _loginPage.Navigation.PushAsync(new AdminFlyoutPage());
                         Clear();
                         break;
@@ -60,110 +59,58 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 			}
 		}
 
-		private bool _emptyUsernameMessage;
-		private bool _shortUsernameMessage;
-		private bool _validUsernameMessage;
-		private bool _emptyPasswordMessage;
-		private bool _shortPasswordMessage;
-		private bool _validPasswordMessage;
-
-		public bool EmptyUsernameMessage
+		private string _usernameLoginMessageText;
+		public string UsernameLoginMessageText
 		{
-			get { return _emptyUsernameMessage; }
+			get { return _usernameLoginMessageText; }
 			set
 			{
-				if (_emptyUsernameMessage != value)
+				if (_usernameLoginMessageText != value)
 				{
-					_emptyUsernameMessage = value;
-					OnPropertyChanged(nameof(EmptyUsernameMessage));
-				}
-			}
-		}
-		public bool EmptyPasswordMessage
-		{
-			get { return _emptyPasswordMessage; }
-			set
-			{
-				if (_emptyPasswordMessage != value)
-				{
-					_emptyPasswordMessage = value;
-					OnPropertyChanged(nameof(EmptyPasswordMessage));
-				}
-			}
-		}
-		public bool ShortPasswordMessage
-		{
-			get { return _shortPasswordMessage; }
-			set
-			{
-				if (_shortPasswordMessage != value)
-				{
-					_shortPasswordMessage = value;
-					OnPropertyChanged(nameof(ShortPasswordMessage));
-				}
-			}
-		}
-		public bool ValidPasswordMessage
-		{
-			get { return _validPasswordMessage; }
-			set
-			{
-				if (_validPasswordMessage != value)
-				{
-					_validPasswordMessage = value;
-					OnPropertyChanged(nameof(ValidPasswordMessage));
-				}
-			}
-		}
-		public bool ShortUsernameMessage
-		{
-			get { return _shortUsernameMessage; }
-			set
-			{
-				if (_shortUsernameMessage != value)
-				{
-					_shortUsernameMessage = value;
-					OnPropertyChanged(nameof(ShortUsernameMessage));
-				}
-			}
-		}
-		public bool ValidUsernameMessage
-		{
-			get { return _validUsernameMessage; }
-			set
-			{
-				if (_validUsernameMessage != value)
-				{
-					_validUsernameMessage = value;
-					OnPropertyChanged(nameof(ValidUsernameMessage));
+					_usernameLoginMessageText = value;
+					OnPropertyChanged(nameof(UsernameLoginMessageText));
 				}
 			}
 		}
 
-		private Color _color;
-		private Color _color2;
-
-		public Color Color
+		private Color _usernameLoginColor;
+		public Color UsernameLoginColor
 		{
-			get { return _color; }
+			get { return _usernameLoginColor; }
 			set
 			{
-				if (_color != value)
+				if (_usernameLoginColor != value)
 				{
-					_color = value;
-					OnPropertyChanged(nameof(Color));
+					_usernameLoginColor = value;
+					OnPropertyChanged(nameof(UsernameLoginColor));
 				}
 			}
 		}
-		public Color Color2
+
+		private string _passwordLoginMessageText;
+		public string PasswordLoginMessageText
 		{
-			get { return _color2; }
+			get { return _passwordLoginMessageText; }
 			set
 			{
-				if (_color2 != value)
+				if (_passwordLoginMessageText != value)
 				{
-					_color2 = value;
-					OnPropertyChanged(nameof(Color2));
+					_passwordLoginMessageText = value;
+					OnPropertyChanged(nameof(PasswordLoginMessageText));
+				}
+			}
+		}
+
+		private Color _passwordLoginColor;
+		public Color PasswordLoginColor
+		{
+			get { return _passwordLoginColor; }
+			set
+			{
+				if (_passwordLoginColor != value)
+				{
+					_passwordLoginColor = value;
+					OnPropertyChanged(nameof(PasswordLoginColor));
 				}
 			}
 		}
@@ -175,65 +122,64 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 		{
 			int index = 0;
 			int index2 = 0;
-			if(globalVariable == 0)
-			{
-				Color = Color.FromArgb("#FFFFFF");
-			}
-			if (globalVariable2 == 0)
-			{
-				Color2 = Color.FromArgb("#FFFFFF");
-			}
 			if (string.IsNullOrEmpty(Username))
 			{
-				EmptyUsernameMessage = true;
-				ValidUsernameMessage = false;
-				ShortUsernameMessage = false;
+				if (globalVariable == 0)
+				{
+					UsernameLoginColor = Color.FromArgb("#FFFFFF");
+				}
+				else
+				{
+					UsernameLoginColor = Color.FromArgb("#BF1D28");
+				}
+				UsernameLoginMessageText = "Username cannot be empty.";
 				index++;
 			}
 			else
 			{
 				globalVariable = 1;
-				Color =Color.FromArgb("#BF1D28");
-				EmptyUsernameMessage = false;
+				UsernameLoginColor = Color.FromArgb("#BF1D28");
 				if (Username.Length < 3)
 				{
-					ShortUsernameMessage = true;
-					ValidUsernameMessage = false;
+					UsernameLoginMessageText = "Your password must be at least 3 characters.";
 					index++;
 				}
 				else
 				{
-					ShortUsernameMessage = false;
-					ValidUsernameMessage = true;
+					UsernameLoginColor = Color.FromArgb("#007D3A");
+					UsernameLoginMessageText = "Valid Username.";
 					index = 0;
 				}
 			}
 			if (string.IsNullOrEmpty(Password))
 			{
-				EmptyPasswordMessage = true;
-				ValidPasswordMessage = false;
-				ShortPasswordMessage = false;
+				if (globalVariable2 == 0)
+				{
+					PasswordLoginColor = Color.FromArgb("#FFFFFF");
+				}
+				else
+				{
+					PasswordLoginColor = Color.FromArgb("#BF1D28");
+				}
+				PasswordLoginMessageText = "Password cannot be empty.";
 				index2++;
 			}
 			else
 			{
 				globalVariable2 = 1;
-				Color2 = Color.FromArgb("#BF1D28");
-				EmptyPasswordMessage = false;
+				PasswordLoginColor = Color.FromArgb("#BF1D28");
 				if(Password.Length < 8 ) 
 				{
-					ShortPasswordMessage = true;
-					ValidPasswordMessage = false;
+					PasswordLoginMessageText = "Your password must be at least 8 characters.";
 					index2++;
 				}
                 else
                 {
-					ShortPasswordMessage = false;
-					ValidPasswordMessage = true;
+					PasswordLoginColor = Color.FromArgb("#007D3A");
+					PasswordLoginMessageText = "Valid Password.";
 					index2 = 0;
 				}
 			}
-
 			if (index > 0 || index2>0) return false;
 			else return true;
 		}
