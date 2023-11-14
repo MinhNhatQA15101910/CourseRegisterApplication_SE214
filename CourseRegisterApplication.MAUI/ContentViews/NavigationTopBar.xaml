@@ -1,57 +1,56 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView
-  x:Class="CourseRegisterApplication.MAUI.ContentViews.NavigationTopBar"
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  x:Name="this"
-  BindingContext="{x:Reference this}">
-  <Grid
-    BackgroundColor="#FCFAFA"
-    ColumnDefinitions="Auto,*,Auto"
-    HeightRequest="80"
-    RowDefinitions="80,80">
-    <HorizontalStackLayout IsVisible="{Binding IsBackVisible}" VerticalOptions="Center">
-      <Image
-        Margin="24,0,0,0"
-        HeightRequest="16"
-        Source="vector_left.png" />
-      <Label
-        Margin="16,0,0,0"
-        FontFamily="RobotoMedium"
-        Text="Back" />
-    </HorizontalStackLayout>
-    <StackLayout
-      Grid.Column="1"
-      Margin="100,0,0,0"
-      IsVisible="{Binding IsTitleVisible}"
-      VerticalOptions="Center">
-      <Label FontFamily="RobotoMedium" Text="{Binding Title, FallbackValue='Card description text.'}" />
-      <Label Text="{Binding Description, FallbackValue='Card description text.'}" />
-    </StackLayout>
-    <StackLayout
-      Grid.Column="2"
-      Margin="0,0,40,0"
-      HorizontalOptions="EndAndExpand"
-      IsVisible="{Binding IsControlVisible}">
+    x:Class="CourseRegisterApplication.MAUI.ContentViews.NavigationTopBar"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="this"
+    BindingContext="{x:Reference this}">
+    <Grid
+        BackgroundColor="#FCFAFA"
+        ColumnDefinitions="Auto,*,Auto"
+        HeightRequest="80"
+        RowDefinitions="80,80">
+        <HorizontalStackLayout IsVisible="{Binding IsBackVisible}" VerticalOptions="Center">
+            <Image
+                Margin="24,0,0,0"
+                HeightRequest="16"
+                Source="vector_left.png" />
+            <Label
+                Margin="16,0,0,0"
+                FontFamily="RobotoMedium"
+                Text="Back" />
+        </HorizontalStackLayout>
+        <StackLayout
+            Grid.Column="1"
+            Margin="100,0,0,0"
+            IsVisible="{Binding IsTitleVisible}"
+            VerticalOptions="Center">
+            <Label FontFamily="RobotoMedium" Text="{Binding Title, FallbackValue='Card description text.'}" />
+            <Label Text="{Binding Description, FallbackValue='Card description text.'}" />
+        </StackLayout>
+        <StackLayout
+            Grid.Column="2"
+            Margin="0,0,40,0"
+            HorizontalOptions="EndAndExpand"
+            IsVisible="{Binding IsControlVisible}">
 
-      <HorizontalStackLayout Margin="0,28,0,0" HorizontalOptions="End">
-        <Image
-          Margin="0,0,40,0"
-          HeightRequest="28"
-          Source="bell_notification.png" />
-        <Button
-          Margin="0,0,60,0"
-          BackgroundColor="#509CDB"
-          FontFamily="RobotoMedium"
-          HeightRequest="40"
-          HorizontalOptions="Center"
-          Text="Log Out"
-          Clicked="OnLogoutTapped"
-          VerticalOptions="Center"
-          WidthRequest="120" >
-        </Button>
-      </HorizontalStackLayout>
+            <HorizontalStackLayout Margin="0,28,0,0" HorizontalOptions="End">
+                <Image
+                    Margin="0,0,40,0"
+                    HeightRequest="28"
+                    Source="bell_notification.png" />
+                <Button
+                    Margin="0,0,60,0"
+                    BackgroundColor="#509CDB"
+                    Clicked="OnLogoutTapped"
+                    FontFamily="RobotoMedium"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    Text="Log Out"
+                    VerticalOptions="Center"
+                    WidthRequest="120" />
+            </HorizontalStackLayout>
 
-    </StackLayout>
-  </Grid>
+        </StackLayout>
+    </Grid>
 </ContentView>

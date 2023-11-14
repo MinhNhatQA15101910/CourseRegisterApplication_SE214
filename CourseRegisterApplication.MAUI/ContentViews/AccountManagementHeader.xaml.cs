@@ -1,4 +1,4 @@
-namespace CourseRegisterApplication.MAUI.Views.ContentsViews;
+namespace CourseRegisterApplication.MAUI.Views.ContentViews;
 
 public partial class AccountManagementHeader : ContentView
 {

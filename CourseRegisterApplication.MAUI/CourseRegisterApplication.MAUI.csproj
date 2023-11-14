@@ -118,7 +118,7 @@
 	  <MauiXaml Update="Views\ChangePasswordPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ContentsViews\AccountManagementHeader.xaml">
+	  <MauiXaml Update="ContentViews\AccountManagementHeader.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ContentViews\NavigationTopBar.xaml">
