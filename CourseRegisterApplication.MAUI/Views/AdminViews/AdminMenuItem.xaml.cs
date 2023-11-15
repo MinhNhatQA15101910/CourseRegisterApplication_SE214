@@ -12,7 +12,7 @@ public partial class AdminMenuItem : ContentPage
 	}
 	private MenuItems selectedItem;
 
-	private void OnItemTapped(object sender, ItemTappedEventArgs e)
+	private async void OnItemTapped(object sender, ItemTappedEventArgs e)
 	{
 		if (e.Item is MenuItems newSelectedItem)
 		{

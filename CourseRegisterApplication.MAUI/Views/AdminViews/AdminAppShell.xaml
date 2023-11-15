@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+  x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminAppShell"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:local="clr-namespace:CourseRegisterApplication.MAUI.Views.AdminViews"
+  FlyoutBackgroundColor="#152259"
+  FlyoutBehavior="Locked"
+  FlyoutWidth="240">
+  <Shell.FlyoutHeader>
+    <DataTemplate>
+      <StackLayout>
+        <StackLayout HeightRequest="170">
+          <Image
+            Margin="0,26,0,0"
+            HeightRequest="65"
+            Source="demo_icon.png"
+            VerticalOptions="Start"
+            WidthRequest="65" />
+          <Label
+            Margin="0,12,0,0"
+            FontAttributes="Bold"
+            FontSize="14"
+            HorizontalOptions="Center"
+            Text="Phòng tài vụ"
+            TextColor="White" />
+        </StackLayout>
+        <BoxView HeightRequest="0.5" Color="#BDBDBD" />
+      </StackLayout>
+    </DataTemplate>
+  </Shell.FlyoutHeader>
+  <Shell.FlyoutFooterTemplate>
+    <DataTemplate>
+      <StackLayout HeightRequest="80">
+        <BoxView HeightRequest="0.5" Color="#BDBDBD" />
+        <Label
+          Margin="0,12,0,0"
+          FontSize="20"
+          HorizontalOptions="Center"
+          Text="Vesion:"
+          TextColor="White" />
+        <Label
+          FontSize="14"
+          HorizontalOptions="Center"
+          Text="1.0.0"
+          TextColor="White" />
+      </StackLayout>
+    </DataTemplate>
+
+  </Shell.FlyoutFooterTemplate>
+
+  <FlyoutItem Title="Dashboard" Icon="home.png">
+    <ShellContent ContentTemplate="{DataTemplate local:AdminDashboardPage}" />
+  </FlyoutItem>
+  <FlyoutItem Title="Admin/Accountant account" Icon="student.png">
+    <ShellContent ContentTemplate="{DataTemplate local:AdminEmployeeAccountManagementPage}" />
+  </FlyoutItem>
+  <FlyoutItem Title="Student account" Icon="book.png">
+    <ShellContent ContentTemplate="{DataTemplate local:StudentAccountManagementPage}" />
+  </FlyoutItem>
+  
+  <Shell.ItemTemplate>
+    <DataTemplate>
+      <StackLayout Margin="8,0,8,8" Orientation="Horizontal">
+        <HorizontalStackLayout x:Name="FlyoutItem" HeightRequest="50">
+          <Image
+            Margin="12"
+            HeightRequest="16"
+            HorizontalOptions="Start"
+            Source="{Binding FlyoutIcon}"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="1"
+            FontFamily="OpenSans-Semibold"
+            FontSize="14"
+            Text="{Binding Title}"
+            TextColor="White"
+            VerticalTextAlignment="Center"/>
+        </HorizontalStackLayout>
+        <VisualStateManager.VisualStateGroups>
+          <VisualStateGroupList>
+            <VisualStateGroup x:Name="CommonStates">
+              <VisualState x:Name="Normal">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#152259" />
+                </VisualState.Setters>
+              </VisualState>
+              <VisualState x:Name="Selected">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#509CDB" />
+                </VisualState.Setters>
+              </VisualState>
+            </VisualStateGroup>
+          </VisualStateGroupList>
+        </VisualStateManager.VisualStateGroups>
+      </StackLayout>
+    </DataTemplate>
+  </Shell.ItemTemplate>
+</Shell>

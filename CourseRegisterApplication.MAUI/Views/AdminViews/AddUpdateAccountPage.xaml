@@ -3,12 +3,172 @@
   x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AddUpdateAccountPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  Title="AddUpdateAccountPage"
+  xmlns:controls="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
   NavigationPage.HasNavigationBar="False">
-  <VerticalStackLayout>
-    <Label
-      HorizontalOptions="Center"
-      Text="Welcome to .NET MAUI!"
-      VerticalOptions="Center" />
-  </VerticalStackLayout>
+  <Grid Background="#FCFAFA" RowDefinitions="Auto,*">
+    <controls:NavigationTopBar
+      Title="Welcome back admin!"
+      Grid.Row="0"
+      Description="Today is Friday, October 13th, 2023"
+      IsBackVisible="True"
+      IsControlVisible="True"
+      IsTitleVisible="False"
+      VerticalOptions="Start" />
+    <ScrollView Grid.Row="1">
+      <VerticalStackLayout
+        HeightRequest="500"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        WidthRequest="500">
+        <Label
+          FontAttributes="Bold"
+          FontFamily="OpenSans-Semibold"
+          FontSize="30"
+          HorizontalOptions="Center"
+          Text="Add an accountant account"
+          TextColor="#4F4F4F"
+          VerticalOptions="Center" />
+        <VerticalStackLayout
+          Margin="0,24,0,0"
+          BackgroundColor="White"
+          HeightRequest="400 "
+          WidthRequest="500">
+          <Label
+            Margin="124,32,0,0"
+            FontSize="16"
+            Text="Username:"
+            TextColor="#667085" />
+          <Grid
+            Margin="0,4,0,0"
+            HeightRequest="40"
+            WidthRequest="250">
+            <Frame
+              Padding="0"
+              BackgroundColor="Transparent"
+              BorderColor="#A7A7A7"
+              CornerRadius="5"
+              HeightRequest="40"
+              HorizontalOptions="FillAndExpand"
+              WidthRequest="250">
+              <Entry
+                FontFamily="OpenSans-Semibold"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Placeholder="Enter Username"
+                Text="{Binding Username}"
+                TextColor="#8A8A8A"
+                VerticalOptions="Center"
+                WidthRequest="250" />
+            </Frame>
+          </Grid>
+          <Label
+            x:Name="UsernameLabel"
+            Margin="124,4,0,0"
+            FontSize="12"
+            Text="{Binding UsernameMessageText}"
+            TextColor="{Binding UsernameColor}" />
+          <Label
+            Margin="124,8,0,0"
+            FontSize="16"
+            Text="Password:"
+            TextColor="#667085" />
+          <Grid
+            Margin="0,4,0,0"
+            HeightRequest="40"
+            WidthRequest="250">
+            <Frame
+              Padding="0"
+              BackgroundColor="Transparent"
+              BorderColor="#A7A7A7"
+              CornerRadius="5"
+              HeightRequest="40"
+              HorizontalOptions="FillAndExpand"
+              WidthRequest="250">
+              <Entry
+                x:Name="password"
+                FontFamily="OpenSans-Semibold"
+                FontSize="14"
+                HorizontalOptions="Start"
+                IsPassword="True"
+                Placeholder="Enter Password"
+                Text="{Binding Password}"
+                TextColor="#8A8A8A"
+                VerticalOptions="Center"
+                WidthRequest="250" />
+            </Frame>
+            <Grid
+              Margin="0,0,2,0"
+              Background="White"
+              HeightRequest="38"
+              HorizontalOptions="End"
+              VerticalOptions="Center"
+              WidthRequest="40">
+              <Image
+                x:Name="eye_icon"
+                HeightRequest="20"
+                Source="eye_close_icon.png"
+                VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnEyeTapped" />
+                </Image.GestureRecognizers>
+              </Image>
+            </Grid>
+          </Grid>
+          <Label
+            x:Name="PasswordLabel"
+            Margin="124,4,0,0"
+            FontSize="12"
+            Text="{Binding PasswordMessageText}"
+            TextColor="{Binding PasswordColor}" />
+          <Label
+            Margin="124,8,0,0"
+            FontSize="16"
+            Text="Email:"
+            TextColor="#667085" />
+          <Grid
+            Margin="0,4,0,0"
+            HeightRequest="40"
+            WidthRequest="250">
+            <Frame
+              Padding="0"
+              BackgroundColor="Transparent"
+              BorderColor="#A7A7A7"
+              CornerRadius="5"
+              HeightRequest="40"
+              HorizontalOptions="FillAndExpand"
+              WidthRequest="250">
+              <Entry
+                FontFamily="OpenSans-Semibold"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Placeholder="Enter Email"
+                Text="{Binding Email}"
+                TextColor="#8A8A8A"
+                VerticalOptions="Center"
+                WidthRequest="250" />
+            </Frame>
+          </Grid>
+          <Label
+            x:Name="EmailLabel"
+            Margin="124,4,0,0"
+            FontSize="12"
+            Text="{Binding EmailMessageText}"
+            TextColor="{Binding EmailColor}" />
+          <Button
+            Margin="0,36,0,0"
+            BackgroundColor="#2D88D4"
+            Command="{Binding AddUpdateAccountCommand}"
+            FontFamily="OpenSans-Semibold"
+            FontSize="14"
+            HeightRequest="40"
+            Text="Login"
+            WidthRequest="250" />
+          <ActivityIndicator
+            IsEnabled="{Binding IsLoading}"
+            IsRunning="{Binding IsLoading}"
+            IsVisible="{Binding IsLoading}" />
+        </VerticalStackLayout>
+      </VerticalStackLayout>
+    </ScrollView>
+  </Grid>
 </ContentPage>
