@@ -62,5 +62,10 @@ namespace CourseRegisterApplication.MAUI.Services
 		{
 			throw new NotImplementedException();
 		}
+
+		public async Task<User> AddUpdateAccount(string username, string password, string email)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

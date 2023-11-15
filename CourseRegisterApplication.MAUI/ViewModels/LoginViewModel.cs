@@ -147,7 +147,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 				UsernameLoginColor = Color.FromArgb("#BF1D28");
 				if (Username.Length < 3)
 				{
-					UsernameLoginMessageText = "Your password must be at least 3 characters.";
+					UsernameLoginMessageText = "Your username must be at least 3 characters.";
 					index++;
 				}
 				else
