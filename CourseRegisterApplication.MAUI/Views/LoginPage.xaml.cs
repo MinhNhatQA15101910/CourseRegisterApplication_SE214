@@ -1,15 +1,16 @@
-using CourseRegisterApplication.MAUI.ViewModels;
+using CourseRegisterApplication.MAUI.IViewModels;
+using CourseRegisterApplication.MAUI.IViews;
 namespace CourseRegisterApplication.MAUI.Views;
 
-public partial class LoginPage : ContentPage
+public partial class LoginPage : ContentPage, ILoginPage
 {
-	public LoginPage()
+	public LoginPage(ILoginViewModel loginViewModel)
 	{
 		InitializeComponent();
-		BindingContext = new LoginViewModel(this);
+		BindingContext = loginViewModel;
 	}
 
-	private void OnEyeTapped(object sender, EventArgs e)
+    public void OnEyeTapped(object sender, EventArgs e)
 	{
 		string closeIconPath = "eye_close_icon.png";
 		string openIconPath = "eye_open_icon.png";
@@ -25,5 +26,4 @@ public partial class LoginPage : ContentPage
 			password.IsPassword = true;
 		}
 	}
-
 }

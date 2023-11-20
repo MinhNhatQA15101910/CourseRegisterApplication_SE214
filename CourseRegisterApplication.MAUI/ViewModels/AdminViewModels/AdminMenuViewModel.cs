@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
+﻿namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 {
     public class MenuItems : INotifyPropertyChanged
 	{

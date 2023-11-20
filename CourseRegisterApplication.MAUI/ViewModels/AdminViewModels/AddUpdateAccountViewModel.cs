@@ -1,6 +1,5 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Services;
-using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AdminViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
@@ -34,7 +33,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 		public async Task AddUpdateAccount()
 		{
 			IsLoading = true;
-			User user = await _userService.AddUpdateAccount(Username ,Helpers.EncryptData(Password), Email);
+			// User user = await _userService.AddUpdateAccount(Username ,Helpers.EncryptData(Password), Email);
 		}
 
 		private string _usernameMessageText;

@@ -6,7 +6,7 @@
   xmlns:local="clr-namespace:CourseRegisterApplication.MAUI.Views.AdminViews"
   Title="AdminFlyoutPage">
   <FlyoutPage.Flyout>
-    <local:AdminMenuItem x:Name="adminFlyoutPage" WidthRequest="240"/>
+    <local:AdminMenuItem x:Name="adminFlyoutPage" WidthRequest="240" />
   </FlyoutPage.Flyout>
   <FlyoutPage.Detail>
     <NavigationPage>

@@ -58,7 +58,7 @@
   <FlyoutItem Title="Student account" Icon="book.png">
     <ShellContent ContentTemplate="{DataTemplate local:StudentAccountManagementPage}" />
   </FlyoutItem>
-  
+
   <Shell.ItemTemplate>
     <DataTemplate>
       <StackLayout Margin="8,0,8,8" Orientation="Horizontal">
@@ -75,7 +75,7 @@
             FontSize="14"
             Text="{Binding Title}"
             TextColor="White"
-            VerticalTextAlignment="Center"/>
+            VerticalTextAlignment="Center" />
         </HorizontalStackLayout>
         <VisualStateManager.VisualStateGroups>
           <VisualStateGroupList>

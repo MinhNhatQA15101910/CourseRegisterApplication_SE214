@@ -8,6 +8,7 @@ public partial class AdminFlyoutPage : FlyoutPage
 		Detail = new NavigationPage(new AdminDashboardPage());
 		adminFlyoutPage.PageChanged += OnPageChanged;
 	}
+
 	private void OnPageChanged(object sender, Type pageType)
 	{
 		if (pageType != null)

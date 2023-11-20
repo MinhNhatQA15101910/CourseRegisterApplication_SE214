@@ -1,4 +1,6 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
+using CourseRegisterApplication.MAUI.IViewModels;
+using CourseRegisterApplication.MAUI.IViews;
 using CourseRegisterApplication.MAUI.Services;
 using CourseRegisterApplication.MAUI.ViewModels;
 using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
@@ -28,18 +30,27 @@ namespace CourseRegisterApplication.MAUI
 		builder.Logging.AddDebug();
 #endif
 
-            // Services
-            builder.Services.AddScoped<IUserService, UserService>();
+            // ViewModels
+            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<ChangePasswordViewModel>();
+
+            builder.Services.AddTransient<AddUpdateAccountViewModel>();
+            builder.Services.AddTransient<AdminFlyoutItem>();
 
             // Views
-            builder.Services.AddSingleton<LoginPage>();
-            builder.Services.AddTransient<AdminMenuItem>();
-            builder.Services.AddTransient<AdminFlyoutPage>();
-            builder.Services.AddTransient<AdminDashboardPage>();
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<ChangePasswordPage>();
 
-            // ViewModels
-            builder.Services.AddSingleton<LoginViewModel>();
-            builder.Services.AddTransient<AdminFlyoutItem>();
+            builder.Services.AddTransient<AddUpdateAccountPage>();
+            builder.Services.AddTransient<AdminAppShell>();
+            builder.Services.AddTransient<AdminDashboardPage>();
+            builder.Services.AddTransient<AdminEmployeeAccountManagementPage>();
+            builder.Services.AddTransient<AdminFlyoutPage>();
+            builder.Services.AddTransient<AdminMenuItem>();
+            builder.Services.AddTransient<StudentAccountManagementPage>();
+
+            // Services
+            builder.Services.AddScoped<IUserService, UserService>();
 
             return builder.Build();
         }

@@ -35,7 +35,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 		public async Task ChangePassword()
 		{
 			IsLoading = true;
-			User user = await _userService.ChangePassword(Helpers.EncryptData(Password1));
+			// User user = await _userService.ChangePassword(Helpers.EncryptData(Password1));
 		}
 
 		private string _passwordMessageText1;
