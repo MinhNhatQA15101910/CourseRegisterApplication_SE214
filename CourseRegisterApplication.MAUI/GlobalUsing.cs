@@ -6,3 +6,4 @@ global using Newtonsoft.Json;
 global using System.Collections.ObjectModel;
 global using System.ComponentModel;
 global using System.Text;
+global using System.Windows.Input;

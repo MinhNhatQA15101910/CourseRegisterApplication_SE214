@@ -1,6 +1,8 @@
-﻿using CourseRegisterApplication.MAUI.IServices;
+﻿using CourseRegisterApplication.MAUI.ContentViews;
+using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Services;
 using CourseRegisterApplication.MAUI.ViewModels;
+using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
 using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AdminViews;
 
@@ -29,10 +31,13 @@ namespace CourseRegisterApplication.MAUI
 
             // ViewModels
             builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<AdminDashboardViewModel>();
 
             // Views
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<AdminAppShell>();
+            builder.Services.AddTransient<NavigationTopBar>();
+            builder.Services.AddTransient<AdminDashboardPage>();
 
             // Services
             builder.Services.AddSingleton<INavigationService, NavigationService>();

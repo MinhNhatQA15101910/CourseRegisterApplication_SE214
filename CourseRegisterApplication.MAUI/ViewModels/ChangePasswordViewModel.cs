@@ -1,12 +1,10 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Services;
 using CourseRegisterApplication.MAUI.Views;
-using CourseRegisterApplication.MAUI.Views.AdminViews;
-using System;
 
 namespace CourseRegisterApplication.MAUI.ViewModels
 {
-	public partial class ChangePasswordViewModel : ObservableObject
+    public partial class ChangePasswordViewModel : ObservableObject
 	{
 		private readonly ChangePasswordPage _changePasswordPage;
 		private readonly IUserService _userService = new UserService();

@@ -3,16 +3,17 @@
   x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminDashboardPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:controls="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
   NavigationPage.HasNavigationBar="False">
   <Grid RowDefinitions="Auto,*">
-    <controls:NavigationTopBar
-      Title="Welcome back admin!"
+    <contentViews:NavigationTopBar
       Grid.Row="0"
-      Description="Today is Friday, October 13th, 2023"
+      DescriptionText="{Binding DescriptionText}"
       IsBackVisible="False"
       IsControlVisible="True"
       IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="Welcome back admin!"
       VerticalOptions="Start" />
     <ScrollView Grid.Row="1">
       <StackLayout Margin="200,100,0,0">

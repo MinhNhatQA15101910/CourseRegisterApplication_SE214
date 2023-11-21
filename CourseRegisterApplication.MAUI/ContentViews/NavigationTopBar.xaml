@@ -3,14 +3,13 @@
   x:Class="CourseRegisterApplication.MAUI.ContentViews.NavigationTopBar"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  x:Name="this"
-  BindingContext="{x:Reference this}">
+  x:Name="this">
   <Grid
     BackgroundColor="#FCFAFA"
     ColumnDefinitions="Auto,*,Auto"
     HeightRequest="80"
     RowDefinitions="80,80">
-    <HorizontalStackLayout IsVisible="{Binding IsBackVisible}" VerticalOptions="Center">
+    <HorizontalStackLayout x:Name="NavigateBackGroup" VerticalOptions="Center">
       <Image
         Margin="24,0,0,0"
         HeightRequest="16"
@@ -21,18 +20,19 @@
         Text="Back" />
     </HorizontalStackLayout>
     <StackLayout
+      x:Name="TitleGroup"
       Grid.Column="1"
       Margin="100,0,0,0"
-      IsVisible="{Binding IsTitleVisible}"
       VerticalOptions="Center">
-      <Label FontFamily="RobotoMedium" Text="{Binding Title, FallbackValue='Card description text.'}" />
-      <Label Text="{Binding Description, FallbackValue='Card description text.'}" />
+      <Label x:Name="Title" FontFamily="RobotoMedium" />
+      <Label x:Name="Description" />
     </StackLayout>
     <StackLayout
+      x:Name="Control"
       Grid.Column="2"
-      Margin="0,0,40,0" VerticalOptions="Center"
+      Margin="0,0,40,0"
       HorizontalOptions="EndAndExpand"
-      IsVisible="{Binding IsControlVisible}">
+      VerticalOptions="Center">
 
       <HorizontalStackLayout HorizontalOptions="End">
         <Image
@@ -40,16 +40,15 @@
           HeightRequest="28"
           Source="bell_notification.png" />
         <Button
+          x:Name="LogoutButton"
           Margin="0,0,60,0"
           BackgroundColor="#509CDB"
           FontFamily="RobotoMedium"
           HeightRequest="40"
           HorizontalOptions="Center"
           Text="Log Out"
-          Clicked="OnLogoutTapped"
           VerticalOptions="Center"
-          WidthRequest="120" >
-        </Button>
+          WidthRequest="120" />
       </HorizontalStackLayout>
 
     </StackLayout>
