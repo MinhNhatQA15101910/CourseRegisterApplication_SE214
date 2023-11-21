@@ -5,25 +5,52 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 {
     public partial class LoginViewModel : ObservableObject
 	{
-		private readonly ContentPage _page;
-		private readonly IUserService _userService;
+		#region Services
+		private readonly IServiceProvider _serviceProvider;
+        private readonly IUserService _userService;
+		private readonly INavigationService _navigationService;
+		private readonly IAlertService _alertService;
+        #endregion
 
-		[ObservableProperty]
+        #region Variables 
+        private int globalVariable1 = 0;
+        private int globalVariable2 = 0;
+        #endregion
+
+        #region Binding Data
+        [ObservableProperty]
 		[NotifyCanExecuteChangedFor(nameof(LoginUserCommand))]
 		private string username;
 
 		[ObservableProperty]
 		[NotifyCanExecuteChangedFor(nameof(LoginUserCommand))]
 		private string password;
+        #endregion
 
-		[ObservableProperty]
+        #region Binding UI
+        [ObservableProperty]
+        private string usernameMessage;
+
+        [ObservableProperty]
+        private Color usernameMessageColor;
+
+        [ObservableProperty]
+        private string passwordMessage;
+
+        [ObservableProperty]
+        private Color passwordMessageColor;
+
+        [ObservableProperty]
 		private bool isLoading = false;
+		#endregion
 
-		public LoginViewModel(ContentPage page, IUserService userService)
+        public LoginViewModel(IServiceProvider serviceProvider)
 		{
-            _page = page;
-			_userService = userService;
-		}
+			_serviceProvider = serviceProvider;
+			_userService = serviceProvider.GetService<IUserService>();
+            _navigationService = serviceProvider.GetService<INavigationService>();
+			_alertService = serviceProvider.GetService<IAlertService>();
+        }
 
 		[RelayCommand(CanExecute = nameof(CanLoginUser))]
 		public async Task LoginUser()
@@ -37,14 +64,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 				Password = "";
 				GlobalConfig.CurrentUser = user;
 
-				await _page.DisplayAlert("Success!", "Login Successfully", "OK");
+				await _alertService.DisplayAlert("Success!", "Login Successfully", "OK");
 
-				var navParam = new Dictionary<string, object>();
-				navParam.Add("CurrentUser", user);
 				switch (user.Role)
 				{
 					case Role.Admin:
-				await _page.Navigation.PushAsync(new AdminFlyoutPage());
+						await _navigationService.NavigateTo(_serviceProvider.GetService<AdminFlyoutPage>());
                         Clear();
                         break;
 					case Role.Accountant:
@@ -59,68 +84,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 			}
 			else
 			{
-				await _page.DisplayAlert("Error", "Incorrect Username or Password. Please try again.", "OK");
+				await _alertService.DisplayAlert("Error", "Incorrect Username or Password. Please try again.", "OK");
 			}
 		}
-
-		private string _usernameLoginMessageText;
-		public string UsernameLoginMessageText
-		{
-			get { return _usernameLoginMessageText; }
-			set
-			{
-				if (_usernameLoginMessageText != value)
-				{
-					_usernameLoginMessageText = value;
-					OnPropertyChanged(nameof(UsernameLoginMessageText));
-				}
-			}
-		}
-
-		private Color _usernameLoginColor;
-		public Color UsernameLoginColor
-		{
-			get { return _usernameLoginColor; }
-			set
-			{
-				if (_usernameLoginColor != value)
-				{
-					_usernameLoginColor = value;
-					OnPropertyChanged(nameof(UsernameLoginColor));
-				}
-			}
-		}
-
-		private string _passwordLoginMessageText;
-		public string PasswordLoginMessageText
-		{
-			get { return _passwordLoginMessageText; }
-			set
-			{
-				if (_passwordLoginMessageText != value)
-				{
-					_passwordLoginMessageText = value;
-					OnPropertyChanged(nameof(PasswordLoginMessageText));
-				}
-			}
-		}
-
-		private Color _passwordLoginColor;
-		public Color PasswordLoginColor
-		{
-			get { return _passwordLoginColor; }
-			set
-			{
-				if (_passwordLoginColor != value)
-				{
-					_passwordLoginColor = value;
-					OnPropertyChanged(nameof(PasswordLoginColor));
-				}
-			}
-		}
-
-		public static int globalVariable = 0;
-		public static int globalVariable2 = 0;
 
 		public bool CanLoginUser()
 		{
@@ -128,30 +94,30 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 			int index2 = 0;
 			if (string.IsNullOrEmpty(Username))
 			{
-				if (globalVariable == 0)
+				if (globalVariable1 == 0)
 				{
-					UsernameLoginColor = Color.FromArgb("#FFFFFF");
+					UsernameMessageColor = Color.FromArgb("#FFFFFF");
 				}
 				else
 				{
-					UsernameLoginColor = Color.FromArgb("#BF1D28");
+                    UsernameMessageColor = Color.FromArgb("#BF1D28");
 				}
-				UsernameLoginMessageText = "Username cannot be empty.";
+				UsernameMessage = "Username cannot be empty.";
 				index++;
 			}
 			else
 			{
-				globalVariable = 1;
-				UsernameLoginColor = Color.FromArgb("#BF1D28");
+                globalVariable1 = 1;
+                UsernameMessageColor = Color.FromArgb("#BF1D28");
 				if (Username.Length < 3)
 				{
-					UsernameLoginMessageText = "Your username must be at least 3 characters.";
+                    UsernameMessage = "Your username must be at least 3 characters.";
 					index++;
 				}
 				else
 				{
-					UsernameLoginColor = Color.FromArgb("#007D3A");
-					UsernameLoginMessageText = "Valid Username.";
+                    UsernameMessageColor = Color.FromArgb("#007D3A");
+                    UsernameMessage = "Valid Username.";
 					index = 0;
 				}
 			}
@@ -159,32 +125,32 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 			{
 				if (globalVariable2 == 0)
 				{
-					PasswordLoginColor = Color.FromArgb("#FFFFFF");
+					PasswordMessageColor = Color.FromArgb("#FFFFFF");
 				}
 				else
 				{
-					PasswordLoginColor = Color.FromArgb("#BF1D28");
+                    PasswordMessageColor = Color.FromArgb("#BF1D28");
 				}
-				PasswordLoginMessageText = "Password cannot be empty.";
+				PasswordMessage = "Password cannot be empty.";
 				index2++;
 			}
 			else
 			{
 				globalVariable2 = 1;
-				PasswordLoginColor = Color.FromArgb("#BF1D28");
+                PasswordMessageColor = Color.FromArgb("#BF1D28");
 				if(Password.Length < 8 ) 
 				{
-					PasswordLoginMessageText = "Your password must be at least 8 characters.";
+					PasswordMessage = "Your password must be at least 8 characters.";
 					index2++;
 				}
                 else
                 {
-					PasswordLoginColor = Color.FromArgb("#007D3A");
-					PasswordLoginMessageText = "Valid Password.";
+                    PasswordMessageColor = Color.FromArgb("#007D3A");
+                    PasswordMessage = "Valid Password.";
 					index2 = 0;
 				}
 			}
-			if (index > 0 || index2>0) return false;
+			if (index > 0 || index2 > 0) return false;
 			else return true;
 		}
 

@@ -57,8 +57,8 @@
           x:Name="UsernameLabel"
           Margin="124,4,0,0"
           FontSize="12"
-          Text="{Binding UsernameLoginMessageText}"
-          TextColor="{Binding UsernameLoginColor}" />
+          Text="{Binding UsernameMessage}"
+          TextColor="{Binding UsernameMessageColor}" />
         <Grid
           Margin="0,12,0,0"
           HeightRequest="40"
@@ -105,12 +105,12 @@
           x:Name="PasswordLabel"
           Margin="124,4,0,0"
           FontSize="12"
-          Text="{Binding PasswordLoginMessageText}"
-          TextColor="{Binding PasswordLoginColor}" />
+          Text="{Binding PasswordMessage}"
+          TextColor="{Binding PasswordMessageColor}" />
         <Button
           Margin="0,36,0,0"
           BackgroundColor="#2D88D4"
-          Command="{Binding LoginEmployeeCommand}"
+          Command="{Binding LoginUserCommand}"
           FontFamily="OpenSans-Semibold"
           FontSize="14"
           HeightRequest="40"

@@ -1,14 +1,14 @@
-using CourseRegisterApplication.MAUI.IViewModels;
-using CourseRegisterApplication.MAUI.IViews;
+using CourseRegisterApplication.MAUI.ViewModels;
+
 namespace CourseRegisterApplication.MAUI.Views;
 
-public partial class LoginPage : ContentPage, ILoginPage
+public partial class LoginPage : ContentPage
 {
-	public LoginPage(ILoginViewModel loginViewModel)
+	public LoginPage(LoginViewModel loginViewModel)
 	{
 		InitializeComponent();
 		BindingContext = loginViewModel;
-	}
+    }
 
     public void OnEyeTapped(object sender, EventArgs e)
 	{
