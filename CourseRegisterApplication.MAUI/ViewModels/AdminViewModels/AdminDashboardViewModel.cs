@@ -32,6 +32,23 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 
         private static string FormatDateTime(DateTime dateTime)
         {
+            int day = dateTime.Day;
+
+            if (day == 1 || day == 21 || day == 31)
+            {
+                return "Today is " + dateTime.ToString("dddd, MMMM d\"st\", yyyy");
+            }
+
+            if (day == 2 || day == 22)
+            {
+                return "Today is " + dateTime.ToString("dddd, MMMM d\"nd\", yyyy");
+            }
+
+            if (day == 3 || day == 23)
+            {
+                return "Today is " + dateTime.ToString("dddd, MMMM d\"rd\", yyyy");
+            }
+
             return "Today is " + dateTime.ToString("dddd, MMMM d\"th\", yyyy");
         }
     }
