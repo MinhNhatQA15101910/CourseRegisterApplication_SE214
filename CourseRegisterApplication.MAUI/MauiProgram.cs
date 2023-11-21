@@ -2,6 +2,7 @@
 using CourseRegisterApplication.MAUI.Services;
 using CourseRegisterApplication.MAUI.ViewModels;
 using CourseRegisterApplication.MAUI.Views;
+using CourseRegisterApplication.MAUI.Views.AdminViews;
 
 namespace CourseRegisterApplication.MAUI
 {
@@ -31,6 +32,7 @@ namespace CourseRegisterApplication.MAUI
 
             // Views
             builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<AdminAppShell>();
 
             // Services
             builder.Services.AddSingleton<INavigationService, NavigationService>();

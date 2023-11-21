@@ -69,7 +69,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 				switch (user.Role)
 				{
 					case Role.Admin:
-						await _navigationService.NavigateTo(_serviceProvider.GetService<AdminFlyoutPage>());
+						await _navigationService.NavigateTo(_serviceProvider.GetService<AdminAppShell>());
                         Clear();
                         break;
 					case Role.Accountant:
