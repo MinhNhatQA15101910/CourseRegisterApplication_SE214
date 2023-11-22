@@ -3,11 +3,12 @@ namespace CourseRegisterApplication.MAUI.Views;
 
 public partial class ChangePasswordPage : ContentPage
 {
-	public ChangePasswordPage()
+	public ChangePasswordPage(ChangePasswordViewModel changePasswordViewModel)
 	{
 		InitializeComponent();
-		BindingContext = new ChangePasswordViewModel(this);
-	}
+		BindingContext = changePasswordViewModel;
+    }
+
 	private void OnEyeTapped1(object sender, EventArgs e)
 	{
 		string closeIconPath = "eye_close_icon.png";
@@ -24,6 +25,7 @@ public partial class ChangePasswordPage : ContentPage
 			password1.IsPassword = true;
 		}
 	}
+
 	private void OnEyeTapped2(object sender, EventArgs e)
 	{
 		string closeIconPath = "eye_close_icon.png";
@@ -40,6 +42,7 @@ public partial class ChangePasswordPage : ContentPage
 			password2.IsPassword = true;
 		}
 	}
+
 	private void OnEyeTapped3(object sender, EventArgs e)
 	{
 		string closeIconPath = "eye_close_icon.png";

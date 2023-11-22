@@ -8,7 +8,7 @@ namespace CourseRegisterApplication.MAUI
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(page);
+            MainPage = page;
         }
     }
 }

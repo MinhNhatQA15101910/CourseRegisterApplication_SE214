@@ -5,6 +5,9 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
   NavigationPage.HasNavigationBar="False">
+  <Shell.BackButtonBehavior>
+    <BackButtonBehavior IsVisible="False" />
+  </Shell.BackButtonBehavior>
   <Grid RowDefinitions="Auto,*">
     <contentViews:NavigationTopBar
       Grid.Row="0"
@@ -20,7 +23,7 @@
         <Label
           FontFamily="RobotoMedium"
           FontSize="24"
-          Text="What would  you do?"
+          Text="What would you do?"
           TextColor="#4F4F4F" />
         <StackLayout Margin="0,48,0,0">
           <Grid

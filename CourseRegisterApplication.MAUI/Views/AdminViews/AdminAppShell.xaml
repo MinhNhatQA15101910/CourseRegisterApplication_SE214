@@ -5,45 +5,53 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:local="clr-namespace:CourseRegisterApplication.MAUI.Views.AdminViews"
   FlyoutBackgroundColor="#152259"
-  FlyoutBehavior="Locked"
-  FlyoutWidth="240">
+  FlyoutBehavior="Flyout"
+  FlyoutWidth="240"
+  NavBarIsVisible="False">
   <Shell.FlyoutHeader>
-    <DataTemplate>
+    <StackLayout>
       <StackLayout>
-        <StackLayout HeightRequest="170">
-          <Image
-            Margin="0,26,0,0"
-            HeightRequest="65"
-            Source="demo_icon.png"
-            VerticalOptions="Start"
-            WidthRequest="65" />
-          <Label
-            Margin="0,12,0,0"
-            FontAttributes="Bold"
-            FontSize="14"
-            HorizontalOptions="Center"
-            Text="Phòng tài vụ"
-            TextColor="White" />
-        </StackLayout>
-        <BoxView HeightRequest="0.5" Color="#BDBDBD" />
+        <Image
+          Margin="0,26,0,0"
+          HeightRequest="65"
+          Source="demo_icon.png"
+          VerticalOptions="Start"
+          WidthRequest="65" />
+        <Label
+          Margin="0,12,0,0"
+          FontAttributes="Bold"
+          FontSize="14"
+          HorizontalOptions="Center"
+          Text="Admin"
+          TextColor="White" />
       </StackLayout>
-    </DataTemplate>
+      <BoxView
+        Margin="0,12,0,12"
+        HeightRequest="0.5"
+        Color="#BDBDBD" />
+    </StackLayout>
   </Shell.FlyoutHeader>
   <Shell.FlyoutFooterTemplate>
     <DataTemplate>
-      <StackLayout HeightRequest="80">
-        <BoxView HeightRequest="0.5" Color="#BDBDBD" />
-        <Label
+      <StackLayout>
+        <BoxView
           Margin="0,12,0,0"
-          FontSize="20"
-          HorizontalOptions="Center"
-          Text="Vesion:"
-          TextColor="White" />
-        <Label
-          FontSize="14"
-          HorizontalOptions="Center"
-          Text="1.0.0"
-          TextColor="White" />
+          HeightRequest="0.5"
+          Color="#BDBDBD" />
+        <HorizontalStackLayout Margin="0,16,0,16" HorizontalOptions="Center">
+          <Image HeightRequest="20" Source="setting_white.png" />
+          <Label
+            Margin="16,0,0,0"
+            FontFamily="RobotoMedium"
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="Change Password"
+            TextColor="White" />
+          <HorizontalStackLayout.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ChangePasswordCommand}" />
+          </HorizontalStackLayout.GestureRecognizers>
+        </HorizontalStackLayout>
+
       </StackLayout>
     </DataTemplate>
 
@@ -61,7 +69,14 @@
 
   <Shell.ItemTemplate>
     <DataTemplate>
-      <StackLayout Margin="8,0,8,8" Orientation="Horizontal">
+      <Frame
+        Padding="0"
+        BorderColor="Transparent"
+        CornerRadius="5"
+        HasShadow="False"
+        HeightRequest="50"
+        HorizontalOptions="FillAndExpand"
+        WidthRequest="210">
         <HorizontalStackLayout x:Name="FlyoutItem" HeightRequest="50">
           <Image
             Margin="12"
@@ -93,7 +108,7 @@
             </VisualStateGroup>
           </VisualStateGroupList>
         </VisualStateManager.VisualStateGroups>
-      </StackLayout>
+      </Frame>
     </DataTemplate>
   </Shell.ItemTemplate>
 </Shell>

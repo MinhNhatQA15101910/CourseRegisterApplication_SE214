@@ -1,15 +1,9 @@
-﻿using CourseRegisterApplication.MAUI.IServices;
-using CourseRegisterApplication.MAUI.Services;
-using CourseRegisterApplication.MAUI.Views;
-
-namespace CourseRegisterApplication.MAUI.ViewModels
+﻿namespace CourseRegisterApplication.MAUI.ViewModels
 {
     public partial class ChangePasswordViewModel : ObservableObject
 	{
-		private readonly ChangePasswordPage _changePasswordPage;
-		private readonly IUserService _userService = new UserService();
-
-		[ObservableProperty]
+        #region Properties
+        [ObservableProperty]
 		[NotifyCanExecuteChangedFor(nameof(ChangePasswordCommand))]
 		private string password1;
 
@@ -21,109 +15,57 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 		[NotifyCanExecuteChangedFor(nameof(ChangePasswordCommand))]
 		private string password3;
 
-		[ObservableProperty]
+        [ObservableProperty]
+        private string descriptionText = Helpers.FormatDateTime(DateTime.Now);
+        #endregion
+
+        #region Data Validation
+        [ObservableProperty]
 		private bool isLoading = false;
 
-		public ChangePasswordViewModel(ChangePasswordPage changePasswordPage)
-		{
-			_changePasswordPage = changePasswordPage;
+		[ObservableProperty]
+		private string passwordMessageText1;
+
+        [ObservableProperty]
+        private Color passwordColor1;
+
+        [ObservableProperty]
+        private string passwordMessageText2;
+
+        [ObservableProperty]
+        private Color passwordColor2;
+
+        [ObservableProperty]
+        private string passwordMessageText3;
+
+        [ObservableProperty]
+        private Color passwordColor3;
+        #endregion
+
+        #region Variables
+        private int globalVariable1 = 0;
+        private int globalVariable2 = 0;
+        private int globalVariable3 = 0;
+        #endregion
+
+		public ChangePasswordViewModel() { }
+
+        [RelayCommand]
+        public async Task Logout()
+        {
+			bool result = await Application.Current.MainPage.DisplayAlert("Question?", "Do you want to logout?", "Yes", "No");
+			if (result)
+			{
+				await Application.Current.MainPage.Navigation.PopToRootAsync();
+            }
 		}
 
-		[RelayCommand(CanExecute = nameof(CanChangePassword))]
+        [RelayCommand(CanExecute = nameof(CanChangePassword))]
 		public async Task ChangePassword()
 		{
 			IsLoading = true;
 			// User user = await _userService.ChangePassword(Helpers.EncryptData(Password1));
 		}
-
-		private string _passwordMessageText1;
-		public string PasswordMessageText1
-		{
-			get { return _passwordMessageText1; }
-			set
-			{
-				if (_passwordMessageText1 != value)
-				{
-					_passwordMessageText1 = value;
-					OnPropertyChanged(nameof(PasswordMessageText1));
-				}
-			}
-		}
-
-		private Color _passwordColor1;
-		public Color PasswordColor1
-		{
-			get { return _passwordColor1; }
-			set
-			{
-				if (_passwordColor1 != value)
-				{
-					_passwordColor1 = value;
-					OnPropertyChanged(nameof(PasswordColor1));
-				}
-			}
-		}
-
-		private string _passwordMessageText2;
-		public string PasswordMessageText2
-		{
-			get { return _passwordMessageText2; }
-			set
-			{
-				if (_passwordMessageText2 != value)
-				{
-					_passwordMessageText2 = value;
-					OnPropertyChanged(nameof(PasswordMessageText2));
-				}
-			}
-		}
-
-		private Color _passwordColor2;
-		public Color PasswordColor2
-		{
-			get { return _passwordColor2; }
-			set
-			{
-				if (_passwordColor2 != value)
-				{
-					_passwordColor2 = value;
-					OnPropertyChanged(nameof(PasswordColor2));
-				}
-			}
-		}
-
-		private string _passwordMessageText3;
-		public string PasswordMessageText3
-		{
-			get { return _passwordMessageText3; }
-			set
-			{
-				if (_passwordMessageText3 != value)
-				{
-					_passwordMessageText3 = value;
-					OnPropertyChanged(nameof(PasswordMessageText3));
-				}
-			}
-		}
-
-		private Color _passwordColor3;
-		public Color PasswordColor3
-		{
-			get { return _passwordColor3; }
-			set
-			{
-				if (_passwordColor3 != value)
-				{
-					_passwordColor3 = value;
-					OnPropertyChanged(nameof(PasswordColor3));
-				}
-			}
-		}
-
-
-		public static int globalVariable = 0;
-		public static int globalVariable2 = 0;
-		public static int globalVariable3 = 0;
 
 		public bool CanChangePassword()
 		{
@@ -133,7 +75,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 
 			if (string.IsNullOrEmpty(Password1))
 			{
-				if (globalVariable == 0)
+				if (globalVariable1 == 0)
 				{
 					PasswordColor1 = Color.FromArgb("#FFFFFF");
 				}
@@ -146,7 +88,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 			}
 			else
 			{
-				globalVariable = 1;
+                globalVariable1 = 1;
 				PasswordColor1 = Color.FromArgb("#BF1D28");
 				if (Password1.Length < 8)
 				{
@@ -245,8 +187,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 					}
 				}
 			}
-			if (index > 0 || index2 > 0 || index3>0) return false;
-			else return true;
+			if (index > 0 || index2 > 0 || index3 > 0)
+			{
+                return false;
+            }
+
+			return true;
 		}
 
 		private void Clear()

@@ -1,55 +1,31 @@
-﻿using CourseRegisterApplication.MAUI.IServices;
+﻿using CourseRegisterApplication.MAUI.Views;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 {
     public partial class AdminDashboardViewModel : ObservableObject
     {
         #region Services
-        private IAlertService _alertService;
-        private INavigationService _navigationService;
+        private readonly IServiceProvider _serviceProvider;
         #endregion
 
         #region Properties
         [ObservableProperty]
-        private string descriptionText = FormatDateTime(DateTime.Now);
+        private string descriptionText = Helpers.FormatDateTime(DateTime.Now);
         #endregion
 
         public AdminDashboardViewModel(IServiceProvider serviceProvider)
         {
-            _alertService = serviceProvider.GetService<IAlertService>();
-            _navigationService = serviceProvider.GetService<INavigationService>();
+            _serviceProvider = serviceProvider;
         }
 
         [RelayCommand]
         public async Task Logout()
         {
-            bool result = await _alertService.DisplayAlert("Question?", "Do you want to logout?", "Yes", "No");
+            bool result = await Application.Current.MainPage.DisplayAlert("Question?", "Do you want to logout?", "Yes", "No");
             if (result)
             {
-                await _navigationService.NavigateBackToRoot();
+                Application.Current.MainPage = _serviceProvider.GetService<LoginPage>();
             }
-        }
-
-        private static string FormatDateTime(DateTime dateTime)
-        {
-            int day = dateTime.Day;
-
-            if (day == 1 || day == 21 || day == 31)
-            {
-                return "Today is " + dateTime.ToString("dddd, MMMM d\"st\", yyyy");
-            }
-
-            if (day == 2 || day == 22)
-            {
-                return "Today is " + dateTime.ToString("dddd, MMMM d\"nd\", yyyy");
-            }
-
-            if (day == 3 || day == 23)
-            {
-                return "Today is " + dateTime.ToString("dddd, MMMM d\"rd\", yyyy");
-            }
-
-            return "Today is " + dateTime.ToString("dddd, MMMM d\"th\", yyyy");
         }
     }
 }

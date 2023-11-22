@@ -31,18 +31,18 @@ namespace CourseRegisterApplication.MAUI
 
             // ViewModels
             builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<AdminAppShellViewModel>();
             builder.Services.AddTransient<AdminDashboardViewModel>();
+            builder.Services.AddTransient<ChangePasswordViewModel>();
 
             // Views
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<AdminAppShell>();
             builder.Services.AddTransient<NavigationTopBar>();
             builder.Services.AddTransient<AdminDashboardPage>();
+            builder.Services.AddTransient<ChangePasswordPage>();
 
             // Services
-            builder.Services.AddSingleton<INavigationService, NavigationService>();
-            builder.Services.AddSingleton<IAlertService, AlertService>();
-
             builder.Services.AddSingleton<IUserService, UserService>();
 
             return builder.Build();

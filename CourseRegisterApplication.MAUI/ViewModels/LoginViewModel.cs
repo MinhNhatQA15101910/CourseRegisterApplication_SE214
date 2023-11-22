@@ -8,8 +8,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 		#region Services
 		private readonly IServiceProvider _serviceProvider;
         private readonly IUserService _userService;
-		private readonly INavigationService _navigationService;
-		private readonly IAlertService _alertService;
         #endregion
 
         #region Variables 
@@ -42,34 +40,34 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 
         [ObservableProperty]
 		private bool isLoading = false;
-		#endregion
+        #endregion
 
+        #region Constructor
         public LoginViewModel(IServiceProvider serviceProvider)
 		{
 			_serviceProvider = serviceProvider;
 			_userService = serviceProvider.GetService<IUserService>();
-            _navigationService = serviceProvider.GetService<INavigationService>();
-			_alertService = serviceProvider.GetService<IAlertService>();
         }
+        #endregion
 
-		[RelayCommand(CanExecute = nameof(CanLoginUser))]
+        #region LoginUserCommand
+        [RelayCommand(CanExecute = nameof(CanLoginUser))]
 		public async Task LoginUser()
 		{
 			IsLoading = true;
 			User user = await _userService.LoginUser(Username, Helpers.EncryptData(Password));
-			IsLoading = false;
 			if (user != null)
 			{
 				Username = "";
 				Password = "";
 				GlobalConfig.CurrentUser = user;
 
-				await _alertService.DisplayAlert("Success!", "Login Successfully", "OK");
+				await Application.Current.MainPage.DisplayAlert("Success!", "Login Successfully", "OK");
 
 				switch (user.Role)
 				{
 					case Role.Admin:
-						await _navigationService.NavigateTo(_serviceProvider.GetService<AdminAppShell>());
+                        Application.Current.MainPage = _serviceProvider.GetService<AdminAppShell>();
                         Clear();
                         break;
 					case Role.Accountant:
@@ -84,7 +82,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 			}
 			else
 			{
-				await _alertService.DisplayAlert("Error", "Incorrect Username or Password. Please try again.", "OK");
+				await Application.Current.MainPage.DisplayAlert("Error", "Incorrect Username or Password. Please try again.", "OK");
 			}
 		}
 
@@ -150,15 +148,23 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 					index2 = 0;
 				}
 			}
-			if (index > 0 || index2 > 0) return false;
-			else return true;
-		}
 
-		private void Clear()
+			if (index > 0 || index2 > 0)
+			{
+				return false;
+			}
+
+			return true;
+		}
+        #endregion
+
+        #region Helpers
+        private void Clear()
 		{
 			IsLoading = false;
             Username = "";
             Password = "";
         }
+        #endregion
     }
 }

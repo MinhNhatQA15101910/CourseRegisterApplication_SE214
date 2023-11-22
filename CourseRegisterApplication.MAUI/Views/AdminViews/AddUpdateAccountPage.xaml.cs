@@ -9,6 +9,7 @@ public partial class AddUpdateAccountPage : ContentPage
 		InitializeComponent();
 		BindingContext = new AddUpdateAccountViewModel(this);
 	}
+
 	private void OnEyeTapped(object sender, EventArgs e)
 	{
 		string closeIconPath = "eye_close_icon.png";
