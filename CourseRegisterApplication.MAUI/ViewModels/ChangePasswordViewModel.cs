@@ -1,4 +1,5 @@
-﻿using CourseRegisterApplication.MAUI.Views;
+﻿using CourseRegisterApplication.MAUI.IServices;
+using CourseRegisterApplication.MAUI.Views;
 
 namespace CourseRegisterApplication.MAUI.ViewModels
 {
@@ -6,6 +7,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 	{
         #region Services
 		private readonly IServiceProvider _serviceProvider;
+		private readonly IUserService _userService;
         #endregion
 
         #region Properties
@@ -58,6 +60,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
         public ChangePasswordViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+			_userService = serviceProvider.GetService<IUserService>();
         }
         #endregion
 
@@ -81,7 +84,38 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 		public async Task ChangePassword()
 		{
 			IsLoading = true;
-			// User user = await _userService.ChangePassword(Helpers.EncryptData(Password1));
+
+			if (!Helpers.EncryptData(Password1).Equals(GlobalConfig.CurrentUser.Password))
+			{
+                IsLoading = false;
+                await Application.Current.MainPage.DisplayAlert("Error", "Your old password is incorrect. Please try again!", "Ok");
+				return;
+            }
+
+			User user = new User
+			{
+				Id = GlobalConfig.CurrentUser.Id,
+				Username = GlobalConfig.CurrentUser.Username,
+				Password = Helpers.EncryptData(Password2),
+				Email = GlobalConfig.CurrentUser.Email,
+				Role = GlobalConfig.CurrentUser.Role,
+			};
+
+			bool result = await _userService.ChangePassword(GlobalConfig.CurrentUser.Id, user);
+			IsLoading = false;
+
+			if (result)
+			{
+				GlobalConfig.CurrentUser.Password = Helpers.EncryptData(Password2);
+
+				await Application.Current.MainPage.DisplayAlert("Success", "Change password successfully!", "Ok");
+                await Shell.Current.GoToAsync("..", true);
+				Clear();
+            }
+			else
+			{
+                await Application.Current.MainPage.DisplayAlert("Failed", "Change password failed!", "Ok");
+            }
 		}
 
 		public bool CanChangePassword()
@@ -214,7 +248,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 
 		private void Clear()
 		{
-			IsLoading = false;
 			Password1 = "";
 			Password2 = "";
 			Password3 = "";

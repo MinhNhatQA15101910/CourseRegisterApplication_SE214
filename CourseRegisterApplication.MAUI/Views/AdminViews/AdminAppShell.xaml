@@ -51,20 +51,18 @@
             <TapGestureRecognizer Command="{Binding ChangePasswordCommand}" />
           </HorizontalStackLayout.GestureRecognizers>
         </HorizontalStackLayout>
-
       </StackLayout>
     </DataTemplate>
-
   </Shell.FlyoutFooterTemplate>
 
   <FlyoutItem Title="Dashboard" Icon="home.png">
-    <ShellContent ContentTemplate="{DataTemplate local:AdminDashboardPage}" />
+    <ShellContent ContentTemplate="{DataTemplate local:AdminDashboardPage}" Route="AdminDashboardPage" />
   </FlyoutItem>
   <FlyoutItem Title="Admin/Accountant account" Icon="student.png">
-    <ShellContent ContentTemplate="{DataTemplate local:AdminEmployeeAccountManagementPage}" />
+    <ShellContent ContentTemplate="{DataTemplate local:AdminEmployeeAccountManagementPage}" Route="AdminEmployeeAccountManagementPage" />
   </FlyoutItem>
   <FlyoutItem Title="Student account" Icon="book.png">
-    <ShellContent ContentTemplate="{DataTemplate local:StudentAccountManagementPage}" />
+    <ShellContent ContentTemplate="{DataTemplate local:StudentAccountManagementPage}" Route="StudentAccountManagementPage" />
   </FlyoutItem>
 
   <Shell.ItemTemplate>

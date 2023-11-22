@@ -43,7 +43,8 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddTransient<ChangePasswordPage>();
 
             // Services
-            builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             return builder.Build();
         }

@@ -5,7 +5,12 @@ namespace CourseRegisterApplication.MAUI.Services
     public class UserService : IUserService
 	{
 		private readonly string _baseUrl = "https://localhost:7182/api/Users/";
-        private readonly HttpClient _httpClient = new HttpClient();
+		private readonly HttpClient _httpClient;
+
+        public UserService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
         public async Task<User> AddUser(User user)
         {
@@ -51,21 +56,6 @@ namespace CourseRegisterApplication.MAUI.Services
 			}
 				
 			return null;
-		}
-
-        Task<User> IUserService.ChangePassword(int id, User user)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<User> ChangePassword(string newPassword)
-		{
-			throw new NotImplementedException();
-		}
-
-		public async Task<User> AddUpdateAccount(string username, string password, string email)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

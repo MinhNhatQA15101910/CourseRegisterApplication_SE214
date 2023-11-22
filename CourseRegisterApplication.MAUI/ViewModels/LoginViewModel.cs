@@ -56,7 +56,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 		{
 			IsLoading = true;
 			User user = await _userService.LoginUser(Username, Helpers.EncryptData(Password));
-            IsLoading = true;
+			IsLoading = false;
             if (user != null)
 			{
 				Username = "";

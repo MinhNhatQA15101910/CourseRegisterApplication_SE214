@@ -7,7 +7,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
     public partial class AddUpdateAccountViewModel : ObservableObject
     {
         public readonly AddUpdateAccountPage _addUpdateAccountPage;
-		private readonly IUserService _userService = new UserService();
+		private readonly IUserService _userService;
 
 		[ObservableProperty]
 		[NotifyCanExecuteChangedFor(nameof(AddUpdateAccountCommand))]
