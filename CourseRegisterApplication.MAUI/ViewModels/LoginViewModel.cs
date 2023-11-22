@@ -56,7 +56,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 		{
 			IsLoading = true;
 			User user = await _userService.LoginUser(Username, Helpers.EncryptData(Password));
-			if (user != null)
+            IsLoading = true;
+            if (user != null)
 			{
 				Username = "";
 				Password = "";
@@ -161,7 +162,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels
         #region Helpers
         private void Clear()
 		{
-			IsLoading = false;
             Username = "";
             Password = "";
         }

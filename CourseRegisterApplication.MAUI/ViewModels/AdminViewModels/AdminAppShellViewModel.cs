@@ -9,7 +9,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         [RelayCommand]
         public async Task ChangePassword()
         {
-            await Shell.Current.GoToAsync(nameof(ChangePasswordPage), true);
+            if (Shell.Current.CurrentState.ToString() != nameof(ChangePasswordPage))
+            {
+                await Shell.Current.GoToAsync(nameof(ChangePasswordPage), true);
+            }
         }
     }
 }

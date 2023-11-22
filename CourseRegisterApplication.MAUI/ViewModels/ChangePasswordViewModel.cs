@@ -1,7 +1,13 @@
-﻿namespace CourseRegisterApplication.MAUI.ViewModels
+﻿using CourseRegisterApplication.MAUI.Views;
+
+namespace CourseRegisterApplication.MAUI.ViewModels
 {
     public partial class ChangePasswordViewModel : ObservableObject
 	{
+        #region Services
+		private readonly IServiceProvider _serviceProvider;
+        #endregion
+
         #region Properties
         [ObservableProperty]
 		[NotifyCanExecuteChangedFor(nameof(ChangePasswordCommand))]
@@ -48,7 +54,12 @@
         private int globalVariable3 = 0;
         #endregion
 
-		public ChangePasswordViewModel() { }
+        #region Constructor
+        public ChangePasswordViewModel(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+        #endregion
 
         [RelayCommand]
         public async Task Logout()
@@ -56,9 +67,15 @@
 			bool result = await Application.Current.MainPage.DisplayAlert("Question?", "Do you want to logout?", "Yes", "No");
 			if (result)
 			{
-				await Application.Current.MainPage.Navigation.PopToRootAsync();
+				Application.Current.MainPage = _serviceProvider.GetService<LoginPage>();
             }
 		}
+
+        [RelayCommand]
+        public async Task NavigateBack()
+        {
+			await Shell.Current.GoToAsync("..", true);
+        }
 
         [RelayCommand(CanExecute = nameof(CanChangePassword))]
 		public async Task ChangePassword()

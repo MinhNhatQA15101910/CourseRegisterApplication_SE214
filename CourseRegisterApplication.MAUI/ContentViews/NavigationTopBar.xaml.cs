@@ -133,6 +133,29 @@ public partial class NavigationTopBar : ContentView
     }
     #endregion
 
+    #region NavigateBackCommand
+    public static readonly BindableProperty NavigateBackCommandProperty
+        = BindableProperty.Create(nameof(NavigateBackCommand),
+            typeof(ICommand),
+            typeof(NavigationTopBar),
+            defaultValue: null,
+            defaultBindingMode: BindingMode.TwoWay,
+            propertyChanged: NavigateBackCommandPropertyChanged);
+
+    private static void NavigateBackCommandPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = (NavigationTopBar)bindable;
+        control.OnTapBackImage.Command = (ICommand)newValue;
+        control.OnTapBackLabel.Command = (ICommand)newValue;
+    }
+
+    public ICommand NavigateBackCommand
+    {
+        get => (ICommand)GetValue(NavigateBackCommandProperty);
+        set => SetValue(NavigateBackCommandProperty, value);
+    }
+    #endregion
+
     #region Constructor
     public NavigationTopBar()
     {

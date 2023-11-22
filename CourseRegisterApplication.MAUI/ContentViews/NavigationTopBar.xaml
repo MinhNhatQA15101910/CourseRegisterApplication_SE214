@@ -13,11 +13,20 @@
       <Image
         Margin="24,0,0,0"
         HeightRequest="16"
-        Source="vector_left.png" />
+        Source="vector_left.png">
+        <Image.GestureRecognizers>
+          <TapGestureRecognizer x:Name="OnTapBackImage" />
+        </Image.GestureRecognizers>
+      </Image>
       <Label
+        x:Name="LabelBack"
         Margin="16,0,0,0"
         FontFamily="RobotoMedium"
-        Text="Back" />
+        Text="Back">
+        <Label.GestureRecognizers>
+          <TapGestureRecognizer x:Name="OnTapBackLabel" />
+        </Label.GestureRecognizers>
+      </Label>
     </HorizontalStackLayout>
     <StackLayout
       x:Name="TitleGroup"
