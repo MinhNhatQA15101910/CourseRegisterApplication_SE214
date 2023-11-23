@@ -1,7 +1,4 @@
-﻿using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
-using CourseRegisterApplication.MAUI.Views;
-using Microsoft.Maui;
-namespace CourseRegisterApplication.MAUI.ContentViews;
+﻿namespace CourseRegisterApplication.MAUI.ContentViews;
 
 public partial class NavigationTopBar : ContentView
 {
