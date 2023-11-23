@@ -32,9 +32,11 @@
       x:Name="TitleGroup"
       Grid.Column="1"
       Margin="100,0,0,0"
-      IsVisible="{Binding IsTitleVisible}"
       VerticalOptions="Center">
-      <Label x:Name="Title" FontFamily="RobotoMedium" />
+      <Label
+        x:Name="Title"
+        FontFamily="RobotoMedium"
+        FontSize="18" />
       <Label x:Name="Description" />
     </StackLayout>
     <StackLayout

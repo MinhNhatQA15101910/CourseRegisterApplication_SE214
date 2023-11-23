@@ -91,6 +91,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="ContentViews\FilterAndSearchBar.xaml.cs">
+	    <DependentUpon>FilterAndSearchBar.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\AdminViews\AdminEmployeeAccountManagementPage.xaml.cs">
 	    <DependentUpon>AdminEmployeeAccountManagementPage.xaml</DependentUpon>
 	  </Compile>

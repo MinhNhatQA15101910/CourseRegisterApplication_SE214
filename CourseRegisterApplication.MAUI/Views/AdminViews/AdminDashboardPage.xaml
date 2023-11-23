@@ -4,14 +4,12 @@
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
-  NavigationPage.HasNavigationBar="False">
-  <Shell.BackButtonBehavior>
-    <BackButtonBehavior IsVisible="False" />
-  </Shell.BackButtonBehavior>
+  NavigationPage.HasNavigationBar="False"
+  Shell.FlyoutBehavior="Flyout">
   <Grid RowDefinitions="Auto,*">
     <contentViews:NavigationTopBar
       Grid.Row="0"
-      DescriptionText="{Binding DescriptionText}"
+      DescriptionText="{Binding DescriptionText, FallbackValue='Card description text.'}"
       IsBackVisible="False"
       IsControlVisible="True"
       IsTitleVisible="True"

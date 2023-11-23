@@ -3,14 +3,14 @@
     x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.StudentAccountManagementPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:CourseRegisterApplication.MAUI.Views.ContentViews"
+    xmlns:controls="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
     Title="StudentAccountManagementPage"
     BackgroundColor="White"
     NavigationPage.HasNavigationBar="False">
 
     <ScrollView>
         <Grid RowDefinitions="Auto, 600, *">
-            <controls:AccountManagementHeader
+            <!--<controls:AccountManagementHeader
                 Title="Student account management page"
                 Grid.Row="0"
                 Description="Student account page simplifies academic and personal data management"
@@ -18,7 +18,7 @@
                 IsControlVisible="True"
                 IsTitleVisible="True"
                 SearchPlaceHolder="Search for a student by name, email or id"
-                VerticalOptions="Start" />
+                VerticalOptions="Start" />-->
 
             <Grid
                 Grid.Row="1"

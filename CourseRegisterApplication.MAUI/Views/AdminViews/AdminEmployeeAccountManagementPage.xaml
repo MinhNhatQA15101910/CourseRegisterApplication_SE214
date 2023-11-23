@@ -3,21 +3,25 @@
   x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminEmployeeAccountManagementPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:controls="clr-namespace:CourseRegisterApplication.MAUI.Views.ContentViews"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
   Title="EmployeeAccountManagementPage"
-  NavigationPage.HasNavigationBar="False">
-
+  NavigationPage.HasNavigationBar="False"
+  Shell.FlyoutBehavior="Flyout">
   <ScrollView>
     <Grid RowDefinitions="Auto, 600, *">
-      <controls:AccountManagementHeader
-        Title="Accountant account management page"
-        Grid.Row="0"
-        Description="Accountant account management page streamlines financial control and oversight"
-        IsBackVisible="True"
-        IsControlVisible="True"
-        IsTitleVisible="True"
-        SearchPlaceHolder="Search for a teachers by name, email or id"
-        VerticalOptions="Start" />
+      <Grid Grid.Row="0" RowDefinitions="Auto,Auto">
+        <contentViews:NavigationTopBar
+          Grid.Row="0"
+          DescriptionText="Manage Admin and Accountant accounts, keep track of their roles and accessibility"
+          IsBackVisible="False"
+          IsControlVisible="True"
+          IsTitleVisible="True"
+          LogoutCommand="{Binding LogoutCommand}"
+          TitleText="Admin / Accountant account management page"
+          VerticalOptions="Start" />
+
+        <contentViews:FilterAndSearchBar Grid.Row="1" Placeholder="Search for a teachers by name, email or id" />
+      </Grid>
 
       <Grid
         Grid.Row="1"
@@ -29,29 +33,25 @@
           Grid.Row="0"
           Padding="5,0,0,0"
           BackgroundColor="Azure"
-          ColumnDefinitions="0.25*, 0.4*, 0.2*, 0.15*"
+          ColumnDefinitions="3*,4*,3*"
           VerticalOptions="Center">
           <Label
             Grid.Column="0"
             FontAttributes="Bold"
-            Text="Name"
+            Text="Username"
             VerticalOptions="Center" />
           <Label
             Grid.Column="1"
             FontAttributes="Bold"
-            Text="ID"
+            Text="Email"
             VerticalOptions="Center" />
           <Label
             Grid.Column="2"
             FontAttributes="Bold"
-            Text="Phone"
-            VerticalOptions="Center" />
-          <Label
-            Grid.Column="3"
-            FontAttributes="Bold"
-            Text="Activate Status"
+            Text="Role"
             VerticalOptions="Center" />
         </Grid>
+
         <CollectionView
           x:Name="collectionView"
           Grid.Row="1"
@@ -62,7 +62,7 @@
               <Grid
                 Padding="5,0,0,0"
                 BackgroundColor="#EBF6FF"
-                ColumnDefinitions="0.25*, 0.4*, 0.25*, 0.1*"
+                ColumnDefinitions="3*, 4*, 3*"
                 VerticalOptions="Center">
                 <Label
                   Grid.Column="0"
@@ -76,7 +76,7 @@
                   Grid.Column="2"
                   Text="{Binding Phone}"
                   VerticalOptions="Center" />
-                <CheckBox Grid.Column="3" />
+                <CheckBox Grid.Column="3" VerticalOptions="Center" />
               </Grid>
             </DataTemplate>
           </CollectionView.ItemTemplate>
