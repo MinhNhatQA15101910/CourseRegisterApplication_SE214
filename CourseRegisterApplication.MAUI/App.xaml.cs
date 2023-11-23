@@ -1,5 +1,4 @@
 ﻿using CourseRegisterApplication.MAUI.Views;
-using CourseRegisterApplication.MAUI.Views.AdminViews;
 
 namespace CourseRegisterApplication.MAUI
 {
