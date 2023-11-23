@@ -2,13 +2,17 @@
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 {
-    public partial class AdminEmployeeAccountManagementViewModel : ObservableObject
+    public partial class AdminAccountantAccountManagementViewModel : ObservableObject
     {
         #region Services
         private readonly IServiceProvider _serviceProvider;
         #endregion
 
-        public AdminEmployeeAccountManagementViewModel(IServiceProvider serviceProvider)
+        #region Properties
+        public ObservableCollection<User> AdminAccountantAccountList { get; set; }
+        #endregion
+
+        public AdminAccountantAccountManagementViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }

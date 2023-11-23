@@ -1,4 +1,5 @@
 ﻿using CourseRegisterApplication.MAUI.Views;
+using CourseRegisterApplication.MAUI.Views.AdminViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 {
@@ -26,6 +27,18 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             {
                 Application.Current.MainPage = _serviceProvider.GetService<LoginPage>();
             }
+        }
+
+        [RelayCommand]
+        public async Task NavigateToAdminAccountantAccountManagement()
+        {
+            await Shell.Current.GoToAsync("//adminaccountant/details", true);
+        }
+
+        [RelayCommand]
+        public async Task NavigateToStudentAccountManagement()
+        {
+            await Shell.Current.GoToAsync("//student/details", true);
         }
     }
 }

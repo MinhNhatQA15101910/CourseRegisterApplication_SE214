@@ -94,8 +94,8 @@
 	  <Compile Update="ContentViews\FilterAndSearchBar.xaml.cs">
 	    <DependentUpon>FilterAndSearchBar.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\AdminViews\AdminEmployeeAccountManagementPage.xaml.cs">
-	    <DependentUpon>AdminEmployeeAccountManagementPage.xaml</DependentUpon>
+	  <Compile Update="Views\AdminViews\AdminAccountantAccountManagementPage.xaml.cs">
+	    <DependentUpon>AdminAccountantAccountManagementPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -109,7 +109,7 @@
 	  <MauiXaml Update="Views\AdminViews\AdminDashboardPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AdminViews\AdminEmployeeAccountManagementPage.xaml">
+	  <MauiXaml Update="Views\AdminViews\AdminAccountantAccountManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\StudentAccountManagementPage.xaml">

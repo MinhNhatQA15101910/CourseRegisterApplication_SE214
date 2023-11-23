@@ -6,7 +6,7 @@
   xmlns:local="clr-namespace:CourseRegisterApplication.MAUI.Views.AdminViews"
   FlyoutBackgroundColor="#152259"
   FlyoutBehavior="Flyout"
-  FlyoutWidth="300"
+  FlyoutWidth="240"
   NavBarIsVisible="False">
   <Shell.FlyoutHeader>
     <StackLayout>
@@ -55,14 +55,23 @@
     </DataTemplate>
   </Shell.FlyoutFooterTemplate>
 
-  <FlyoutItem Title="Dashboard" Icon="home.png">
-    <ShellContent ContentTemplate="{DataTemplate local:AdminDashboardPage}" Route="AdminDashboardPage" />
+  <FlyoutItem
+    Title="Dashboard"
+    Icon="home.png"
+    Route="dashboard">
+    <ShellContent ContentTemplate="{DataTemplate local:AdminDashboardPage}" Route="details" />
   </FlyoutItem>
-  <FlyoutItem Title="Admin / Accountant account" Icon="student.png">
-    <ShellContent ContentTemplate="{DataTemplate local:AdminEmployeeAccountManagementPage}" Route="AdminEmployeeAccountManagementPage" />
+  <FlyoutItem
+    Title="Admin / Accountant account"
+    Icon="student.png"
+    Route="adminaccountant">
+    <ShellContent ContentTemplate="{DataTemplate local:AdminAccountantAccountManagementPage}" Route="details" />
   </FlyoutItem>
-  <FlyoutItem Title="Student account" Icon="book.png">
-    <ShellContent ContentTemplate="{DataTemplate local:StudentAccountManagementPage}" Route="StudentAccountManagementPage" />
+  <FlyoutItem
+    Title="Student account"
+    Icon="book.png"
+    Route="student">
+    <ShellContent ContentTemplate="{DataTemplate local:StudentAccountManagementPage}" Route="details" />
   </FlyoutItem>
 
   <Shell.ItemTemplate>

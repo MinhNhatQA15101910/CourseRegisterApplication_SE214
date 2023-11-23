@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-  x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminEmployeeAccountManagementPage"
+  x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminAccountantAccountManagementPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
@@ -37,25 +37,28 @@
           VerticalOptions="Center">
           <Label
             Grid.Column="0"
-            FontAttributes="Bold"
+            FontFamily="RobotoMedium"
+            FontSize="16"
             Text="Username"
             VerticalOptions="Center" />
           <Label
             Grid.Column="1"
-            FontAttributes="Bold"
+            FontFamily="RobotoMedium"
+            FontSize="16"
             Text="Email"
             VerticalOptions="Center" />
           <Label
             Grid.Column="2"
-            FontAttributes="Bold"
+            FontFamily="RobotoMedium"
+            FontSize="16"
             Text="Role"
             VerticalOptions="Center" />
         </Grid>
 
         <CollectionView
-          x:Name="collectionView"
           Grid.Row="1"
           Grid.Column="0"
+          ItemsSource="{Binding AdminAccountantAccounts}"
           VerticalScrollBarVisibility="Always">
           <CollectionView.ItemTemplate>
             <DataTemplate>
