@@ -4,6 +4,7 @@ using CourseRegisterApplication.MAUI.ViewModels;
 using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
 using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AdminViews;
+using Mopups.Hosting;
 
 namespace CourseRegisterApplication.MAUI
 {
@@ -14,11 +15,12 @@ namespace CourseRegisterApplication.MAUI
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .ConfigureMopups()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-					fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular");
+                    fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular");
 					fonts.AddFont("Roboto-Medium.ttf", "RobotoMedium");
 					fonts.AddFont("Roboto-Thin.ttf", "RobotoThin");
 					fonts.AddFont("Roboto-Bold.ttf", "RobotoBold");

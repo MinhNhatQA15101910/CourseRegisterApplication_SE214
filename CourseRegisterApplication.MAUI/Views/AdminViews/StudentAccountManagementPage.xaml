@@ -57,6 +57,7 @@
                     x:Name="collectionView"
                     Grid.Row="1"
                     Grid.Column="0"
+                    SelectionMode="Single"
                     VerticalScrollBarVisibility="Always">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
@@ -103,10 +104,11 @@
                         <Image Aspect="AspectFill" Source="profile_avatar.jpg" />
                     </Frame>
                     <Label
+                        BindingContext="{x:Reference collectionView}"
                         FontAttributes="Bold"
                         FontSize="16"
                         HorizontalOptions="Center"
-                        Text="Nguyễn Văn Vũ" />
+                        Text="{Binding SelectedItem.Name}" />
                     <Label
                         FontSize="14"
                         HorizontalOptions="Center"

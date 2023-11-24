@@ -1,3 +1,6 @@
+using CourseRegisterApplication.MAUI.ContentViews;
+using Mopups.Services;
+
 namespace CourseRegisterApplication.MAUI.Views.ContentViews;
 
 public partial class AccountManagementHeader : ContentView
@@ -49,5 +52,6 @@ public partial class AccountManagementHeader : ContentView
     private void btnFilter_Clicked(object sender, EventArgs e)
     {
         btnFilter.BackgroundColor = Color.FromHex("#509CDB");
+        MopupService.Instance.PushAsync(new FilterPopup());
     }
 }
