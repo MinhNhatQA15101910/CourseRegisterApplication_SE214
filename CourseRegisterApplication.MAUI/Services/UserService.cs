@@ -44,13 +44,61 @@ namespace CourseRegisterApplication.MAUI.Services
 			return false;
         }
 
+        public Task<bool> DeleteUser(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<User> FilterBySearchBox(string filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<User> FilterUserAZByEmail()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<User> FilterUserAZByUsername()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<User> FilterUserZAByEmail()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<User> FilterUserZAByUsername()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<User>> GetAdminAccountantAccounts()
+        {
+            var response = await _httpClient.GetAsync(new Uri(_baseUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var userList = JsonConvert.DeserializeObject<List<User>>(jsonResponse);
+                return userList.Where(u => u.Role == Role.Admin || u.Role == Role.Accountant).ToList();
+            }
+
+            return null;
+        }
+
+        public Task<List<User>> GetStudentAccounts()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<User> LoginUser(string username, string password)
-	{
+	    {
 			string apiUrl = $"{_baseUrl}{username}/{password}";
 
 			var response = await _httpClient.GetAsync(new Uri(apiUrl));
 			if (response.IsSuccessStatusCode)
-		{
+		    {
 				string jsonResponse = await response.Content.ReadAsStringAsync();
 				return JsonConvert.DeserializeObject<User>(jsonResponse);
 			}

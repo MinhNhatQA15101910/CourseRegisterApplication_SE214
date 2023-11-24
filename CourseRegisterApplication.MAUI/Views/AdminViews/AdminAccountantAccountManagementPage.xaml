@@ -3,7 +3,9 @@
   x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminAccountantAccountManagementPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:adminViewModels="clr-namespace:CourseRegisterApplication.MAUI.ViewModels.AdminViewModels"
   xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  xmlns:mauiToolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
   Title="EmployeeAccountManagementPage"
   NavigationPage.HasNavigationBar="False"
   Shell.FlyoutBehavior="Flyout">
@@ -20,13 +22,16 @@
           TitleText="Admin / Accountant account management page"
           VerticalOptions="Start" />
 
-        <contentViews:FilterAndSearchBar Grid.Row="1" Placeholder="Search for a teachers by name, email or id" />
+        <contentViews:FilterAndSearchBar
+          Grid.Row="1"
+          Margin="100,0,0,0"
+          Placeholder="Search for a teachers by name, email or id" />
       </Grid>
 
       <Grid
         Grid.Row="1"
         Grid.Column="0"
-        Margin="20,50,0,0"
+        Margin="100,100,0,0"
         ColumnDefinitions="6*, 4*"
         RowDefinitions="Auto, *">
         <Grid
@@ -39,18 +44,21 @@
             Grid.Column="0"
             FontFamily="RobotoMedium"
             FontSize="16"
+            HorizontalOptions="Center"
             Text="Username"
             VerticalOptions="Center" />
           <Label
             Grid.Column="1"
             FontFamily="RobotoMedium"
             FontSize="16"
+            HorizontalOptions="Center"
             Text="Email"
             VerticalOptions="Center" />
           <Label
             Grid.Column="2"
             FontFamily="RobotoMedium"
             FontSize="16"
+            HorizontalOptions="Center"
             Text="Role"
             VerticalOptions="Center" />
         </Grid>
@@ -58,28 +66,70 @@
         <CollectionView
           Grid.Row="1"
           Grid.Column="0"
-          ItemsSource="{Binding AdminAccountantAccounts}"
+          ItemsSource="{Binding AdminAccountantAccountList}"
           VerticalScrollBarVisibility="Always">
           <CollectionView.ItemTemplate>
-            <DataTemplate>
+            <DataTemplate x:Name="DataTemplate">
               <Grid
-                Padding="5,0,0,0"
+                Margin="5"
+                Padding="5"
                 BackgroundColor="#EBF6FF"
-                ColumnDefinitions="3*, 4*, 3*"
+                ColumnDefinitions="3*,4*,3*"
                 VerticalOptions="Center">
                 <Label
                   Grid.Column="0"
-                  Text="{Binding Name}"
+                  FontSize="14"
+                  Text="{Binding Username}"
                   VerticalOptions="Center" />
+
                 <Label
                   Grid.Column="1"
-                  Text="{Binding Id}"
+                  FontSize="14"
+                  Text="{Binding Email}"
                   VerticalOptions="Center" />
-                <Label
+
+                <Picker
                   Grid.Column="2"
-                  Text="{Binding Phone}"
+                  HorizontalOptions="Center"
+                  ItemDisplayBinding="{Binding Role}"
+                  ItemsSource="{Binding RoleNames}"
+                  SelectedItem="{Binding Role}"
+                  TextColor="Black"
                   VerticalOptions="Center" />
-                <CheckBox Grid.Column="3" VerticalOptions="Center" />
+
+                <!--<mauiToolkit:Expander
+                  HeightRequest="150"
+                  IsExpanded="{Binding RoleExpanded}"
+                  WidthRequest="200">
+                  <mauiToolkit:Expander.Header>
+                    <Border HeightRequest="40">
+                      <Grid Padding="10" ColumnDefinitions="*,Auto">
+                        <Label
+                          Grid.Column="0"
+                          HorizontalOptions="Center"
+                          Text="{Binding Role}"
+                          VerticalOptions="Center" />
+                        <Label
+                          Grid.Column="1"
+                          HorizontalOptions="EndAndExpand"
+                          Text="&#9660;"
+                          VerticalOptions="Center" />
+                      </Grid>
+                    </Border>
+                  </mauiToolkit:Expander.Header>
+
+                  <mauiToolkit:Expander.Content>
+                    <Border HeightRequest="110">
+                      <CollectionView ItemsSource="{Binding RoleNames}" SelectionChanged="CollectionView_SelectionChanged">
+                        <CollectionView.ItemTemplate>
+                          <DataTemplate>
+                            <Label Margin="5" Text="{Binding .}" />
+                          </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                      </CollectionView>
+                    </Border>
+                  </mauiToolkit:Expander.Content>
+                </mauiToolkit:Expander>-->
               </Grid>
             </DataTemplate>
           </CollectionView.ItemTemplate>

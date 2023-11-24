@@ -1,4 +1,5 @@
-﻿using CourseRegisterApplication.MAUI.ContentViews;
+﻿using CommunityToolkit.Maui;
+using CourseRegisterApplication.MAUI.ContentViews;
 using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Services;
 using CourseRegisterApplication.MAUI.ViewModels;
@@ -15,6 +16,7 @@ namespace CourseRegisterApplication.MAUI
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

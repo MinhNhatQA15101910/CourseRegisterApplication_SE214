@@ -9,4 +9,11 @@ public partial class AdminAccountantAccountManagementPage : ContentPage
 		InitializeComponent();
         BindingContext = adminAccountantAccountManagementViewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        (BindingContext as AdminAccountantAccountManagementViewModel).GetAdminAccountantAccountCommand.Execute(null);
+    }
 }
