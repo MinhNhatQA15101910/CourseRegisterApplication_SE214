@@ -6,7 +6,6 @@
   xmlns:adminViewModels="clr-namespace:CourseRegisterApplication.MAUI.ViewModels.AdminViewModels"
   xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
   xmlns:mauiToolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-  Title="EmployeeAccountManagementPage"
   NavigationPage.HasNavigationBar="False"
   Shell.FlyoutBehavior="Flyout">
   <ScrollView>
@@ -22,10 +21,25 @@
           TitleText="Admin / Accountant account management page"
           VerticalOptions="Start" />
 
-        <contentViews:FilterAndSearchBar
+        <HorizontalStackLayout
           Grid.Row="1"
           Margin="100,0,0,0"
-          Placeholder="Search for a teachers by name, email or id" />
+          HorizontalOptions="Start">
+          <Picker
+            Title="Choose a filter"
+            ItemsSource="{Binding FilterOptions}"
+            SelectedItem="{Binding SelectedFilterOption}" />
+
+          <SearchBar
+            Grid.Column="1"
+            Margin="20,20,0,0"
+            BackgroundColor="#FCFAFA"
+            FontFamily="Roboto"
+            FontSize="13"
+            Placeholder="Search for a teachers by name, email or id"
+            TextColor="Black"
+            WidthRequest="500" />
+        </HorizontalStackLayout>
       </Grid>
 
       <Grid
@@ -39,6 +53,7 @@
           Padding="5,0,0,0"
           BackgroundColor="Azure"
           ColumnDefinitions="3*,4*,3*"
+          HeightRequest="40"
           VerticalOptions="Center">
           <Label
             Grid.Column="0"
@@ -69,78 +84,64 @@
           ItemsSource="{Binding AdminAccountantAccountList}"
           VerticalScrollBarVisibility="Always">
           <CollectionView.ItemTemplate>
-            <DataTemplate x:Name="DataTemplate">
+            <DataTemplate>
               <Grid
                 Margin="5"
                 Padding="5"
-                BackgroundColor="#EBF6FF"
+                BackgroundColor="{Binding BackgroundColor}"
                 ColumnDefinitions="3*,4*,3*"
                 VerticalOptions="Center">
-                <Label
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding ChooseAccountCommand}" />
+                </Grid.GestureRecognizers>
+                <Grid
                   Grid.Column="0"
-                  FontSize="14"
-                  Text="{Binding Username}"
-                  VerticalOptions="Center" />
+                  ColumnDefinitions="Auto,Auto"
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center">
+                  <Frame
+                    Grid.Column="0"
+                    Margin="20"
+                    Padding="0"
+                    CornerRadius="15"
+                    HeightRequest="30"
+                    IsClippedToBounds="True"
+                    WidthRequest="30">
+                    <Image Aspect="AspectFill" Source="{Binding Avatar}" />
+                  </Frame>
+                  <Label
+                    Grid.Column="1"
+                    FontSize="16"
+                    Text="{Binding Username}"
+                    VerticalOptions="Center" />
+                </Grid>
 
                 <Label
                   Grid.Column="1"
-                  FontSize="14"
+                  FontSize="16"
+                  HorizontalOptions="Center"
                   Text="{Binding Email}"
                   VerticalOptions="Center" />
 
-                <Picker
+                <Border
                   Grid.Column="2"
+                  BackgroundColor="{Binding RoleBackgroundColor}"
+                  HeightRequest="40"
                   HorizontalOptions="Center"
-                  ItemDisplayBinding="{Binding Role}"
-                  ItemsSource="{Binding RoleNames}"
-                  SelectedItem="{Binding Role}"
-                  TextColor="Black"
-                  VerticalOptions="Center" />
-
-                <!--<mauiToolkit:Expander
-                  HeightRequest="150"
-                  IsExpanded="{Binding RoleExpanded}"
-                  WidthRequest="200">
-                  <mauiToolkit:Expander.Header>
-                    <Border HeightRequest="40">
-                      <Grid Padding="10" ColumnDefinitions="*,Auto">
-                        <Label
-                          Grid.Column="0"
-                          HorizontalOptions="Center"
-                          Text="{Binding Role}"
-                          VerticalOptions="Center" />
-                        <Label
-                          Grid.Column="1"
-                          HorizontalOptions="EndAndExpand"
-                          Text="&#9660;"
-                          VerticalOptions="Center" />
-                      </Grid>
-                    </Border>
-                  </mauiToolkit:Expander.Header>
-
-                  <mauiToolkit:Expander.Content>
-                    <Border HeightRequest="110">
-                      <CollectionView ItemsSource="{Binding RoleNames}" SelectionChanged="CollectionView_SelectionChanged">
-                        <CollectionView.ItemTemplate>
-                          <DataTemplate>
-                            <Label Margin="5" Text="{Binding .}" />
-                          </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                      </CollectionView>
-                    </Border>
-                  </mauiToolkit:Expander.Content>
-                </mauiToolkit:Expander>-->
+                  VerticalOptions="Center"
+                  WidthRequest="125">
+                  <Picker
+                    HorizontalOptions="Center"
+                    ItemsSource="{Binding Roles}"
+                    SelectedItem="{Binding RoleName}"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                </Border>
               </Grid>
             </DataTemplate>
           </CollectionView.ItemTemplate>
         </CollectionView>
-        <Label
-          Grid.Row="0"
-          Grid.Column="1"
-          FontAttributes="Bold"
-          FontSize="16"
-          HorizontalOptions="Center"
-          Text="21521682" />
+
         <VerticalStackLayout
           Grid.Row="1"
           Grid.Column="1"
@@ -152,53 +153,49 @@
             HeightRequest="200"
             IsClippedToBounds="True"
             WidthRequest="200">
-            <Image Aspect="AspectFill" Source="profile_avatar.jpg" />
+            <Image Aspect="AspectFill" Source="{Binding AvatarUri}" />
           </Frame>
           <Label
             FontAttributes="Bold"
             FontSize="16"
             HorizontalOptions="Center"
-            Text="Nguyễn Văn Vũ" />
-          <Label
-            FontSize="14"
-            HorizontalOptions="Center"
-            Text="CNPM" />
+            Text="{Binding Username}" />
           <HorizontalStackLayout Margin="0,30,0,20" Spacing="60">
             <VerticalStackLayout>
               <Label
                 FontAttributes="Bold"
-                FontSize="14"
+                FontSize="16"
                 HorizontalOptions="Start"
                 Text="Username" />
               <Label
-                FontSize="12"
+                FontSize="14"
                 HorizontalOptions="Start"
-                Text="idunno"
+                Text="{Binding Username}"
                 TextColor="Gray" />
             </VerticalStackLayout>
             <VerticalStackLayout>
               <Label
                 FontAttributes="Bold"
-                FontSize="14"
+                FontSize="16"
                 HorizontalOptions="End"
                 Text="Account Type" />
               <Label
-                FontSize="12"
+                FontSize="14"
                 HorizontalOptions="Start"
-                Text="student"
+                Text="{Binding RoleName}"
                 TextColor="Gray" />
             </VerticalStackLayout>
           </HorizontalStackLayout>
           <VerticalStackLayout Margin="0,5,0,20">
             <Label
               FontAttributes="Bold"
-              FontSize="14"
+              FontSize="16"
               HorizontalOptions="Start"
               Text="Email Address" />
             <Label
-              FontSize="12"
+              FontSize="14"
               HorizontalOptions="Start"
-              Text="blablabla@gmail.com"
+              Text="{Binding Email}"
               TextColor="Gray" />
           </VerticalStackLayout>
           <HorizontalStackLayout Margin="0,30,0,0">

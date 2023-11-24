@@ -3,26 +3,71 @@ using CourseRegisterApplication.MAUI.Views;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 {
-    public partial class AdminAccountantAccountManagementViewModel : ObservableObject
+    public partial class UserDisplay : ObservableObject
     {
-        public class RoleDisplay
+        [ObservableProperty]
+        private string username;
+
+        [ObservableProperty]
+        private string email;
+
+        [ObservableProperty]
+        private string roleName;
+
+        [ObservableProperty]
+        private Color roleBackgroundColor;
+
+        [ObservableProperty]
+        private Color backgroundColor;
+
+        [ObservableProperty]
+        private string avatar;
+
+        public string PrimaryRoleName { get; set; }
+        public IUserRequester UserRequester { get; set; }
+
+        public ObservableCollection<string> Roles { get; set; } = new ObservableCollection<string>();
+
+        public UserDisplay()
         {
-            public int Id { get; set; }
-            public string RoleName { get; set; }
+            Roles = new ObservableCollection<string> { "Admin", "Accountant" };
         }
 
-        public partial class UserDisplay : ObservableObject
+        [RelayCommand]
+        public void ChooseAccount()
         {
-            public string Username { get; set; }
-            public string Email { get; set; }
-            public RoleDisplay Role { get; set; }
-            public ObservableCollection<RoleDisplay> RoleNames { get; set; } = new ObservableCollection<RoleDisplay>
+            UserRequester.ResetItemBackgrounds();
+            BackgroundColor = Color.FromArgb("#1E90FF");
+
+            UserRequester.DisplayAccountInformation(new User
             {
-                new() {Id = 1, RoleName = "Admin"},
-                new() {Id = 2, RoleName = "Accountant"}
-            };
+                Username = Username,
+                Email = Email,
+                Role = (PrimaryRoleName == "Admin") ? Role.Admin : Role.Accountant
+            });
         }
 
+        partial void OnRoleNameChanged(string oldValue, string newValue)
+        {
+            if (newValue != PrimaryRoleName)
+            {
+                RoleBackgroundColor = Color.FromArgb("#ADD8E6");
+            }
+            else
+            {
+                RoleBackgroundColor = Color.FromArgb("#EBF6FF");
+            }
+        }
+    }
+
+    public interface IUserRequester
+    {
+        void ResetItemBackgrounds();
+        void DisplayAccountInformation(User user);
+    }
+
+    public partial class AdminAccountantAccountManagementViewModel : ObservableObject, IUserRequester
+    {
         #region Services
         private readonly IServiceProvider _serviceProvider;
         private readonly IUserService _userService;
@@ -30,10 +75,22 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 
         #region Properties
         public ObservableCollection<UserDisplay> AdminAccountantAccountList { get; set; } = new ObservableCollection<UserDisplay>();
-        public ObservableCollection<string> RoleNames { get; set; } = new ObservableCollection<string> { "Admin", "Accountant" };
+        public ObservableCollection<string> FilterOptions { get; set; } = new ObservableCollection<string>();
 
         [ObservableProperty]
-        private string roleName;
+        private string avatarUri = "blank_avatar.jpg";
+
+        [ObservableProperty]
+        private string username = "";
+
+        [ObservableProperty]
+        private string roleName = "";
+
+        [ObservableProperty]
+        private string email = "";
+
+        [ObservableProperty]
+        private string selectedFilterOption = "Username";
         #endregion
 
         #region Constructor
@@ -41,6 +98,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         {
             _serviceProvider = serviceProvider;
             _userService = serviceProvider.GetService<IUserService>();
+
+            FilterOptions = new ObservableCollection<string> { "Username", "Email", "Role" };
         }
         #endregion
 
@@ -67,10 +126,31 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     {
                         Username = account.Username,
                         Email = account.Email,
-                        Role = (account.Role == Role.Admin) ? new() { Id = 1, RoleName = "Admin" } : new() { Id = 2, RoleName = "Accountant" }
+                        RoleName = (account.Role == Role.Admin) ? "Admin" : "Accountant",
+                        PrimaryRoleName = (account.Role == Role.Admin) ? "Admin" : "Accountant",
+                        Avatar = (account.Role == Role.Admin) ? "admin_avatar.jpg" : "accountant_avatar.png",
+                        BackgroundColor = Color.FromArgb("#EBF6FF"),
+                        RoleBackgroundColor = Color.FromArgb("#EBF6FF"),
+                        UserRequester = this,
                     });
                 }
             }
+        }
+
+        public void ResetItemBackgrounds()
+        {
+            foreach (var account in AdminAccountantAccountList)
+            {
+                account.BackgroundColor = Color.FromArgb("#EBF6FF");
+            }
+        }
+
+        public void DisplayAccountInformation(User user)
+        {
+            AvatarUri = (user.Role == Role.Admin) ? "admin_avatar.jpg" : "accountant_avatar.png";
+            Username = user.Username;
+            Email = user.Email;
+            RoleName = (user.Role == Role.Admin) ? "Admin" : "Accountant";
         }
     }
 }
