@@ -1,8 +1,11 @@
-﻿
-namespace CourseRegisterApplication.MAUI
+﻿namespace CourseRegisterApplication.MAUI
 {
     public static class GlobalConfig
 	{
-		public static User CurrentUser { get; set; } = new User();
+        #region Base URL
+        public const string USER_BASE_URL = "https://localhost:7182/api/Users/";
+        #endregion
+
+        public static User CurrentUser { get; set; } = new User();
 	}
 }

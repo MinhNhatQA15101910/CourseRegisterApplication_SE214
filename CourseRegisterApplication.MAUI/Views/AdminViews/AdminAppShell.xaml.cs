@@ -10,5 +10,6 @@ public partial class AdminAppShell : Shell
 		BindingContext = adminAppShellViewModel;
 
 		Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
-	}
+        Routing.RegisterRoute(nameof(AddAdminAccountantAccountPage), typeof(AddAdminAccountantAccountPage));
+    }
 }

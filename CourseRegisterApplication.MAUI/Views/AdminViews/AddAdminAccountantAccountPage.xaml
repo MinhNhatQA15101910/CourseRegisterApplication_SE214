@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-  x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AddUpdateAccountPage"
+  x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AddAdminAccountantAccountPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
   NavigationPage.HasNavigationBar="False">
+  <Shell.BackButtonBehavior>
+    <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+  </Shell.BackButtonBehavior>
   <Grid Background="#FCFAFA" RowDefinitions="Auto,*">
     <contentViews:NavigationTopBar
       Grid.Row="0"
-      DescriptionText="Today is Friday, October 13th, 2023"
+      DescriptionText="{Binding DescriptionText, FallbackValue='Card description text.'}"
       IsBackVisible="True"
       IsControlVisible="True"
       IsTitleVisible="False"
+      LogoutCommand="{Binding LogoutCommand}"
+      NavigateBackCommand="{Binding NavigateBackCommand}"
       TitleText="Welcome back admin!"
       VerticalOptions="Start" />
-    <ScrollView Grid.Row="1">
-      <VerticalStackLayout
-        HeightRequest="500"
-        HorizontalOptions="Center"
-        VerticalOptions="Center"
-        WidthRequest="500">
+    <ScrollView Grid.Row="1" HorizontalOptions="Center">
+      <VerticalStackLayout HorizontalOptions="Center">
         <Label
           FontAttributes="Bold"
           FontFamily="OpenSans-Semibold"
           FontSize="30"
           HorizontalOptions="Center"
           Text="Add an accountant account"
-          TextColor="#4F4F4F"
-          VerticalOptions="Center" />
+          TextColor="#4F4F4F" />
         <VerticalStackLayout
           Margin="0,24,0,0"
           BackgroundColor="White"
-          HeightRequest="400 "
+          HorizontalOptions="Center"
+          VerticalOptions="Center"
           WidthRequest="500">
           <Label
             Margin="124,32,0,0"
@@ -104,6 +105,59 @@
               VerticalOptions="Center"
               WidthRequest="40">
               <Image
+                x:Name="eye_icon_2"
+                HeightRequest="20"
+                Source="eye_close_icon.png"
+                VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnEyeTapped2" />
+                </Image.GestureRecognizers>
+              </Image>
+            </Grid>
+          </Grid>
+          <Label
+            x:Name="PasswordLabel"
+            Margin="124,4,0,0"
+            FontSize="12"
+            Text="{Binding PasswordMessageText}"
+            TextColor="{Binding PasswordColor}" />
+          <Label
+            Margin="124,8,0,0"
+            FontSize="16"
+            Text="Confirm password:"
+            TextColor="#667085" />
+          <Grid
+            Margin="0,4,0,0"
+            HeightRequest="40"
+            WidthRequest="250">
+            <Frame
+              Padding="0"
+              BackgroundColor="Transparent"
+              BorderColor="#A7A7A7"
+              CornerRadius="5"
+              HeightRequest="40"
+              HorizontalOptions="FillAndExpand"
+              WidthRequest="250">
+              <Entry
+                x:Name="confirmPassword"
+                FontFamily="OpenSans-Semibold"
+                FontSize="14"
+                HorizontalOptions="Start"
+                IsPassword="True"
+                Placeholder="Confirm Password"
+                Text="{Binding PasswordConfirm}"
+                TextColor="#8A8A8A"
+                VerticalOptions="Center"
+                WidthRequest="250" />
+            </Frame>
+            <Grid
+              Margin="0,0,2,0"
+              Background="White"
+              HeightRequest="38"
+              HorizontalOptions="End"
+              VerticalOptions="Center"
+              WidthRequest="40">
+              <Image
                 x:Name="eye_icon"
                 HeightRequest="20"
                 Source="eye_close_icon.png"
@@ -115,11 +169,11 @@
             </Grid>
           </Grid>
           <Label
-            x:Name="PasswordLabel"
+            x:Name="PasswordConfirmLabel"
             Margin="124,4,0,0"
             FontSize="12"
-            Text="{Binding PasswordMessageText}"
-            TextColor="{Binding PasswordColor}" />
+            Text="{Binding PasswordConfirmMessageText}"
+            TextColor="{Binding PasswordConfirmColor}" />
           <Label
             Margin="124,8,0,0"
             FontSize="16"
@@ -154,16 +208,26 @@
             FontSize="12"
             Text="{Binding EmailMessageText}"
             TextColor="{Binding EmailColor}" />
+          <Label
+            Margin="124,8,0,0"
+            FontSize="16"
+            Text="Role:"
+            TextColor="#667085" />
+          <Picker
+            ItemsSource="{Binding Roles}"
+            SelectedItem="{Binding SelectedRole}"
+            WidthRequest="250" />
           <Button
             Margin="0,36,0,0"
             BackgroundColor="#2D88D4"
-            Command="{Binding AddUpdateAccountCommand}"
+            Command="{Binding AddAccountCommand}"
             FontFamily="OpenSans-Semibold"
             FontSize="14"
             HeightRequest="40"
-            Text="Login"
+            Text="Add account"
             WidthRequest="250" />
           <ActivityIndicator
+            Margin="0,20,0,0"
             IsEnabled="{Binding IsLoading}"
             IsRunning="{Binding IsLoading}"
             IsVisible="{Binding IsLoading}" />

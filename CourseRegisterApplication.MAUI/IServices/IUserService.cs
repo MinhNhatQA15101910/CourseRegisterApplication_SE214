@@ -3,15 +3,12 @@
     public interface IUserService
     {
         Task<User> LoginUser(string username, string password);
-        Task<bool> ChangePassword(int id, User user);
+        Task<bool> ChangePassword(User user, string newPassword);
         Task<User> AddUser(User user);
-        Task<List<User>> GetAdminAccountantAccounts();
-        Task<List<User>> GetStudentAccounts();
-        List<User> FilterBySearchBox(string filter);
-        List<User> FilterUserAZByUsername();
-        List<User> FilterUserZAByUsername();
-        List<User> FilterUserAZByEmail();
-        List<User> FilterUserZAByEmail();
+        Task<List<User>> GetAdminAccountantUsers();
+        Task<List<User>> GetStudentUsers();
+        Task<List<User>> GetUsers();
         Task<bool> DeleteUser(int id);
+        Task<bool> UpdateRole(User user, Role role);
     }
 }

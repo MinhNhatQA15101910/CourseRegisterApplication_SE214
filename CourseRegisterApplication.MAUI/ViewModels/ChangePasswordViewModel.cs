@@ -92,16 +92,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 				return;
             }
 
-			User user = new User
-			{
-				Id = GlobalConfig.CurrentUser.Id,
-				Username = GlobalConfig.CurrentUser.Username,
-				Password = Helpers.EncryptData(Password2),
-				Email = GlobalConfig.CurrentUser.Email,
-				Role = GlobalConfig.CurrentUser.Role,
-			};
-
-			bool result = await _userService.ChangePassword(GlobalConfig.CurrentUser.Id, user);
+			bool result = await _userService.ChangePassword(GlobalConfig.CurrentUser, Helpers.EncryptData(Password2));
 			IsLoading = false;
 
 			if (result)

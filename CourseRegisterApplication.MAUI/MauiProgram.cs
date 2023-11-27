@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui;
-using CourseRegisterApplication.MAUI.ContentViews;
+﻿using CourseRegisterApplication.MAUI.ContentViews;
 using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Services;
 using CourseRegisterApplication.MAUI.ViewModels;
@@ -37,6 +36,7 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddTransient<AdminDashboardViewModel>();
             builder.Services.AddTransient<AdminAccountantAccountManagementViewModel>();
             builder.Services.AddTransient<ChangePasswordViewModel>();
+            builder.Services.AddTransient<AddAdminAccountantAccountViewModel>();
 
             // Views
             builder.Services.AddTransient<LoginPage>();
@@ -45,6 +45,7 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddTransient<AdminDashboardPage>();
             builder.Services.AddTransient<AdminAccountantAccountManagementPage>();
             builder.Services.AddTransient<ChangePasswordPage>();
+            builder.Services.AddTransient<AddAdminAccountantAccountPage>();
 
             // Services
             builder.Services.AddSingleton<HttpClient>();

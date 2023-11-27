@@ -4,7 +4,6 @@ namespace CourseRegisterApplication.MAUI.Services
 {
     public class UserService : IUserService
 	{
-		private readonly string _baseUrl = "https://localhost:7182/api/Users/";
 		private readonly HttpClient _httpClient;
 
         public UserService(HttpClient httpClient)
@@ -14,7 +13,7 @@ namespace CourseRegisterApplication.MAUI.Services
 
         public async Task<User> AddUser(User user)
         {
-            string apiUrl = $"{_baseUrl}";
+            string apiUrl = $"{GlobalConfig.USER_BASE_URL}";
 
             var json = JsonConvert.SerializeObject(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -28,73 +27,73 @@ namespace CourseRegisterApplication.MAUI.Services
             return null;
         }
 
-        public async Task<bool> ChangePassword(int id, User user)
+        public async Task<bool> ChangePassword(User user, string newPassword)
         {
-			string apiUrl = $"{_baseUrl}{id}";
+            user.Password = newPassword;
 
-			var json = JsonConvert.SerializeObject(user);
-			var content = new StringContent(json, Encoding.UTF8, "application/json");
-			var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
+            string apiUrl = $"{GlobalConfig.USER_BASE_URL}{user.Id}";
 
-			if (response.IsSuccessStatusCode)
-			{
-				return true;
-			}
-				
-			return false;
+            var json = JsonConvert.SerializeObject(user);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
+
+            return response.IsSuccessStatusCode;
         }
 
-        public Task<bool> DeleteUser(int id)
+        public async Task<bool> DeleteUser(int id)
         {
-            throw new NotImplementedException();
+            string apiUrl = $"{GlobalConfig.USER_BASE_URL}{id}";
+            var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
+
+            return response.IsSuccessStatusCode;
         }
 
-        public List<User> FilterBySearchBox(string filter)
+        public async Task<List<User>> GetAdminAccountantUsers()
         {
-            throw new NotImplementedException();
-        }
-
-        public List<User> FilterUserAZByEmail()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<User> FilterUserAZByUsername()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<User> FilterUserZAByEmail()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<User> FilterUserZAByUsername()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<User>> GetAdminAccountantAccounts()
-        {
-            var response = await _httpClient.GetAsync(new Uri(_baseUrl));
+            var response = await _httpClient.GetAsync(new Uri(GlobalConfig.USER_BASE_URL));
             if (response.IsSuccessStatusCode)
             {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 var userList = JsonConvert.DeserializeObject<List<User>>(jsonResponse);
-                return userList.Where(u => u.Role == Role.Admin || u.Role == Role.Accountant).ToList();
+                return userList
+                    .Where(u => u.Role == Role.Admin || u.Role == Role.Accountant)
+                    .ToList();
             }
 
             return null;
         }
 
-        public Task<List<User>> GetStudentAccounts()
+        public async Task<List<User>> GetStudentUsers()
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.GetAsync(new Uri(GlobalConfig.USER_BASE_URL));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var userList = JsonConvert.DeserializeObject<List<User>>(jsonResponse);
+                return userList
+                    .Where(u => u.Role == Role.Student)
+                    .ToList();
+            }
+
+            return null;
+        }
+
+        public async Task<List<User>> GetUsers()
+        {
+            var response = await _httpClient.GetAsync(new Uri(GlobalConfig.USER_BASE_URL));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var userList = JsonConvert.DeserializeObject<List<User>>(jsonResponse);
+                return userList.ToList();
+            }
+
+            return null;
         }
 
         public async Task<User> LoginUser(string username, string password)
 	    {
-			string apiUrl = $"{_baseUrl}{username}/{password}";
+			string apiUrl = $"{GlobalConfig.USER_BASE_URL}{username}/{password}";
 
 			var response = await _httpClient.GetAsync(new Uri(apiUrl));
 			if (response.IsSuccessStatusCode)
@@ -105,5 +104,29 @@ namespace CourseRegisterApplication.MAUI.Services
 				
 			return null;
 		}
-	}
+
+        public async Task<bool> UpdateRole(int id, User user)
+        {
+            string apiUrl = $"{GlobalConfig.USER_BASE_URL}{id}";
+
+            var json = JsonConvert.SerializeObject(user);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> UpdateRole(User user, Role role)
+        {
+            user.Role = role;
+
+            string apiUrl = $"{GlobalConfig.USER_BASE_URL}{user.Id}";
+
+            var json = JsonConvert.SerializeObject(user);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
+
+            return response.IsSuccessStatusCode;
+        }
+    }
 }

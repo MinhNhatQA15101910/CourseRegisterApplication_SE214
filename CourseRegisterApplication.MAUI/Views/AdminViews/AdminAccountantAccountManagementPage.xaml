@@ -9,7 +9,7 @@
   NavigationPage.HasNavigationBar="False"
   Shell.FlyoutBehavior="Flyout">
   <ScrollView>
-    <Grid RowDefinitions="Auto, 600, *">
+    <Grid RowDefinitions="Auto,600,*">
       <Grid Grid.Row="0" RowDefinitions="Auto,Auto">
         <contentViews:NavigationTopBar
           Grid.Row="0"
@@ -21,25 +21,53 @@
           TitleText="Admin / Accountant account management page"
           VerticalOptions="Start" />
 
-        <HorizontalStackLayout
+        <Grid
           Grid.Row="1"
-          Margin="100,0,0,0"
-          HorizontalOptions="Start">
-          <Picker
-            Title="Choose a filter"
-            ItemsSource="{Binding FilterOptions}"
-            SelectedItem="{Binding SelectedFilterOption}" />
+          Margin="100,0,300,0"
+          ColumnDefinitions="Auto,*">
+          <HorizontalStackLayout HorizontalOptions="Start">
+            <Picker
+              Title="Choose a filter"
+              ItemsSource="{Binding FilterOptions}"
+              SelectedItem="{Binding SelectedFilterOption}" />
 
-          <SearchBar
+            <SearchBar
+              Margin="20,20,0,0"
+              BackgroundColor="#FCFAFA"
+              FontFamily="Roboto"
+              FontSize="13"
+              Placeholder="Search for a teachers by name, email or id"
+              Text="{Binding SearchFilter}"
+              TextColor="Black"
+              WidthRequest="500" />
+          </HorizontalStackLayout>
+
+          <Grid
             Grid.Column="1"
-            Margin="20,20,0,0"
-            BackgroundColor="#FCFAFA"
-            FontFamily="Roboto"
-            FontSize="13"
-            Placeholder="Search for a teachers by name, email or id"
-            TextColor="Black"
-            WidthRequest="500" />
-        </HorizontalStackLayout>
+            ColumnDefinitions="Auto,Auto"
+            HorizontalOptions="End">
+            <Grid.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding NavigateToAddAdminAccountantAccountPageCommand}" />
+            </Grid.GestureRecognizers>
+            <Frame
+              Grid.Column="0"
+              Margin="20"
+              Padding="0"
+              HeightRequest="30"
+              IsClippedToBounds="True"
+              VerticalOptions="Center"
+              WidthRequest="30">
+              <Image Aspect="AspectFill" Source="button_add_account.png" />
+            </Frame>
+
+            <Label
+              Grid.Column="1"
+              FontFamily="RobotoMedium"
+              FontSize="20"
+              Text="Add an account"
+              VerticalOptions="Center" />
+          </Grid>
+        </Grid>
       </Grid>
 
       <Grid
@@ -203,6 +231,7 @@
               Margin="0,0,20,0"
               Padding="5"
               BackgroundColor="#509CDB"
+              Command="{Binding SaveChangesCommand}"
               CornerRadius="10"
               FontAttributes="Bold"
               FontSize="14"
@@ -212,13 +241,13 @@
             <Button
               Margin="0,0,20,0"
               Padding="5"
-              BackgroundColor="#EFF3FA"
+              BackgroundColor="#509CDB"
+              Command="{Binding DeleteUserCommand}"
               CornerRadius="10"
               FontAttributes="Bold"
               FontSize="14"
               HorizontalOptions="End"
-              Text="Cancel"
-              TextColor="#509CDB"
+              Text="Delete user"
               WidthRequest="120" />
           </HorizontalStackLayout>
         </VerticalStackLayout>

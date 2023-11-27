@@ -48,7 +48,7 @@
             Text="Change Password"
             TextColor="White" />
           <HorizontalStackLayout.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding ChangePasswordCommand}" />
+            <TapGestureRecognizer Command="{Binding NavigateToChangePasswordPageCommand}" />
           </HorizontalStackLayout.GestureRecognizers>
         </HorizontalStackLayout>
       </StackLayout>
