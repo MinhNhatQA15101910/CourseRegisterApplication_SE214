@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseRegisterApplication.Server.Migrations
 {
     [DbContext(typeof(CourseRegisterManagementDbContext))]
-    [Migration("20231103035000_Initial")]
-    partial class Initial
+    [Migration("20231113142659_CRM")]
+    partial class CRM
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,9 +34,11 @@ namespace CourseRegisterApplication.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BranchName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BranchSpecificId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("DepartmentId")
@@ -45,12 +47,10 @@ namespace CourseRegisterApplication.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BranchName")
-                        .IsUnique()
-                        .HasFilter("[BranchName] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("BranchSpecificId")
-                        .IsUnique()
-                        .HasFilter("[BranchSpecificId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("DepartmentId");
 
@@ -138,20 +138,20 @@ namespace CourseRegisterApplication.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DepartmentName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DepartmentSpecificId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentName")
-                        .IsUnique()
-                        .HasFilter("[DepartmentName] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("DepartmentSpecificId")
-                        .IsUnique()
-                        .HasFilter("[DepartmentSpecificId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Departments");
 
@@ -203,7 +203,8 @@ namespace CourseRegisterApplication.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DistrictName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsPriority")
                         .HasColumnType("bit");
@@ -214,6 +215,9 @@ namespace CourseRegisterApplication.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProvinceId");
+
+                    b.HasIndex("DistrictName", "ProvinceId")
+                        .IsUnique();
 
                     b.ToTable("Districts");
 
@@ -5164,6 +5168,7 @@ namespace CourseRegisterApplication.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("PriorityName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("TuitionDiscountRate")
@@ -5172,8 +5177,7 @@ namespace CourseRegisterApplication.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PriorityName")
-                        .IsUnique()
-                        .HasFilter("[PriorityName] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("PriorityTypes");
 
@@ -5213,13 +5217,13 @@ namespace CourseRegisterApplication.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ProvinceName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProvinceName")
-                        .IsUnique()
-                        .HasFilter("[ProvinceName] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Provinces");
 
@@ -5541,43 +5545,6 @@ namespace CourseRegisterApplication.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CourseRegisterApplication.Shared.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("RoleName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleName")
-                        .IsUnique()
-                        .HasFilter("[RoleName] IS NOT NULL");
-
-                    b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            RoleName = "Admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            RoleName = "Accountant"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            RoleName = "Student"
-                        });
-                });
-
             modelBuilder.Entity("CourseRegisterApplication.Shared.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -5596,12 +5563,14 @@ namespace CourseRegisterApplication.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
                     b.Property<string>("StudentSpecificId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -5611,8 +5580,7 @@ namespace CourseRegisterApplication.Server.Migrations
                     b.HasIndex("DistrictId");
 
                     b.HasIndex("StudentSpecificId")
-                        .IsUnique()
-                        .HasFilter("[StudentSpecificId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Students");
 
@@ -6636,6 +6604,46 @@ namespace CourseRegisterApplication.Server.Migrations
                             FullName = "Nguyễn Thanh Tường Vi",
                             Gender = 1,
                             StudentSpecificId = "SV21521636"
+                        },
+                        new
+                        {
+                            Id = 103,
+                            BranchId = 3,
+                            DateOfBirth = new DateTime(2003, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 647,
+                            FullName = "Trần Trọng Khiêm",
+                            Gender = 0,
+                            StudentSpecificId = "SV21522217"
+                        },
+                        new
+                        {
+                            Id = 104,
+                            BranchId = 3,
+                            DateOfBirth = new DateTime(2003, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 396,
+                            FullName = "Nguyễn Văn Vũ",
+                            Gender = 0,
+                            StudentSpecificId = "SV21521682"
+                        },
+                        new
+                        {
+                            Id = 105,
+                            BranchId = 3,
+                            DateOfBirth = new DateTime(2003, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 537,
+                            FullName = "Mai Hoàng Nhật Duy",
+                            Gender = 0,
+                            StudentSpecificId = "SV21522819"
+                        },
+                        new
+                        {
+                            Id = 106,
+                            BranchId = 3,
+                            DateOfBirth = new DateTime(2003, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DistrictId = 595,
+                            FullName = "Đỗ Minh Nhật",
+                            Gender = 0,
+                            StudentSpecificId = "SV21522415"
                         });
                 });
 
@@ -6663,28 +6671,27 @@ namespace CourseRegisterApplication.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
-
-                    b.HasIndex("RoleId");
+                        .IsUnique();
 
                     b.HasIndex("Username")
-                        .IsUnique()
-                        .HasFilter("[Username] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Users");
 
@@ -6694,7 +6701,7 @@ namespace CourseRegisterApplication.Server.Migrations
                             Id = 1,
                             Email = "admin1.uit@gmail.com",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 1,
+                            Role = 0,
                             Username = "admin1"
                         },
                         new
@@ -6702,7 +6709,7 @@ namespace CourseRegisterApplication.Server.Migrations
                             Id = 2,
                             Email = "admin2.uit@gmail.com",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 1,
+                            Role = 0,
                             Username = "admin2"
                         },
                         new
@@ -6710,7 +6717,7 @@ namespace CourseRegisterApplication.Server.Migrations
                             Id = 3,
                             Email = "teacher1.uit@gmail.com",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 2,
+                            Role = 1,
                             Username = "teacher1"
                         },
                         new
@@ -6718,40 +6725,40 @@ namespace CourseRegisterApplication.Server.Migrations
                             Id = 4,
                             Email = "teacher2.uit@gmail.com",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 2,
+                            Role = 1,
                             Username = "teacher2"
                         },
                         new
                         {
                             Id = 5,
-                            Email = "21522415@gm.uit.edu.vn",
+                            Email = "21520007@gm.uit.edu.vn",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 3,
-                            Username = "SV21522415"
+                            Role = 2,
+                            Username = "SV21520007"
                         },
                         new
                         {
                             Id = 6,
-                            Email = "21521682@gm.uit.edu.vn",
+                            Email = "21520013@gm.uit.edu.vn",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 3,
-                            Username = "SV21521682"
+                            Role = 2,
+                            Username = "SV21520013"
                         },
                         new
                         {
                             Id = 7,
-                            Email = "21522819@gm.uit.edu.vn",
+                            Email = "21520032@gm.uit.edu.vn",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 3,
-                            Username = "SV21522819"
+                            Role = 2,
+                            Username = "SV21520032"
                         },
                         new
                         {
                             Id = 8,
-                            Email = "21522217@gm.uit.edu.vn",
+                            Email = "21520035@gm.uit.edu.vn",
                             Password = "MTIzNDU2Nzg=",
-                            RoleId = 3,
-                            Username = "SV21522217"
+                            Role = 2,
+                            Username = "SV21520035"
                         });
                 });
 
@@ -6815,17 +6822,6 @@ namespace CourseRegisterApplication.Server.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("CourseRegisterApplication.Shared.User", b =>
-                {
-                    b.HasOne("CourseRegisterApplication.Shared.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
             modelBuilder.Entity("CourseRegisterApplication.Shared.Department", b =>
                 {
                     b.Navigation("Branches");
@@ -6839,11 +6835,6 @@ namespace CourseRegisterApplication.Server.Migrations
             modelBuilder.Entity("CourseRegisterApplication.Shared.Province", b =>
                 {
                     b.Navigation("Districts");
-                });
-
-            modelBuilder.Entity("CourseRegisterApplication.Shared.Role", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("CourseRegisterApplication.Shared.Student", b =>

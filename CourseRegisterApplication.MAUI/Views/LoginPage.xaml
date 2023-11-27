@@ -3,7 +3,8 @@
   x:Class="CourseRegisterApplication.MAUI.Views.LoginPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  BackgroundColor="#FCFAFA">
+  BackgroundColor="#FCFAFA"
+  NavigationPage.HasNavigationBar="False">
   <ScrollView>
     <VerticalStackLayout
       HeightRequest="500"
@@ -52,28 +53,62 @@
             VerticalOptions="Center"
             WidthRequest="250" />
         </Frame>
-        <Frame
+        <Label
+          x:Name="UsernameLabel"
+          Margin="124,4,0,0"
+          FontSize="12"
+          Text="{Binding UsernameMessage}"
+          TextColor="{Binding UsernameMessageColor}" />
+        <Grid
           Margin="0,12,0,0"
-          Padding="0"
-          BackgroundColor="Transparent"
-          BorderColor="#A7A7A7"
-          CornerRadius="5"
           HeightRequest="40"
-          HorizontalOptions="FillAndExpand"
           WidthRequest="250">
-          <Entry
-            FontFamily="OpenSans-Semibold"
-            FontSize="14"
+          <Frame
+            Padding="0"
+            BackgroundColor="Transparent"
+            BorderColor="#A7A7A7"
+            CornerRadius="5"
+            HeightRequest="40"
             HorizontalOptions="FillAndExpand"
-            IsPassword="True"
-            Placeholder="Enter Password"
-            Text="{Binding Password}"
-            TextColor="#8A8A8A"
+            WidthRequest="250">
+            <Entry
+              x:Name="password"
+              FontFamily="OpenSans-Semibold"
+              FontSize="14"
+              HorizontalOptions="Start"
+              IsPassword="True"
+              Placeholder="Enter Password"
+              Text="{Binding Password}"
+              TextColor="#8A8A8A"
+              VerticalOptions="Center"
+              WidthRequest="250" />
+          </Frame>
+          <Grid
+            Margin="0,0,2,0"
+            Background="White"
+            HeightRequest="38"
+            HorizontalOptions="End"
             VerticalOptions="Center"
-            WidthRequest="250" />
-        </Frame>
+            WidthRequest="40">
+            <Image
+              x:Name="eye_icon"
+              HeightRequest="20"
+              Source="eye_close_icon.png"
+              VerticalOptions="Center">
+              <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnEyeTapped" />
+              </Image.GestureRecognizers>
+            </Image>
+          </Grid>
+        </Grid>
+        <Label
+          x:Name="PasswordLabel"
+          Margin="124,4,0,0"
+          FontSize="12"
+          Text="{Binding PasswordMessage}"
+          TextColor="{Binding PasswordMessageColor}" />
         <Button
-          Margin="0,48,0,0"
+          Margin="0,36,0,0"
           BackgroundColor="#2D88D4"
           Command="{Binding LoginUserCommand}"
           FontFamily="OpenSans-Semibold"
@@ -81,10 +116,7 @@
           HeightRequest="40"
           Text="Login"
           WidthRequest="250" />
-        <ActivityIndicator
-          IsEnabled="{Binding IsLoading}"
-          IsRunning="{Binding IsLoading}"
-          IsVisible="{Binding IsLoading}" />
+        <ActivityIndicator Margin="10,0,0,0" IsRunning="{Binding IsLoading}" />
       </VerticalStackLayout>
     </VerticalStackLayout>
   </ScrollView>

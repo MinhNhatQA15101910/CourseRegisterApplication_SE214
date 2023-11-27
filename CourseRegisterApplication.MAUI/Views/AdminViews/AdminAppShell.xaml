@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+  x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminAppShell"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:local="clr-namespace:CourseRegisterApplication.MAUI.Views.AdminViews"
+  FlyoutBackgroundColor="#152259"
+  FlyoutBehavior="Flyout"
+  FlyoutWidth="240"
+  NavBarIsVisible="False">
+  <Shell.FlyoutHeader>
+    <StackLayout>
+      <StackLayout>
+        <Image
+          Margin="0,26,0,0"
+          HeightRequest="65"
+          Source="demo_icon.png"
+          VerticalOptions="Start"
+          WidthRequest="65" />
+        <Label
+          Margin="0,12,0,0"
+          FontAttributes="Bold"
+          FontSize="14"
+          HorizontalOptions="Center"
+          Text="Admin"
+          TextColor="White" />
+      </StackLayout>
+      <BoxView
+        Margin="0,12,0,12"
+        HeightRequest="0.5"
+        Color="#BDBDBD" />
+    </StackLayout>
+  </Shell.FlyoutHeader>
+  <Shell.FlyoutFooterTemplate>
+    <DataTemplate>
+      <StackLayout>
+        <BoxView
+          Margin="0,12,0,0"
+          HeightRequest="0.5"
+          Color="#BDBDBD" />
+        <HorizontalStackLayout Margin="0,16,0,16" HorizontalOptions="Center">
+          <Image HeightRequest="20" Source="setting_white.png" />
+          <Label
+            Margin="16,0,0,0"
+            FontFamily="RobotoMedium"
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="Change Password"
+            TextColor="White" />
+          <HorizontalStackLayout.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding NavigateToChangePasswordPageCommand}" />
+          </HorizontalStackLayout.GestureRecognizers>
+        </HorizontalStackLayout>
+      </StackLayout>
+    </DataTemplate>
+  </Shell.FlyoutFooterTemplate>
+
+  <FlyoutItem
+    Title="Dashboard"
+    Icon="home.png"
+    Route="dashboard">
+    <ShellContent ContentTemplate="{DataTemplate local:AdminDashboardPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Admin / Accountant account"
+    Icon="student.png"
+    Route="adminaccountant">
+    <ShellContent ContentTemplate="{DataTemplate local:AdminAccountantAccountManagementPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Student account"
+    Icon="book.png"
+    Route="student">
+    <ShellContent ContentTemplate="{DataTemplate local:StudentAccountManagementPage}" Route="details" />
+  </FlyoutItem>
+
+  <Shell.ItemTemplate>
+    <DataTemplate>
+      <Frame
+        Padding="0"
+        BorderColor="Transparent"
+        CornerRadius="5"
+        HasShadow="False"
+        HeightRequest="50"
+        HorizontalOptions="FillAndExpand"
+        WidthRequest="210">
+        <HorizontalStackLayout x:Name="FlyoutItem" HeightRequest="50">
+          <Image
+            Margin="12"
+            HeightRequest="16"
+            HorizontalOptions="Start"
+            Source="{Binding FlyoutIcon}"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="1"
+            FontFamily="OpenSans-Semibold"
+            FontSize="14"
+            Text="{Binding Title}"
+            TextColor="White"
+            VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+        <VisualStateManager.VisualStateGroups>
+          <VisualStateGroupList>
+            <VisualStateGroup x:Name="CommonStates">
+              <VisualState x:Name="Normal">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#152259" />
+                </VisualState.Setters>
+              </VisualState>
+              <VisualState x:Name="Selected">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#509CDB" />
+                </VisualState.Setters>
+              </VisualState>
+            </VisualStateGroup>
+          </VisualStateGroupList>
+        </VisualStateManager.VisualStateGroups>
+      </Frame>
+    </DataTemplate>
+  </Shell.ItemTemplate>
+</Shell>

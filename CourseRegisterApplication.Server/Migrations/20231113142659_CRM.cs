@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -8,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CourseRegisterApplication.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class CRM : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,8 +18,8 @@ namespace CourseRegisterApplication.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DepartmentSpecificId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DepartmentName = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    DepartmentSpecificId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DepartmentName = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,7 +32,7 @@ namespace CourseRegisterApplication.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PriorityName = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    PriorityName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TuitionDiscountRate = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
@@ -47,7 +46,7 @@ namespace CourseRegisterApplication.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProvinceName = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ProvinceName = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,16 +54,19 @@ namespace CourseRegisterApplication.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleName = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,8 +75,8 @@ namespace CourseRegisterApplication.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BranchSpecificId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    BranchName = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    BranchSpecificId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    BranchName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -94,7 +96,7 @@ namespace CourseRegisterApplication.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DistrictName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DistrictName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsPriority = table.Column<bool>(type: "bit", nullable: false),
                     ProvinceId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -110,35 +112,13 @@ namespace CourseRegisterApplication.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentSpecificId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StudentSpecificId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     DistrictId = table.Column<int>(type: "int", nullable: false),
@@ -280,13 +260,18 @@ namespace CourseRegisterApplication.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Roles",
-                columns: new[] { "Id", "RoleName" },
+                table: "Users",
+                columns: new[] { "Id", "Email", "Password", "Role", "Username" },
                 values: new object[,]
                 {
-                    { 1, "Admin" },
-                    { 2, "Accountant" },
-                    { 3, "Student" }
+                    { 1, "admin1.uit@gmail.com", "MTIzNDU2Nzg=", 0, "admin1" },
+                    { 2, "admin2.uit@gmail.com", "MTIzNDU2Nzg=", 0, "admin2" },
+                    { 3, "teacher1.uit@gmail.com", "MTIzNDU2Nzg=", 1, "teacher1" },
+                    { 4, "teacher2.uit@gmail.com", "MTIzNDU2Nzg=", 1, "teacher2" },
+                    { 5, "21520007@gm.uit.edu.vn", "MTIzNDU2Nzg=", 2, "SV21520007" },
+                    { 6, "21520013@gm.uit.edu.vn", "MTIzNDU2Nzg=", 2, "SV21520013" },
+                    { 7, "21520032@gm.uit.edu.vn", "MTIzNDU2Nzg=", 2, "SV21520032" },
+                    { 8, "21520035@gm.uit.edu.vn", "MTIzNDU2Nzg=", 2, "SV21520035" }
                 });
 
             migrationBuilder.InsertData(
@@ -1019,21 +1004,6 @@ namespace CourseRegisterApplication.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Email", "Password", "RoleId", "Username" },
-                values: new object[,]
-                {
-                    { 1, "admin1.uit@gmail.com", "MTIzNDU2Nzg=", 1, "admin1" },
-                    { 2, "admin2.uit@gmail.com", "MTIzNDU2Nzg=", 1, "admin2" },
-                    { 3, "teacher1.uit@gmail.com", "MTIzNDU2Nzg=", 2, "teacher1" },
-                    { 4, "teacher2.uit@gmail.com", "MTIzNDU2Nzg=", 2, "teacher2" },
-                    { 5, "21522415@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21522415" },
-                    { 6, "21521682@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21521682" },
-                    { 7, "21522819@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21522819" },
-                    { 8, "21522217@gm.uit.edu.vn", "MTIzNDU2Nzg=", 3, "SV21522217" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Students",
                 columns: new[] { "Id", "BranchId", "DateOfBirth", "DistrictId", "FullName", "Gender", "StudentSpecificId" },
                 values: new object[,]
@@ -1139,22 +1109,24 @@ namespace CourseRegisterApplication.Server.Migrations
                     { 99, 10, new DateTime(2003, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 14, "Trịnh Ngọc Pháp", 0, "SV21521227" },
                     { 100, 10, new DateTime(2003, 11, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 7, "Nguyễn Thị Thắm", 1, "SV21521384" },
                     { 101, 10, new DateTime(2003, 4, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 443, "Nguyễn Quang Thuận", 0, "SV21521470" },
-                    { 102, 10, new DateTime(2003, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 668, "Nguyễn Thanh Tường Vi", 1, "SV21521636" }
+                    { 102, 10, new DateTime(2003, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 668, "Nguyễn Thanh Tường Vi", 1, "SV21521636" },
+                    { 103, 3, new DateTime(2003, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), 647, "Trần Trọng Khiêm", 0, "SV21522217" },
+                    { 104, 3, new DateTime(2003, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 396, "Nguyễn Văn Vũ", 0, "SV21521682" },
+                    { 105, 3, new DateTime(2003, 1, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 537, "Mai Hoàng Nhật Duy", 0, "SV21522819" },
+                    { 106, 3, new DateTime(2003, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), 595, "Đỗ Minh Nhật", 0, "SV21522415" }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Branches_BranchName",
                 table: "Branches",
                 column: "BranchName",
-                unique: true,
-                filter: "[BranchName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Branches_BranchSpecificId",
                 table: "Branches",
                 column: "BranchSpecificId",
-                unique: true,
-                filter: "[BranchSpecificId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Branches_DepartmentId",
@@ -1165,15 +1137,19 @@ namespace CourseRegisterApplication.Server.Migrations
                 name: "IX_Departments_DepartmentName",
                 table: "Departments",
                 column: "DepartmentName",
-                unique: true,
-                filter: "[DepartmentName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_DepartmentSpecificId",
                 table: "Departments",
                 column: "DepartmentSpecificId",
-                unique: true,
-                filter: "[DepartmentSpecificId] IS NOT NULL");
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Districts_DistrictName_ProvinceId",
+                table: "Districts",
+                columns: new[] { "DistrictName", "ProvinceId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Districts_ProvinceId",
@@ -1184,22 +1160,13 @@ namespace CourseRegisterApplication.Server.Migrations
                 name: "IX_PriorityTypes_PriorityName",
                 table: "PriorityTypes",
                 column: "PriorityName",
-                unique: true,
-                filter: "[PriorityName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Provinces_ProvinceName",
                 table: "Provinces",
                 column: "ProvinceName",
-                unique: true,
-                filter: "[ProvinceName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Roles_RoleName",
-                table: "Roles",
-                column: "RoleName",
-                unique: true,
-                filter: "[RoleName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentPriorityTypes_PriorityTypeId",
@@ -1220,27 +1187,19 @@ namespace CourseRegisterApplication.Server.Migrations
                 name: "IX_Students_StudentSpecificId",
                 table: "Students",
                 column: "StudentSpecificId",
-                unique: true,
-                filter: "[StudentSpecificId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
                 table: "Users",
                 column: "Email",
-                unique: true,
-                filter: "[Email] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId",
-                table: "Users",
-                column: "RoleId");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Username",
                 table: "Users",
                 column: "Username",
-                unique: true,
-                filter: "[Username] IS NOT NULL");
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -1257,9 +1216,6 @@ namespace CourseRegisterApplication.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Students");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Branches");

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminAccountantAccountManagementPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:adminViewModels="clr-namespace:CourseRegisterApplication.MAUI.ViewModels.AdminViewModels"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  xmlns:mauiToolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+  NavigationPage.HasNavigationBar="False"
+  Shell.FlyoutBehavior="Flyout">
+  <ScrollView>
+    <Grid RowDefinitions="Auto,600,*">
+      <Grid Grid.Row="0" RowDefinitions="Auto,Auto">
+        <contentViews:NavigationTopBar
+          Grid.Row="0"
+          DescriptionText="Manage Admin and Accountant accounts, keep track of their roles and accessibility"
+          IsBackVisible="False"
+          IsControlVisible="True"
+          IsTitleVisible="True"
+          LogoutCommand="{Binding LogoutCommand}"
+          TitleText="Admin / Accountant account management page"
+          VerticalOptions="Start" />
+
+        <Grid
+          Grid.Row="1"
+          Margin="100,0,300,0"
+          ColumnDefinitions="Auto,*">
+          <HorizontalStackLayout HorizontalOptions="Start">
+            <Picker
+              Title="Choose a filter"
+              ItemsSource="{Binding FilterOptions}"
+              SelectedItem="{Binding SelectedFilterOption}" />
+
+            <SearchBar
+              Margin="20,20,0,0"
+              BackgroundColor="#FCFAFA"
+              FontFamily="Roboto"
+              FontSize="13"
+              Placeholder="Search for a teachers by name, email or id"
+              Text="{Binding SearchFilter}"
+              TextColor="Black"
+              WidthRequest="500" />
+          </HorizontalStackLayout>
+
+          <Grid
+            Grid.Column="1"
+            ColumnDefinitions="Auto,Auto"
+            HorizontalOptions="End">
+            <Grid.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding NavigateToAddAdminAccountantAccountPageCommand}" />
+            </Grid.GestureRecognizers>
+            <Frame
+              Grid.Column="0"
+              Margin="20"
+              Padding="0"
+              HeightRequest="30"
+              IsClippedToBounds="True"
+              VerticalOptions="Center"
+              WidthRequest="30">
+              <Image Aspect="AspectFill" Source="button_add_account.png" />
+            </Frame>
+
+            <Label
+              Grid.Column="1"
+              FontFamily="RobotoMedium"
+              FontSize="20"
+              Text="Add an account"
+              VerticalOptions="Center" />
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid
+        Grid.Row="1"
+        Grid.Column="0"
+        Margin="100,100,0,0"
+        ColumnDefinitions="6*, 4*"
+        RowDefinitions="Auto, *">
+        <Grid
+          Grid.Row="0"
+          Padding="5,0,0,0"
+          BackgroundColor="Azure"
+          ColumnDefinitions="3*,4*,3*"
+          HeightRequest="40"
+          VerticalOptions="Center">
+          <Label
+            Grid.Column="0"
+            FontFamily="RobotoMedium"
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="Username"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="1"
+            FontFamily="RobotoMedium"
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="Email"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="2"
+            FontFamily="RobotoMedium"
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="Role"
+            VerticalOptions="Center" />
+        </Grid>
+
+        <CollectionView
+          Grid.Row="1"
+          Grid.Column="0"
+          ItemsSource="{Binding AdminAccountantAccountList}"
+          VerticalScrollBarVisibility="Always">
+          <CollectionView.ItemTemplate>
+            <DataTemplate>
+              <Grid
+                Margin="5"
+                Padding="5"
+                BackgroundColor="{Binding BackgroundColor}"
+                ColumnDefinitions="3*,4*,3*"
+                VerticalOptions="Center">
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding ChooseAccountCommand}" />
+                </Grid.GestureRecognizers>
+                <Grid
+                  Grid.Column="0"
+                  ColumnDefinitions="Auto,Auto"
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center">
+                  <Frame
+                    Grid.Column="0"
+                    Margin="20"
+                    Padding="0"
+                    CornerRadius="15"
+                    HeightRequest="30"
+                    IsClippedToBounds="True"
+                    WidthRequest="30">
+                    <Image Aspect="AspectFill" Source="{Binding Avatar}" />
+                  </Frame>
+                  <Label
+                    Grid.Column="1"
+                    FontSize="16"
+                    Text="{Binding Username}"
+                    VerticalOptions="Center" />
+                </Grid>
+
+                <Label
+                  Grid.Column="1"
+                  FontSize="16"
+                  HorizontalOptions="Center"
+                  Text="{Binding Email}"
+                  VerticalOptions="Center" />
+
+                <Border
+                  Grid.Column="2"
+                  BackgroundColor="{Binding RoleBackgroundColor}"
+                  HeightRequest="40"
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center"
+                  WidthRequest="125">
+                  <Picker
+                    HorizontalOptions="Center"
+                    ItemsSource="{Binding Roles}"
+                    SelectedItem="{Binding RoleName}"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                </Border>
+              </Grid>
+            </DataTemplate>
+          </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <VerticalStackLayout
+          Grid.Row="1"
+          Grid.Column="1"
+          HorizontalOptions="Center">
+          <Frame
+            Margin="20"
+            Padding="0"
+            CornerRadius="100"
+            HeightRequest="200"
+            IsClippedToBounds="True"
+            WidthRequest="200">
+            <Image Aspect="AspectFill" Source="{Binding AvatarUri}" />
+          </Frame>
+          <Label
+            FontAttributes="Bold"
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="{Binding Username}" />
+          <HorizontalStackLayout Margin="0,30,0,20" Spacing="60">
+            <VerticalStackLayout>
+              <Label
+                FontAttributes="Bold"
+                FontSize="16"
+                HorizontalOptions="Start"
+                Text="Username" />
+              <Label
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="{Binding Username}"
+                TextColor="Gray" />
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+              <Label
+                FontAttributes="Bold"
+                FontSize="16"
+                HorizontalOptions="End"
+                Text="Account Type" />
+              <Label
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="{Binding RoleName}"
+                TextColor="Gray" />
+            </VerticalStackLayout>
+          </HorizontalStackLayout>
+          <VerticalStackLayout Margin="0,5,0,20">
+            <Label
+              FontAttributes="Bold"
+              FontSize="16"
+              HorizontalOptions="Start"
+              Text="Email Address" />
+            <Label
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="{Binding Email}"
+              TextColor="Gray" />
+          </VerticalStackLayout>
+          <HorizontalStackLayout Margin="0,30,0,0">
+            <Button
+              Margin="0,0,20,0"
+              Padding="5"
+              BackgroundColor="#509CDB"
+              Command="{Binding SaveChangesCommand}"
+              CornerRadius="10"
+              FontAttributes="Bold"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Save Changes"
+              WidthRequest="120" />
+            <Button
+              Margin="0,0,20,0"
+              Padding="5"
+              BackgroundColor="#509CDB"
+              Command="{Binding DeleteUserCommand}"
+              CornerRadius="10"
+              FontAttributes="Bold"
+              FontSize="14"
+              HorizontalOptions="End"
+              Text="Delete user"
+              WidthRequest="120" />
+          </HorizontalStackLayout>
+        </VerticalStackLayout>
+      </Grid>
+    </Grid>
+  </ScrollView>
+</ContentPage>

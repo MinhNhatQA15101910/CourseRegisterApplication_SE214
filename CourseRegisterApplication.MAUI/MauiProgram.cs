@@ -1,4 +1,5 @@
-﻿using CourseRegisterApplication.MAUI.IServices;
+﻿using CourseRegisterApplication.MAUI.ContentViews;
+using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Services;
 using CourseRegisterApplication.MAUI.ViewModels;
 using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
@@ -14,29 +15,41 @@ namespace CourseRegisterApplication.MAUI
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+					fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular");
+					fonts.AddFont("Roboto-Medium.ttf", "RobotoMedium");
+					fonts.AddFont("Roboto-Thin.ttf", "RobotoThin");
+					fonts.AddFont("Roboto-Bold.ttf", "RobotoBold");
+				});
 
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
 
-            // Services
-            builder.Services.AddScoped<IUserService, UserService>();
-            builder.Services.AddScoped<IRoleService, RoleService>();
+            // ViewModels
+            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<AdminAppShellViewModel>();
+            builder.Services.AddTransient<AdminDashboardViewModel>();
+            builder.Services.AddTransient<AdminAccountantAccountManagementViewModel>();
+            builder.Services.AddTransient<ChangePasswordViewModel>();
+            builder.Services.AddTransient<AddAdminAccountantAccountViewModel>();
 
             // Views
-            builder.Services.AddSingleton<LoginPage>();
-            builder.Services.AddTransient<AdminMenuItem>();
-            builder.Services.AddTransient<AdminFlyoutPage>();
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<AdminAppShell>();
+            builder.Services.AddTransient<NavigationTopBar>();
             builder.Services.AddTransient<AdminDashboardPage>();
+            builder.Services.AddTransient<AdminAccountantAccountManagementPage>();
+            builder.Services.AddTransient<ChangePasswordPage>();
+            builder.Services.AddTransient<AddAdminAccountantAccountPage>();
 
-            // ViewModels
-            builder.Services.AddSingleton<LoginViewModel>();
-            builder.Services.AddTransient<AdminFlyoutItem>();
+            // Services
+            builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             return builder.Build();
         }

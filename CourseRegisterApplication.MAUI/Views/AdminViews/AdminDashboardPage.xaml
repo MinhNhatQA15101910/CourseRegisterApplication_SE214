@@ -3,11 +3,109 @@
   x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminDashboardPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  Title="AdminDashboardPage">
-  <VerticalStackLayout>
-    <Label
-      HorizontalOptions="Center"
-      Text="Welcome to .NET MAUI!"
-      VerticalOptions="Center" />
-  </VerticalStackLayout>
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  NavigationPage.HasNavigationBar="False"
+  Shell.FlyoutBehavior="Flyout">
+  <Grid RowDefinitions="Auto,*">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="{Binding DescriptionText, FallbackValue='Card description text.'}"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="Welcome back admin!"
+      VerticalOptions="Start" />
+    <ScrollView Grid.Row="1">
+      <StackLayout Margin="200,100,0,0">
+        <Label
+          FontFamily="RobotoMedium"
+          FontSize="24"
+          Text="What would you do?"
+          TextColor="#4F4F4F" />
+        <StackLayout Margin="0,48,0,0">
+          <Grid
+            ColumnDefinitions="Auto,*"
+            HorizontalOptions="Start"
+            RowDefinitions="Auto,*"
+            WidthRequest="600">
+            <Grid.GestureRecognizers>
+              <PointerGestureRecognizer PointerEntered="SelectionMouseEnter" PointerExited="SelectionMouseExit" />
+              <TapGestureRecognizer Command="{Binding NavigateToAdminAccountantAccountManagementCommand}" />
+            </Grid.GestureRecognizers>
+            <Image HeightRequest="36" Source="admin_image_1.png" />
+            <Label
+              Grid.Column="1"
+              Margin="24,0,0,0"
+              FontSize="24"
+              Text="Add other admin account"
+              TextColor="#4F4F4F"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Row="1"
+              Grid.Column="1"
+              Margin="24,12,0,0"
+              FontAttributes="Bold"
+              FontFamily="RobotoThin"
+              Text="This feature allows you to give certain individuals elevated privileges for system management."
+              TextColor="#4F4F4F" />
+          </Grid>
+          <Grid
+            Margin="0,48,0,0"
+            ColumnDefinitions="Auto,*"
+            HorizontalOptions="Start"
+            RowDefinitions="Auto,*"
+            WidthRequest="600">
+            <Grid.GestureRecognizers>
+              <PointerGestureRecognizer PointerEntered="SelectionMouseEnter" PointerExited="SelectionMouseExit" />
+              <TapGestureRecognizer Command="{Binding NavigateToAdminAccountantAccountManagementCommand}" />
+            </Grid.GestureRecognizers>
+            <Image HeightRequest="36" Source="admin_image_2.png" />
+            <Label
+              Grid.Column="1"
+              Margin="24,0,0,0"
+              FontSize="24"
+              Text="Add accountant account"
+              TextColor="#4F4F4F"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Row="1"
+              Grid.Column="1"
+              Margin="24,12,0,0"
+              FontAttributes="Bold"
+              FontFamily="RobotoThin"
+              Text="Create specialized accounts for financial professionals to manage financial transactions."
+              TextColor="#4F4F4F" />
+          </Grid>
+          <Grid
+            Margin="0,48,0,0"
+            ColumnDefinitions="Auto,*"
+            HorizontalOptions="Start"
+            RowDefinitions="Auto,*"
+            WidthRequest="600">
+            <Grid.GestureRecognizers>
+              <PointerGestureRecognizer PointerEntered="SelectionMouseEnter" PointerExited="SelectionMouseExit" />
+              <TapGestureRecognizer Command="{Binding NavigateToStudentManagementCommand}" />
+            </Grid.GestureRecognizers>
+            <Image HeightRequest="36" Source="admin_image_3.png" />
+            <Label
+              Grid.Column="1"
+              Margin="24,0,0,0"
+              FontSize="24"
+              Text="Add student account"
+              TextColor="#4F4F4F"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Row="1"
+              Grid.Column="1"
+              Margin="24,12,0,0"
+              FontAttributes="Bold"
+              FontFamily="RobotoThin"
+              Text="Register students on your educational platform to grant them access to course materials and resources."
+              TextColor="#4F4F4F" />
+          </Grid>
+        </StackLayout>
+      </StackLayout>
+    </ScrollView>
+  </Grid>
 </ContentPage>

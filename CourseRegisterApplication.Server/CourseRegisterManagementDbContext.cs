@@ -6,7 +6,6 @@ public class CourseRegisterManagementDbContext : DbContext
     {
     }
 
-    public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Province> Provinces { get; set; }
     public DbSet<District> Districts { get; set; }
@@ -26,15 +25,15 @@ public class CourseRegisterManagementDbContext : DbContext
 
     private void InitializeUniques(ModelBuilder modelBuilder)
     {
-        // Role
-        modelBuilder.Entity<Role>(entity => entity.HasIndex(e => e.RoleName).IsUnique());
-
         // User
         modelBuilder.Entity<User>(entity => entity.HasIndex(e => e.Username).IsUnique());
         modelBuilder.Entity<User>(entity => entity.HasIndex(e => e.Email).IsUnique());
 
         // Province
         modelBuilder.Entity<Province>(entity => entity.HasIndex(e => e.ProvinceName).IsUnique());
+
+        // District
+        modelBuilder.Entity<District>(entity => entity.HasIndex(e => new { e.DistrictName, e.ProvinceId }).IsUnique());
 
         // Department
         modelBuilder.Entity<Department>(entity => entity.HasIndex(e => e.DepartmentSpecificId).IsUnique());
