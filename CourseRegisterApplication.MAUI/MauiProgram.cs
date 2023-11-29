@@ -3,8 +3,10 @@ using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Services;
 using CourseRegisterApplication.MAUI.ViewModels;
 using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
+using CourseRegisterApplication.MAUI.ViewModels.StudentViewModels;
 using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AdminViews;
+using CourseRegisterApplication.MAUI.Views.StudentViews;
 
 namespace CourseRegisterApplication.MAUI
 {
@@ -37,11 +39,13 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddTransient<AdminAccountantAccountManagementViewModel>();
             builder.Services.AddTransient<ChangePasswordViewModel>();
             builder.Services.AddTransient<AddAdminAccountantAccountViewModel>();
+			builder.Services.AddTransient<StudentAppShellViewModel>();
 
-            // Views
-            builder.Services.AddTransient<LoginPage>();
+			// Views
+			builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<AdminAppShell>();
-            builder.Services.AddTransient<NavigationTopBar>();
+			builder.Services.AddTransient<StudentAppShell>();
+			builder.Services.AddTransient<NavigationTopBar>();
             builder.Services.AddTransient<AdminDashboardPage>();
             builder.Services.AddTransient<AdminAccountantAccountManagementPage>();
             builder.Services.AddTransient<ChangePasswordPage>();

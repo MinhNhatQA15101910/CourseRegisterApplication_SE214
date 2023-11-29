@@ -49,6 +49,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\Roboto-Thin.ttf" />
+	  <None Remove="Resources\Images\admin_icon.png" />
 	  <None Remove="Resources\Images\admin_image_1.svg" />
 	  <None Remove="Resources\Images\admin_image_2.svg" />
 	  <None Remove="Resources\Images\admin_image_3.svg" />
@@ -74,6 +75,8 @@
 	  <None Remove="Resources\Images\setting.svg" />
 	  <None Remove="Resources\Images\setting_White.svg" />
 	  <None Remove="Resources\Images\student.svg" />
+	  <None Remove="Resources\Images\teacher_icon.png" />
+	  <None Remove="Resources\Images\university_icon.jpg" />
 	  <None Remove="Resources\Images\vector_down.svg" />
 	  <None Remove="Resources\Images\vector_left.svg" />
 	  <None Remove="Resources\Images\vector_right.svg" />
@@ -97,6 +100,9 @@
 	  </Compile>
 	  <Compile Update="Views\AdminViews\AdminAccountantAccountManagementPage.xaml.cs">
 	    <DependentUpon>AdminAccountantAccountManagementPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\StudentViews\StudentAppShell.xaml.cs">
+	    <DependentUpon>StudentAppShell.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -129,6 +135,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\StudentViews\StudentAppShell.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

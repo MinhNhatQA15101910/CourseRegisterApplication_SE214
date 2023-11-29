@@ -79,7 +79,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels
                         // TODO: Navigate to Accountant Page
                         Clear();
                         break;
-			}
+				}
 			}
 			else
 			{

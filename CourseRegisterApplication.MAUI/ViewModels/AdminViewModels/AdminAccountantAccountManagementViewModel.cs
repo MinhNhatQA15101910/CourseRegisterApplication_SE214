@@ -10,6 +10,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #region Properties
         public int Id { get; set; }
 
+        public int Index { get; set; }
+
         public string Password { get; set; }
 
         [ObservableProperty]
@@ -24,7 +26,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         [ObservableProperty]
         private Color roleBackgroundColor;
 
-        [ObservableProperty]
+		[ObservableProperty]
+		private bool isVisibleDot;
+
+		[ObservableProperty]
         private Color backgroundColor;
 
         [ObservableProperty]
@@ -42,7 +47,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         public void ChooseAccount()
         {
             UserRequester.ResetItemBackgrounds();
-            BackgroundColor = Color.FromArgb("#1E90FF");
+            BackgroundColor = Color.FromArgb("#B9D8F2");
 
             UserRequester.DisplayAccountInformation(new User
             {
@@ -59,12 +64,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         {
             if (newValue != PrimaryRoleName)
             {
-                RoleBackgroundColor = Color.FromArgb("#ADD8E6");
+                IsVisibleDot = true; 
             }
             else
             {
-                RoleBackgroundColor = Color.FromArgb("#EBF6FF");
-            }
+				IsVisibleDot = false;
+			}
 
             if (UserRequester != null)
             {
@@ -229,16 +234,16 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #region Implement IUserRequester
         public void ResetItemBackgrounds()
         {
-            foreach (var account in AdminAccountantAccountList)
+            for (int i = 0; i < AdminAccountantAccountList.Count; i++)
             {
-                account.BackgroundColor = Color.FromArgb("#EBF6FF");
-            }
+				AdminAccountantAccountList[i].BackgroundColor = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
+			}
         }
 
         public void DisplayAccountInformation(User user)
         {
             Id = user.Id;
-            AvatarUri = (user.Role == Role.Admin) ? "admin_avatar.jpg" : "accountant_avatar.png";
+            AvatarUri = (user.Role == Role.Admin) ? "admin_icon.png" : "teacher_icon.png";
             Username = user.Username;
             Email = user.Email;
             RoleName = (user.Role == Role.Admin) ? "Admin" : "Accountant";
@@ -250,10 +255,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         {
             if (oldValue != newValue)
             {
-                SearchFilter = "";
-                ResetItemBackgrounds();
-                ResetAccountInformation();
-
                 switch (newValue)
                 {
                     case "Username":
@@ -266,15 +267,16 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                         AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.RoleName).ToObservableCollection();
                         break;
                 }
-            }
+
+				SearchFilter = "";
+				ResetAccountInformation();
+				ResetItemBackgrounds();
+			}
         }
 
         partial void OnSearchFilterChanged(string oldValue, string newValue)
         {
-            ResetItemBackgrounds();
-            ResetAccountInformation();
-
-            switch (SelectedFilterOption)
+			switch (SelectedFilterOption)
             {
                 case "Username":
                     AdminAccountantAccountList = primaryAdminAccountantAccountList.Where(a => a.Username.Contains(newValue)).OrderBy(a => a.Username).ToObservableCollection();
@@ -286,34 +288,41 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     AdminAccountantAccountList = primaryAdminAccountantAccountList.Where(a => a.RoleName.Contains(newValue)).OrderBy(a => a.RoleName).ToObservableCollection();
                     break;
             }
-        }
+
+			ResetItemBackgrounds();
+			ResetAccountInformation();
+		}
         #endregion
 
         #region Helpers
         private void ReloadAdminAccountantAccountList(List<User> accountList)
         {
-            primaryAdminAccountantAccountList.Clear();
+			primaryAdminAccountantAccountList.Clear();
 
             if (accountList.Count > 0)
             {
-                foreach (var account in accountList)
+				for (int i = 0; i < accountList.Count; i++)
                 {
                     primaryAdminAccountantAccountList.Add(new UserDisplay
                     {
-                        Id = account.Id,
-                        Username = account.Username,
-                        Password = account.Password,
-                        Email = account.Email,
-                        RoleName = (account.Role == Role.Admin) ? "Admin" : "Accountant",
-                        PrimaryRoleName = (account.Role == Role.Admin) ? "Admin" : "Accountant",
-                        Avatar = (account.Role == Role.Admin) ? "admin_avatar.jpg" : "accountant_avatar.png",
-                        BackgroundColor = Color.FromArgb("#EBF6FF"),
-                        RoleBackgroundColor = Color.FromArgb("#EBF6FF"),
+                        Id = accountList[i].Id,
+                        Username = accountList[i].Username,
+                        Password = accountList[i].Password,
+                        Email = accountList[i].Email,
+                        RoleName = (accountList[i].Role == Role.Admin) ? "Admin" : "Accountant",
+                        PrimaryRoleName = (accountList[i].Role == Role.Admin) ? "Admin" : "Accountant",
+                        Avatar = (accountList[i].Role == Role.Admin) ? "admin_icon.png" : "teacher_icon.png",
+                        RoleBackgroundColor = Color.FromArgb("#4F4F4F"),
+                        IsVisibleDot = false,
                         UserRequester = this,
                     });
                 }
 
                 AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.Username).ToObservableCollection();
+                for (int i = 0; i < primaryAdminAccountantAccountList.Count; i++)
+                {
+                    AdminAccountantAccountList[i].BackgroundColor = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
+                }
             }
         }
 
