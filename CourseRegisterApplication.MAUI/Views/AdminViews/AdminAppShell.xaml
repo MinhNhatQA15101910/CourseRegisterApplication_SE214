@@ -62,7 +62,7 @@
     <ShellContent ContentTemplate="{DataTemplate local:AdminDashboardPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
-    Title="Admin / Accountant account"
+    Title="Manager account"
     Icon="student.png"
     Route="adminaccountant">
     <ShellContent ContentTemplate="{DataTemplate local:AdminAccountantAccountManagementPage}" Route="details" />
@@ -73,7 +73,6 @@
     Route="student">
     <ShellContent ContentTemplate="{DataTemplate local:StudentAccountManagementPage}" Route="details" />
   </FlyoutItem>
-
   <Shell.ItemTemplate>
     <DataTemplate>
       <Frame

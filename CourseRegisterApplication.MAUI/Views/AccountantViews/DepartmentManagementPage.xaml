@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.DepartmentManagementPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  Title="DepartmentManagementPage">
+  <Grid RowDefinitions="Auto,*">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="Can add, update, delete departments"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="Department Management Page"
+      VerticalOptions="Start" />
+
+    <Grid
+      Grid.Row="1"
+      ColumnDefinitions="6*,4*"
+      RowDefinitions="200,*">
+
+      <HorizontalStackLayout
+        Grid.Row="0"
+        Grid.Column="0"
+        Margin="100,0,0,0"
+        VerticalOptions="Center">
+
+        <Picker
+          FontSize="14"
+          HorizontalTextAlignment="Center"
+          ItemsSource="{Binding FilterOptions}"
+          SelectedItem="{Binding SelectedFilterOption}"
+          VerticalOptions="Center"
+          WidthRequest="100" />
+
+        <SearchBar
+          Margin="20,0,0,0"
+          BackgroundColor="#FCFAFA"
+          FontFamily="Roboto"
+          FontSize="14"
+          Placeholder="Search for a department by its ID or name"
+          Text="{Binding SearchFilter}"
+          TextColor="Black"
+          VerticalOptions="Center"
+          WidthRequest="500" />
+      </HorizontalStackLayout>
+
+      <Grid
+        Grid.Row="1"
+        Grid.Column="0"
+        Margin="100,0,0,0"
+        RowDefinitions="24,*">
+        <Grid
+          Grid.Row="0"
+          ColumnDefinitions="3*,7*"
+          HeightRequest="50">
+          <Label
+            Grid.Column="0"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="Department ID"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="1"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="Department Name"
+            VerticalOptions="Center" />
+        </Grid>
+
+        <CollectionView
+          Grid.Row="1"
+          Margin="0,0,0,100"
+          ItemsSource="{Binding DepartmentDisplayList}"
+          VerticalScrollBarVisibility="Always">
+          <CollectionView.ItemTemplate>
+            <DataTemplate>
+              <Grid
+                Padding="5"
+                BackgroundColor="{Binding BackgroundColor}"
+                ColumnDefinitions="3*,7*"
+                HeightRequest="50">
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding DisplayDepartmentInformationCommand}" />
+                </Grid.GestureRecognizers>
+                <Label
+                  Grid.Column="0"
+                  FontSize="14"
+                  Text="{Binding DepartmentSpecificId}"
+                  TextColor="#4F4F4F"
+                  VerticalOptions="Center" />
+                <Label
+                  Grid.Column="1"
+                  FontSize="14"
+                  Text="{Binding DepartmentName}"
+                  TextColor="#4F4F4F"
+                  VerticalOptions="Center" />
+              </Grid>
+            </DataTemplate>
+          </CollectionView.ItemTemplate>
+        </CollectionView>
+      </Grid>
+
+      <VerticalStackLayout
+        Grid.Row="1"
+        Grid.Column="1"
+        Margin="0,100,0,0"
+        HorizontalOptions="Center">
+        <VerticalStackLayout
+          Padding="5"
+          BackgroundColor="#FCFAFA"
+          HorizontalOptions="Center">
+          <Label
+            FontFamily="RobotoMedium"
+            FontSize="20"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            Text="{Binding SelectedDepartmentNameDisplayText}" />
+
+          <Label
+            Margin="0,5,0,0"
+            FontSize="14"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            Text="{Binding SelectedDepartmentSpecificIdDisplayText}" />
+
+          <HorizontalStackLayout Margin="0,30,0,0" HorizontalOptions="Center">
+            <ImageButton
+              Aspect="AspectFit"
+              BackgroundColor="#EFF3FA"
+              BorderColor="Black"
+              CornerRadius="8"
+              HeightRequest="24"
+              Source="vector_update.png"
+              ToolTipProperties.Text="Update Department"
+              WidthRequest="24" />
+            <ImageButton
+              Margin="40,0,0,0"
+              Aspect="AspectFit"
+              BackgroundColor="#EFF3FA"
+              BorderColor="Black"
+              CornerRadius="8"
+              HeightRequest="24"
+              Source="vector_delete.png"
+              ToolTipProperties.Text="Delete Department"
+              WidthRequest="24" />
+          </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <Border
+          Margin="0,100,0,0"
+          StrokeShape="RoundRectangle 4,4,4,4"
+          StrokeThickness="0">
+          <HorizontalStackLayout
+            Padding="10"
+            BackgroundColor="#EFF3FA"
+            HorizontalOptions="Center">
+            <Image
+              HeightRequest="24"
+              Source="vector_add.png"
+              VerticalOptions="Center"
+              WidthRequest="24" />
+            <Label
+              Margin="5,0,0,0"
+              FontFamily="RobotoMedium"
+              FontSize="18"
+              Text="Add a new department"
+              TextColor="#2671B1"
+              VerticalOptions="Center" />
+          </HorizontalStackLayout>
+        </Border>
+      </VerticalStackLayout>
+    </Grid>
+  </Grid>
+</ContentPage>
