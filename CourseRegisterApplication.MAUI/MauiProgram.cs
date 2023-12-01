@@ -35,6 +35,7 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddTransient<AdminAppShellViewModel>();
             builder.Services.AddTransient<AdminDashboardViewModel>();
             builder.Services.AddTransient<AdminAccountantAccountManagementViewModel>();
+            builder.Services.AddTransient<StudentAccountManagementViewModel>();
             builder.Services.AddTransient<ChangePasswordViewModel>();
             builder.Services.AddTransient<AddAdminAccountantAccountViewModel>();
 
@@ -44,12 +45,14 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddTransient<NavigationTopBar>();
             builder.Services.AddTransient<AdminDashboardPage>();
             builder.Services.AddTransient<AdminAccountantAccountManagementPage>();
+            builder.Services.AddTransient<StudentAccountManagementPage>();
             builder.Services.AddTransient<ChangePasswordPage>();
             builder.Services.AddTransient<AddAdminAccountantAccountPage>();
 
             // Services
             builder.Services.AddSingleton<HttpClient>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IStudentService, StudentService>();
 
             return builder.Build();
         }

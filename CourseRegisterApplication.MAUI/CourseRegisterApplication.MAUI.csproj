@@ -98,6 +98,9 @@
 	  <Compile Update="Views\AdminViews\AdminAccountantAccountManagementPage.xaml.cs">
 	    <DependentUpon>AdminAccountantAccountManagementPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\AdminViews\StudentAccountManagementPage.xaml.cs">
+	    <DependentUpon>StudentAccountManagementPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
