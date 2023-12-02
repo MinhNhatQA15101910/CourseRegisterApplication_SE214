@@ -99,7 +99,7 @@
                 Margin="5"
                 Padding="5"
                 BackgroundColor="{Binding BackgroundColor}"
-                ColumnDefinitions="3*,4*,3*"
+                ColumnDefinitions="3*,1.5*,3.5*, 2*"
                 VerticalOptions="Center">
                 <Grid.GestureRecognizers>
                   <TapGestureRecognizer Command="{Binding ChooseStudentAccountCommand}" />
@@ -107,30 +107,34 @@
                 <Grid
                   Grid.Column="0"
                   ColumnDefinitions="Auto,Auto"
-                  HorizontalOptions="Center"
+                  HorizontalOptions="Start"
                   VerticalOptions="Center">
-                  <Frame
-                    Grid.Column="0"
-                    Margin="20"
-                    Padding="0"
-                    CornerRadius="15"
-                    HeightRequest="30"
-                    IsClippedToBounds="True"
-                    WidthRequest="30">
-                    <Image Aspect="AspectFill" Source="{Binding Avatar}" />
-                  </Frame>
-                  <Label
-                    Grid.Column="1"
-                    FontSize="16"
-                    Text="{Binding FullName}"
-                    VerticalOptions="Center" />
+                  <HorizontalStackLayout Grid.Column="0" Margin="0">
+                    <Frame
+                      Grid.Column="0"
+                      Margin="0,0,10,0"
+                      Padding="0"
+                      CornerRadius="15"
+                      HeightRequest="30"
+                      IsClippedToBounds="True"
+                      VerticalOptions="Center"
+                      WidthRequest="30">
+                      <Image Aspect="AspectFill" Source="{Binding Avatar}" />
+                    </Frame>
+                    <Label
+                      Grid.Column="1"
+                      FontSize="16"
+                      Text="{Binding FullName}"
+                      VerticalOptions="Center" />
+                  </HorizontalStackLayout>
+
                 </Grid>
 
                 <Label
                   Grid.Column="1"
                   FontSize="16"
-                  HorizontalOptions="Center"
-                  Text="{Binding StudentSpecificID}"
+                  HorizontalOptions="Start"
+                  Text="{Binding StudentSpecificId}"
                   VerticalOptions="Center" />
 
                 <Label
@@ -138,6 +142,13 @@
                   FontSize="16"
                   HorizontalOptions="Center"
                   Text="{Binding Gender}"
+                  VerticalOptions="Center" />
+
+                <CheckBox
+                  Grid.Column="3"
+                  HorizontalOptions="Center"
+                  IsChecked="{Binding ActivateStatus}"
+                  IsEnabled="True"
                   VerticalOptions="Center" />
               </Grid>
             </DataTemplate>
@@ -149,7 +160,7 @@
           Grid.Column="1"
           HorizontalOptions="Center">
           <Frame
-            Margin="20,-50,0,50"
+            Margin="20,-50,0,20"
             Padding="0"
             CornerRadius="175"
             HeightRequest="250"
@@ -157,12 +168,20 @@
             WidthRequest="250">
             <Image Aspect="AspectFill" Source="{Binding AvatarUri}" />
           </Frame>
-          <Label
-            FontAttributes="Bold"
-            FontSize="16"
-            HorizontalOptions="Center"
-            Text="{Binding FullName}" />
+          <VerticalStackLayout Margin="0,0,0,20">
+            <Label
+              FontAttributes="Bold"
+              FontSize="16"
+              HorizontalOptions="Center"
+              Text="{Binding FullName}" />
+            <Label
+              FontSize="14"
+              HorizontalOptions="Center"
+              Text="{Binding StudentSpecificId}"
+              TextColor="Gray" />
+          </VerticalStackLayout>
           <Grid
+            Margin="50,20,0,0"
             ColumnDefinitions="5*, 5*"
             ColumnSpacing="50"
             RowDefinitions="2.5*, 2.5*, 2.5*, 2.5*"
@@ -207,11 +226,11 @@
               <Label
                 FontAttributes="Bold"
                 FontSize="16"
-                HorizontalOptions="Center"
+                HorizontalOptions="Start"
                 Text="Gender" />
               <Label
                 FontSize="14"
-                HorizontalOptions="Center"
+                HorizontalOptions="Start"
                 Text="{Binding Gender}"
                 TextColor="Gray" />
             </VerticalStackLayout>

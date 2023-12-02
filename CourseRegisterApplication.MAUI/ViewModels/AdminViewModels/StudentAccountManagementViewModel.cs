@@ -130,10 +130,43 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         }
 
         [RelayCommand]
-        public async Task GetStudentAccount()
+        public void GetStudentAccount()
         {
-            var studentList = await _studentService.GetStudents();
+            //var studentList = await _studentService.GetStudents();
+
+            List<Student> studentList = new()
+            {
+                new()
+                {
+                    FullName = "Nguyen Van A",
+                    StudentSpecificId = "A123456",
+                    Gender = Gender.Male,
+                },
+                new()
+                {
+                    FullName = "Nguyen Van A",
+                    StudentSpecificId = "A123456",
+                    Gender = Gender.Male,
+                },new()
+                {
+                    FullName = "Nguyen Thi B",
+                    StudentSpecificId = "B123654",
+                    Gender = Gender.Female,
+                },new()
+                {
+                    FullName = "Tran Van C",
+                    StudentSpecificId = "A987654",
+                    Gender = Gender.Male,
+                },new()
+                {
+                    FullName = "Nguyen Van Vu",
+                    StudentSpecificId = "A123456",
+                    Gender = Gender.Female,
+                },
+            };
+            
             ReloadStudentAccountList(studentList);
+
         }
        
         #endregion
@@ -152,10 +185,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             AvatarUri = "profile_avatar";
             FullName = student.FullName;
             StudentSpecificId = student.StudentSpecificId;
-            ActivateStatus = IsStudentHasAccount(student);
+            //ActivateStatus = IsStudentHasAccount(student);
             Gender = student.Gender;
-            DateOfBirth = student.DateOfBirth;
-            Branch = student.Branch;
+            //DateOfBirth = student.DateOfBirth;
+            //Branch = student.Branch;
         }
         #endregion
 
@@ -198,7 +231,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #endregion
 
         #region Helpers
-        private void ReloadStudentAccountList(List<Student> accountList)
+        private async void ReloadStudentAccountList(List<Student> accountList)
         {
             primaryStudentAccountList.Clear();
 
@@ -210,8 +243,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     {
                         FullName = account.FullName,
                         StudentSpecificId = account.StudentSpecificId,
+                        Gender = account.Gender,
                         DateOfBirth = account.DateOfBirth,
                         Avatar = "profile_avatar.png",
+                        ActivateStatus = await IsStudentHasAccount(account),
                         BackgroundColor = Color.FromArgb("#EBF6FF"),
                         StudentRequester = this,
                     });
@@ -226,15 +261,24 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             AvatarUri = "blank_avatar.jpg";
             FullName = "";
             StudentSpecificId = "";
-            DateOfBirth = DateTime.Today;
-            string formattedDate = DateOfBirth.ToString("dd/MM/yyyy");
+            //DateOfBirth = DateTime.Today;
+            _ = DateOfBirth.ToString("dd/MM/yyyy");
         }
 
-        private bool IsStudentHasAccount(Student student)
+        private async Task<bool> IsStudentHasAccount(Student student)
         {
-            var status = _userService.GetStudentUsers().Result.Any(u => u.Username == student.StudentSpecificId);
-            return status;
+            List<User> userList = await _userService.GetStudentUsers();
+            foreach (var user in userList)
+            {
+                if (user.Username == student.StudentSpecificId)
+                {
+                    ActivateStatus = true;
+                    return true;
+                }
+            }
+            return false;
         }
+
         #endregion
     }
     #endregion
