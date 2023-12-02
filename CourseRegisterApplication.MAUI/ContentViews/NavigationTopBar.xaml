@@ -60,7 +60,24 @@
           HorizontalOptions="Center"
           Text="Log Out"
           VerticalOptions="Center"
-          WidthRequest="120" />
+          WidthRequest="120">
+          <VisualStateManager.VisualStateGroups>
+            <VisualStateGroupList>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#509CDB" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#3F83BC" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateGroupList>
+          </VisualStateManager.VisualStateGroups>
+        </Button>
       </HorizontalStackLayout>
 
     </StackLayout>
