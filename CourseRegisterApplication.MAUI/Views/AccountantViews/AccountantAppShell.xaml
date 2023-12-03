@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Shell
-  x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.AdminAppShell"
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.AccountantAppShell"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:local="clr-namespace:CourseRegisterApplication.MAUI.Views.AdminViews"
+  xmlns:local="clr-namespace:CourseRegisterApplication.MAUI.Views.AccountantViews"
   FlyoutBackgroundColor="#152259"
   FlyoutBehavior="Flyout"
   FlyoutWidth="240"
@@ -19,7 +19,7 @@
           IsClippedToBounds="True"
           VerticalOptions="Start"
           WidthRequest="65">
-          <Image Aspect="AspectFill" Source="admin_icon.png" />
+          <Image Aspect="AspectFill" Source="teacher_icon.png" />
         </Frame>
         <Label
           Margin="0,12,0,0"
@@ -63,19 +63,79 @@
     Title="Dashboard"
     Icon="home.png"
     Route="dashboard">
-    <ShellContent ContentTemplate="{DataTemplate local:AdminDashboardPage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:AccountantDashboardPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
-    Title="Manager account"
+    Title="Student management"
     Icon="student.png"
-    Route="adminaccountant">
-    <ShellContent ContentTemplate="{DataTemplate local:AdminAccountantAccountManagementPage}" Route="details" />
+    Route="studentmanagement">
+    <ShellContent ContentTemplate="{DataTemplate local:StudentManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
-    Title="Student account"
+    Title="Subject management"
     Icon="book.png"
-    Route="student">
-    <ShellContent ContentTemplate="{DataTemplate local:StudentAccountManagementPage}" Route="details" />
+    Route="subjectmanagement">
+    <ShellContent ContentTemplate="{DataTemplate local:SubjectManagementPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Study program"
+    Icon="book.png"
+    Route="studyprogram">
+    <ShellContent ContentTemplate="{DataTemplate local:StudyProgramPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Open subject"
+    Icon="book.png"
+    Route="opensubject">
+    <ShellContent ContentTemplate="{DataTemplate local:OpenSubjectPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Course management"
+    Icon="bank.png"
+    Route="coursemanagement">
+    <ShellContent ContentTemplate="{DataTemplate local:CourseManagementPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Tuition collection"
+    Icon="bank.png"
+    Route="tuitioncollection">
+    <ShellContent ContentTemplate="{DataTemplate local:TuitionCollectionPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Statistic"
+    Icon="chart.png"
+    Route="statistic">
+    <ShellContent ContentTemplate="{DataTemplate local:StatisticPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Department Management"
+    Icon="student.png"
+    Route="departmentmanagerment">
+    <ShellContent ContentTemplate="{DataTemplate local:DepantmentManagementPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Branch Management"
+    Icon="student.png"
+    Route="branchtmanagerment">
+    <ShellContent ContentTemplate="{DataTemplate local:BranchManagementPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Province, district"
+    Icon="location_icon.png"
+    Route="provincedistrict">
+    <ShellContent ContentTemplate="{DataTemplate local:ProvinceDistrictPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Priority object"
+    Icon="student.png"
+    Route="priorityobject">
+    <ShellContent ContentTemplate="{DataTemplate local:PriorityObjectPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Credits, subject type"
+    Icon="book.png"
+    Route="creditssubjecttype">
+    <ShellContent ContentTemplate="{DataTemplate local:CreditsSubjectTypePage}" Route="details" />
   </FlyoutItem>
 
   <Shell.ItemTemplate>

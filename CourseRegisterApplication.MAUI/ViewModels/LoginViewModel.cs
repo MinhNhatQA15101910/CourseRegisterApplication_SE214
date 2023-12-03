@@ -1,5 +1,7 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views.AdminViews;
+using CourseRegisterApplication.MAUI.Views.StudentViews;
+using CourseRegisterApplication.MAUI.Views.AccountantViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels
 {
@@ -72,13 +74,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels
                         Clear();
                         break;
 					case Role.Accountant:
-                        // TODO: Navigate to Accountant Page
-                        Clear();
+						Application.Current.MainPage = _serviceProvider.GetService<AccountantAppShell>();
+						Clear();
                         break;
                     case Role.Student:
-                        // TODO: Navigate to Accountant Page
-                        Clear();
-                        break;
+						Application.Current.MainPage = _serviceProvider.GetService<StudentAppShell>();
+						Clear();
+						break;
 				}
 			}
 			else

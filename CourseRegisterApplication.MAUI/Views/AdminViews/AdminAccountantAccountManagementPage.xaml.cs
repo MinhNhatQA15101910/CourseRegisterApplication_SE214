@@ -1,3 +1,5 @@
+using CommunityToolkit.Maui.Views;
+using CourseRegisterApplication.MAUI.ContentViews;
 using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
 
 namespace CourseRegisterApplication.MAUI.Views.AdminViews;
@@ -16,4 +18,8 @@ public partial class AdminAccountantAccountManagementPage : ContentPage
 
         (BindingContext as AdminAccountantAccountManagementViewModel).GetAdminAccountantAccountCommand.Execute(null);
     }
+	void OnTapGestureRecognizerTapped(object sender, TappedEventArgs args)
+	{
+		this.ShowPopup(new ManagerAccountFilterPopup());
+	}
 }

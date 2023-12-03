@@ -4,6 +4,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 {
     public partial class AdminAppShellViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private string username = GlobalConfig.CurrentUser.Username;
+
         [RelayCommand]
         public async Task NavigateToChangePasswordPage()
         {

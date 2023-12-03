@@ -27,6 +27,25 @@
                 Title="Choose a filter"
                 ItemsSource="{Binding FilterOptions}"
                 SelectedItem="{Binding SelectedFilterOption}" />
+              <HorizontalStackLayout
+                Margin="16,0,0,0"
+                HeightRequest="50"
+                VerticalOptions="Center"
+                WidthRequest="160">
+                <HorizontalStackLayout.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnTapGestureRecognizerTapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label
+                  Text="Add filter"
+                  TextColor="#C4C4C4"
+                  VerticalOptions="Center" />
+                <Image
+                  Margin="8,0,0,0"
+                  HeightRequest="16"
+                  Source="down_arrow.png"
+                  TranslationY="6"
+                  VerticalOptions="Center" />
+              </HorizontalStackLayout>
               <Border
                 Margin="20,20,0,0"
                 BackgroundColor="#FCFAFA"
@@ -58,9 +77,9 @@
               </Border>
             </HorizontalStackLayout>
             <Grid
-              HeightRequest="30"
               Grid.Column="1"
               ColumnDefinitions="*,Auto"
+              HeightRequest="30"
               HorizontalOptions="Center"
               VerticalOptions="Center">
               <Grid.GestureRecognizers>
@@ -275,7 +294,7 @@
                 Text="{Binding Email}"
                 TextColor="#A7A7A7" />
             </VerticalStackLayout>
-            <HorizontalStackLayout Margin="0,30,0,0" HorizontalOptions="Center" >
+            <HorizontalStackLayout Margin="0,30,0,0" HorizontalOptions="Center">
               <Button
                 Margin="0,0,15,0"
                 BackgroundColor="#509CDB"
@@ -306,12 +325,12 @@
               </Button>
               <Button
                 Margin="15,0,0,0"
-                HeightRequest="40"
                 BackgroundColor="#EFF3FA"
                 Command="{Binding DeleteUserCommand}"
                 CornerRadius="10"
                 FontFamily="RobotoMedium"
                 FontSize="14"
+                HeightRequest="40"
                 HorizontalOptions="Center"
                 Text="Delete user"
                 TextColor="#2671B1"

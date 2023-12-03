@@ -3,7 +3,7 @@
   x:Class="CourseRegisterApplication.MAUI.Views.StudentViews.StudentAppShell"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:local="clr-namespace:CourseRegisterApplication.MAUI.Views.AdminViews"
+  xmlns:local="clr-namespace:CourseRegisterApplication.MAUI.Views.StudentViews"
   FlyoutBackgroundColor="#152259"
   FlyoutBehavior="Flyout"
   FlyoutWidth="240"
@@ -11,18 +11,22 @@
   <Shell.FlyoutHeader>
     <StackLayout>
       <StackLayout>
-        <Image
+        <Frame
           Margin="0,26,0,0"
+          Padding="0"
+          CornerRadius="100"
           HeightRequest="65"
-          Source="demo_icon.png"
+          IsClippedToBounds="True"
           VerticalOptions="Start"
-          WidthRequest="65" />
+          WidthRequest="65">
+          <Image Aspect="AspectFill" Source="{Binding Avatar}" />
+        </Frame>
         <Label
           Margin="0,12,0,0"
           FontAttributes="Bold"
           FontSize="14"
           HorizontalOptions="Center"
-          Text="Admin"
+          Text="{Binding StudentName}"
           TextColor="White" />
       </StackLayout>
       <BoxView
@@ -59,19 +63,25 @@
     Title="Dashboard"
     Icon="home.png"
     Route="dashboard">
-    <ShellContent ContentTemplate="{DataTemplate local:AdminDashboardPage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:StudentDashboardPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
-    Title="Admin / Accountant account"
+    Title="Student Infomation"
     Icon="student.png"
-    Route="adminaccountant">
-    <ShellContent ContentTemplate="{DataTemplate local:AdminAccountantAccountManagementPage}" Route="details" />
+    Route="studentinfomation">
+    <ShellContent ContentTemplate="{DataTemplate local:StudentInfomationPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
-    Title="Student account"
+    Title="Course register"
     Icon="book.png"
-    Route="student">
-    <ShellContent ContentTemplate="{DataTemplate local:StudentAccountManagementPage}" Route="details" />
+    Route="courseregister">
+    <ShellContent ContentTemplate="{DataTemplate local:CourseRegisterPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Tuition payment"
+    Icon="bank.png"
+    Route="tuitionpayment">
+    <ShellContent ContentTemplate="{DataTemplate local:TuitionPaymentPage}" Route="details" />
   </FlyoutItem>
 
   <Shell.ItemTemplate>
