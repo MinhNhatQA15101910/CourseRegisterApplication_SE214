@@ -8,6 +8,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
     public partial class StudentDisplay : ObservableObject
     {
         #region Properties
+        public int Index { get; set; }
+
         [ObservableProperty]
         private string studentSpecificId;
 
@@ -27,10 +29,18 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         private Branch branch;
 
         [ObservableProperty]
+        private string department;
+
+        [ObservableProperty]
         private Color backgroundColor;
 
         [ObservableProperty]
+        private Color checkBoxColor;
+
+        [ObservableProperty]
         private string avatar;
+
+        public bool PrimaryStatus { get; set; }
 
         public IStudentRequester StudentRequester { get; set; }
         #endregion
@@ -40,18 +50,36 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         public void ChooseStudentAccount()
         {
             StudentRequester.ResetItemBackgrounds();
-            BackgroundColor = Color.FromArgb("#1E90FF");
+            BackgroundColor = Color.FromArgb("#B9D8F2");
 
             StudentRequester.DisplayStudentAccountInformation(new Student
             {
                 FullName = FullName,
                 StudentSpecificId = StudentSpecificId,
-                DateOfBirth = DateOfBirth,
                 Gender = Gender,
-                Branch = Branch
+                Branch = Branch,
+                DateOfBirth = DateOfBirth,
             });
         }
         #endregion
+
+        partial void OnActivateStatusChanged(bool oldValue, bool newValue)
+        {
+            if(newValue != PrimaryStatus)
+            {
+                CheckBoxColor = Color.FromArgb("#DE3226");
+            }
+            else
+            {
+                CheckBoxColor = Color.FromArgb("#3189CC");
+            }
+
+            if (StudentRequester != null)
+            {
+                StudentRequester.NotifyCanSaveChanges();
+            }
+        }
+
     }
     #endregion
 
@@ -60,6 +88,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
     {
         void DisplayStudentAccountInformation(Student student);
         void ResetItemBackgrounds();
+        void NotifyCanSaveChanges();
     }
     #endregion
 
@@ -93,13 +122,16 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         private bool activateStatus;
 
         [ObservableProperty]
-        private DateTime dateOfBirth;
+        private string dateOfBirth;
 
         [ObservableProperty]
         private Gender gender;
 
         [ObservableProperty]
         private Branch branch;
+
+        [ObservableProperty]
+        private string department;
 
         [ObservableProperty]
         private string selectedFilterOption = "Name";
@@ -138,45 +170,64 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             {
                 new()
                 {
-                    FullName = "Nguyen Van A",
-                    StudentSpecificId = "A123456",
+                    FullName = "Trương Bá Cường",
+                    StudentSpecificId = "SV21520013",
                     Gender = Gender.Male,
                 },
                 new()
                 {
-                    FullName = "Nguyen Van A",
-                    StudentSpecificId = "A123456",
+                    FullName = "Đôn Khánh Duy",
+                    StudentSpecificId = "SV21520032",
                     Gender = Gender.Male,
                 },new()
                 {
-                    FullName = "Nguyen Thi B",
-                    StudentSpecificId = "B123654",
+                    FullName = "Nguyễn Thị Phương",
+                    StudentSpecificId = "SV21520135",
                     Gender = Gender.Female,
                 },new()
                 {
-                    FullName = "Tran Van C",
-                    StudentSpecificId = "A987654",
+                    FullName = "Huỳnh Bá Anh Quân",
+                    StudentSpecificId = "SV21520136",
+                    DateOfBirth = new DateTime(2003, 05, 15),
                     Gender = Gender.Male,
                 },new()
                 {
-                    FullName = "Nguyen Van Vu",
-                    StudentSpecificId = "A123456",
-                    Gender = Gender.Female,
+                    FullName = "Võ Thanh Bình",
+                    StudentSpecificId = "SV21520007",
+                    DateOfBirth = new DateTime(2003, 05, 15),
+                    Gender = Gender.Male,
                 },
             };
             
             ReloadStudentAccountList(studentList);
-
         }
-       
+
+        [RelayCommand(CanExecute = nameof(CanSaveChanges))]
+        public async Task SaveChanges()
+        {
+            // Filter accounts need to be updated
+            List<Student> students = await _studentService.GetStudents();
+            List<Student> updateStudents = students
+                .Where(u => primaryStudentAccountList
+                .Find(sd => sd.StudentSpecificId == u.StudentSpecificId) != null)
+                .ToList();
+        }
+
+        public bool CanSaveChanges()
+        {
+            var account = primaryStudentAccountList.Find(a => a.ActivateStatus != a.ActivateStatus);
+
+            return (account != null);
+        }
+
         #endregion
 
         #region Implement IStudentRequester
         public void ResetItemBackgrounds()
         {
-            foreach (var account in StudentAccountList)
+            for (int i = 0; i < StudentAccountList.Count; i++)
             {
-                account.BackgroundColor = Color.FromArgb("#EBF6FF");
+                StudentAccountList[i].BackgroundColor = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
             }
         }
 
@@ -185,9 +236,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             AvatarUri = "profile_avatar";
             FullName = student.FullName;
             StudentSpecificId = student.StudentSpecificId;
-            //ActivateStatus = IsStudentHasAccount(student);
             Gender = student.Gender;
-            //DateOfBirth = student.DateOfBirth;
+            DateOfBirth = student.DateOfBirth.ToString("dd/MM/yyyy");
             //Branch = student.Branch;
         }
         #endregion
@@ -196,28 +246,26 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         partial void OnSelectedFilterOptionChanged(string oldValue, string newValue)
         {
             if (oldValue != newValue)
-            {
-                SearchFilter = "";
-                ResetItemBackgrounds();
-                ResetAccountInformation();
-
+            {             
                 switch (newValue)
                 {
-                    case "Full Name":
+                    case "Name":
                         StudentAccountList = primaryStudentAccountList.OrderBy(a => a.FullName).ToObservableCollection();
                         break;
                     case "Student ID":
                         StudentAccountList = primaryStudentAccountList.OrderBy(a => a.StudentSpecificId).ToObservableCollection();
                         break;
                 }
+
+                SearchFilter = "";
+                ResetItemBackgrounds();
+                ResetAccountInformation();
             }
         }
 
         partial void OnSearchFilterChanged(string oldValue, string newValue)
         {
-            ResetItemBackgrounds();
-            ResetAccountInformation();
-
+            
             switch (SelectedFilterOption)
             {
                 case "Name":
@@ -227,6 +275,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     StudentAccountList = primaryStudentAccountList.Where(a => a.StudentSpecificId.Contains(newValue)).OrderBy(a => a.StudentSpecificId).ToObservableCollection();
                     break;
             }
+
+            ResetItemBackgrounds();
+            ResetAccountInformation();
+
         }
         #endregion
 
@@ -237,22 +289,29 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 
             if (accountList.Count > 0)
             {
-                foreach (var account in accountList)
+                for(int i = 0; i < accountList.Count; i++)
                 {
                     primaryStudentAccountList.Add(new StudentDisplay
                     {
-                        FullName = account.FullName,
-                        StudentSpecificId = account.StudentSpecificId,
-                        Gender = account.Gender,
-                        DateOfBirth = account.DateOfBirth,
+                        FullName = accountList[i].FullName,
+                        StudentSpecificId = accountList[i].StudentSpecificId,
+                        Gender = accountList[i].Gender,
+                        DateOfBirth = accountList[i].DateOfBirth,
+                        Branch = accountList[i].Branch,
                         Avatar = "profile_avatar.png",
-                        ActivateStatus = await IsStudentHasAccount(account),
+                        ActivateStatus = await IsStudentHasAccount(accountList[i]),
+                        PrimaryStatus = await IsStudentHasAccount(accountList[i]),
+                        CheckBoxColor = Color.FromArgb("#3189CC"),
                         BackgroundColor = Color.FromArgb("#EBF6FF"),
                         StudentRequester = this,
                     });
                 }
 
                 StudentAccountList = primaryStudentAccountList.OrderBy(a => a.FullName).ToObservableCollection();
+                for (int i = 0; i < primaryStudentAccountList.Count; i++)
+                {
+                    StudentAccountList[i].BackgroundColor = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
+                }
             }
         }
 
@@ -261,8 +320,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             AvatarUri = "blank_avatar.jpg";
             FullName = "";
             StudentSpecificId = "";
-            //DateOfBirth = DateTime.Today;
-            _ = DateOfBirth.ToString("dd/MM/yyyy");
+            DateOfBirth = DateTime.Today.ToString("dd/MM/yyyy");
         }
 
         private async Task<bool> IsStudentHasAccount(Student student)
@@ -277,6 +335,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                 }
             }
             return false;
+        }
+        public void NotifyCanSaveChanges()
+        {
+            SaveChangesCommand.NotifyCanExecuteChanged();
         }
 
         #endregion
