@@ -23,35 +23,48 @@
         <Grid Grid.Row="0" Margin="100,48,0,0">
           <Grid Grid.Row="1" ColumnDefinitions="7*,3*">
             <HorizontalStackLayout HorizontalOptions="Start">
-              <Picker
-                Title="Choose a filter"
-                ItemsSource="{Binding FilterOptions}"
-                SelectedItem="{Binding SelectedFilterOption}" />
               <HorizontalStackLayout
                 Margin="16,0,0,0"
                 HeightRequest="50"
-                VerticalOptions="Center"
-                WidthRequest="160">
+                VerticalOptions="Center">
                 <HorizontalStackLayout.GestureRecognizers>
-                  <TapGestureRecognizer Tapped="OnTapGestureRecognizerTapped" />
+                  <TapGestureRecognizer Tapped="OnTapOpenPopupFilter" />
                 </HorizontalStackLayout.GestureRecognizers>
                 <Label
+                  Margin="16,0,0,0"
                   Text="Add filter"
                   TextColor="#C4C4C4"
                   VerticalOptions="Center" />
                 <Image
-                  Margin="8,0,0,0"
+                  Margin="16,0,16,0"
                   HeightRequest="16"
                   Source="down_arrow.png"
                   TranslationY="6"
                   VerticalOptions="Center" />
+                <VisualStateManager.VisualStateGroups>
+                  <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                      <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="Transparent" />
+                        </VisualState.Setters>
+                      </VisualState>
+                      <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#FCFAFA" />
+                        </VisualState.Setters>
+                      </VisualState>
+                    </VisualStateGroup>
+                  </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
               </HorizontalStackLayout>
               <Border
-                Margin="20,20,0,0"
+                Margin="0,0,0,0"
                 BackgroundColor="#FCFAFA"
                 HeightRequest="50"
                 StrokeShape="RoundRectangle 0,5,0,5"
                 StrokeThickness="0"
+                VerticalOptions="Center"
                 WidthRequest="500">
                 <HorizontalStackLayout>
                   <Image

@@ -57,10 +57,11 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                 Role = (PrimaryRoleName == "Admin") ? Role.Admin : Role.Accountant
             });
         }
-        #endregion
 
-        #region Property Changed
-        partial void OnRoleNameChanged(string oldValue, string newValue)
+		#endregion
+
+		#region Property Changed
+		partial void OnRoleNameChanged(string oldValue, string newValue)
         {
             if (newValue != PrimaryRoleName)
             {
@@ -103,7 +104,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         [ObservableProperty]
         private ObservableCollection<UserDisplay> adminAccountantAccountList = new();
 
-        public ObservableCollection<string> FilterOptions { get; set; } = new() { "Username", "Email", "Role" };
+        public ObservableCollection<string> FilterAccountTypeOptions { get; set; } = new() { "All", "Admin", "Accountant" };
 
         public int Id { get; set; }
 
@@ -120,14 +121,27 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         private string email = "";
 
         [ObservableProperty]
-        private string selectedFilterOption = "Username";
+        private string selectedFilterAccountTypeOptions = "All";
 
         [ObservableProperty]
         private string searchFilter = "";
-        #endregion
 
-        #region Constructor
-        public AdminAccountantAccountManagementViewModel(IServiceProvider serviceProvider)
+		[ObservableProperty]
+		private bool usernameAZChecked = true;
+		[ObservableProperty]
+		private bool usernameZAChecked = false;
+		[ObservableProperty]
+		private bool emailAZChecked = false;
+		[ObservableProperty]
+		private bool emailZAChecked = false;
+		[ObservableProperty]
+		private bool roleAZChecked = false;
+		[ObservableProperty]
+		private bool roleZAChecked = false;
+		#endregion
+
+		#region Constructor
+		public AdminAccountantAccountManagementViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _userService = serviceProvider.GetService<IUserService>();
@@ -251,44 +265,124 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #endregion
 
         #region Property Changed
-        partial void OnSelectedFilterOptionChanged(string oldValue, string newValue)
+        public void UpdateSoftList()
         {
-            if (oldValue != newValue)
+            if(UsernameAZChecked==true)
             {
-                switch (newValue)
-                {
-                    case "Username":
-                        AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.Username).ToObservableCollection();
-                        break;
-                    case "Email":
-                        AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.Email).ToObservableCollection();
-                        break;
-                    case "Role":
-                        AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.RoleName).ToObservableCollection();
-                        break;
-                }
+				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.Username).ToObservableCollection();
+			}
+			if (UsernameZAChecked == true)
+			{
+				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderByDescending(a => a.Username).ToObservableCollection();
+			}
+			if (EmailAZChecked == true)
+			{
+				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.Email).ToObservableCollection();
+			}
+			if (EmailZAChecked == true)
+			{
+				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderByDescending(a => a.Email).ToObservableCollection();
+			}
+			if (RoleAZChecked == true)
+			{
+				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.RoleName).ToObservableCollection();
+			}
+			if (RoleZAChecked == true)
+			{
+				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderByDescending(a => a.RoleName).ToObservableCollection();
+			}
+		}
+        public void UpdateFilterList()
+        {
+            switch(selectedFilterAccountTypeOptions)
+            {
+				case "Accountant":
+					AdminAccountantAccountList = AdminAccountantAccountList.Where(a => a.RoleName == "Accountant").ToObservableCollection();
+					break;
+				case "Admin":
+					AdminAccountantAccountList = AdminAccountantAccountList.Where(a => a.RoleName == "Admin").ToObservableCollection();
+					break;
+			}
+        }
+		partial void OnSelectedFilterAccountTypeOptionsChanged(string oldValue, string newValue)
+        {
+            if (oldValue != newValue && newValue != null)
+            {
+                UpdateSoftList();
+                UpdateFilterList();
+                SearchFilter = "";
+                ResetAccountInformation();
+                ResetItemBackgrounds();
+            }
+        }
 
-				SearchFilter = "";
+        partial void OnUsernameAZCheckedChanged(bool oldValue, bool newValue)
+        {
+			if (oldValue != newValue)
+			{
+				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.Username).ToObservableCollection();
+                UpdateFilterList();
 				ResetAccountInformation();
 				ResetItemBackgrounds();
 			}
-        }
+		}
+		partial void OnUsernameZACheckedChanged(bool oldValue, bool newValue)
+		{
+			if (oldValue != newValue)
+			{
+				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderByDescending(a => a.Username).ToObservableCollection();
+				UpdateFilterList(); 
+                ResetAccountInformation();
+				ResetItemBackgrounds();
+			}
+		}
+		partial void OnEmailAZCheckedChanged(bool oldValue, bool newValue)
+		{
+			if (oldValue != newValue)
+			{
+				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.Email).ToObservableCollection();
+				UpdateFilterList(); 
+                ResetAccountInformation();
+				ResetItemBackgrounds();
+			}
+		}
+		partial void OnEmailZACheckedChanged(bool oldValue, bool newValue)
+		{
+			if (oldValue != newValue)
+			{
+				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderByDescending(a => a.Email).ToObservableCollection();
+				UpdateFilterList(); 
+                ResetAccountInformation();
+				ResetItemBackgrounds();
+			}
+		}
+		partial void OnRoleAZCheckedChanged(bool oldValue, bool newValue)
+		{
+			if (oldValue != newValue)
+			{
+				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.RoleName).ToObservableCollection();
+				UpdateFilterList(); 
+                ResetAccountInformation();
+				ResetItemBackgrounds();
+			}
+		}
+		partial void OnRoleZACheckedChanged(bool oldValue, bool newValue)
+		{
+			if (oldValue != newValue)
+			{
+				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderByDescending(a => a.RoleName).ToObservableCollection();
+				UpdateFilterList(); 
+                ResetAccountInformation();
+				ResetItemBackgrounds();
+			}
+		}
 
-        partial void OnSearchFilterChanged(string oldValue, string newValue)
+		partial void OnSearchFilterChanged(string oldValue, string newValue)
         {
-			switch (SelectedFilterOption)
-            {
-                case "Username":
-                    AdminAccountantAccountList = primaryAdminAccountantAccountList.Where(a => a.Username.Contains(newValue)).OrderBy(a => a.Username).ToObservableCollection();
-                    break;
-                case "Email":
-                    AdminAccountantAccountList = primaryAdminAccountantAccountList.Where(a => a.Email.Contains(newValue)).OrderBy(a => a.Email).ToObservableCollection();
-                    break;
-                case "Role":
-                    AdminAccountantAccountList = primaryAdminAccountantAccountList.Where(a => a.RoleName.Contains(newValue)).OrderBy(a => a.RoleName).ToObservableCollection();
-                    break;
-            }
-
+			UpdateSoftList();
+			UpdateFilterList();
+			AdminAccountantAccountList = AdminAccountantAccountList
+				.Where(a => a.Username.Contains(newValue) || a.Email.Contains(newValue) || a.RoleName.Contains(newValue)).ToObservableCollection();
 			ResetItemBackgrounds();
 			ResetAccountInformation();
 		}
