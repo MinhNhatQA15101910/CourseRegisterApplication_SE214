@@ -1,4 +1,6 @@
-﻿using CourseRegisterApplication.MAUI.Views;
+﻿using CourseRegisterApplication.MAUI.IServices;
+using CourseRegisterApplication.MAUI.Views;
+using CourseRegisterApplication.MAUI.Views.AccountantViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 {
@@ -6,6 +8,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
     {
         #region Properties
         public IDepartmentRequester DepartmentRequester { get; set; }
+
+        public int DepartmentId {  get; set; }
 
         [ObservableProperty]
         private string departmentSpecificId;
@@ -39,6 +43,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
     {
         #region Services
         private readonly IServiceProvider _serviceProvider;
+        private readonly IDepartmentService _departmentService;
+        private readonly IBranchService _branchService;
         #endregion
 
         #region Properties
@@ -52,7 +58,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 
         [ObservableProperty] private ObservableCollection<DepartmentDisplay> departmentDisplayList = new();
 
-        [ObservableProperty] private string selectedDepartmentSpecificIdDisplayText = "Department ID:";
+        private int selectedDepartmentId;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(DisplayUpdateDepartmentPopupCommand))]
+        [NotifyCanExecuteChangedFor(nameof(DeleteDepartmentCommand))]
+        private string selectedDepartmentSpecificIdDisplayText;
 
         [ObservableProperty] private string selectedDepartmentNameDisplayText = "Department:";
         #endregion
@@ -61,6 +72,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         public DepartmentManagementViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+            _departmentService = serviceProvider.GetService<IDepartmentService>();
+            _branchService = serviceProvider.GetService<IBranchService>();
         }
         #endregion
 
@@ -76,49 +89,64 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         }
 
         [RelayCommand]
-        public void GetDepartments()
+        public async Task GetDepartments()
         {
-            List<Department> departmentList = new()
-            {
-                new()
-                {
-                    Id = 1,
-                    DepartmentSpecificId = "CNPM",
-                    DepartmentName = "Công nghệ phần mềm"
-                },
-                new()
-                {
-                    Id = 2,
-                    DepartmentSpecificId = "HTTT",
-                    DepartmentName = "Hệ thống thông tin"
-                },
-                new()
-                {
-                    Id = 3,
-                    DepartmentSpecificId = "KHMT",
-                    DepartmentName = "Khoa học máy tính"
-                },
-                new()
-                {
-                    Id = 4,
-                    DepartmentSpecificId = "KTMT",
-                    DepartmentName = "Kỹ thuật máy tính"
-                },
-                new()
-                {
-                    Id = 5,
-                    DepartmentSpecificId = "MMT&TT",
-                    DepartmentName = "Mạng máy tính và Truyền thông"
-                },
-                new()
-                {
-                    Id = 6,
-                    DepartmentSpecificId = "KH&KTTT",
-                    DepartmentName = "Khoa học và Kỹ thuật thông tin"
-                },
-            };
+            List<Department> departmentList = await _departmentService.GetDepartments();
 
             ReloadDepartmentDisplays(departmentList);
+        }
+
+        [RelayCommand(CanExecute = nameof(CanDeleteUpdateDepartmentExecuted))]
+        public async Task DeleteDepartment()
+        {
+            bool accept = await Application.Current.MainPage.DisplayAlert("Warning!", "Do you want to delete this department", "Yes", "No");
+            if (accept)
+            {
+                // If there is any branch which belongs to the deleted department, display not allow alert.
+                var branchList = await _branchService.GetBranchesByDepartmentId(selectedDepartmentId);
+                if (branchList != null || branchList!.Count > 0) 
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "You cannot delete this department because there is some branches belong to it!", "OK");
+                    return;
+                }
+
+                // Delete department
+                var success = await _departmentService.DeleteDepartment(selectedDepartmentId);
+                if (success)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", "Delete department successfully!", "OK");
+                    GetDepartmentsCommand.Execute(null);
+                }
+            }
+        }
+
+        [RelayCommand]
+        public async Task DisplayAddDepartmentPopup()
+        {
+            Popup popup = _serviceProvider.GetService<AddUpdateDepartmentPopup>();
+            var bindingContext = popup.BindingContext as AddUpdateDepartmentViewModel;
+
+            bindingContext.CommandName = "Add department";
+
+            await Application.Current.MainPage.ShowPopupAsync(popup);
+        }
+
+        [RelayCommand(CanExecute = nameof(CanDeleteUpdateDepartmentExecuted))]
+        public async Task DisplayUpdateDepartmentPopup()
+        {
+            Popup popup = _serviceProvider.GetService<AddUpdateDepartmentPopup>();
+            var bindingContext = popup.BindingContext as AddUpdateDepartmentViewModel;
+
+            bindingContext.DepartmentSpecificId = SelectedDepartmentSpecificIdDisplayText;
+            bindingContext.DepartmentName = SelectedDepartmentNameDisplayText[12..];
+            bindingContext.CommandName = "Update department";
+
+            await Application.Current.MainPage.ShowPopupAsync(popup);
+        }
+
+        public bool CanDeleteUpdateDepartmentExecuted()
+        {
+            return !string.IsNullOrEmpty(SelectedDepartmentSpecificIdDisplayText);
         }
         #endregion
 
@@ -172,13 +200,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 
             if (departmentList.Count > 0)
             {
-                for (int i = 0; i < departmentList.Count; i++)
+                foreach (var department in departmentList)
                 {
                     primaryDepartmentDisplayList.Add(new DepartmentDisplay
                     {
                         DepartmentRequester = this,
-                        DepartmentSpecificId = departmentList[i].DepartmentSpecificId,
-                        DepartmentName = departmentList[i].DepartmentName,
+                        DepartmentId = department.Id, 
+                        DepartmentSpecificId = department.DepartmentSpecificId,
+                        DepartmentName = department.DepartmentName,
                     });
                 }
 
@@ -197,7 +226,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 
         public void DisplayDepartmentInformation(DepartmentDisplay departmentDisplay)
         {
-            SelectedDepartmentSpecificIdDisplayText = $"Department ID: {departmentDisplay.DepartmentSpecificId}";
+            selectedDepartmentId = departmentDisplay.DepartmentId;
+            SelectedDepartmentSpecificIdDisplayText = $"{departmentDisplay.DepartmentSpecificId}";
             SelectedDepartmentNameDisplayText = $"Department: {departmentDisplay.DepartmentName}";
         }
         #endregion

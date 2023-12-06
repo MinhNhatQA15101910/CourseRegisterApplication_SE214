@@ -119,33 +119,75 @@
             HorizontalTextAlignment="Center"
             Text="{Binding SelectedDepartmentNameDisplayText}" />
 
-          <Label
-            Margin="0,5,0,0"
-            FontSize="14"
-            HorizontalOptions="Center"
-            HorizontalTextAlignment="Center"
-            Text="{Binding SelectedDepartmentSpecificIdDisplayText}" />
+          <HorizontalStackLayout Margin="0,5,0,0" HorizontalOptions="Center">
+            <Label
+              Margin="0,0,3,0"
+              FontSize="14"
+              Text="Department ID: " />
+            <Label
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              Text="{Binding SelectedDepartmentSpecificIdDisplayText}" />
+          </HorizontalStackLayout>
 
           <HorizontalStackLayout Margin="0,30,0,0" HorizontalOptions="Center">
             <ImageButton
+              Padding="8"
               Aspect="AspectFit"
               BackgroundColor="#EFF3FA"
               BorderColor="Black"
+              Command="{Binding DisplayUpdateDepartmentPopupCommand}"
               CornerRadius="8"
               HeightRequest="24"
               Source="vector_update.png"
               ToolTipProperties.Text="Update Department"
-              WidthRequest="24" />
+              WidthRequest="24">
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </ImageButton>
             <ImageButton
               Margin="40,0,0,0"
+              Padding="8"
               Aspect="AspectFit"
               BackgroundColor="#EFF3FA"
               BorderColor="Black"
+              Command="{Binding DeleteDepartmentCommand}"
               CornerRadius="8"
               HeightRequest="24"
               Source="vector_delete.png"
               ToolTipProperties.Text="Delete Department"
-              WidthRequest="24" />
+              WidthRequest="24">
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </ImageButton>
           </HorizontalStackLayout>
         </VerticalStackLayout>
 
@@ -153,6 +195,9 @@
           Margin="0,100,0,0"
           StrokeShape="RoundRectangle 4,4,4,4"
           StrokeThickness="0">
+          <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding DisplayAddDepartmentPopupCommand}" />
+          </Border.GestureRecognizers>
           <HorizontalStackLayout
             Padding="10"
             BackgroundColor="#EFF3FA"
@@ -169,6 +214,22 @@
               Text="Add a new department"
               TextColor="#2671B1"
               VerticalOptions="Center" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                    </VisualState.Setters>
+                  </VisualState>
+                  <VisualState x:Name="PointerOver">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                    </VisualState.Setters>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
           </HorizontalStackLayout>
         </Border>
       </VerticalStackLayout>

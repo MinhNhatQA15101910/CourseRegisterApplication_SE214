@@ -92,6 +92,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\AccountantViews\AddUpdateDepartmentPopup.xaml.cs">
+	    <DependentUpon>AddUpdateDepartmentPopup.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\AdminViews\AddAdminAccountantAccountPage.xaml.cs">
 	    <DependentUpon>AddAdminAccountantAccountPage.xaml</DependentUpon>
 	  </Compile>
@@ -101,6 +104,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\AccountantViews\AddUpdateDepartmentPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\DepartmentManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
