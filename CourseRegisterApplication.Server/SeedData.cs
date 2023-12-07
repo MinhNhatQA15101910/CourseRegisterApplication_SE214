@@ -15,6 +15,8 @@ namespace CourseRegisterApplication.Server
         private static string SUBJECT_TYPES_FILE_PATH = "Resources/subject-types.txt";
         private static string SUBJECTS_FILE_PATH = "Resources/subjects.txt";
         private static string CURRICULUMS_FILE_PATH = "Resources/curriculums.txt";
+        private static string SEMESTERS_FILE_PATH = "Resources/semesters.txt";
+        private static string AVAILABLE_COURSES_FILE_PATH = "Resources/available-courses.txt";
 
         public static void Initialize(ModelBuilder modelBuilder)
         {
@@ -29,6 +31,8 @@ namespace CourseRegisterApplication.Server
             InitializeSubjectTypes(modelBuilder);
             InitializeSubjects(modelBuilder);
             InitializeCurriculums(modelBuilder);
+            InitializeSemester(modelBuilder);
+            InitializeAvailableCourses(modelBuilder);
         }
 
         private static void InitializeStudentPriorityTypes(ModelBuilder modelBuilder)
@@ -353,6 +357,64 @@ namespace CourseRegisterApplication.Server
                     }
 
                     modelBuilder.Entity<Curriculum>().HasData(curriculums);
+                }
+            }
+        }
+
+        public static void InitializeSemester(ModelBuilder modelBuilder)
+        {
+            var semesters = new List<Semester>();
+
+            if (File.Exists(SEMESTERS_FILE_PATH))
+            {
+                using (StreamReader sr = new StreamReader(SEMESTERS_FILE_PATH))
+                {
+                    int semesterId = 1;
+                    string? semesterLine;
+
+                    while ((semesterLine = sr.ReadLine()) != null)
+                    {
+                        string[]? semesterData = semesterLine!.Split(',');
+
+                        semesters.Add(new Semester
+                        {
+                            Id = semesterId++,
+                            SemesterName = (int.Parse(semesterData[0]) == 1) ? SemesterName.FirstSemester : ((int.Parse(semesterData[0]) == 2) ? SemesterName.SecondSemester : SemesterName.SummerSemester),
+                            Year = int.Parse(semesterData[1].Trim()),
+                            StartRegistrationDate = DateTime.ParseExact(semesterData[2].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            EndRegistrationDate = DateTime.ParseExact(semesterData[3].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            MinimumCredits = int.Parse(semesterData[4].Trim()),
+                            MaximumCredits = int.Parse(semesterData[5].Trim()),
+                        });
+                    }
+
+                    modelBuilder.Entity<Semester>().HasData(semesters);
+                }
+            }
+        }
+
+        public static void InitializeAvailableCourses(ModelBuilder modelBuilder)
+        {
+            var availableCourses = new List<AvailableCourse>();
+
+            if (File.Exists(AVAILABLE_COURSES_FILE_PATH))
+            {
+                using (StreamReader sr = new StreamReader(AVAILABLE_COURSES_FILE_PATH))
+                {
+                    string? availableCourseLine;
+
+                    while ((availableCourseLine = sr.ReadLine()) != null)
+                    {
+                        string[]? availableCourseData = availableCourseLine!.Split(',');
+
+                        availableCourses.Add(new AvailableCourse
+                        {
+                            SemesterId = int.Parse(availableCourseData[0].Trim()),
+                            SubjectId = int.Parse(availableCourseData[1].Trim()),
+                        });
+                    }
+
+                    modelBuilder.Entity<AvailableCourse>().HasData(availableCourses);
                 }
             }
         }

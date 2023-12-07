@@ -1,4 +1,6 @@
-﻿namespace CourseRegisterApplication.Server;
+﻿using Microsoft.Build.ObjectModelRemoting;
+
+namespace CourseRegisterApplication.Server;
 
 public class CourseRegisterManagementDbContext : DbContext
 {
@@ -16,8 +18,11 @@ public class CourseRegisterManagementDbContext : DbContext
     public DbSet<StudentPriorityType> StudentPriorityTypes { get; set; }
     public DbSet<SubjectType> SubjectTypes { get; set; }
     public DbSet<Subject> Subjects { get; set; }
-    public DbSet<Curriculum> Curriculums {  get; set; }
-    
+    public DbSet<Curriculum> Curriculums { get; set; }
+    public DbSet<Semester> Semesters { get; set; }
+    public DbSet<AvailableCourse> AvailableCourses { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         InitializeUniques(modelBuilder);
@@ -63,5 +68,11 @@ public class CourseRegisterManagementDbContext : DbContext
 
         // Curriculum
         modelBuilder.Entity<Curriculum>().HasKey(c => new { c.BranchId, c.SubjectId });
+
+        // Semester
+        modelBuilder.Entity<Semester>().HasIndex(s => new { s.Year, s.SemesterName }).IsUnique();
+
+        // Available Course
+        modelBuilder.Entity<AvailableCourse>().HasKey(ac => new { ac.SemesterId, ac.SubjectId });
     }
 }
