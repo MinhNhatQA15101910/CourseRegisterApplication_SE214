@@ -94,6 +94,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             List<Department> departmentList = await _departmentService.GetAllDepartments();
 
             ReloadDepartmentDisplays(departmentList);
+
+            DisplayDepartmentInformation(new()
+            {
+                DepartmentSpecificId = "",
+                DepartmentName = ""
+            });
         }
 
         [RelayCommand(CanExecute = nameof(CanDeleteUpdateDepartmentExecuted))]
@@ -137,6 +143,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             Popup popup = _serviceProvider.GetService<AddUpdateDepartmentPopup>();
             var bindingContext = popup.BindingContext as AddUpdateDepartmentViewModel;
 
+            bindingContext.DepartmentId = selectedDepartmentId;
             bindingContext.DepartmentSpecificId = SelectedDepartmentSpecificIdDisplayText;
             bindingContext.DepartmentName = SelectedDepartmentNameDisplayText[12..];
             bindingContext.CommandName = "Update department";

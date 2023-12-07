@@ -40,7 +40,7 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<ChangePasswordViewModel>();
             builder.Services.AddScoped<AddAdminAccountantAccountViewModel>();
             builder.Services.AddScoped<DepartmentManagementViewModel>();
-            builder.Services.AddTransient<AddUpdateDepartmentViewModel>();
+            builder.Services.AddScoped<AddUpdateDepartmentViewModel>();
 
             // Views
             builder.Services.AddScoped<LoginPage>();
@@ -51,7 +51,7 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<ChangePasswordPage>();
             builder.Services.AddScoped<AddAdminAccountantAccountPage>();
             builder.Services.AddScoped<DepartmentManagementPage>();
-            builder.Services.AddTransient<AddUpdateDepartmentPopup>();
+            builder.Services.AddScoped<AddUpdateDepartmentPopup>();
 
             // Services
             builder.Services.AddSingleton<HttpClient>();
