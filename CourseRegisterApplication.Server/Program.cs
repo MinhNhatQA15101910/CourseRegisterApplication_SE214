@@ -1,8 +1,11 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<CourseRegisterManagementDbContext>(options
-    => options.UseSqlServer(builder.Configuration.GetConnectionString("CourseRegisterManagementCS")));
+builder.Services.AddDbContext<CourseRegisterManagementDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CourseRegisterManagementCS"));
+});
+
 
 
 builder.Services.AddControllers();
@@ -17,12 +20,20 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Initialize database
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+using (var scope = scopeFactory.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var db = scope.ServiceProvider.GetRequiredService<CourseRegisterManagementDbContext>();
+    db.Database.EnsureCreated();
 }
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
 
 app.UseCors("corspolicy");
 
