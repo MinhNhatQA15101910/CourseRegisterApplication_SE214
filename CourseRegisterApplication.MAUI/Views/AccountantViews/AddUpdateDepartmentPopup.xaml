@@ -72,7 +72,7 @@
         BackgroundColor="#EFF3FA"
         Command="{Binding AddUpdateDeparmentCommand}"
         FontFamily="RobotoMedium"
-        FontSize="12"
+        FontSize="14"
         HeightRequest="50"
         HorizontalOptions="Center"
         Text="{Binding CommandName}"

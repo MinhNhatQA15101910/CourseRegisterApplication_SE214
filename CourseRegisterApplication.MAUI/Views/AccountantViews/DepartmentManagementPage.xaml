@@ -106,8 +106,8 @@
       <VerticalStackLayout
         Grid.Row="1"
         Grid.Column="1"
-        Margin="0,100,0,0"
-        HorizontalOptions="Center">
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
         <VerticalStackLayout
           Padding="5"
           BackgroundColor="#FCFAFA"

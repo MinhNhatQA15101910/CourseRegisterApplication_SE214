@@ -2,7 +2,8 @@
 {
     interface IDepartmentService
     {
-        Task<List<Department>> GetDepartments();
+        Task<Department> AddDepartment(Department department);
         Task<bool> DeleteDepartment(int departmentId);
+        Task<List<Department>> GetAllDepartments();
     }
 }

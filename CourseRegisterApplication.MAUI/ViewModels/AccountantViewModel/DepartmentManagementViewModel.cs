@@ -91,7 +91,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         [RelayCommand]
         public async Task GetDepartments()
         {
-            List<Department> departmentList = await _departmentService.GetDepartments();
+            List<Department> departmentList = await _departmentService.GetAllDepartments();
 
             ReloadDepartmentDisplays(departmentList);
         }

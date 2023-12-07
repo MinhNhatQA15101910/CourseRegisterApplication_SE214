@@ -11,6 +11,22 @@ namespace CourseRegisterApplication.MAUI.Services
             _httpClient = httpClient;
         }
 
+        public async Task<Department> AddDepartment(Department department)
+        {
+            string apiUrl = $"{GlobalConfig.DEPARTMENT_BASE_URL}";
+
+            var json = JsonConvert.SerializeObject(department);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(new Uri(apiUrl), content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return department;
+            }
+
+            return null;
+        }
+
         public async Task<bool> DeleteDepartment(int departmentId)
         {
             string apiUrl = $"{GlobalConfig.DEPARTMENT_BASE_URL}{departmentId}";
@@ -19,7 +35,7 @@ namespace CourseRegisterApplication.MAUI.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<List<Department>> GetDepartments()
+        public async Task<List<Department>> GetAllDepartments()
         {
             var response = await _httpClient.GetAsync(new Uri(GlobalConfig.DEPARTMENT_BASE_URL));
             if (response.IsSuccessStatusCode)

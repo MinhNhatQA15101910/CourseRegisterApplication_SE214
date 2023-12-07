@@ -23,15 +23,15 @@
         }
 
         // GET: api/Departments/5
-        [HttpGet("{departmentSpecificId}")]
-        public async Task<ActionResult<Department>> GetDepartmentBySpecificId(string departmentSpecificId)
+        [HttpGet("{departmentId}")]
+        public async Task<ActionResult<Department>> GetDepartmentById(int departmentId)
         {
             if (_context.Departments == null)
             {
                 return NotFound();
             }
-            var department = await _context.Departments.Where(d => d.DepartmentSpecificId == departmentSpecificId).FirstAsync();
 
+            var department = await _context.Departments.FindAsync(departmentId);
             if (department == null)
             {
                 return NotFound();
@@ -83,7 +83,7 @@
             _context.Departments.Add(department);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDepartment", new { id = department.Id }, department);
+            return Ok(department);
         }
 
         // DELETE: api/Departments/5

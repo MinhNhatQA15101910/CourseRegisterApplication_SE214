@@ -33,24 +33,24 @@ namespace CourseRegisterApplication.MAUI
 #endif
 
             // ViewModels
-            builder.Services.AddTransient<LoginViewModel>();
-            builder.Services.AddTransient<AdminAppShellViewModel>();
-            builder.Services.AddTransient<AdminDashboardViewModel>();
-            builder.Services.AddTransient<AdminAccountantAccountManagementViewModel>();
-            builder.Services.AddTransient<ChangePasswordViewModel>();
-            builder.Services.AddTransient<AddAdminAccountantAccountViewModel>();
-            builder.Services.AddTransient<DepartmentManagementViewModel>();
+            builder.Services.AddScoped<LoginViewModel>();
+            builder.Services.AddScoped<AdminAppShellViewModel>();
+            builder.Services.AddScoped<AdminDashboardViewModel>();
+            builder.Services.AddScoped<AdminAccountantAccountManagementViewModel>();
+            builder.Services.AddScoped<ChangePasswordViewModel>();
+            builder.Services.AddScoped<AddAdminAccountantAccountViewModel>();
+            builder.Services.AddScoped<DepartmentManagementViewModel>();
             builder.Services.AddTransient<AddUpdateDepartmentViewModel>();
 
             // Views
-            builder.Services.AddTransient<LoginPage>();
-            builder.Services.AddTransient<AdminAppShell>();
-            builder.Services.AddTransient<NavigationTopBar>();
-            builder.Services.AddTransient<AdminDashboardPage>();
-            builder.Services.AddTransient<AdminAccountantAccountManagementPage>();
-            builder.Services.AddTransient<ChangePasswordPage>();
-            builder.Services.AddTransient<AddAdminAccountantAccountPage>();
-            builder.Services.AddTransient<DepartmentManagementPage>();
+            builder.Services.AddScoped<LoginPage>();
+            builder.Services.AddScoped<AdminAppShell>();
+            builder.Services.AddScoped<NavigationTopBar>();
+            builder.Services.AddScoped<AdminDashboardPage>();
+            builder.Services.AddScoped<AdminAccountantAccountManagementPage>();
+            builder.Services.AddScoped<ChangePasswordPage>();
+            builder.Services.AddScoped<AddAdminAccountantAccountPage>();
+            builder.Services.AddScoped<DepartmentManagementPage>();
             builder.Services.AddTransient<AddUpdateDepartmentPopup>();
 
             // Services
