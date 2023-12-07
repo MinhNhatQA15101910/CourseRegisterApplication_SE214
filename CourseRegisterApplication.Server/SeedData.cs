@@ -1,17 +1,15 @@
-﻿using System.Globalization;
-
-namespace CourseRegisterApplication.Server
+﻿namespace CourseRegisterApplication.Server
 {
     public static class SeedData
     {
-        private static string USERS_FILE_PATH = "Resources/users.txt";
-        private static string PROVINCES_FILE_PATH = "Resources/provinces.txt";
-        private static string DISTRICTS_FILE_PATH = "Resources/districts.txt";
-        private static string DEPARTMENTS_FILE_PATH = "Resources/departments.txt";
-        private static string BRANCHES_FILE_PATH = "Resources/branches.txt";
-        private static string PRIORITY_TYPES_FILE_PATH = "Resources/priority-types.txt";
-        private static string STUDENTS_FILE_PATH = "Resources/students.txt";
-        private static string STUDENT_PRIORITY_TYPES_FILE_PATH = "Resources/student-priority-types.txt";
+        private static readonly string USERS_FILE_PATH = "Resources/users.txt";
+        private static readonly string PROVINCES_FILE_PATH = "Resources/provinces.txt";
+        private static readonly string DISTRICTS_FILE_PATH = "Resources/districts.txt";
+        private static readonly string DEPARTMENTS_FILE_PATH = "Resources/departments.txt";
+        private static readonly string BRANCHES_FILE_PATH = "Resources/branches.txt";
+        private static readonly string PRIORITY_TYPES_FILE_PATH = "Resources/priority-types.txt";
+        private static readonly string STUDENTS_FILE_PATH = "Resources/students.txt";
+        private static readonly string STUDENT_PRIORITY_TYPES_FILE_PATH = "Resources/student-priority-types.txt";
 
         public static void Initialize(ModelBuilder modelBuilder)
         {

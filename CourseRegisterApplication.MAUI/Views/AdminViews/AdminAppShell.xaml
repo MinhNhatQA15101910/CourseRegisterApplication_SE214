@@ -73,7 +73,6 @@
     Route="student">
     <ShellContent ContentTemplate="{DataTemplate local:StudentAccountManagementPage}" Route="details" />
   </FlyoutItem>
-
   <Shell.ItemTemplate>
     <DataTemplate>
       <Frame
