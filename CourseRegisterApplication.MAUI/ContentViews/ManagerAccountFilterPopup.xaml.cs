@@ -11,6 +11,6 @@ public partial class ManagerAccountFilterPopup : Popup
 	}
 	void ClosePopup(object sender, TappedEventArgs args)
 	{
-		this.Close();
+		Close();
 	}
 }

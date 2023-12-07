@@ -1,4 +1,6 @@
-﻿using CourseRegisterApplication.MAUI.IServices;
+﻿using CommunityToolkit.Maui.Views;
+using CourseRegisterApplication.MAUI.ContentViews;
+using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AdminViews;
 
@@ -166,6 +168,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             ReloadAdminAccountantAccountList(accountList);
         }
 
+        [RelayCommand]
+        public async Task OpenPopup()
+        {
+			Popup popup = _serviceProvider.GetService<ManagerAccountFilterPopup>();
+			var bindingContext = popup.BindingContext as AdminAccountantAccountManagementViewModel;
+			await Application.Current.MainPage.ShowPopupAsync(popup);
+		}
+
         [RelayCommand(CanExecute = nameof(CanDeleteUser))]
         public async Task DeleteUser()
         {
@@ -265,7 +275,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #endregion
 
         #region Property Changed
-        public void UpdateSoftList()
+        public void UpdateSortList()
         {
             if(UsernameAZChecked==true)
             {
@@ -308,7 +318,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         {
             if (oldValue != newValue && newValue != null)
             {
-                UpdateSoftList();
+                UpdateSortList();
                 UpdateFilterList();
                 SearchFilter = "";
                 ResetAccountInformation();
@@ -379,7 +389,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 
 		partial void OnSearchFilterChanged(string oldValue, string newValue)
         {
-			UpdateSoftList();
+			UpdateSortList();
 			UpdateFilterList();
 			AdminAccountantAccountList = AdminAccountantAccountList
 				.Where(a => a.Username.Contains(newValue) || a.Email.Contains(newValue) || a.RoleName.Contains(newValue)).ToObservableCollection();

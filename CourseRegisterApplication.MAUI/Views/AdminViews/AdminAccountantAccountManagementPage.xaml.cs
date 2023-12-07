@@ -18,9 +18,4 @@ public partial class AdminAccountantAccountManagementPage : ContentPage
 
         (BindingContext as AdminAccountantAccountManagementViewModel).GetAdminAccountantAccountCommand.Execute(null);
     }
-	void OnTapOpenPopupFilter(object sender, TappedEventArgs args)
-	{
-		this.ShowPopup(new ManagerAccountFilterPopup());
-
-	}
 }

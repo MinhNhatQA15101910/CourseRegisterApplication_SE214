@@ -28,7 +28,7 @@
                 HeightRequest="50"
                 VerticalOptions="Center">
                 <HorizontalStackLayout.GestureRecognizers>
-                  <TapGestureRecognizer Tapped="OnTapOpenPopupFilter" />
+                  <TapGestureRecognizer Command="{Binding OpenPopupCommand}" />
                 </HorizontalStackLayout.GestureRecognizers>
                 <Label
                   Margin="16,0,0,0"

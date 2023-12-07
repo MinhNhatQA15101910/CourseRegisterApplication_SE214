@@ -10,7 +10,7 @@
     Padding="0"
     BackgroundColor="White"
     BorderColor="#4F4F4F"
-    CornerRadius="10">
+    CornerRadius="16">
     <VerticalStackLayout Margin="24,16,16,0" WidthRequest="600">
       <Grid>
         <Label
