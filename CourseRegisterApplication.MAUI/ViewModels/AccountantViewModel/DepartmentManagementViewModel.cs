@@ -104,7 +104,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             {
                 // If there is any branch which belongs to the deleted department, display not allow alert.
                 var branchList = await _branchService.GetBranchesByDepartmentId(selectedDepartmentId);
-                if (branchList != null || branchList!.Count > 0) 
+                if (branchList!.Count > 0) 
                 {
                     await Application.Current.MainPage.DisplayAlert("Error", "You cannot delete this department because there is some branches belong to it!", "OK");
                     return;

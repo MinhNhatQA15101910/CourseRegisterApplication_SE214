@@ -47,43 +47,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         {
             if (CommandName == "Add department")
             {
-                var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to add this new department?", "Yes", "No");
-                if (accept)
-                {
-                    var departmentService = _serviceProvider.GetService<IDepartmentService>();
-                    var departments = await departmentService.GetAllDepartments();
-
-                    // Check if there is any department in the database with the same DepartmentSpecificId
-                    var sameSpecifcIdDepartments = departments.Where(d => d.DepartmentSpecificId.ToLower() == DepartmentSpecificId.ToLower());
-                    if (sameSpecifcIdDepartments.Any())
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this department because there is another department with the same Id!", "OK");
-                        return;
-                    }
-
-                    // Check if there is any department in the database with the same DepartmentName
-                    var sameNameDepartments = departments.Where(d => d.DepartmentName.ToLower() == DepartmentName.ToLower());
-                    if (sameNameDepartments.Any())
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this department because there is another department with the same name!", "OK");
-                        return;
-                    }
-
-                    // Add department
-                    var department = departmentService.AddDepartment(new() { DepartmentSpecificId = DepartmentSpecificId, DepartmentName = DepartmentName });
-                    if (department != null)
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Success", "Add department successfully!", "OK");
-
-                        // Reset department list in the DepartmentManagementPage
-                        DepartmentManagementViewModel departmentManagementViewModel = _serviceProvider.GetService<DepartmentManagementViewModel>();
-                        departmentManagementViewModel.GetDepartmentsCommand.Execute(null);
-                    }
-                    else
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Failed", "Add department failed!", "OK");
-                    }
-                }
+                await AddDepartment();
             }
             else if (CommandName == "Update department")
             {
@@ -147,6 +111,57 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             }
 
             return true;
+        }
+        #endregion
+
+        #region Helpers
+        private void Clear()
+        {
+            DepartmentSpecificId = "";
+            DepartmentName = "";
+        }
+
+        private async Task AddDepartment()
+        {
+            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to add this new department?", "Yes", "No");
+            if (accept)
+            {
+                var departmentService = _serviceProvider.GetService<IDepartmentService>();
+                var departments = await departmentService.GetAllDepartments();
+
+                // Check if there is any department in the database with the same DepartmentSpecificId
+                var sameSpecifcIdDepartments = departments.Where(d => d.DepartmentSpecificId.ToLower() == DepartmentSpecificId.ToLower());
+                if (sameSpecifcIdDepartments.Any())
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this department because there is another department with the same Id!", "OK");
+                    return;
+                }
+
+                // Check if there is any department in the database with the same DepartmentName
+                var sameNameDepartments = departments.Where(d => d.DepartmentName.ToLower() == DepartmentName.ToLower());
+                if (sameNameDepartments.Any())
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this department because there is another department with the same name!", "OK");
+                    return;
+                }
+
+                // Add department
+                var department = departmentService.AddDepartment(new() { DepartmentSpecificId = DepartmentSpecificId, DepartmentName = DepartmentName });
+                if (department != null)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", "Add department successfully!", "OK");
+
+                    // Reset department list in the DepartmentManagementPage
+                    DepartmentManagementViewModel departmentManagementViewModel = _serviceProvider.GetService<DepartmentManagementViewModel>();
+                    departmentManagementViewModel.GetDepartmentsCommand.Execute(null);
+
+                    Clear();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Failed", "Add department failed!", "OK");
+                }
+            }
         }
         #endregion
     }
