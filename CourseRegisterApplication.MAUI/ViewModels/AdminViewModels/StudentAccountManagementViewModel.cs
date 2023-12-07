@@ -1,6 +1,7 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views;
-using CourseRegisterApplication.MAUI.Views.AdminViews;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 {
@@ -24,6 +25,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 
         [ObservableProperty]
         private bool activateStatus;
+
+        [ObservableProperty]
+        private string email;
 
         [ObservableProperty]
         private Branch branch;
@@ -125,10 +129,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         private string dateOfBirth;
 
         [ObservableProperty]
+        private string email;
+
+        [ObservableProperty]
         private Gender gender;
 
         [ObservableProperty]
-        private Branch branch;
+        private string branch;
 
         [ObservableProperty]
         private string department;
@@ -173,49 +180,141 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     FullName = "Trương Bá Cường",
                     StudentSpecificId = "SV21520013",
                     Gender = Gender.Male,
+                    Branch = new Branch
+                    {
+                        BranchName = "Kỹ thuật phần mềm",
+                        BranchSpecificId = "KTPM",
+                        Department = new Department
+                        {
+                            DepartmentName = "Công nghệ phần mềm",
+                            DepartmentSpecificId = "CNPM",
+                        }
+                    },
                 },
                 new()
                 {
                     FullName = "Đôn Khánh Duy",
                     StudentSpecificId = "SV21520032",
                     Gender = Gender.Male,
+                    Branch = new Branch
+                    {
+                        BranchName = "Công nghệ thông tin",
+                        BranchSpecificId = "CNTT",
+                        Department = new Department
+                        {
+                            DepartmentName = "Công nghệ thông tin",
+                            DepartmentSpecificId = "CNTT",
+                        }
+                    },
                 },new()
                 {
                     FullName = "Nguyễn Thị Phương",
                     StudentSpecificId = "SV21520135",
                     Gender = Gender.Female,
+                    Branch = new Branch
+                    {
+                        BranchName = "Công nghệ thông tin",
+                        BranchSpecificId = "CNTT",
+                        Department = new Department
+                        {
+                            DepartmentName = "Công nghệ thông tin",
+                            DepartmentSpecificId = "CNTT",
+                        }
+                    },
                 },new()
                 {
                     FullName = "Huỳnh Bá Anh Quân",
                     StudentSpecificId = "SV21520136",
                     DateOfBirth = new DateTime(2003, 05, 15),
                     Gender = Gender.Male,
+                    Branch = new Branch
+                    {
+                        BranchName = "Kỹ thuật phần mềm",
+                        BranchSpecificId = "KTPM",
+                        Department = new Department
+                        {
+                            DepartmentName = "Công nghệ phần mềm",
+                            DepartmentSpecificId = "CNPM",
+                        }
+                    },
                 },new()
                 {
                     FullName = "Võ Thanh Bình",
                     StudentSpecificId = "SV21520007",
-                    DateOfBirth = new DateTime(2003, 05, 15),
+                    DateOfBirth = new DateTime(2003, 02, 10),
                     Gender = Gender.Male,
+                    Branch = new Branch
+                    {
+                        BranchName = "Khoa học máy tính",
+                        BranchSpecificId = "KHMT",
+                        Department = new Department
+                        {
+                            DepartmentName = "Khoa học máy tính",
+                            DepartmentSpecificId = "KHMT",
+                        }
+                    },
                 },
             };
             
             ReloadStudentAccountList(studentList);
         }
 
+        [RelayCommand]
+        public async Task Cancel()
+        {
+            bool result = await Application.Current.MainPage.DisplayAlert("Question?", "Do you want to reverse changes?", "Yes", "No");
+            if (result)
+            {
+                getStudentAccountCommand.Execute(null);
+            }
+        }
+
         [RelayCommand(CanExecute = nameof(CanSaveChanges))]
         public async Task SaveChanges()
         {
             // Filter accounts need to be updated
-            List<Student> students = await _studentService.GetStudents();
-            List<Student> updateStudents = students
-                .Where(u => primaryStudentAccountList
-                .Find(sd => sd.StudentSpecificId == u.StudentSpecificId) != null)
-                .ToList();
+            var studentUserList = _userService.GetStudentUsers();
+            List<StudentDisplay> accountsNeedToBeUpdated = StudentAccountList.Where(a => a.ActivateStatus != a.PrimaryStatus).ToList();
+            var accept = await  Application.Current.MainPage.DisplayAlert("Question", "Do you want to change Active Status for these students?", "Yes", "No");
+            if (accept)
+            {
+                foreach (var account in accountsNeedToBeUpdated)
+                {
+                    if (account.ActivateStatus)
+                    {
+                        // Create new user
+                        User newUser = new()
+                        {
+                            Username = account.StudentSpecificId,
+                            //Password = Helpers.EncryptData(Helpers.GeneratePassword()),
+                            Password = "12345678",
+                            Email = account.Email,
+                            Role = Role.Student,
+                        };
+
+                        // Add new user to database
+                        User user = await _userService.AddUser(newUser);
+                        if(user == null)
+                        {
+                            await Application.Current.MainPage.DisplayAlert("Error", "Error occurred!", "OK");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        // Delete user from database
+                        User deleteUser = studentUserList.Result.Find(u => u.Username == account.StudentSpecificId);
+                        await _userService.DeleteUser(deleteUser.Id);
+                    }
+                }
+                await Application.Current.MainPage.DisplayAlert("Success", "Changes have been saved", "OK");
+                getStudentAccountCommand.Execute(null);
+            }
         }
 
         public bool CanSaveChanges()
         {
-            var account = primaryStudentAccountList.Find(a => a.ActivateStatus != a.ActivateStatus);
+            var account = primaryStudentAccountList.Find(a => a.PrimaryStatus != a.ActivateStatus);
 
             return (account != null);
         }
@@ -233,12 +332,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 
         public void DisplayStudentAccountInformation(Student student)
         {
-            AvatarUri = "profile_avatar";
+            AvatarUri = "profile_avatar.jpg";
             FullName = student.FullName;
             StudentSpecificId = student.StudentSpecificId;
+            Email = student.StudentSpecificId.Substring(2) + "@gm.uit.edu.vn";
             Gender = student.Gender;
             DateOfBirth = student.DateOfBirth.ToString("dd/MM/yyyy");
-            //Branch = student.Branch;
+            Branch = student.Branch.BranchName;
+            Department = student.Branch.Department.DepartmentName;
         }
         #endregion
 
@@ -269,7 +370,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             switch (SelectedFilterOption)
             {
                 case "Name":
-                    StudentAccountList = primaryStudentAccountList.Where(a => a.FullName.Contains(newValue)).OrderBy(a => a.FullName).ToObservableCollection();
+                    SearchStudentsByName(newValue);
                     break;
                 case "Student ID":
                     StudentAccountList = primaryStudentAccountList.Where(a => a.StudentSpecificId.Contains(newValue)).OrderBy(a => a.StudentSpecificId).ToObservableCollection();
@@ -295,10 +396,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     {
                         FullName = accountList[i].FullName,
                         StudentSpecificId = accountList[i].StudentSpecificId,
+                        Email = accountList[i].StudentSpecificId.Substring(2) + "@gm.uit.edu.vn",
                         Gender = accountList[i].Gender,
                         DateOfBirth = accountList[i].DateOfBirth,
                         Branch = accountList[i].Branch,
-                        Avatar = "profile_avatar.png",
+                        Department = accountList[i].Branch.Department.DepartmentName,
+                        Avatar = "profile_avatar.jpg",
                         ActivateStatus = await IsStudentHasAccount(accountList[i]),
                         PrimaryStatus = await IsStudentHasAccount(accountList[i]),
                         CheckBoxColor = Color.FromArgb("#3189CC"),
@@ -320,7 +423,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             AvatarUri = "blank_avatar.jpg";
             FullName = "";
             StudentSpecificId = "";
-            DateOfBirth = DateTime.Today.ToString("dd/MM/yyyy");
+            Email = "";
+            Department = "";
+            DateOfBirth = null;
+            Branch = null;
         }
 
         private async Task<bool> IsStudentHasAccount(Student student)
@@ -336,6 +442,37 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             }
             return false;
         }
+
+        string RemoveAccents(string input)
+        {
+            string normalizedString = input.Normalize(NormalizationForm.FormD);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (char c in normalizedString)
+            {
+                UnicodeCategory unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+        void SearchStudentsByName(string newValue)
+        {
+            string normalizedValue = RemoveAccents(newValue);
+
+            string pattern = string.Join(".*", normalizedValue.Select(c => Regex.Escape(c.ToString())));
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+            StudentAccountList = primaryStudentAccountList
+                .Where(a => regex.IsMatch(RemoveAccents(a.FullName)))
+                .OrderBy(a => a.FullName)
+                .ToObservableCollection();
+        }
+
         public void NotifyCanSaveChanges()
         {
             SaveChangesCommand.NotifyCanExecuteChanged();

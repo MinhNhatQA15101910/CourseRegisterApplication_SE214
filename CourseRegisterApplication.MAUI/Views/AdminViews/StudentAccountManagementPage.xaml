@@ -66,7 +66,8 @@
           Grid.Column="0"
           Margin="100,24,0,80"
           ColumnDefinitions="7*, 3*"
-          RowDefinitions="Auto, *">
+          RowDefinitions="Auto, *"
+          VerticalOptions="Center">
           <Grid
             Grid.Row="0"
             Padding="5,0,0,0"
@@ -156,7 +157,7 @@
                     Grid.Column="2"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding Gender}"
+                    Text="{Binding Email}"
                     TextColor="#4F4F4F"
                     VerticalOptions="Center" />
 
@@ -177,12 +178,12 @@
             Grid.Column="1"
             HorizontalOptions="Center">
             <Frame
-              Margin="20,-50,0,20"
+              Margin="20,-70,0,20"
               Padding="0"
-              CornerRadius="175"
-              HeightRequest="250"
+              CornerRadius="100"
+              HeightRequest="200"
               IsClippedToBounds="True"
-              WidthRequest="250">
+              WidthRequest="200">
               <Image Aspect="AspectFill" Source="{Binding AvatarUri}" />
             </Frame>
             <VerticalStackLayout Margin="0,0,0,20">
@@ -200,8 +201,9 @@
             </VerticalStackLayout>
             <Grid
               Margin="50,20,0,0"
-              ColumnDefinitions="Auto, *"
+              ColumnDefinitions="5*, 5*"
               ColumnSpacing="50"
+              HorizontalOptions="Center"
               RowDefinitions="2.5*, 2.5*, 2.5*, 2.5*"
               RowSpacing="20">
               <VerticalStackLayout Grid.Row="0" Grid.Column="0">
@@ -209,12 +211,12 @@
                   FontAttributes="Bold"
                   FontSize="13"
                   HorizontalOptions="Start"
-                  Text="Name"
+                  Text="Department"
                   TextColor="#1A1A1A" />
                 <Label
                   FontSize="13"
                   HorizontalOptions="Start"
-                  Text="{Binding FullName}"
+                  Text="{Binding Department}"
                   TextColor="#A7A7A7" />
               </VerticalStackLayout>
               <VerticalStackLayout Grid.Row="0" Grid.Column="1">
@@ -275,6 +277,7 @@
                 Margin="0,0,20,0"
                 Padding="5"
                 BackgroundColor="#EFF3FA"
+                Command="{Binding SaveChangesCommand}"
                 CornerRadius="10"
                 FontAttributes="Bold"
                 FontSize="14"
@@ -305,6 +308,7 @@
                 Margin="0,0,20,0"
                 Padding="5"
                 BackgroundColor="#EFF3FA"
+                Command="{Binding CancelCommand}"
                 CornerRadius="10"
                 FontAttributes="Bold"
                 FontSize="14"
