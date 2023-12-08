@@ -41,6 +41,9 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<AddAdminAccountantAccountViewModel>();
             builder.Services.AddScoped<DepartmentManagementViewModel>();
             builder.Services.AddScoped<AddUpdateDepartmentViewModel>();
+            builder.Services.AddScoped<BranchManagementViewModel>();
+            builder.Services.AddScoped<AddUpdateBranchViewModel>();
+
 
             // Views
             builder.Services.AddScoped<LoginPage>();
@@ -52,6 +55,8 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<AddAdminAccountantAccountPage>();
             builder.Services.AddScoped<DepartmentManagementPage>();
             builder.Services.AddScoped<AddUpdateDepartmentPopup>();
+            builder.Services.AddScoped<BranchManagementPage>();
+            builder.Services.AddScoped<AddUpdateBranchPopup>();
 
             // Services
             builder.Services.AddSingleton<HttpClient>();

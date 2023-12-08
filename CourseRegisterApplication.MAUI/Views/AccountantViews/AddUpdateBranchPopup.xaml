@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <mct:Popup
-  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.AddUpdateDepartmentPopup"
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.AddUpdateBranchPopup"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-  x:Name="addUpdateDepartmentPopup"
   CanBeDismissedByTappingOutsideOfPopup="False"
   HorizontalOptions="Center"
   VerticalOptions="Center"
@@ -14,7 +13,7 @@
     BackgroundColor="White"
     BorderColor="#4F4F4F"
     CornerRadius="16"
-    HeightRequest="400"
+    HeightRequest="500"
     WidthRequest="400">
     <VerticalStackLayout>
       <Grid Padding="5" HeightRequest="50">
@@ -41,38 +40,56 @@
         Margin="50,50,0,0"
         FontFamily="RobotoMedium"
         FontSize="16"
-        Text="Department ID:" />
+        Text="Branch ID:" />
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
-        Text="{Binding DepartmentSpecificId}"
+        Text="{Binding BranchSpecificId}"
         WidthRequest="300" />
       <Label
         Margin="50,0,0,0"
         FontSize="12"
-        Text="{Binding DepartmentSpecificIdMessageText}"
-        TextColor="{Binding DepartmentSpecificIdColor}" />
+        Text="{Binding BranchSpecificIdMessageText}"
+        TextColor="{Binding BranchSpecificIdColor}" />
+
+      <Label
+        Margin="50,20,0,0"
+        FontFamily="RobotoMedium"
+        FontSize="16"
+        Text="Branch Name:" />
+      <Entry
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        Text="{Binding BranchName}"
+        WidthRequest="300" />
+      <Label
+        Margin="50,0,0,0"
+        FontSize="12"
+        Text="{Binding BranchNameMessageText}"
+        TextColor="{Binding BranchNameColor}" />
 
       <Label
         Margin="50,20,0,0"
         FontFamily="RobotoMedium"
         FontSize="16"
         Text="Department Name:" />
-      <Entry
+      <Picker
         HeightRequest="50"
         HorizontalOptions="Center"
-        Text="{Binding DepartmentName}"
+        ItemDisplayBinding="{Binding DepartmentName}"
+        ItemsSource="{Binding DepartmentList}"
+        SelectedItem="{Binding SelectedDepartment}"
         WidthRequest="300" />
       <Label
         Margin="50,0,0,0"
         FontSize="12"
-        Text="{Binding DepartmentNameMessageText}"
-        TextColor="{Binding DepartmentNameColor}" />
+        Text="{Binding DepartmentMessageText}"
+        TextColor="{Binding DepartmentColor}" />
 
       <Button
         Margin="0,20,0,0"
         BackgroundColor="#EFF3FA"
-        Command="{Binding AddUpdateDeparmentCommand}"
+        Command="{Binding AddUpdateBranchCommand}"
         FontFamily="RobotoMedium"
         FontSize="15"
         HeightRequest="50"

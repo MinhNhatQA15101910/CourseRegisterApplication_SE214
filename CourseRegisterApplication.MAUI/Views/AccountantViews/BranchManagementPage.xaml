@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.BranchManagementPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  Title="BranchManagementPage">
+  <Grid RowDefinitions="Auto,*">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="Can add, update, delete branches"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="Branch Management Page"
+      VerticalOptions="Start" />
+
+    <Grid
+      Grid.Row="1"
+      ColumnDefinitions="6*,4*"
+      RowDefinitions="200,*">
+
+      <HorizontalStackLayout
+        Grid.Row="0"
+        Grid.Column="0"
+        Margin="100,0,0,0"
+        VerticalOptions="Center">
+
+        <Picker
+          FontSize="14"
+          HorizontalTextAlignment="Center"
+          ItemsSource="{Binding FilterOptions}"
+          SelectedItem="{Binding SelectedFilterOption}"
+          VerticalOptions="Center" />
+
+        <SearchBar
+          Margin="20,0,0,0"
+          BackgroundColor="#FCFAFA"
+          FontFamily="Roboto"
+          FontSize="14"
+          Placeholder="Search for a branch by its ID, name or department ID"
+          Text="{Binding SearchFilter}"
+          TextColor="Black"
+          VerticalOptions="Center"
+          WidthRequest="500" />
+      </HorizontalStackLayout>
+
+      <Grid
+        Grid.Row="1"
+        Grid.Column="0"
+        Margin="100,0,0,0"
+        RowDefinitions="24,*">
+        <Grid
+          Grid.Row="0"
+          ColumnDefinitions="1*,2*,1*"
+          HeightRequest="50">
+          <Label
+            Grid.Column="0"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="Branch ID"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="1"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="Branch Name"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="2"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="Department ID"
+            VerticalOptions="Center" />
+        </Grid>
+
+        <CollectionView
+          Grid.Row="1"
+          Margin="0,0,0,100"
+          ItemsSource="{Binding BranchDisplayList}"
+          VerticalScrollBarVisibility="Always">
+          <CollectionView.ItemTemplate>
+            <DataTemplate>
+              <Grid
+                BackgroundColor="{Binding BackgroundColor}"
+                ColumnDefinitions="1*,2*,1*"
+                HeightRequest="50">
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding DisplayBranchInformationCommand}" />
+                </Grid.GestureRecognizers>
+                <Label
+                  Grid.Column="0"
+                  Padding="5"
+                  FontSize="14"
+                  Text="{Binding BranchSpecificId}"
+                  TextColor="#4F4F4F"
+                  VerticalOptions="Center" />
+                <Label
+                  Grid.Column="1"
+                  Padding="5"
+                  FontSize="14"
+                  Text="{Binding BranchName}"
+                  TextColor="#4F4F4F"
+                  VerticalOptions="Center" />
+                <Label
+                  Grid.Column="2"
+                  Padding="5"
+                  FontSize="14"
+                  Text="{Binding DepartmentSpecificId}"
+                  TextColor="#4F4F4F"
+                  VerticalOptions="Center" />
+              </Grid>
+            </DataTemplate>
+          </CollectionView.ItemTemplate>
+        </CollectionView>
+      </Grid>
+
+      <VerticalStackLayout
+        Grid.Row="1"
+        Grid.Column="1"
+        Margin="0,50,0,0"
+        HorizontalOptions="Center">
+        <VerticalStackLayout
+          Padding="5"
+          BackgroundColor="#FCFAFA"
+          HorizontalOptions="Center">
+          <Label
+            FontFamily="RobotoMedium"
+            FontSize="20"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            Text="{Binding SelectedBranchNameDisplayText}" />
+
+          <HorizontalStackLayout Margin="0,5,0,0" HorizontalOptions="Center">
+            <Label
+              Margin="0,0,3,0"
+              FontSize="14"
+              Text="Department Name:" />
+            <Label
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              Text="{Binding SelectedDepartmentNameDisplayText}" />
+          </HorizontalStackLayout>
+
+          <HorizontalStackLayout Margin="0,5,0,0" HorizontalOptions="Center">
+            <Label
+              Margin="0,0,3,0"
+              FontSize="14"
+              Text="Branch ID:" />
+            <Label
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              Text="{Binding SelectedBranchSpecificIdDisplayText}" />
+          </HorizontalStackLayout>
+
+          <HorizontalStackLayout Margin="0,30,0,0" HorizontalOptions="Center">
+            <ImageButton
+              Padding="8"
+              Aspect="AspectFit"
+              BackgroundColor="#EFF3FA"
+              BorderColor="Black"
+              Command="{Binding DisplayUpdateBranchPopupCommand}"
+              CornerRadius="8"
+              HeightRequest="24"
+              Source="vector_update.png"
+              ToolTipProperties.Text="Update Branch"
+              WidthRequest="24">
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </ImageButton>
+            <ImageButton
+              Margin="40,0,0,0"
+              Padding="8"
+              Aspect="AspectFit"
+              BackgroundColor="#EFF3FA"
+              BorderColor="Black"
+              Command="{Binding DeleteBranchCommand}"
+              CornerRadius="8"
+              HeightRequest="24"
+              Source="vector_delete.png"
+              ToolTipProperties.Text="Delete Branch"
+              WidthRequest="24">
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </ImageButton>
+          </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <Border
+          Margin="0,100,0,0"
+          StrokeShape="RoundRectangle 4,4,4,4"
+          StrokeThickness="0">
+          <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding DisplayAddBranchPopupCommand}" />
+          </Border.GestureRecognizers>
+          <HorizontalStackLayout
+            Padding="10"
+            BackgroundColor="#EFF3FA"
+            HorizontalOptions="Center">
+            <Image
+              HeightRequest="24"
+              Source="vector_add.png"
+              VerticalOptions="Center"
+              WidthRequest="24" />
+            <Label
+              Margin="5,0,0,0"
+              FontFamily="RobotoMedium"
+              FontSize="18"
+              Text="Add a new branch"
+              TextColor="#2671B1"
+              VerticalOptions="Center" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                    </VisualState.Setters>
+                  </VisualState>
+                  <VisualState x:Name="PointerOver">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                    </VisualState.Setters>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+          </HorizontalStackLayout>
+        </Border>
+      </VerticalStackLayout>
+    </Grid>
+  </Grid>
+</ContentPage>

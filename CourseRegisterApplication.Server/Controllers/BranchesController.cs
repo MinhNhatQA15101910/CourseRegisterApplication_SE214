@@ -77,7 +77,7 @@
             _context.Branches.Add(branch);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBranch", new { id = branch.Id }, branch);
+            return Ok(branch);
         }
 
         // DELETE: api/Branches/5

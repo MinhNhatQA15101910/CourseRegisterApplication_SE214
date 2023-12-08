@@ -42,6 +42,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         #endregion
 
         #region Commands
+        [RelayCommand]
+        public async Task ClosePopup()
+        {
+            Popup popup = _serviceProvider.GetService<AddUpdateDepartmentPopup>();
+            await popup.CloseAsync();
+        }
+
         [RelayCommand(CanExecute = nameof(CanAddUpdateDepartmentExecuted))]
         public async Task AddUpdateDeparment()
         {
@@ -121,6 +128,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             DepartmentName = "";
         }
 
+        private void ClearState()
+        {
+            DepartmentSpecificId = "";
+            DepartmentName = "";
+
+            globalVariable1 = 0;
+            globalVariable2 = 0;
+        }
+
         private async Task AddDepartment()
         {
             var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to add this new department?", "Yes", "No");
@@ -198,7 +214,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                     DepartmentManagementViewModel departmentManagementViewModel = _serviceProvider.GetService<DepartmentManagementViewModel>();
                     departmentManagementViewModel.GetDepartmentsCommand.Execute(null);
 
-                    Clear();
+                    ClearState();
 
                     // Close this popup
                     Popup popup = _serviceProvider.GetService<AddUpdateDepartmentPopup>();
