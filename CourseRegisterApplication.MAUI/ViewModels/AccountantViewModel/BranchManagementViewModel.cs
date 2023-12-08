@@ -133,6 +133,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             bindingContext.BranchSpecificId = SelectedBranchSpecificIdDisplayText;
             bindingContext.BranchName = SelectedBranchNameDisplayText[8..];
             bindingContext.DepartmentId = selectedDepartmentId;
+            bindingContext.SelectedDepartment = bindingContext.DepartmentList.First(d => d.Id == bindingContext.DepartmentId);
 
             await Application.Current.MainPage.ShowPopupAsync(popup);
         }

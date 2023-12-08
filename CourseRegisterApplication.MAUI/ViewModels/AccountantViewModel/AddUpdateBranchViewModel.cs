@@ -128,13 +128,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         }
         #endregion
 
-        #region Property Changed
-        partial void OnDepartmentIdChanged(int oldValue, int newValue)
-        {
-            SelectedDepartment = DepartmentList.First(d => d.Id == DepartmentId);
-        }
-        #endregion
-
         #region Helpers
         private void ClearState()
         {
@@ -152,7 +145,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                 var branches = await branchService.GetAllBranches();
 
                 // Check if there is any branch in the database with the same BranchSpecificId
-                var sameSpecifcIdBranches = branches.Where(d => d.BranchSpecificId.ToLower() == BranchSpecificId.ToLower());
+                var sameSpecifcIdBranches = branches.Where(b => b.BranchSpecificId.ToLower() == BranchSpecificId.ToLower());
                 if (sameSpecifcIdBranches.Any())
                 {
                     await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this branch because there is another branch with the same Id!", "OK");
@@ -160,7 +153,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                 }
 
                 // Check if there is any branch in the database with the same BranchName
-                var sameNameBranches = branches.Where(d => d.BranchName.ToLower() == BranchName.ToLower());
+                var sameNameBranches = branches.Where(b => b.BranchName.ToLower() == BranchName.ToLower());
                 if (sameNameBranches.Any())
                 {
                     await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this branch because there is another branch with the same name!", "OK");
@@ -188,7 +181,45 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 
         private async Task UpdateBranch()
         {
+            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to update this branch?", "Yes", "No");
+            if (accept)
+            {
+                var branchService = _serviceProvider.GetService<IBranchService>();
+                var branches = await branchService.GetAllBranches();
 
+                // Check if there is any branch in the database with the same BranchSpecificId with the updated one.
+                var sameSpecifcIdBranches = branches.Where(b => b.BranchSpecificId.ToLower() == BranchSpecificId.ToLower() && b.Id != BranchId);
+                if (sameSpecifcIdBranches.Any())
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot update this branch because there is another branch with the same Id!", "OK");
+                    return;
+                }
+
+                // Check if there is any branch in the database with the same BranchName
+                var sameNameBranches = branches.Where(b => b.BranchName.ToLower() == BranchName.ToLower() && b.Id != BranchId);
+                if (sameNameBranches.Any())
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot update this branch because there is another branch with the same name!", "OK");
+                    return;
+                }
+
+                // Update branch
+                var success = await branchService.UpdateBranch(BranchId, new() { Id = BranchId, BranchSpecificId = BranchSpecificId.Trim(), BranchName = BranchName.Trim(), DepartmentId = SelectedDepartment.Id });
+                if (success)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", "Update branch successfully!", "OK");
+
+                    // Reset branches list in the BranchManagementPage
+                    BranchManagementViewModel branchManagementViewModel = _serviceProvider.GetService<BranchManagementViewModel>();
+                    branchManagementViewModel.GetBranchesCommand.Execute(null);
+
+                    ClosePopupCommand.Execute(null);
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Failed", "Update branch failed!", "OK");
+                }
+            }
         }
         #endregion
     }

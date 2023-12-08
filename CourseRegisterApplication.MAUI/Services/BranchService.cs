@@ -56,5 +56,16 @@ namespace CourseRegisterApplication.MAUI.Services
 
             return null;
         }
+
+        public async Task<bool> UpdateBranch(int branchId, Branch branch)
+        {
+            string apiUrl = $"{GlobalConfig.BRANCH_BASE_URL}{branchId}";
+
+            var json = JsonConvert.SerializeObject(branch);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
+
+            return response.IsSuccessStatusCode;
+        }
     }
 }
