@@ -14,6 +14,11 @@ public class CourseRegisterManagementDbContext : DbContext
     public DbSet<PriorityType> PriorityTypes { get; set; }
     public DbSet<Student> Students { get; set; }
     public DbSet<StudentPriorityType> StudentPriorityTypes { get; set; }
+    public DbSet<SubjectType> SubjectTypes { get; set; }
+    public DbSet<Subject> Subjects { get; set; }
+    public DbSet<Curriculum> Curriculums { get; set; }
+    public DbSet<Semester> Semesters { get; set; }
+    public DbSet<AvailableCourse> AvailableCourses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -51,5 +56,20 @@ public class CourseRegisterManagementDbContext : DbContext
 
         // Student Priority Type
         modelBuilder.Entity<StudentPriorityType>().HasKey(spt => new { spt.StudentId, spt.PriorityTypeId });
+
+        // Subject Type 
+        modelBuilder.Entity<SubjectType>().HasIndex(st => st.Name).IsUnique();
+
+        // Subject
+        modelBuilder.Entity<Subject>().HasIndex(s => s.SubjectSpecificId).IsUnique();
+
+        // Curriculum
+        modelBuilder.Entity<Curriculum>().HasKey(c => new { c.BranchId, c.SubjectId });
+
+        // Semester
+        modelBuilder.Entity<Semester>().HasIndex(s => new { s.Year, s.SemesterName }).IsUnique();
+
+        // Available Course
+        modelBuilder.Entity<AvailableCourse>().HasKey(ac => new { ac.SemesterId, ac.SubjectId });
     }
 }
