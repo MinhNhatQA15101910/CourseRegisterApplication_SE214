@@ -2,8 +2,6 @@
 {
     public class Curriculum
     {
-
-
         [ForeignKey("Branch")]
         public int BranchId { get; set; }
         public Branch? Branch { get; set; } = null!;
