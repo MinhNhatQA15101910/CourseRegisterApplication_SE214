@@ -107,35 +107,60 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             bool accept = await Application.Current.MainPage.DisplayAlert("Warning!", "Do you want to delete this branch", "Yes", "No");
             if (accept)
             {
+                var studentService = _serviceProvider.GetService<IStudentService>();
+                var curriculumService = _serviceProvider.GetService<ICurriculumService>();
+                var branchService = _serviceProvider.GetService<IBranchService>();
+
+                // If there is any student which belongs to the deleted branch, display not allow alert.
+                var studentList = await studentService.GetStudentsByBranchId(selectedBranchId);
+                if (studentList!.Count > 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "You cannot delete this branch because there is some students belong to it!", "OK");
+                    return;
+                }
+
+                // If there is any curriculum which contains the deleted branch, display not allow alert.
+                var curriculumList = await curriculumService.GetCurriculumsByBranchId(selectedBranchId);
+                if (curriculumList!.Count > 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "You cannot delete this branch because there is some curriculums contain it!", "OK");
+                    return;
+                }
+
                 // Delete branch
+                var success = await branchService.DeleteBranch(selectedBranchId);
+                if (success)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", "Delete branch successfully!", "OK");
+                    GetBranchesCommand.Execute(null);
+                }
             }
         }
 
         [RelayCommand]
         public async Task DisplayAddBranchPopup()
         {
-            Popup popup = _serviceProvider.GetService<AddUpdateBranchPopup>();
-            var bindingContext = popup.BindingContext as AddUpdateBranchViewModel;
+            var addUpdateBranchPopup = _serviceProvider.GetService<AddUpdateBranchPopup>();
+            var addUpdateBranchViewModel = _serviceProvider.GetService<AddUpdateBranchViewModel>();
 
-            bindingContext.CommandName = "Add branch";
+            addUpdateBranchViewModel.CommandName = "Add branch";
 
-            await Application.Current.MainPage.ShowPopupAsync(popup);
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateBranchPopup);
         }
 
         [RelayCommand(CanExecute = nameof(CanDeleteUpdateBranchExecuted))]
         public async Task DisplayUpdateBranchPopup()
         {
-            Popup popup = _serviceProvider.GetService<AddUpdateBranchPopup>();
-            var bindingContext = popup.BindingContext as AddUpdateBranchViewModel;
+            var addUpdateBranchPopup = _serviceProvider.GetService<AddUpdateBranchPopup>();
+            var addUpdateBranchViewModel = _serviceProvider.GetService<AddUpdateBranchViewModel>();
 
-            bindingContext.CommandName = "Update branch";
-            bindingContext.BranchId = selectedBranchId;
-            bindingContext.BranchSpecificId = SelectedBranchSpecificIdDisplayText;
-            bindingContext.BranchName = SelectedBranchNameDisplayText[8..];
-            bindingContext.DepartmentId = selectedDepartmentId;
-            bindingContext.SelectedDepartment = bindingContext.DepartmentList.First(d => d.Id == bindingContext.DepartmentId);
+            addUpdateBranchViewModel.CommandName = "Update branch";
+            addUpdateBranchViewModel.BranchId = selectedBranchId;
+            addUpdateBranchViewModel.BranchSpecificId = SelectedBranchSpecificIdDisplayText;
+            addUpdateBranchViewModel.BranchName = SelectedBranchNameDisplayText[8..];
+            addUpdateBranchViewModel.DepartmentId = selectedDepartmentId;
 
-            await Application.Current.MainPage.ShowPopupAsync(popup);
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateBranchPopup);
         }
 
         public bool CanDeleteUpdateBranchExecuted()

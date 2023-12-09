@@ -44,7 +44,6 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<BranchManagementViewModel>();
             builder.Services.AddScoped<AddUpdateBranchViewModel>();
 
-
             // Views
             builder.Services.AddScoped<LoginPage>();
             builder.Services.AddScoped<AdminAppShell>();
@@ -63,6 +62,8 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped<IBranchService, BranchService>();
+            builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddScoped<ICurriculumService, CurriculumService>();
 
             return builder.Build();
         }

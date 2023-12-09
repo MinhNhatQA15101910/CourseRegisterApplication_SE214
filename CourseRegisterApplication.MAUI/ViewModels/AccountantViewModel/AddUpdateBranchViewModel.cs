@@ -44,8 +44,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         public AddUpdateBranchViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-
-            GetDepartmentsCommand.Execute(null);
         }
         #endregion
 
@@ -128,9 +126,20 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         }
         #endregion
 
+        #region Property Changed
+        partial void OnDepartmentIdChanged(int value)
+        {
+            if (value >= 0)
+            {
+                SelectedDepartment = DepartmentList.First(d => d.Id == value);
+            }
+        }
+        #endregion
+
         #region Helpers
         private void ClearState()
         {
+            DepartmentId = -1;
             BranchSpecificId = "";
             BranchName = "";
             SelectedDepartment = null;

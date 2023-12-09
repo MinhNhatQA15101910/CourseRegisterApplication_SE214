@@ -27,6 +27,14 @@ namespace CourseRegisterApplication.MAUI.Services
             return null;
         }
 
+        public async Task<bool> DeleteBranch(int branchId)
+        {
+            string apiUrl = $"{GlobalConfig.BRANCH_BASE_URL}{branchId}";
+            var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
+
+            return response.IsSuccessStatusCode;
+        }
+
         public async Task<List<Branch>> GetAllBranches()
         {
             string apiUrl = $"{GlobalConfig.BRANCH_BASE_URL}";

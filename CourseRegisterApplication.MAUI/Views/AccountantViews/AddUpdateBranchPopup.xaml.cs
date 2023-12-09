@@ -7,6 +7,8 @@ public partial class AddUpdateBranchPopup : Popup
 	public AddUpdateBranchPopup(AddUpdateBranchViewModel addUpdateBranchViewModel)
 	{
 		InitializeComponent();
-		BindingContext = addUpdateBranchViewModel;
+
+        addUpdateBranchViewModel.GetDepartmentsCommand.Execute(null);
+        BindingContext = addUpdateBranchViewModel;
 	}
 }
