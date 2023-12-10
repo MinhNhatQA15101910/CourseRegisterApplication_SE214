@@ -8,6 +8,8 @@
         public const string BRANCH_BASE_URL = "https://localhost:7182/api/Branches/";
         public const string STUDENT_BASE_URL = "https://localhost:7182/api/Students/";
         public const string CURRICULUM_BASE_URL = "https://localhost:7182/api/Curriculums/";
+        public const string PROVINCE_BASE_URL = "https://localhost:7182/api/Provinces/";
+        public const string DISTRICT_BASE_URL = "https://localhost:7182/api/Districts/";
         #endregion
 
         public static User CurrentUser { get; set; } = new User();

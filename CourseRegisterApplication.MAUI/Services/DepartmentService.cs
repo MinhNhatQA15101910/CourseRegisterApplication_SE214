@@ -13,7 +13,7 @@ namespace CourseRegisterApplication.MAUI.Services
 
         public async Task<Department> AddDepartment(Department department)
         {
-            string apiUrl = $"{GlobalConfig.DEPARTMENT_BASE_URL}";
+            string apiUrl = GlobalConfig.DEPARTMENT_BASE_URL;
 
             var json = JsonConvert.SerializeObject(department);
             var content = new StringContent(json, Encoding.UTF8, "application/json");

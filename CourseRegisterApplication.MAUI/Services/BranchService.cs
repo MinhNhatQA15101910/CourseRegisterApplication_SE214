@@ -13,7 +13,7 @@ namespace CourseRegisterApplication.MAUI.Services
 
         public async Task<Branch> AddBranch(Branch branch)
         {
-            string apiUrl = $"{GlobalConfig.BRANCH_BASE_URL}";
+            string apiUrl = GlobalConfig.BRANCH_BASE_URL;
 
             var json = JsonConvert.SerializeObject(branch);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -37,7 +37,7 @@ namespace CourseRegisterApplication.MAUI.Services
 
         public async Task<List<Branch>> GetAllBranches()
         {
-            string apiUrl = $"{GlobalConfig.BRANCH_BASE_URL}";
+            string apiUrl = GlobalConfig.BRANCH_BASE_URL;
 
             var response = await _httpClient.GetAsync(new Uri(apiUrl));
             if (response.IsSuccessStatusCode)
