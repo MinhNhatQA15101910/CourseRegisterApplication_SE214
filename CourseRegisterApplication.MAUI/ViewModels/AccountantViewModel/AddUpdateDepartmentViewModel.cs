@@ -29,11 +29,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         [ObservableProperty] private Color departmentNameColor;
         #endregion
 
-        #region Variables 
-        private int globalVariable1 = 0;
-        private int globalVariable2 = 0;
-        #endregion
-
         #region Constructor
         public AddUpdateDepartmentViewModel(IServiceProvider serviceProvider)
         {
@@ -45,6 +40,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         [RelayCommand]
         public async Task ClosePopup()
         {
+            ClearState();
+
             Popup popup = _serviceProvider.GetService<AddUpdateDepartmentPopup>();
             await popup.CloseAsync();
         }
@@ -64,77 +61,46 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 
         public bool CanAddUpdateDepartmentExecuted()
         {
-            int index1 = 0;
-            int index2 = 0;
+            bool isValidDepartmentSpecificId = true;
+            bool isValidDepartmentName = true;
 
             // Validate Department ID
             if (string.IsNullOrEmpty(DepartmentSpecificId))
             {
-                if (globalVariable1 == 0)
-                {
-                    DepartmentSpecificIdColor = Color.FromArgb("#FFFFFF");
-                }
-                else
-                {
-                    DepartmentSpecificIdColor = Color.FromArgb("#BF1D28");
-                }
+                isValidDepartmentSpecificId = false;
+                DepartmentSpecificIdColor = Color.FromArgb("#BF1D28");
                 DepartmentSpecificIdMessageText = "Department ID cannot be empty.";
-                index1++;
             }
             else
             {
-                globalVariable1 = 1;
                 DepartmentSpecificIdColor = Color.FromArgb("#007D3A");
                 DepartmentSpecificIdMessageText = "Valid Department ID.";
-                index1 = 0;
 
             }
 
             // Validate Department Name
             if (string.IsNullOrEmpty(DepartmentName))
             {
-                if (globalVariable2 == 0)
-                {
-                    DepartmentNameColor = Color.FromArgb("#FFFFFF");
-                }
-                else
-                {
-                    DepartmentNameColor = Color.FromArgb("#BF1D28");
-                }
+                isValidDepartmentName = false;
+                DepartmentNameColor = Color.FromArgb("#BF1D28");
                 DepartmentNameMessageText = "Department name cannot be empty.";
-                index2++;
             }
             else
             {
-                globalVariable2 = 1;
                 DepartmentNameColor = Color.FromArgb("#007D3A");
                 DepartmentNameMessageText = "Valid department name.";
-                index2 = 0;
             }
 
-            if (index1 > 0 || index2 > 0)
-            {
-                return false;
-            }
-
-            return true;
+            return isValidDepartmentSpecificId && isValidDepartmentName;
         }
         #endregion
 
         #region Helpers
-        private void Clear()
-        {
-            DepartmentSpecificId = "";
-            DepartmentName = "";
-        }
-
         private void ClearState()
         {
+            DepartmentId = -1;
             DepartmentSpecificId = "";
             DepartmentName = "";
-
-            globalVariable1 = 0;
-            globalVariable2 = 0;
         }
 
         private async Task AddDepartment()
@@ -171,7 +137,11 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                     DepartmentManagementViewModel departmentManagementViewModel = _serviceProvider.GetService<DepartmentManagementViewModel>();
                     departmentManagementViewModel.GetDepartmentsCommand.Execute(null);
 
-                    Clear();
+                    // Reset department list in the AddUpdateBranchPopup
+                    var addUpdateBranchViewModel = _serviceProvider.GetService<AddUpdateBranchViewModel>();
+                    await addUpdateBranchViewModel.GetDepartmentsCommand.ExecuteAsync(null);
+
+                    ClearState();
                 }
                 else
                 {

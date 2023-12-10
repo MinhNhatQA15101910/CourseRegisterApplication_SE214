@@ -50,9 +50,23 @@ namespace CourseRegisterApplication.MAUI.Services
             return null;
         }
 
+        public async Task<Branch> GetBranchById(int branchId)
+        {
+            string apiUrl = $"{GlobalConfig.BRANCH_BASE_URL}{branchId}";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Branch>(jsonResponse);
+            }
+
+            return null;
+        }
+
         public async Task<List<Branch>> GetBranchesByDepartmentId(int departmentId)
         {
-            string apiUrl = $"{GlobalConfig.BRANCH_BASE_URL}{departmentId}";
+            string apiUrl = $"{GlobalConfig.BRANCH_BASE_URL}department/{departmentId}";
 
             var response = await _httpClient.GetAsync(new Uri(apiUrl));
             if (response.IsSuccessStatusCode)

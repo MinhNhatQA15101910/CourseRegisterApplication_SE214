@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Syncfusion.Maui.DataForm" Version="23.1.44" />
-  </ItemGroup>
-
 </Project>

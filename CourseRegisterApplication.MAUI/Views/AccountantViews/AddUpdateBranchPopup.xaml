@@ -73,13 +73,46 @@
         FontFamily="RobotoMedium"
         FontSize="16"
         Text="Department Name:" />
-      <Picker
-        HeightRequest="50"
-        HorizontalOptions="Center"
-        ItemDisplayBinding="{Binding DepartmentName}"
-        ItemsSource="{Binding DepartmentList}"
-        SelectedItem="{Binding SelectedDepartment}"
-        WidthRequest="300" />
+      <Grid>
+        <Picker
+          HeightRequest="50"
+          HorizontalOptions="Center"
+          ItemDisplayBinding="{Binding DepartmentName}"
+          ItemsSource="{Binding DepartmentList}"
+          SelectedItem="{Binding SelectedDepartment}"
+          VerticalOptions="Center"
+          WidthRequest="300" />
+
+        <ImageButton
+          Margin="0,0,5,0"
+          Padding="12"
+          BackgroundColor="#EFF3FA"
+          Command="{Binding DisplayAddDepartmentPopupCommand}"
+          CornerRadius="8"
+          HeightRequest="12"
+          HorizontalOptions="End"
+          Source="vector_add_small.png"
+          ToolTipProperties.Text="Add Department"
+          VerticalOptions="Center"
+          WidthRequest="12">
+          <VisualStateManager.VisualStateGroups>
+            <VisualStateGroupList>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateGroupList>
+          </VisualStateManager.VisualStateGroups>
+        </ImageButton>
+      </Grid>
       <Label
         Margin="50,0,0,0"
         FontSize="12"

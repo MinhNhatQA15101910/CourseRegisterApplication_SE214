@@ -48,7 +48,7 @@ namespace CourseRegisterApplication.MAUI.Services
             return null;
         }
 
-        public async Task<Department> GetDepartment(int departmentId)
+        public async Task<Department> GetDepartmentById(int departmentId)
         {
             string apiUrl = $"{GlobalConfig.DEPARTMENT_BASE_URL}{departmentId}";
 

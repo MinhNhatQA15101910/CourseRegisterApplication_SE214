@@ -10,27 +10,25 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         #endregion
 
         #region Properties
-        [ObservableProperty] private string commandName;
+        [ObservableProperty] private string commandName = "";
 
-        public int BranchId { get; set; }
-
-        [ObservableProperty] private int departmentId;
+        public int BranchId { get; set; } = -1;
 
         [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateBranchCommand))]
-        private string branchSpecificId;
+        private string branchSpecificId = "";
 
         [ObservableProperty] private string branchSpecificIdMessageText;
 
         [ObservableProperty] private Color branchSpecificIdColor;
 
         [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateBranchCommand))]
-        private string branchName;
+        private string branchName = "";
 
         [ObservableProperty] private string branchNameMessageText;
 
         [ObservableProperty] private Color branchNameColor;
 
-        [ObservableProperty] private ObservableCollection<Department> departmentList;
+        [ObservableProperty] private ObservableCollection<Department> departmentList = null;
 
         [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateBranchCommand))]
         private Department selectedDepartment = null;
@@ -58,7 +56,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         }
 
         [RelayCommand]
-        private async Task GetDepartments()
+        public async Task GetDepartments()
         {
             var departmentService = _serviceProvider.GetService<IDepartmentService>();
             DepartmentList = (await departmentService.GetAllDepartments()).ToObservableCollection();
@@ -78,7 +76,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         }
 
         public bool CanAddUpdateBranchExecuted()
-       {
+        {
             bool isValidBranchSpecificId = true;
             bool isValidBranchName = true;
             bool isValidDepartment = true;
@@ -124,14 +122,37 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 
             return isValidBranchSpecificId && isValidBranchName && isValidDepartment;
         }
+
+        [RelayCommand]
+        public async Task DisplayAddDepartmentPopup()
+        {
+            var addUpdateDepartmentPopup = _serviceProvider.GetService<AddUpdateDepartmentPopup>();
+            var addUpdateDepartmentViewModel = _serviceProvider.GetService<AddUpdateDepartmentViewModel>();
+
+            addUpdateDepartmentViewModel.CommandName = "Add department";
+
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateDepartmentPopup);
+        }
         #endregion
 
         #region Property Changed
-        partial void OnDepartmentIdChanged(int value)
+        async partial void OnCommandNameChanged(string value)
         {
-            if (value >= 0)
+            var branchService = _serviceProvider.GetService<IBranchService>();
+
+            // Load data
+            if (!string.IsNullOrEmpty(value))
             {
-                SelectedDepartment = DepartmentList.First(d => d.Id == value);
+                // Get Departments
+                await GetDepartmentsCommand.ExecuteAsync(null);
+
+                if (value.Equals("Update branch"))
+                {
+                    var branch = await branchService.GetBranchById(BranchId);
+                    BranchSpecificId = branch.BranchSpecificId;
+                    BranchName = branch.BranchName;
+                    SelectedDepartment = DepartmentList.First(d => d.Id == branch.DepartmentId);
+                }
             }
         }
         #endregion
@@ -139,10 +160,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         #region Helpers
         private void ClearState()
         {
-            DepartmentId = -1;
+            CommandName = "";
+            BranchId = -1;
             BranchSpecificId = "";
             BranchName = "";
             SelectedDepartment = null;
+            DepartmentList = null;
         }
 
         private async Task AddBranch()

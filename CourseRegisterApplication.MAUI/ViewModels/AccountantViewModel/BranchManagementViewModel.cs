@@ -53,15 +53,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 
         [ObservableProperty] private ObservableCollection<BranchDisplay> branchDisplayList = new();
 
-        [ObservableProperty] private ObservableCollection<string> filterOptions = new() { "ID", "Name", "Department ID" };
+        [ObservableProperty] private ObservableCollection<string> filterOptions = new() { "ID", "Name", "Department" };
 
         [ObservableProperty] private string selectedFilterOption = "ID";
 
         [ObservableProperty] private string searchFilter;
 
         private int selectedBranchId;
-
-        private int selectedDepartmentId;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(DeleteBranchCommand))]
@@ -154,11 +152,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             var addUpdateBranchPopup = _serviceProvider.GetService<AddUpdateBranchPopup>();
             var addUpdateBranchViewModel = _serviceProvider.GetService<AddUpdateBranchViewModel>();
 
-            addUpdateBranchViewModel.CommandName = "Update branch";
             addUpdateBranchViewModel.BranchId = selectedBranchId;
-            addUpdateBranchViewModel.BranchSpecificId = SelectedBranchSpecificIdDisplayText;
-            addUpdateBranchViewModel.BranchName = SelectedBranchNameDisplayText[8..];
-            addUpdateBranchViewModel.DepartmentId = selectedDepartmentId;
+            addUpdateBranchViewModel.CommandName = "Update branch";
 
             await Application.Current.MainPage.ShowPopupAsync(addUpdateBranchPopup);
         }
@@ -180,7 +175,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                 case "Name":
                     BranchDisplayList = primaryBranchDisplayList.OrderBy(b => b.BranchName).ToObservableCollection();
                     break;
-                case "Department ID":
+                case "Department":
                     BranchDisplayList = primaryBranchDisplayList.OrderBy(b => b.DepartmentId).ToObservableCollection();
                     break;
             }
@@ -205,7 +200,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                 case "Name":
                     BranchDisplayList = primaryBranchDisplayList.Where(d => d.BranchName.ToLower().Contains(newValue.Trim().ToLower())).OrderBy(d => d.BranchName).ToObservableCollection();
                     break;
-                case "Department ID":
+                case "Department":
                     BranchDisplayList = primaryBranchDisplayList.Where(d => d.DepartmentSpecificId.ToLower().Contains(newValue.Trim().ToLower())).OrderBy(d => d.DepartmentSpecificId).ToObservableCollection();
                     break;
             }
@@ -230,7 +225,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                 foreach (var branch in branchList)
                 {
                     var departmentService = _serviceProvider.GetService<IDepartmentService>();
-                    var department = await departmentService.GetDepartment(branch.DepartmentId);
+                    var department = await departmentService.GetDepartmentById(branch.DepartmentId);
 
                     primaryBranchDisplayList.Add(new()
                     {
@@ -266,7 +261,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         public void DisplayBranchInformation(BranchDisplay branchDisplay)
         {
             selectedBranchId = branchDisplay.BranchId;
-            selectedDepartmentId = branchDisplay.DepartmentId;
             SelectedBranchSpecificIdDisplayText = branchDisplay.BranchSpecificId;
             SelectedBranchNameDisplayText = $"Branch: {branchDisplay.BranchName}";
             SelectedDepartmentNameDisplayText = branchDisplay.DepartmentName;

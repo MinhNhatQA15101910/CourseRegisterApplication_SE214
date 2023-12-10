@@ -32,8 +32,7 @@
           HorizontalTextAlignment="Center"
           ItemsSource="{Binding FilterOptions}"
           SelectedItem="{Binding SelectedFilterOption}"
-          VerticalOptions="Center"
-          WidthRequest="100" />
+          VerticalOptions="Center" />
 
         <SearchBar
           Margin="20,0,0,0"
