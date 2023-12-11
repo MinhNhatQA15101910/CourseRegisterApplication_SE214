@@ -69,5 +69,39 @@
 
             return Ok(province);
         }
+
+        [HttpPut("{provinceId}")]
+        public async Task<IActionResult> PutProvince(int provinceId, Province province)
+        {
+            if (provinceId != province.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(province).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProvinceExists(provinceId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool ProvinceExists(int provinceId)
+        {
+            return (_context.Provinces?.Any(p => p.Id == provinceId)).GetValueOrDefault();
+        }
     }
 }

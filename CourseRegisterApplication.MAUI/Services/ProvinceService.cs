@@ -1,5 +1,4 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using CourseRegisterApplication.Shared;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
@@ -63,6 +62,17 @@ namespace CourseRegisterApplication.MAUI.Services
             }
 
             return null;
+        }
+
+        public async Task<bool> UpdateProvince(int provinceId, Province province)
+        {
+            string apiUrl = $"{GlobalConfig.PROVINCE_BASE_URL}{provinceId}";
+
+            var json = JsonConvert.SerializeObject(province);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
+
+            return response.IsSuccessStatusCode;
         }
     }
 }

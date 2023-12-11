@@ -6,5 +6,6 @@
         Task<bool> DeleteProvince(int provinceId);
         Task<List<Province>> GetAllProvinces();
         Task<Province> GetProvinceById(int provinceId);
+        Task<bool> UpdateProvince(int provinceId, Province province);
     }
 }

@@ -48,7 +48,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             }
             else if (CommandName == "Update province")
             {
-                // await UpdateProvince();
+                await UpdateProvince();
             }
         }
 
@@ -113,11 +113,58 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                     var provinceDistrictManagementViewModel = _serviceProvider.GetService<ProvinceDistrictManagementViewModel>();
                     provinceDistrictManagementViewModel.GetProvincesCommand.Execute(null);
 
+                    provinceDistrictManagementViewModel.SearchProvinceFilter = "";
+                    provinceDistrictManagementViewModel.SearchDistrictFilter = "";
+                    provinceDistrictManagementViewModel.ReloadDistrictDisplays(new());
+                    provinceDistrictManagementViewModel.ClearProperties();
+
                     ClearData();
                 }
                 else
                 {
                     await Application.Current.MainPage.DisplayAlert("Failed", "Add province failed!", "OK");
+                }
+            }
+        }
+
+        private async Task UpdateProvince()
+        {
+            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to update this province?", "Yes", "No");
+            if (accept)
+            {
+                var provinceService = _serviceProvider.GetService<IProvinceService>();
+                var provinces = await provinceService.GetAllProvinces();
+
+                // Check if there is any province in the database with the same ProvinceName with the updated province
+                var sameNameProvinces = provinces.Where(d => d.ProvinceName.ToLower() == ProvinceName.ToLower() && d.Id != ProvinceId);
+                if (sameNameProvinces.Any())
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot update this province because there is another province with the same name!", "OK");
+                    return;
+                }
+
+                // Update province
+                var success = await provinceService.UpdateProvince(ProvinceId, new() { Id = ProvinceId, ProvinceName = ProvinceName.Trim() });
+                if (success)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", "Update province successfully!", "OK");
+
+                    // Reset province list in the ProvinceDistrictManagementPage
+                    var provinceDistrictManagementViewModel = _serviceProvider.GetService<ProvinceDistrictManagementViewModel>();
+                    provinceDistrictManagementViewModel.GetProvincesCommand.Execute(null);
+
+                    provinceDistrictManagementViewModel.SearchProvinceFilter = "";
+                    provinceDistrictManagementViewModel.SearchDistrictFilter = "";
+                    provinceDistrictManagementViewModel.ReloadDistrictDisplays(new());
+                    provinceDistrictManagementViewModel.ClearProperties();
+
+                    // Close Popup
+                    ClosePopupCommand.Execute(null);
+
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Failed", "Update province failed!", "OK");
                 }
             }
         }

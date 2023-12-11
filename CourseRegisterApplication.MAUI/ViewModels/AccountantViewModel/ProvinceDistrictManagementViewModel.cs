@@ -330,7 +330,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             }
         }
 
-        private void ReloadDistrictDisplays(List<District> districtList)
+        public void ReloadDistrictDisplays(List<District> districtList)
         {
             primaryDistrictDisplayList.Clear();
 
@@ -379,7 +379,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             selectedDistrictPriority = districtDisplay.IsPriority;
         }
 
-        private void ClearProperties()
+        public void ClearProperties()
         {
             SelectedProvinceId = -1;
             selectedProvinceName = "";
