@@ -37,5 +37,24 @@
 
             return province;
         }
+
+        [HttpDelete("{provinceId}")]
+        public async Task<IActionResult> DeleteProvince(int provinceId)
+        {
+            if (_context.Provinces == null)
+            {
+                return NotFound();
+            }
+            var province = await _context.Provinces.FindAsync(provinceId);
+            if (province == null)
+            {
+                return NotFound();
+            }
+
+            _context.Provinces.Remove(province);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

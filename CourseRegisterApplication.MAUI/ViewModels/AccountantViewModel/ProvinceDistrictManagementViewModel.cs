@@ -169,7 +169,28 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         [RelayCommand(CanExecute = nameof(CanDeleteUpdateProvinceExecuted))]
         public async Task DeleteProvince()
         {
+            bool accept = await Application.Current.MainPage.DisplayAlert("Warning!", "Do you want to delete this province", "Yes", "No");
+            if (accept)
+            {
+                var districtService = _serviceProvider.GetService<IDistrictService>();
+                var provinceService = _serviceProvider.GetService<IProvinceService>();
 
+                // If there is any district which belongs to the deleted province, display not allow alert.
+                var districtList = await districtService.GetDistrictsByProvinceId(SelectedProvinceId);
+                if (districtList!.Count > 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "You cannot delete this province because there is some districts belong to it!", "OK");
+                    return;
+                }
+
+                // Delete province
+                var success = await provinceService.DeleteProvince(SelectedProvinceId);
+                if (success)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", "Delete province successfully!", "OK");
+                    GetProvincesCommand.Execute(null);
+                }
+            }
         }
 
         [RelayCommand(CanExecute = nameof(CanDeleteUpdateProvinceExecuted))]

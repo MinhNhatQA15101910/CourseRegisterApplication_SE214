@@ -1,5 +1,4 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using CourseRegisterApplication.Shared;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
@@ -10,6 +9,14 @@ namespace CourseRegisterApplication.MAUI.Services
         public ProvinceService(HttpClient httpClient)
         {
             _httpClient = httpClient;
+        }
+
+        public async Task<bool> DeleteProvince(int provinceId)
+        {
+            string apiUrl = $"{GlobalConfig.PROVINCE_BASE_URL}{provinceId}";
+            var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
+
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<List<Province>> GetAllProvinces()
