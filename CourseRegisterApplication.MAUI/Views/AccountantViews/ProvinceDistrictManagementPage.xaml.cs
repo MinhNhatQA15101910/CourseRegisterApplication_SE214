@@ -14,6 +14,6 @@ public partial class ProvinceDistrictManagementPage : ContentPage
     {
         base.OnAppearing();
 
-        (BindingContext as ProvinceDistrictManagementViewModel).GetProvincesAndDistrictsCommand.Execute(null);
+        (BindingContext as ProvinceDistrictManagementViewModel).GetProvincesCommand.Execute(null);
     }
 }

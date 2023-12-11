@@ -184,10 +184,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             switch (SelectedFilterOption)
             {
                 case "ID":
-                    DepartmentDisplayList = primaryDepartmentDisplayList.Where(d => d.DepartmentSpecificId.Contains(newValue.Trim())).OrderBy(d => d.DepartmentSpecificId).ToObservableCollection();
+                    DepartmentDisplayList = primaryDepartmentDisplayList.Where(d => d.DepartmentSpecificId.ToLower().Contains(newValue.Trim().ToLower())).OrderBy(d => d.DepartmentSpecificId).ToObservableCollection();
                     break;
                 case "Name":
-                    DepartmentDisplayList = primaryDepartmentDisplayList.Where(d => d.DepartmentName.Contains(newValue.Trim())).OrderBy(d => d.DepartmentName).ToObservableCollection();
+                    DepartmentDisplayList = primaryDepartmentDisplayList.Where(d => d.DepartmentName.ToLower().Contains(newValue.Trim().ToLower())).OrderBy(d => d.DepartmentName).ToObservableCollection();
                     break;
             }
 

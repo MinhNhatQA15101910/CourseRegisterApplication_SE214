@@ -2,5 +2,6 @@
 {
     public interface IDistrictService
     {
+        Task<List<District>> GetDistrictsByProvinceId(int provinceId);
     }
 }

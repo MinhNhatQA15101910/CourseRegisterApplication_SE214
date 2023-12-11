@@ -6,6 +6,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
     public partial class ProvinceDisplay : ObservableObject
     {
         #region Properties
+        public IProvinceRequester ProvinceRequester { get; set; }
+
         [ObservableProperty] private int provinceCode;
 
         [ObservableProperty] private string provinceName;
@@ -15,9 +17,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 
         #region Commands
         [RelayCommand]
-        public async Task DisplayDistrictListOfSelectedProvince()
+        public void DisplayDistrictListOfSelectedProvince()
         {
+            ProvinceRequester.ReloadProvincesBackground();
+            BackgroundColor = Color.FromArgb("#B9D8F2");
 
+            ProvinceRequester.DisplayDistrictList(this);
         }
         #endregion
     }
@@ -25,6 +30,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
     public partial class DistrictDisplay : ObservableObject
     {
         #region Properties
+        public IDistrictRequester DistrictRequester {  get; set; }
+
         [ObservableProperty] private int districtCode;
 
         [ObservableProperty] private string districtName;
@@ -38,21 +45,52 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 
         #region Commands
         [RelayCommand]
-        public async Task DisplayDistrictListOfSelectedProvince()
+        public void GetSelectedDistrictProperties()
         {
+            DistrictRequester.ReloadDistrictsBackground();
+            BackgroundColor = Color.FromArgb("#B9D8F2");
 
+            DistrictRequester.GetSelectedDistrictProperties(this);
         }
         #endregion
     }
 
-    public partial class ProvinceDistrictManagementViewModel : ObservableObject
+    public interface IProvinceRequester
+    {
+        void DisplayDistrictList(ProvinceDisplay provinceDisplay);
+        void ReloadProvincesBackground();
+    }
+
+    public interface IDistrictRequester
+    {
+        void GetSelectedDistrictProperties(DistrictDisplay districtDisplay);
+        void ReloadDistrictsBackground();
+    }
+
+    public partial class ProvinceDistrictManagementViewModel : ObservableObject, IProvinceRequester, IDistrictRequester
     {
         #region Services
         private readonly IServiceProvider _serviceProvider;
         #endregion
 
         #region Properties
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(DisplayUpdateProvincePopupCommand))]
+        [NotifyCanExecuteChangedFor(nameof(DeleteProvinceCommand))]
+        [NotifyCanExecuteChangedFor(nameof(DisplayAddDistrictPopupCommand))]
         private int selectedProvinceId = -1;
+
+        private string selectedProvinceName = "";
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(DisplayUpdateDistrictPopupCommand))]
+        [NotifyCanExecuteChangedFor(nameof(DeleteDistrictCommand))]
+        private int selectedDistrictId = -1;
+
+        private string selectedDistrictName = "";
+
+        private bool selectedDistrictPriority = false;
 
         [ObservableProperty] private ObservableCollection<string> provinceFilterOptions = new() { "Code", "Name" };
 
@@ -60,7 +98,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 
         [ObservableProperty] private string searchProvinceFilter;
 
-        [ObservableProperty] private ObservableCollection<string> districtFilterOptions = new() { "Code", "Name", "Province" };
+        [ObservableProperty] private ObservableCollection<string> districtFilterOptions = new() { "Code", "Name" };
 
         [ObservableProperty] private string selectedDistrictFilterOption = "Code";
 
@@ -94,13 +132,137 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         }
 
         [RelayCommand]
-        public async Task GetProvincesAndDistricts()
+        public async Task GetProvinces()
         {
             var provinceService = _serviceProvider.GetService<IProvinceService>();
 
             var provinceList = await provinceService.GetAllProvinces();
 
             ReloadProvinceDisplays(provinceList);
+        }
+
+        [RelayCommand]
+        public async Task DisplayAddProvincePopup()
+        {
+
+        }
+
+        [RelayCommand(CanExecute = nameof(CanDeleteUpdateProvinceExecuted))]
+        public async Task DisplayUpdateProvincePopup()
+        {
+
+        }
+
+        [RelayCommand(CanExecute = nameof(CanDeleteUpdateProvinceExecuted))]
+        public async Task DeleteProvince()
+        {
+
+        }
+
+        [RelayCommand(CanExecute = nameof(CanDeleteUpdateProvinceExecuted))]
+        public async Task DisplayAddDistrictPopup()
+        {
+
+        }
+
+        [RelayCommand(CanExecute = nameof(CanDeleteUpdateDistrictExecuted))]
+        public async Task DisplayUpdateDistrictPopup()
+        {
+
+        }
+
+        [RelayCommand(CanExecute = nameof(CanDeleteUpdateDistrictExecuted))]
+        public async Task DeleteDistrict()
+        {
+
+        }
+
+        public bool CanDeleteUpdateProvinceExecuted()
+        {
+            return SelectedProvinceId != -1;
+        }
+
+        public bool CanDeleteUpdateDistrictExecuted()
+        {
+            return SelectedDistrictId != -1;
+        }
+        #endregion
+
+        #region Property Changed
+        partial void OnSelectedProvinceFilterOptionChanged(string value)
+        {
+            switch (value)
+            {
+                case "Code":
+                    ProvinceDisplayList = primaryProvinceDisplayList.OrderBy(p => p.ProvinceCode).ToObservableCollection();
+                    break;
+                case "Name":
+                    ProvinceDisplayList = primaryProvinceDisplayList.OrderBy(d => d.ProvinceName).ToObservableCollection();
+                    break;
+            }
+
+            SearchProvinceFilter = "";
+            SearchDistrictFilter = "";
+            ReloadProvincesBackground();
+            ReloadDistrictDisplays(new());
+
+            ClearProperties();
+        }
+
+        partial void OnSearchProvinceFilterChanged(string value)
+        {
+            switch (SelectedProvinceFilterOption)
+            {
+                case "Code":
+                    ProvinceDisplayList = primaryProvinceDisplayList.Where(p => p.ProvinceCode.ToString().Contains(value.Trim().ToLower())).OrderBy(p => p.ProvinceCode).ToObservableCollection();
+                    break;
+                case "Name":
+                    ProvinceDisplayList = primaryProvinceDisplayList.Where(p => p.ProvinceName.ToLower().Contains(value.Trim().ToLower())).OrderBy(p => p.ProvinceName).ToObservableCollection();
+                    break;
+            }
+
+            SearchDistrictFilter = "";
+            ReloadProvincesBackground();
+            ReloadDistrictDisplays(new());
+
+            ClearProperties();
+        }
+
+        partial void OnSelectedDistrictFilterOptionChanged(string value)
+        {
+            switch (value)
+            {
+                case "Code":
+                    DistrictDisplayList = primaryDistrictDisplayList.OrderBy(d => d.DistrictCode).ToObservableCollection();
+                    break;
+                case "Name":
+                    DistrictDisplayList = primaryDistrictDisplayList.OrderBy(d => d.DistrictName).ToObservableCollection();
+                    break;
+            }
+
+            SearchDistrictFilter = "";
+            ReloadDistrictsBackground();
+            SelectedDistrictId = -1;
+            selectedDistrictName = "";
+            selectedDistrictPriority = false;
+        }
+
+        partial void OnSearchDistrictFilterChanged(string value)
+        {
+            switch (SelectedDistrictFilterOption)
+            {
+                case "Code":
+                    DistrictDisplayList = primaryDistrictDisplayList.Where(d => d.DistrictCode.ToString().Contains(value.Trim().ToLower())).OrderBy(p => p.DistrictCode).ToObservableCollection();
+                    break;
+                case "Name":
+                    DistrictDisplayList = primaryDistrictDisplayList.Where(p => p.DistrictName.ToLower().Contains(value.Trim().ToLower())).OrderBy(p => p.DistrictName).ToObservableCollection();
+                    break;
+            }
+
+            ReloadDistrictsBackground();
+            SelectedDistrictId = -1;
+            selectedDistrictName = "";
+            selectedDistrictPriority = false;
         }
         #endregion
 
@@ -115,6 +277,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                 {
                     primaryProvinceDisplayList.Add(new()
                     {
+                        ProvinceRequester = this,
                         ProvinceCode = province.Id,
                         ProvinceName = province.ProvinceName
                     });
@@ -125,7 +288,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             }
         }
 
-        private void ReloadProvincesBackground()
+        public void ReloadProvincesBackground()
         {
             for (int i = 0; i < ProvinceDisplayList.Count; i++)
             {
@@ -133,34 +296,62 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             }
         }
 
-        private async Task ReloadDistrictDisplays(List<District> districtList)
+        private void ReloadDistrictDisplays(List<District> districtList)
         {
             primaryDistrictDisplayList.Clear();
 
-            if (districtList.Count > 0)
+            foreach (var district in districtList)
             {
-                foreach (var district in districtList)
+                primaryDistrictDisplayList.Add(new()
                 {
-                    var provinceService = _serviceProvider.GetService<IProvinceService>();
-                    var province = await provinceService.GetProvinceById(district.ProvinceId);
-
-                    primaryDistrictDisplayList.Add(new()
-                    {
-                        DistrictCode = district.Id,
-                        DistrictName = district.DistrictName,
-                        ProvinceName = province.ProvinceName,
-                        IsPriority = district.IsPriority
-                    });
-                }
+                    DistrictRequester = this,
+                    DistrictCode = district.Id,
+                    DistrictName = district.DistrictName,
+                    ProvinceName = selectedProvinceName,
+                    IsPriority = district.IsPriority
+                });
             }
+
+            DistrictDisplayList = primaryDistrictDisplayList.OrderBy(d => d.DistrictCode).ToObservableCollection();
+            ReloadDistrictsBackground();
         }
 
-        private void ReloadDistrictsBackground()
+        public void ReloadDistrictsBackground()
         {
             for (int i = 0; i < DistrictDisplayList.Count; i++)
             {
                 DistrictDisplayList[i].BackgroundColor = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
             }
+        }
+
+        public async void DisplayDistrictList(ProvinceDisplay provinceDisplay)
+        {
+            SelectedProvinceId = provinceDisplay.ProvinceCode;
+            selectedProvinceName = provinceDisplay.ProvinceName;
+
+            var districtService = _serviceProvider.GetService<IDistrictService>();
+            var districtList = await districtService.GetDistrictsByProvinceId(SelectedProvinceId);
+            ReloadDistrictDisplays(districtList);
+
+            SelectedDistrictId = -1;
+            selectedDistrictName = "";
+            selectedDistrictPriority = false;
+        }
+
+        public void GetSelectedDistrictProperties(DistrictDisplay districtDisplay)
+        {
+            SelectedDistrictId = districtDisplay.DistrictCode;
+            selectedDistrictName = districtDisplay.DistrictName;
+            selectedDistrictPriority = districtDisplay.IsPriority;
+        }
+
+        private void ClearProperties()
+        {
+            SelectedProvinceId = -1;
+            selectedProvinceName = "";
+            SelectedDistrictId = -1;
+            selectedDistrictName = "";
+            selectedDistrictPriority = false;
         }
         #endregion
     }

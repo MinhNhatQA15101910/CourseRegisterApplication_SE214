@@ -42,11 +42,11 @@
           BackgroundColor="#FCFAFA"
           FontFamily="Roboto"
           FontSize="14"
-          MinimumWidthRequest="150"
           Placeholder="Search for a province by its province code or name"
           Text="{Binding SearchProvinceFilter}"
           TextColor="Black"
-          VerticalOptions="Center" />
+          VerticalOptions="Center"
+          WidthRequest="500" />
       </HorizontalStackLayout>
 
       <!--  Filter and SearchBar of District  -->
@@ -71,7 +71,8 @@
           Placeholder="Search for a district by its district code, name or its province name"
           Text="{Binding SearchDistrictFilter}"
           TextColor="Black"
-          VerticalOptions="Center" />
+          VerticalOptions="Center"
+          WidthRequest="500" />
       </HorizontalStackLayout>
 
       <!--  Splitter  -->
@@ -246,6 +247,7 @@
           Aspect="AspectFit"
           BackgroundColor="#EFF3FA"
           BorderColor="Black"
+          Command="{Binding DisplayAddProvincePopupCommand}"
           CornerRadius="8"
           HeightRequest="24"
           Source="vector_add_black.png"
@@ -274,6 +276,7 @@
           Aspect="AspectFit"
           BackgroundColor="#EFF3FA"
           BorderColor="Black"
+          Command="{Binding DisplayUpdateProvincePopupCommand}"
           CornerRadius="8"
           HeightRequest="24"
           Source="vector_update.png"
@@ -302,6 +305,7 @@
           Aspect="AspectFit"
           BackgroundColor="#EFF3FA"
           BorderColor="Black"
+          Command="{Binding DeleteProvinceCommand}"
           CornerRadius="8"
           HeightRequest="24"
           Source="vector_delete.png"
@@ -336,6 +340,7 @@
           Aspect="AspectFit"
           BackgroundColor="#EFF3FA"
           BorderColor="Black"
+          Command="{Binding DisplayAddDistrictPopupCommand}"
           CornerRadius="8"
           HeightRequest="24"
           Source="vector_add_black.png"
@@ -364,6 +369,7 @@
           Aspect="AspectFit"
           BackgroundColor="#EFF3FA"
           BorderColor="Black"
+          Command="{Binding DisplayUpdateDistrictPopupCommand}"
           CornerRadius="8"
           HeightRequest="24"
           Source="vector_update.png"
@@ -392,6 +398,7 @@
           Aspect="AspectFit"
           BackgroundColor="#EFF3FA"
           BorderColor="Black"
+          Command="{Binding DeleteDistrictCommand}"
           CornerRadius="8"
           HeightRequest="24"
           Source="vector_delete.png"
