@@ -1,5 +1,6 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views;
+using CourseRegisterApplication.MAUI.Views.AccountantViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 {
@@ -144,13 +145,25 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         [RelayCommand]
         public async Task DisplayAddProvincePopup()
         {
+            var addUpdateProvincePopup = _serviceProvider.GetService<AddUpdateProvincePopup>();
+            var addUpdateProvinceViewModel = _serviceProvider.GetService<AddUpdateProvinceViewModel>();
 
+            addUpdateProvinceViewModel.CommandName = "Add province";
+
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateProvincePopup);
         }
 
         [RelayCommand(CanExecute = nameof(CanDeleteUpdateProvinceExecuted))]
         public async Task DisplayUpdateProvincePopup()
         {
+            var addUpdateProvincePopup = _serviceProvider.GetService<AddUpdateProvincePopup>();
+            var addUpdateProvinceViewModel = _serviceProvider.GetService<AddUpdateProvinceViewModel>();
 
+            addUpdateProvinceViewModel.CommandName = "Update province";
+            addUpdateProvinceViewModel.ProvinceId = SelectedProvinceId;
+            addUpdateProvinceViewModel.ProvinceName = selectedProvinceName;
+
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateProvincePopup);
         }
 
         [RelayCommand(CanExecute = nameof(CanDeleteUpdateProvinceExecuted))]
