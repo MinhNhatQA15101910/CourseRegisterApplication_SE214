@@ -1,4 +1,5 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
+using CourseRegisterApplication.Shared;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
@@ -9,6 +10,22 @@ namespace CourseRegisterApplication.MAUI.Services
         public ProvinceService(HttpClient httpClient)
         {
             _httpClient = httpClient;
+        }
+
+        public async Task<Province> AddProvince(Province province)
+        {
+            string apiUrl = GlobalConfig.PROVINCE_BASE_URL;
+
+            var json = JsonConvert.SerializeObject(province);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(new Uri(apiUrl), content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return province;
+            }
+
+            return null;
         }
 
         public async Task<bool> DeleteProvince(int provinceId)

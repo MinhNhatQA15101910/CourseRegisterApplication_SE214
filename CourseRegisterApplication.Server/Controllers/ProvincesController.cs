@@ -56,5 +56,18 @@
 
             return NoContent();
         }
+
+        [HttpPost]
+        public async Task<ActionResult<Province>> PostProvince(Province province)
+        {
+            if (_context.Provinces == null)
+            {
+                return Problem("Entity set 'CourseRegisterManagementDbContext.Provinces'  is null.");
+            }
+            _context.Provinces.Add(province);
+            await _context.SaveChangesAsync();
+
+            return Ok(province);
+        }
     }
 }

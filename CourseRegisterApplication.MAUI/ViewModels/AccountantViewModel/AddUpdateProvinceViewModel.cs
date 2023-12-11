@@ -1,4 +1,5 @@
-﻿using CourseRegisterApplication.MAUI.Views.AccountantViews;
+﻿using CourseRegisterApplication.MAUI.IServices;
+using CourseRegisterApplication.MAUI.Views.AccountantViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
 {
@@ -41,7 +42,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         [RelayCommand(CanExecute = nameof(CanAddUpdateProvinceExecuted))]
         public async Task AddUpdateProvince()
         {
-
+            if (CommandName == "Add province")
+            {
+                await AddProvince();
+            }
+            else if (CommandName == "Update province")
+            {
+                // await UpdateProvince();
+            }
         }
 
         public bool CanAddUpdateProvinceExecuted()
@@ -71,6 +79,47 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             CommandName = "";
             ProvinceId = -1;
             ProvinceName = "";
+        }
+
+        private void ClearData()
+        {
+            ProvinceId = -1;
+            ProvinceName = "";
+        }
+
+        private async Task AddProvince()
+        {
+            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to add this new province?", "Yes", "No");
+            if (accept)
+            {
+                var provinceService = _serviceProvider.GetService<IProvinceService>();
+                var provinces = await provinceService.GetAllProvinces();
+
+                // Check if there is any province in the database with the same ProvinceName
+                var sameNameProvinces = provinces.Where(d => d.ProvinceName.ToLower() == ProvinceName.ToLower());
+                if (sameNameProvinces.Any())
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this province because there is another province with the same name!", "OK");
+                    return;
+                }
+
+                // Add province
+                var province = await provinceService.AddProvince(new() { ProvinceName = ProvinceName.Trim() });
+                if (province != null)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", "Add province successfully!", "OK");
+
+                    // Reset province list in the ProvinceDistrictManagementPage
+                    var provinceDistrictManagementViewModel = _serviceProvider.GetService<ProvinceDistrictManagementViewModel>();
+                    provinceDistrictManagementViewModel.GetProvincesCommand.Execute(null);
+
+                    ClearData();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Failed", "Add province failed!", "OK");
+                }
+            }
         }
         #endregion
     }
