@@ -45,6 +45,7 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<AddUpdateBranchViewModel>();
             builder.Services.AddScoped<ProvinceDistrictManagementViewModel>();
             builder.Services.AddScoped<AddUpdateProvinceViewModel>();
+            builder.Services.AddScoped<AddUpdateDistrictViewModel>();
 
             // Views
             builder.Services.AddScoped<LoginPage>();
@@ -60,6 +61,7 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<AddUpdateBranchPopup>();
             builder.Services.AddScoped<ProvinceDistrictManagementPage>();
             builder.Services.AddScoped<AddUpdateProvincePopup>();
+            builder.Services.AddScoped<AddUpdateDistrictPopup>();
 
             // Services
             builder.Services.AddSingleton<HttpClient>();

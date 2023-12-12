@@ -110,6 +110,9 @@
 	  <MauiXaml Update="Views\AccountantViews\AddUpdateDepartmentPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\AddUpdateDistrictPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\AddUpdateProvincePopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

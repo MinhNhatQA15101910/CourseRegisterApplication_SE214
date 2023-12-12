@@ -41,5 +41,18 @@
 
             return NoContent();
         }
+
+        [HttpPost]
+        public async Task<ActionResult<District>> PostDistrict(District district)
+        {
+            if (_context.Districts == null)
+            {
+                return Problem("Entity set 'CourseRegisterManagementDbContext.Districts'  is null.");
+            }
+            _context.Districts.Add(district);
+            await _context.SaveChangesAsync();
+
+            return Ok(district);
+        }
     }
 }

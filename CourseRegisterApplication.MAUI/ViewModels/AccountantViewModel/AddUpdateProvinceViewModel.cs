@@ -96,7 +96,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                 var provinces = await provinceService.GetAllProvinces();
 
                 // Check if there is any province in the database with the same ProvinceName
-                var sameNameProvinces = provinces.Where(d => d.ProvinceName.ToLower() == ProvinceName.ToLower());
+                var sameNameProvinces = provinces.Where(d => d.ProvinceName.ToLower() == ProvinceName.Trim().ToLower());
                 if (sameNameProvinces.Any())
                 {
                     await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this province because there is another province with the same name!", "OK");

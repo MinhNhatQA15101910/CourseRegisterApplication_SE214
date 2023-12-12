@@ -202,13 +202,30 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         [RelayCommand(CanExecute = nameof(CanDeleteUpdateProvinceExecuted))]
         public async Task DisplayAddDistrictPopup()
         {
+            var addUpdateDistrictPopup = _serviceProvider.GetService<AddUpdateDistrictPopup>();
+            var addUpdateDistrictViewModel = _serviceProvider.GetService<AddUpdateDistrictViewModel>();
 
+            addUpdateDistrictViewModel.CommandName = "Add district";
+            addUpdateDistrictViewModel.ProvinceId = SelectedProvinceId;
+            addUpdateDistrictViewModel.ProvinceName = selectedProvinceName;
+
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateDistrictPopup);
         }
 
         [RelayCommand(CanExecute = nameof(CanDeleteUpdateDistrictExecuted))]
         public async Task DisplayUpdateDistrictPopup()
         {
+            var addUpdateDistrictPopup = _serviceProvider.GetService<AddUpdateDistrictPopup>();
+            var addUpdateDistrictViewModel = _serviceProvider.GetService<AddUpdateDistrictViewModel>();
 
+            addUpdateDistrictViewModel.CommandName = "Update district";
+            addUpdateDistrictViewModel.ProvinceId = SelectedProvinceId;
+            addUpdateDistrictViewModel.ProvinceName = selectedProvinceName;
+            addUpdateDistrictViewModel.DistrictId = SelectedDistrictId;
+            addUpdateDistrictViewModel.DistrictName = selectedDistrictName;
+            addUpdateDistrictViewModel.IsPriority = selectedDistrictPriority;
+
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateDistrictPopup);
         }
 
         [RelayCommand(CanExecute = nameof(CanDeleteUpdateDistrictExecuted))]
@@ -418,6 +435,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         {
             SelectedProvinceId = -1;
             selectedProvinceName = "";
+            SelectedDistrictId = -1;
+            selectedDistrictName = "";
+            selectedDistrictPriority = false;
+        }
+
+        public void ClearDistrictData()
+        {
             SelectedDistrictId = -1;
             selectedDistrictName = "";
             selectedDistrictPriority = false;
