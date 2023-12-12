@@ -5,5 +5,6 @@
         Task<District> AddDistrict(District district);
         Task<bool> DeleteDistrict(int districtId);
         Task<List<District>> GetDistrictsByProvinceId(int provinceId);
+        Task<bool> UpdateDistrict(int districtId, District district);
     }
 }

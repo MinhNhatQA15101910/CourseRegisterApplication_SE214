@@ -54,5 +54,39 @@
 
             return Ok(district);
         }
+
+        [HttpPut("{districtId}")]
+        public async Task<IActionResult> PutDistrict(int districtId, District district)
+        {
+            if (districtId != district.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(district).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DistrictExists(districtId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool DistrictExists(int districtId)
+        {
+            return (_context.Districts?.Any(p => p.Id == districtId)).GetValueOrDefault();
+        }
     }
 }

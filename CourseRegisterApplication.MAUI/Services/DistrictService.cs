@@ -1,5 +1,4 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using CourseRegisterApplication.Shared;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
@@ -49,6 +48,17 @@ namespace CourseRegisterApplication.MAUI.Services
             }
 
             return null;
+        }
+
+        public async Task<bool> UpdateDistrict(int districtId, District district)
+        {
+            string apiUrl = $"{GlobalConfig.DISTRICT_BASE_URL}{districtId}";
+
+            var json = JsonConvert.SerializeObject(district);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
+
+            return response.IsSuccessStatusCode;
         }
     }
 }

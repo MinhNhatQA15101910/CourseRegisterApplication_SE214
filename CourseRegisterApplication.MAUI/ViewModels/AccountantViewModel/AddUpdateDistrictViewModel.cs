@@ -54,7 +54,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             }
             else if (CommandName == "Update district")
             {
-                // await UpdateDistrict();
+                await UpdateDistrict();
             }
         }
 
@@ -134,6 +134,46 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                 else
                 {
                     await Application.Current.MainPage.DisplayAlert("Failed", "Add district failed!", "OK");
+                }
+            }
+        }
+
+        private async Task UpdateDistrict()
+        {
+            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to update this district?", "Yes", "No");
+            if (accept)
+            {
+                var districtService = _serviceProvider.GetService<IDistrictService>();
+                var districts = await districtService.GetDistrictsByProvinceId(ProvinceId);
+
+                // Check if there is any district in the province with the same DistrictName as the updated district
+                var sameNameDistricts = districts.Where(d => d.DistrictName.ToLower() == DistrictName.Trim().ToLower() && d.Id != DistrictId);
+                if (sameNameDistricts.Any())
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot update this district because there is another district in the province with the same name!", "OK");
+                    return;
+                }
+
+                // Update district
+                var success = await districtService.UpdateDistrict(DistrictId, new() { Id = DistrictId, DistrictName = DistrictName.Trim(), IsPriority = IsPriority, ProvinceId = ProvinceId });
+                if (success)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", "Update district successfully!", "OK");
+
+                    // Reset district list in the ProvinceDistrictManagementPage
+                    var provinceDistrictManagementViewModel = _serviceProvider.GetService<ProvinceDistrictManagementViewModel>();
+
+                    var districtList = await districtService.GetDistrictsByProvinceId(ProvinceId);
+                    provinceDistrictManagementViewModel.ReloadDistrictDisplays(districtList);
+
+                    provinceDistrictManagementViewModel.ClearDistrictData();
+
+                    // Close this popup
+                    ClosePopupCommand.Execute(null);
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Failed", "Update district failed!", "OK");
                 }
             }
         }
