@@ -11,6 +11,14 @@ namespace CourseRegisterApplication.MAUI.Services
             _httpClient = httpClient;
         }
 
+        public async Task<bool> DeleteDistrict(int districtId)
+        {
+            string apiUrl = $"{GlobalConfig.DISTRICT_BASE_URL}{districtId}";
+            var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
+
+            return response.IsSuccessStatusCode;
+        }
+
         public async Task<List<District>> GetDistrictsByProvinceId(int provinceId)
         {
             string apiUrl = $"{GlobalConfig.DISTRICT_BASE_URL}province/{provinceId}";

@@ -136,7 +136,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         public async Task GetProvinces()
         {
             var provinceService = _serviceProvider.GetService<IProvinceService>();
-
             var provinceList = await provinceService.GetAllProvinces();
 
             ReloadProvinceDisplays(provinceList);
@@ -189,6 +188,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "Delete province successfully!", "OK");
                     GetProvincesCommand.Execute(null);
+
+                    SearchProvinceFilter = "";
+                    SearchDistrictFilter = "";
+                    ReloadProvincesBackground();
+                    ReloadDistrictDisplays(new());
+
+                    ClearProperties();
                 }
             }
         }
@@ -208,7 +214,36 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
         [RelayCommand(CanExecute = nameof(CanDeleteUpdateDistrictExecuted))]
         public async Task DeleteDistrict()
         {
+            bool accept = await Application.Current.MainPage.DisplayAlert("Warning!", "Do you want to delete this district?", "Yes", "No");
+            if (accept)
+            {
+                var studentService = _serviceProvider.GetService<IStudentService>();
+                var districtService = _serviceProvider.GetService<IDistrictService>();
 
+                // If there is any student which belongs to the deleted district, display not allow alert.
+                var studentList = await studentService.GetStudentsByDistrictId(SelectedDistrictId);
+                if (studentList!.Count > 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "You cannot delete this district because there is some students belong to it!", "OK");
+                    return;
+                }
+
+                // Delete district
+                var success = await districtService.DeleteDistrict(SelectedDistrictId);
+                if (success)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", "Delete district successfully!", "OK");
+
+                    var districtList = await districtService.GetDistrictsByProvinceId(SelectedProvinceId);
+                    ReloadDistrictDisplays(districtList);
+
+                    SearchDistrictFilter = "";
+
+                    SelectedDistrictId = -1;
+                    selectedDistrictName = "";
+                    selectedDistrictPriority = false;
+                }
+            }
         }
 
         public bool CanDeleteUpdateProvinceExecuted()

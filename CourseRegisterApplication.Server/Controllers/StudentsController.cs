@@ -66,6 +66,18 @@
             return result;
         }
 
+        [HttpGet("district/{districtId}")]
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudentsByDistrictId(int districtId)
+        {
+            if (_context.Students == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _context.Students.Where(s => s.DistrictId == districtId).ToListAsync();
+            return result;
+        }
+
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

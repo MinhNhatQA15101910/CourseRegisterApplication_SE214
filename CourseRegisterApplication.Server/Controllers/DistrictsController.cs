@@ -22,5 +22,24 @@
             var result = await _context.Districts.Where(d => d.ProvinceId == provinceId).ToListAsync();
             return result;
         }
+
+        [HttpDelete("{districtId}")]
+        public async Task<IActionResult> DeleteDistrict(int districtId)
+        {
+            if (_context.Districts == null)
+            {
+                return NotFound();
+            }
+            var district = await _context.Districts.FindAsync(districtId);
+            if (district == null)
+            {
+                return NotFound();
+            }
+
+            _context.Districts.Remove(district);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
