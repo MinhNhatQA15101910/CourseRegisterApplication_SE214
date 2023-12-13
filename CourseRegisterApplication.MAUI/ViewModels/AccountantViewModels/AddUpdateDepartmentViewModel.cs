@@ -1,7 +1,7 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views.AccountantViews;
 
-namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
+namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
     public partial class AddUpdateDepartmentViewModel : ObservableObject
     {

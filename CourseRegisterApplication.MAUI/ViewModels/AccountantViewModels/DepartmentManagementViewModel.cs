@@ -2,14 +2,14 @@
 using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AccountantViews;
 
-namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
+namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
     public partial class DepartmentDisplay : ObservableObject
     {
         #region Properties
         public IDepartmentRequester DepartmentRequester { get; set; }
 
-        public int DepartmentId {  get; set; }
+        public int DepartmentId { get; set; }
 
         [ObservableProperty]
         private string departmentSpecificId;
@@ -110,7 +110,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
             {
                 // If there is any branch which belongs to the deleted department, display not allow alert.
                 var branchList = await _branchService.GetBranchesByDepartmentId(selectedDepartmentId);
-                if (branchList!.Count > 0) 
+                if (branchList!.Count > 0)
                 {
                     await Application.Current.MainPage.DisplayAlert("Error", "You cannot delete this department because there is some branches belong to it!", "OK");
                     return;
@@ -212,7 +212,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                     primaryDepartmentDisplayList.Add(new DepartmentDisplay
                     {
                         DepartmentRequester = this,
-                        DepartmentId = department.Id, 
+                        DepartmentId = department.Id,
                         DepartmentSpecificId = department.DepartmentSpecificId,
                         DepartmentName = department.DepartmentName,
                     });

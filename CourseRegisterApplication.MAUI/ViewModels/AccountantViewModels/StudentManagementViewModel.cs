@@ -4,7 +4,7 @@ using CourseRegisterApplication.MAUI.Views.AccountantViews;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
+namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
     #region Displays
     public partial class StudentDisplay : ObservableObject
@@ -526,7 +526,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
                         Department = accountList[i].Branch.Department,
                         Avatar = "profile_avatar.jpg",
                         ActivateStatus = await IsStudentHasAccount(accountList[i]) ? "Activated" : "Pending",
-                        StatusColor = await IsStudentHasAccount(accountList[i]) ?  Color.FromArgb("#007D3A") : Color.FromArgb("#CC8100"),
+                        StatusColor = await IsStudentHasAccount(accountList[i]) ? Color.FromArgb("#007D3A") : Color.FromArgb("#CC8100"),
                         BackgroundColor = Color.FromArgb("#EBF6FF"),
                         StudentRequester = this,
                     });

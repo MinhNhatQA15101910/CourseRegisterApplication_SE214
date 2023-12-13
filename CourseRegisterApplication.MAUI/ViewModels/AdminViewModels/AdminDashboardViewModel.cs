@@ -24,7 +24,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             bool result = await Application.Current.MainPage.DisplayAlert("Question?", "Do you want to logout?", "Yes", "No");
             if (result)
             {
-                Application.Current.MainPage = _serviceProvider.GetService<LoginPage>();
+                var loginPage = _serviceProvider.GetService<LoginPage>();
+                Application.Current.MainPage = loginPage;
             }
         }
 

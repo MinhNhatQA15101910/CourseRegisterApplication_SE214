@@ -1,9 +1,4 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
@@ -14,6 +9,11 @@ namespace CourseRegisterApplication.MAUI.Services
 		public StudentService(HttpClient httpClient)
         {
 			_httpClient = httpClient;
+        }
+
+        public Task<Student> AddStudent(Student student)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<List<Student>> GetStudents()
