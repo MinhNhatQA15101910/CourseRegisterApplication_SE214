@@ -10,6 +10,6 @@
         public int SubjectId { get; set; }
         public Subject? Subject { get; set; } = null!;
 
-        public int Semester {  get; set; }
+        public int Semester { get; set; }
     }
 }

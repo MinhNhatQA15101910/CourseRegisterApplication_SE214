@@ -1,24 +1,45 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
+using CourseRegisterApplication.Shared;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
     public class StudentService : IStudentService
     {
-		private readonly HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
 
-		public StudentService(HttpClient httpClient)
+        public StudentService(HttpClient httpClient)
         {
-			_httpClient = httpClient;
+            _httpClient = httpClient;
         }
 
-        public Task<Student> AddStudent(Student student)
+        public async Task<List<Student>> GetStudentsByBranchId(int branchId)
         {
-            throw new NotImplementedException();
+            string apiUrl = $"{GlobalConfig.STUDENT_BASE_URL}branch/{branchId}";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var studentList = JsonConvert.DeserializeObject<List<Student>>(jsonResponse);
+                return studentList;
+            }
+
+            return null;
         }
 
-        public Task<List<Student>> GetStudents()
+        public async Task<List<Student>> GetStudentsByDistrictId(int districtId)
         {
-            throw new NotImplementedException();
+            string apiUrl = $"{GlobalConfig.STUDENT_BASE_URL}district/{districtId}";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var studentList = JsonConvert.DeserializeObject<List<Student>>(jsonResponse);
+                return studentList;
+            }
+
+            return null;
         }
     }
 }

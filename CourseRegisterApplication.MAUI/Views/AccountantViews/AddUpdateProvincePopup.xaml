@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <mct:Popup
-  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.AddUpdateDepartmentPopup"
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.AddUpdateProvincePopup"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-  x:Name="addUpdateDepartmentPopup"
   CanBeDismissedByTappingOutsideOfPopup="False"
   HorizontalOptions="Center"
   VerticalOptions="Center"
@@ -14,7 +13,7 @@
     BackgroundColor="White"
     BorderColor="#4F4F4F"
     CornerRadius="16"
-    HeightRequest="400"
+    HeightRequest="280"
     WidthRequest="400">
     <VerticalStackLayout>
       <Grid Padding="5" HeightRequest="50">
@@ -41,38 +40,22 @@
         Margin="50,50,0,0"
         FontFamily="RobotoMedium"
         FontSize="16"
-        Text="Department ID:" />
+        Text="Province Name:" />
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
-        Text="{Binding DepartmentSpecificId}"
+        Text="{Binding ProvinceName}"
         WidthRequest="300" />
       <Label
         Margin="50,0,0,0"
         FontSize="12"
-        Text="{Binding DepartmentSpecificIdMessageText}"
-        TextColor="{Binding DepartmentSpecificIdColor}" />
-
-      <Label
-        Margin="50,20,0,0"
-        FontFamily="RobotoMedium"
-        FontSize="16"
-        Text="Department Name:" />
-      <Entry
-        HeightRequest="50"
-        HorizontalOptions="Center"
-        Text="{Binding DepartmentName}"
-        WidthRequest="300" />
-      <Label
-        Margin="50,0,0,0"
-        FontSize="12"
-        Text="{Binding DepartmentNameMessageText}"
-        TextColor="{Binding DepartmentNameColor}" />
+        Text="{Binding ProvinceNameMessageText}"
+        TextColor="{Binding ProvinceNameColor}" />
 
       <Button
         Margin="0,20,0,0"
         BackgroundColor="#EFF3FA"
-        Command="{Binding AddUpdateDeparmentCommand}"
+        Command="{Binding AddUpdateProvinceCommand}"
         FontFamily="RobotoMedium"
         FontSize="15"
         HeightRequest="50"

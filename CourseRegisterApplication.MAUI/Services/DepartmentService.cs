@@ -1,5 +1,4 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using CourseRegisterApplication.Shared;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
@@ -14,7 +13,7 @@ namespace CourseRegisterApplication.MAUI.Services
 
         public async Task<Department> AddDepartment(Department department)
         {
-            string apiUrl = $"{GlobalConfig.DEPARTMENT_BASE_URL}";
+            string apiUrl = GlobalConfig.DEPARTMENT_BASE_URL;
 
             var json = JsonConvert.SerializeObject(department);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -44,6 +43,20 @@ namespace CourseRegisterApplication.MAUI.Services
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 var departmentList = JsonConvert.DeserializeObject<List<Department>>(jsonResponse);
                 return departmentList.ToList();
+            }
+
+            return null;
+        }
+
+        public async Task<Department> GetDepartmentById(int departmentId)
+        {
+            string apiUrl = $"{GlobalConfig.DEPARTMENT_BASE_URL}{departmentId}";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Department>(jsonResponse);
             }
 
             return null;

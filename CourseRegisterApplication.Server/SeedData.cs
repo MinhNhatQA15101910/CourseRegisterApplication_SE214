@@ -2,19 +2,19 @@
 {
     public static class SeedData
     {
-        private static string USERS_FILE_PATH = "Resources/users.txt";
-        private static string PROVINCES_FILE_PATH = "Resources/provinces.txt";
-        private static string DISTRICTS_FILE_PATH = "Resources/districts.txt";
-        private static string DEPARTMENTS_FILE_PATH = "Resources/departments.txt";
-        private static string BRANCHES_FILE_PATH = "Resources/branches.txt";
-        private static string PRIORITY_TYPES_FILE_PATH = "Resources/priority-types.txt";
-        private static string STUDENTS_FILE_PATH = "Resources/students.txt";
-        private static string STUDENT_PRIORITY_TYPES_FILE_PATH = "Resources/student-priority-types.txt";
-        private static string SUBJECT_TYPES_FILE_PATH = "Resources/subject-types.txt";
-        private static string SUBJECTS_FILE_PATH = "Resources/subjects.txt";
-        private static string CURRICULUMS_FILE_PATH = "Resources/curriculums.txt";
-        private static string SEMESTERS_FILE_PATH = "Resources/semesters.txt";
-        private static string AVAILABLE_COURSES_FILE_PATH = "Resources/available-courses.txt";
+        private static readonly string USERS_FILE_PATH = "Resources/users.txt";
+        private static readonly string PROVINCES_FILE_PATH = "Resources/provinces.txt";
+        private static readonly string DISTRICTS_FILE_PATH = "Resources/districts.txt";
+        private static readonly string DEPARTMENTS_FILE_PATH = "Resources/departments.txt";
+        private static readonly string BRANCHES_FILE_PATH = "Resources/branches.txt";
+        private static readonly string PRIORITY_TYPES_FILE_PATH = "Resources/priority-types.txt";
+        private static readonly string STUDENTS_FILE_PATH = "Resources/students.txt";
+        private static readonly string STUDENT_PRIORITY_TYPES_FILE_PATH = "Resources/student-priority-types.txt";
+        private static readonly string SUBJECT_TYPES_FILE_PATH = "Resources/subject-types.txt";
+        private static readonly string SUBJECTS_FILE_PATH = "Resources/subjects.txt";
+        private static readonly string CURRICULUMS_FILE_PATH = "Resources/curriculums.txt";
+        private static readonly string SEMESTERS_FILE_PATH = "Resources/semesters.txt";
+        private static readonly string AVAILABLE_COURSES_FILE_PATH = "Resources/available-courses.txt";
 
         public static void Initialize(ModelBuilder modelBuilder)
         {
@@ -187,7 +187,7 @@
                 {
                     int userId = 1;
                     string? userLine;
-                    
+
                     while ((userLine = sr.ReadLine()) != null)
                     {
                         string[]? userData = userLine!.Split(',');
@@ -284,7 +284,7 @@
                     int subjectTypeId = 1;
                     string? subjectTypeLine;
 
-                    while((subjectTypeLine = sr.ReadLine()) != null)
+                    while ((subjectTypeLine = sr.ReadLine()) != null)
                     {
                         string[] subjectTypeData = subjectTypeLine!.Split(",");
 
@@ -317,7 +317,8 @@
                     {
                         string[] subjectData = subjectLine!.Split(",");
 
-                        subjects.Add(new Subject { 
+                        subjects.Add(new Subject
+                        {
                             Id = subjectId++,
                             SubjectSpecificId = subjectData[0].Trim(),
                             Name = subjectData[1].Trim(),
@@ -333,7 +334,8 @@
             }
         }
 
-        public static void InitializeCurriculums(ModelBuilder modelBuilder) {
+        public static void InitializeCurriculums(ModelBuilder modelBuilder)
+        {
             var curriculums = new List<Curriculum>();
 
             if (File.Exists(CURRICULUMS_FILE_PATH))
@@ -374,12 +376,22 @@
                     {
                         string[]? semesterData = semesterLine!.Split(',');
 
+                        SemesterName semesterName = SemesterName.FirstSemester;
+                        if (int.Parse(semesterData[0]) == 2)
+                        {
+                            semesterName = SemesterName.SecondSemester;
+                        }
+                        else if (int.Parse(semesterData[0]) == 3)
+                        {
+                            semesterName = SemesterName.SummerSemester;
+                        }
+
                         semesters.Add(new Semester
                         {
                             Id = semesterId++,
-                            SemesterName = (int.Parse(semesterData[0]) == 1) ? SemesterName.FirstSemester : ((int.Parse(semesterData[0]) == 2) ? SemesterName.SecondSemester : SemesterName.SummerSemester),
+                            SemesterName = semesterName,
                             Year = int.Parse(semesterData[1].Trim()),
-                            StartRegistrationDate = DateTime.ParseExact(semesterData[2].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            StartRegistrationDate = DateTime.ParseExact(semesterData[2].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture), 
                             EndRegistrationDate = DateTime.ParseExact(semesterData[3].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture),
                             MinimumCredits = int.Parse(semesterData[4].Trim()),
                             MaximumCredits = int.Parse(semesterData[5].Trim()),

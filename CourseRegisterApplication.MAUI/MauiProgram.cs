@@ -35,6 +35,19 @@ namespace CourseRegisterApplication.MAUI
 #endif
 
             // ViewModels
+            builder.Services.AddScoped<LoginViewModel>();
+            builder.Services.AddScoped<AdminAppShellViewModel>();
+            builder.Services.AddScoped<AdminDashboardViewModel>();
+            builder.Services.AddScoped<AdminAccountantAccountManagementViewModel>();
+            builder.Services.AddScoped<ChangePasswordViewModel>();
+            builder.Services.AddScoped<AddAdminAccountantAccountViewModel>();
+            builder.Services.AddScoped<DepartmentManagementViewModel>();
+            builder.Services.AddScoped<AddUpdateDepartmentViewModel>();
+            builder.Services.AddScoped<BranchManagementViewModel>();
+            builder.Services.AddScoped<AddUpdateBranchViewModel>();
+            builder.Services.AddScoped<ProvinceDistrictManagementViewModel>();
+            builder.Services.AddScoped<AddUpdateProvinceViewModel>();
+            builder.Services.AddScoped<AddUpdateDistrictViewModel>();
             builder.Services.AddScoped<AddUpdateDepartmentViewModel>();
             builder.Services.AddScoped<StudentAccountManagementViewModel>();
             builder.Services.AddScoped<AddStudentViewModel>();
@@ -63,6 +76,7 @@ namespace CourseRegisterApplication.MAUI
 			builder.Services.AddScoped<TuitionCollectionViewModel>();
 
             // Views
+            builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddScoped<AccountantAppShell>();
 			builder.Services.AddScoped<StudentDashboardPage>();
@@ -93,6 +107,11 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<AddAdminAccountantAccountPage>();
             builder.Services.AddScoped<DepartmentManagementPage>();
             builder.Services.AddScoped<AddUpdateDepartmentPopup>();
+            builder.Services.AddScoped<BranchManagementPage>();
+            builder.Services.AddScoped<AddUpdateBranchPopup>();
+            builder.Services.AddScoped<ProvinceDistrictManagementPage>();
+            builder.Services.AddScoped<AddUpdateProvincePopup>();
+            builder.Services.AddScoped<AddUpdateDistrictPopup>();
             builder.Services.AddScoped<StudentManagementPage>();
             builder.Services.AddScoped<AddStudentPage>();
 
@@ -102,6 +121,11 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped<IBranchService, BranchService>();
+            builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddScoped<ICurriculumService, CurriculumService>();
+            builder.Services.AddScoped<IProvinceService, ProvinceService>();
+            builder.Services.AddScoped<IDistrictService, DistrictService>();
+            builder.Services.AddScoped<IStudentPriorityTypeService, StudentPriorityTypeService>();
             builder.Services.AddScoped<IProvinceService, ProvinceService>();
             builder.Services.AddScoped<IDistrictService, DistrictService>();
 

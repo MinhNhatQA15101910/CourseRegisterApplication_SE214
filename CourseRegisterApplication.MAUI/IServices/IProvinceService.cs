@@ -1,7 +1,11 @@
 ﻿namespace CourseRegisterApplication.MAUI.IServices
 {
-    interface IProvinceService
+    public interface IProvinceService
     {
-        Task<List<Province>> GetAllProvince();
+        Task<Province> AddProvince(Province province);
+        Task<bool> DeleteProvince(int provinceId);
+        Task<List<Province>> GetAllProvinces();
+        Task<Province> GetProvinceById(int provinceId);
+        Task<bool> UpdateProvince(int provinceId, Province province);
     }
 }

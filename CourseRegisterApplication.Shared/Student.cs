@@ -22,6 +22,6 @@
 		public int BranchId { get; set; }
 		public Branch? Branch { get; set; } = null!;
 
-		public ICollection<StudentPriorityType>? PriorityTypes { get; } = null!;
-	}
+        public ICollection<StudentPriorityType>? PriorityTypes { get; } = null!;
+    }
 }

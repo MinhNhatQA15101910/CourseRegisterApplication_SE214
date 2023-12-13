@@ -60,4 +60,4 @@ Thành phố Cần Thơ,
 Tỉnh Hậu Giang,
 Tỉnh Sóc Trăng,
 Tỉnh Bạc Liêu,
-Tỉnh Cà Mau;
+Tỉnh Cà Mau

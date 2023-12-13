@@ -22,7 +22,19 @@
             return await _context.Branches.ToListAsync();
         }
 
-        [HttpGet("{departmentId}")]
+        [HttpGet("{branchId}")]
+        public async Task<ActionResult<Branch>> GetBranchById(int branchId)
+        {
+            if (_context.Branches == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _context.Branches.FirstAsync(b => b.Id == branchId);
+            return result;
+        }
+
+        [HttpGet("department/{departmentId}")]
         public async Task<ActionResult<IEnumerable<Branch>>> GetBranchesByDepartmentId(int departmentId)
         {
             if (_context.Branches == null)
@@ -77,7 +89,7 @@
             _context.Branches.Add(branch);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBranch", new { id = branch.Id }, branch);
+            return Ok(branch);
         }
 
         // DELETE: api/Branches/5

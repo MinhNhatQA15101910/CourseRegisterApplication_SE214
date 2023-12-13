@@ -24,6 +24,7 @@ public class CourseRegisterManagementDbContext : DbContext
     public DbSet<CourseRegistrationForm> CourseRegistrationForms { get; set; }
     public DbSet<CourseRegistrationDetail> CourseRegistrationDetails { get; set; }
     public DbSet<TuitionFeeReceipt> TuitionFeeReceipts { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         InitializeUniques(modelBuilder);
@@ -78,7 +79,7 @@ public class CourseRegisterManagementDbContext : DbContext
 
         // Course registration form
         modelBuilder.Entity<CourseRegistrationForm>().HasIndex(crf => crf.CourseRegistrationFormSpecificId).IsUnique();
-        modelBuilder.Entity<CourseRegistrationForm>().HasIndex(crf => new {crf.SemesterId, crf.StudentId}).IsUnique();
+        modelBuilder.Entity<CourseRegistrationForm>().HasIndex(crf => new { crf.SemesterId, crf.StudentId }).IsUnique();
 
         // Course registration detail
         modelBuilder.Entity<CourseRegistrationDetail>().HasKey(crd => new { crd.CourseRegistrationFormId, crd.SubjectId });

@@ -1,7 +1,10 @@
 ﻿namespace CourseRegisterApplication.MAUI.IServices
 {
-    interface IDistrictService
+    public interface IDistrictService
     {
-        Task<List<District>> GetDistrictsByProvinceID(int provinceId);
+        Task<District> AddDistrict(District district);
+        Task<bool> DeleteDistrict(int districtId);
+        Task<List<District>> GetDistrictsByProvinceId(int provinceId);
+        Task<bool> UpdateDistrict(int districtId, District district);
     }
 }
