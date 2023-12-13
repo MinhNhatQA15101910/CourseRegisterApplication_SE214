@@ -2,7 +2,7 @@
 using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Services;
 using CourseRegisterApplication.MAUI.ViewModels;
-using CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel;
+using CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels;
 using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
 using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AccountantViews;

@@ -1,4 +1,4 @@
-using CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel;
+using CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels;
 
 namespace CourseRegisterApplication.MAUI.Views.AccountantViews;
 

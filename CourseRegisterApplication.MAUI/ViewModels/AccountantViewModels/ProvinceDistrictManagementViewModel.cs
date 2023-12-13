@@ -2,7 +2,7 @@
 using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AccountantViews;
 
-namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel
+namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
     public partial class ProvinceDisplay : ObservableObject
     {
