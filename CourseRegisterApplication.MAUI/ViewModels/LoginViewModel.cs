@@ -164,6 +164,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 		{
             Username = "";
             Password = "";
+			globalVariable1 = 0;
+			globalVariable2 = 0;
         }
         #endregion
 	}

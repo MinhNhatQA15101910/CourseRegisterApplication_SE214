@@ -48,7 +48,7 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<AddUpdateDistrictViewModel>();
 
             // Views
-            builder.Services.AddScoped<LoginPage>();
+            builder.Services.AddTransient<LoginPage>();
             builder.Services.AddScoped<AdminAppShell>();
             builder.Services.AddScoped<NavigationTopBar>();
             builder.Services.AddScoped<AdminDashboardPage>();
