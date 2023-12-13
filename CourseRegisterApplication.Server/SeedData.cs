@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace CourseRegisterApplication.Server
+﻿namespace CourseRegisterApplication.Server
 {
     public static class SeedData
     {

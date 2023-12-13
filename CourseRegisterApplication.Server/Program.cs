@@ -6,8 +6,6 @@ builder.Services.AddDbContext<CourseRegisterManagementDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CourseRegisterManagementCS"));
 });
 
-
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -20,7 +18,8 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 
 var app = builder.Build();
 
-// Initialize database
+
+// Initialize the database
 var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
 using (var scope = scopeFactory.CreateScope())
 {
@@ -28,12 +27,12 @@ using (var scope = scopeFactory.CreateScope())
     db.Database.EnsureCreated();
 }
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseCors("corspolicy");
 

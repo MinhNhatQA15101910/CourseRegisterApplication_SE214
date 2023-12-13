@@ -1,12 +1,402 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.StudentManagementPage"
-             Title="StudentManagermentPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.StudentManagementPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:accountantViewModels="clr-namespace:CourseRegisterApplication.MAUI.ViewModels.AccountantViewModel"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  xmlns:mauiToolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+  NavigationPage.HasNavigationBar="False"
+  Shell.FlyoutBehavior="Flyout">
+
+  <Grid RowDefinitions="Auto,*">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="To update, delete student please right click in the student list"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="Student management page"
+      VerticalOptions="Start" />
+    <ScrollView Grid.Row="1">
+      <Grid
+        Grid.Row="1"
+        ColumnDefinitions="7*, 3*"
+        RowDefinitions="0.5*, 8*, 1.5*">
+        <HorizontalStackLayout
+          Grid.Row="0"
+          Grid.Column="0"
+          Margin="100,50,0,0"
+          VerticalOptions="Center">
+          <Label
+            Margin="0,0,10,0"
+            FontFamily="RobotoRegular"
+            FontSize="14"
+            Text="Filter by:"
+            TextColor="#8A8A8A"
+            VerticalOptions="Center" />
+          <Picker
+            ItemsSource="{Binding FilterOptions}"
+            SelectedItem="{Binding SelectedFilterOption}"
+            VerticalOptions="Center" />
+          <Border
+            Margin="20,0,0,0"
+            BackgroundColor="#FCFAFA"
+            HeightRequest="50"
+            StrokeShape="RoundRectangle 0,5,0,5"
+            StrokeThickness="0"
+            WidthRequest="500">
+            <HorizontalStackLayout>
+              <Image
+                Margin="16,0,8,0"
+                HeightRequest="16"
+                Source="search_icon.png" />
+              <Border
+                BackgroundColor="#FCFAFA"
+                HeightRequest="50"
+                StrokeThickness="0"
+                WidthRequest="500">
+                <Entry
+                  FontFamily="RobotoRegular"
+                  FontSize="14"
+                  HeightRequest="50"
+                  Placeholder="Search for a student by name, email or id"
+                  PlaceholderColor="#8A8A8A"
+                  Text="{Binding SearchFilter}"
+                  TextColor="#8A8A8A"
+                  WidthRequest="520" />
+              </Border>
+            </HorizontalStackLayout>
+          </Border>
+        </HorizontalStackLayout>
+
+        <Grid
+          Grid.Row="1"
+          Grid.Column="0"
+          Margin="100,20,0,80"
+          RowDefinitions="Auto, *"
+          VerticalOptions="Start">
+          <Grid
+            Grid.Row="0"
+            BackgroundColor="Transparent"
+            ColumnDefinitions="2.5*,2*,3.5*, 2*"
+            HeightRequest="40"
+            VerticalOptions="Center">
+            <Label
+              Grid.Column="0"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Name"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="1"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Student ID"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="2"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Email Address"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="3"
+              FontFamily="RobotoMedium"
+              FontSize="16"
+              HorizontalOptions="Start"
+              Text="Activate status"
+              VerticalOptions="Center" />
+          </Grid>
+
+          <CollectionView
+            Grid.Row="1"
+            Grid.Column="0"
+            HeightRequest="400"
+            ItemsSource="{Binding StudentAccountList}"
+            VerticalScrollBarVisibility="Always">
+            <CollectionView.ItemTemplate>
+              <DataTemplate>
+                <Grid
+                  BackgroundColor="{Binding BackgroundColor}"
+                  ColumnDefinitions="2.5*,2*,3.5*, 2*"
+                  VerticalOptions="Center">
+                  <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChooseStudentAccountCommand}" />
+                  </Grid.GestureRecognizers>
+                  <Grid
+                    Grid.Column="0"
+                    ColumnDefinitions="Auto,Auto"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                    <HorizontalStackLayout Grid.Column="0" Margin="0">
+                      <Frame
+                        Grid.Column="0"
+                        Margin="8,12,8,12"
+                        Padding="0"
+                        CornerRadius="15"
+                        HeightRequest="24"
+                        IsClippedToBounds="True"
+                        WidthRequest="24">
+                        <Image Aspect="AspectFill" Source="{Binding Avatar}" />
+                      </Frame>
+                      <Label
+                        Grid.Column="1"
+                        FontSize="14"
+                        Text="{Binding FullName}"
+                        TextColor="#4F4F4F"
+                        VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                  </Grid>
+
+                  <Label
+                    Grid.Column="1"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding StudentSpecificId}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+
+                  <Label
+                    Grid.Column="2"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding Email}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+
+                  <Label
+                    Grid.Column="3"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding ActivateStatus}"
+                    TextColor="{Binding StatusColor}"
+                    VerticalOptions="Center" />
+                </Grid>
+              </DataTemplate>
+            </CollectionView.ItemTemplate>
+          </CollectionView>
+        </Grid>
+
+        <Button
+          Grid.Row="2"
+          Grid.Column="0"
+          Margin="0,0,0,50"
+          FontFamily="RobotoMedium"
+          FontSize="14"
+          HeightRequest="40"
+          HorizontalOptions="End"
+          Text="Add a student"
+          TextColor="#2671B1"
+          WidthRequest="200">
+          <VisualStateManager.VisualStateGroups>
+            <VisualStateGroupList>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateGroupList>
+          </VisualStateManager.VisualStateGroups>
+        </Button>
+
+        <VerticalStackLayout
+          Grid.Row="0"
+          Grid.RowSpan="2"
+          Grid.Column="1"
+          Margin="50,0,0,0">
+          <Frame
+            Margin="20,50,20,20"
+            Padding="0"
+            CornerRadius="100"
+            HeightRequest="200"
+            IsClippedToBounds="True"
+            WidthRequest="200">
+            <Image Aspect="AspectFill" Source="{Binding AvatarUri}" />
+          </Frame>
+          <VerticalStackLayout Margin="0,0,0,20">
+            <Label
+              FontAttributes="Bold"
+              FontSize="16"
+              HorizontalOptions="Center"
+              Text="{Binding FullName}"
+              TextColor="#1A1A1A" />
+            <Label
+              FontSize="14"
+              HorizontalOptions="Center"
+              Text="{Binding StudentSpecificId}"
+              TextColor="#A7A7A7" />
+            <HorizontalStackLayout
+              Margin="0,20,0,0"
+              HorizontalOptions="Center"
+              Spacing="30">
+              <ImageButton
+                Aspect="AspectFit"
+                BackgroundColor="#EFF3FA"
+                BorderColor="Black"
+                CornerRadius="8"
+                HeightRequest="16"
+                Source="message_box.png"
+                ToolTipProperties.Text="{Binding Email}"
+                WidthRequest="16">
+                <VisualStateManager.VisualStateGroups>
+                  <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                      <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                        </VisualState.Setters>
+                      </VisualState>
+                      <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                        </VisualState.Setters>
+                      </VisualState>
+                    </VisualStateGroup>
+                  </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+              </ImageButton>
+              <ImageButton
+                Aspect="AspectFit"
+                BackgroundColor="#EFF3FA"
+                BorderColor="Black"
+                CornerRadius="8"
+                HeightRequest="16"
+                Source="info_box.png"
+                ToolTipProperties.Text="Go to Student detail page"
+                WidthRequest="16">
+                <VisualStateManager.VisualStateGroups>
+                  <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                      <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                        </VisualState.Setters>
+                      </VisualState>
+                      <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                        </VisualState.Setters>
+                      </VisualState>
+                    </VisualStateGroup>
+                  </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+              </ImageButton>
+            </HorizontalStackLayout>
+          </VerticalStackLayout>
+          <Grid
+            Margin="30,20,0,0"
+            ColumnDefinitions="5*, 5*"
+            ColumnSpacing="50"
+            RowDefinitions="2.5*, 2.5*, 2.5*, 2.5*"
+            RowSpacing="20">
+            <VerticalStackLayout Grid.Row="0" Grid.Column="0">
+              <Label
+                FontAttributes="Bold"
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="Department"
+                TextColor="#1A1A1A" />
+              <Label
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="{Binding Department}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+              <Label
+                FontAttributes="Bold"
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="Branch"
+                TextColor="#1A1A1A" />
+              <Label
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="{Binding Branch}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="1" Grid.Column="0">
+              <Label
+                FontAttributes="Bold"
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="Date of birth"
+                TextColor="#1A1A1A" />
+              <Label
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="{Binding DateOfBirth}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+              <Label
+                FontAttributes="Bold"
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="Gender"
+                TextColor="#1A1A1A" />
+              <Label
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="{Binding Gender}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="2">
+              <Label
+                FontAttributes="Bold"
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="Age"
+                TextColor="#1A1A1A" />
+              <Label
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="{Binding Age}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="2" Grid.Column="1">
+              <Label
+                FontAttributes="Bold"
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="Address"
+                TextColor="#1A1A1A" />
+              <Label
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="{Binding Address}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="3" Grid.ColumnSpan="2">
+              <Label
+                FontAttributes="Bold"
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="Email"
+                TextColor="#1A1A1A" />
+              <Label
+                FontSize="13"
+                HorizontalOptions="Start"
+                Text="{Binding Email}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
+          </Grid>
+
+        </VerticalStackLayout>
+      </Grid>
+    </ScrollView>
+  </Grid>
 </ContentPage>
