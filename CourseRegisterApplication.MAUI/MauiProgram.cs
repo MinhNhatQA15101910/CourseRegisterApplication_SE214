@@ -43,35 +43,25 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<AddAdminAccountantAccountViewModel>();
             builder.Services.AddScoped<DepartmentManagementViewModel>();
             builder.Services.AddScoped<AddUpdateDepartmentViewModel>();
-            builder.Services.AddTransient<LoginViewModel>();
-            builder.Services.AddTransient<AdminAppShellViewModel>();
-            builder.Services.AddTransient<AdminDashboardViewModel>();
-            builder.Services.AddTransient<AdminAccountantAccountManagementViewModel>();
-            builder.Services.AddTransient<StudentAccountManagementViewModel>();
-            builder.Services.AddTransient<ChangePasswordViewModel>();
-            builder.Services.AddTransient<AddAdminAccountantAccountViewModel>();
-			builder.Services.AddTransient<StudentAppShellViewModel>();
+            builder.Services.AddScoped<StudentAccountManagementViewModel>();
+            builder.Services.AddScoped<StudentManagementViewModel>();
+			builder.Services.AddScoped<StudentAppShellViewModel>();
+            builder.Services.AddScoped<AddStudentViewModel>();
 
 			// Views
-			builder.Services.AddTransient<LoginPage>();
-            builder.Services.AddTransient<AdminAppShell>();
-			builder.Services.AddTransient<StudentAppShell>();
-			builder.Services.AddTransient<NavigationTopBar>();
-            builder.Services.AddTransient<AdminDashboardPage>();
-            builder.Services.AddTransient<AdminAccountantAccountManagementPage>();
-            builder.Services.AddTransient<StudentAccountManagementPage>();
-            builder.Services.AddTransient<ChangePasswordPage>();
-            builder.Services.AddTransient<AddAdminAccountantAccountPage>();
-            // Views
             builder.Services.AddScoped<LoginPage>();
             builder.Services.AddScoped<AdminAppShell>();
+            builder.Services.AddScoped<StudentAppShell>();
             builder.Services.AddScoped<NavigationTopBar>();
             builder.Services.AddScoped<AdminDashboardPage>();
             builder.Services.AddScoped<AdminAccountantAccountManagementPage>();
+            builder.Services.AddScoped<StudentAccountManagementPage>();
             builder.Services.AddScoped<ChangePasswordPage>();
             builder.Services.AddScoped<AddAdminAccountantAccountPage>();
             builder.Services.AddScoped<DepartmentManagementPage>();
             builder.Services.AddScoped<AddUpdateDepartmentPopup>();
+            builder.Services.AddScoped<StudentManagementPage>();
+            builder.Services.AddScoped<AddStudentPage>();
 
             // Services
             builder.Services.AddSingleton<HttpClient>();
@@ -79,6 +69,8 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped<IBranchService, BranchService>();
+            builder.Services.AddScoped<IProvinceService, ProvinceService>();
+            builder.Services.AddScoped<IDistrictService, DistrictService>();
 
             return builder.Build();
         }
