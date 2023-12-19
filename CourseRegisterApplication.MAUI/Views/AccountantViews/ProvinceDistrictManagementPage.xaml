@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.ProvinceDistrictManagementPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  Title="ProvinceDistrictManagementPage">
+  <Grid RowDefinitions="Auto,*,Auto">
+    <!--  Header  -->
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="Can add, update, delete provinces and districts"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="Province, District Management Page"
+      VerticalOptions="Start" />
+
+    <!--  Body  -->
+    <Grid
+      Grid.Row="1"
+      ColumnDefinitions="2*,1,3*"
+      RowDefinitions="200,*">
+
+      <!--  Filter and SearchBar of Provinces  -->
+      <HorizontalStackLayout
+        Grid.Row="0"
+        Grid.Column="0"
+        Margin="100,0,50,0"
+        VerticalOptions="Center">
+
+        <Picker
+          FontSize="14"
+          HorizontalTextAlignment="Center"
+          ItemsSource="{Binding ProvinceFilterOptions}"
+          SelectedItem="{Binding SelectedProvinceFilterOption}"
+          VerticalOptions="Center" />
+
+        <SearchBar
+          Margin="20,0,0,0"
+          BackgroundColor="#FCFAFA"
+          FontFamily="Roboto"
+          FontSize="14"
+          Placeholder="Search for a province by its province code or name"
+          Text="{Binding SearchProvinceFilter}"
+          TextColor="Black"
+          VerticalOptions="Center"
+          WidthRequest="500" />
+      </HorizontalStackLayout>
+
+      <!--  Filter and SearchBar of District  -->
+      <HorizontalStackLayout
+        Grid.Row="0"
+        Grid.Column="2"
+        Margin="50,0,0,0"
+        VerticalOptions="Center">
+
+        <Picker
+          FontSize="14"
+          HorizontalTextAlignment="Center"
+          ItemsSource="{Binding DistrictFilterOptions}"
+          SelectedItem="{Binding SelectedDistrictFilterOption}"
+          VerticalOptions="Center" />
+
+        <SearchBar
+          Margin="20,0,20,0"
+          BackgroundColor="#FCFAFA"
+          FontFamily="Roboto"
+          FontSize="14"
+          Placeholder="Search for a district by its district code, name or its province name"
+          Text="{Binding SearchDistrictFilter}"
+          TextColor="Black"
+          VerticalOptions="Center"
+          WidthRequest="500" />
+      </HorizontalStackLayout>
+
+      <!--  Splitter  -->
+      <Grid
+        Grid.Row="1"
+        Grid.Column="1"
+        BackgroundColor="#509CDB" />
+
+      <Grid
+        Grid.Row="1"
+        Grid.Column="0"
+        Margin="100,0,50,0"
+        RowDefinitions="Auto,Auto,*">
+        <Label
+          Grid.Row="0"
+          FontFamily="RobotoMedium"
+          FontSize="24"
+          Text="Province List" />
+
+        <Grid
+          Grid.Row="1"
+          Margin="0,10,0,0"
+          ColumnDefinitions="2*,3*">
+          <Label
+            Grid.Column="0"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="Province Code"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="1"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="Province Name"
+            VerticalOptions="Center" />
+        </Grid>
+
+        <CollectionView
+          Grid.Row="2"
+          Margin="0,10,0,0"
+          ItemsSource="{Binding ProvinceDisplayList}"
+          VerticalScrollBarVisibility="Always">
+          <CollectionView.ItemTemplate>
+            <DataTemplate>
+              <Grid
+                BackgroundColor="{Binding BackgroundColor}"
+                ColumnDefinitions="2*,3*"
+                HeightRequest="50">
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding DisplayDistrictListOfSelectedProvinceCommand}" />
+                </Grid.GestureRecognizers>
+                <Label
+                  Grid.Column="0"
+                  Padding="5"
+                  FontSize="14"
+                  Text="{Binding ProvinceCode}"
+                  TextColor="#4F4F4F"
+                  VerticalOptions="Center" />
+                <Label
+                  Grid.Column="1"
+                  Padding="5"
+                  FontSize="14"
+                  Text="{Binding ProvinceName}"
+                  TextColor="#4F4F4F"
+                  VerticalOptions="Center" />
+              </Grid>
+            </DataTemplate>
+          </CollectionView.ItemTemplate>
+        </CollectionView>
+      </Grid>
+
+      <Grid
+        Grid.Row="1"
+        Grid.Column="2"
+        Margin="50,0,50,0"
+        RowDefinitions="Auto,Auto,*">
+        <Label
+          Grid.Row="0"
+          FontFamily="RobotoMedium"
+          FontSize="24"
+          Text="District List" />
+
+        <Grid
+          Grid.Row="1"
+          Margin="0,10,0,0"
+          ColumnDefinitions="2*,3*,3*,2*">
+          <Label
+            Grid.Column="0"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="District Code"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="1"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="District Name"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="2"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="Province Name"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="3"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="Priority Area"
+            VerticalOptions="Center" />
+        </Grid>
+
+        <CollectionView
+          Grid.Row="2"
+          Margin="0,10,0,0"
+          ItemsSource="{Binding DistrictDisplayList}"
+          VerticalScrollBarVisibility="Always">
+          <CollectionView.ItemTemplate>
+            <DataTemplate>
+              <Grid
+                BackgroundColor="{Binding BackgroundColor}"
+                ColumnDefinitions="2*,3*,3*,2*"
+                HeightRequest="50">
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding GetSelectedDistrictPropertiesCommand}" />
+                </Grid.GestureRecognizers>
+                <Label
+                  Grid.Column="0"
+                  Padding="5"
+                  FontSize="14"
+                  Text="{Binding DistrictCode}"
+                  TextColor="#4F4F4F"
+                  VerticalOptions="Center" />
+                <Label
+                  Grid.Column="1"
+                  Padding="5"
+                  FontSize="14"
+                  Text="{Binding DistrictName}"
+                  TextColor="#4F4F4F"
+                  VerticalOptions="Center" />
+                <Label
+                  Grid.Column="2"
+                  Padding="5"
+                  FontSize="14"
+                  Text="{Binding ProvinceName}"
+                  TextColor="#4F4F4F"
+                  VerticalOptions="Center" />
+                <CheckBox
+                  Grid.Column="3"
+                  IsChecked="{Binding IsPriority}"
+                  IsEnabled="False" />
+              </Grid>
+            </DataTemplate>
+          </CollectionView.ItemTemplate>
+        </CollectionView>
+      </Grid>
+    </Grid>
+
+    <!--  Footer  -->
+    <Grid
+      Grid.Row="2"
+      Margin="100,50,50,50"
+      ColumnDefinitions="2*,1,3*"
+      VerticalOptions="End">
+      <HorizontalStackLayout
+        Grid.Column="0"
+        Margin="0,0,50,0"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <ImageButton
+          Padding="8"
+          Aspect="AspectFit"
+          BackgroundColor="#EFF3FA"
+          BorderColor="Black"
+          Command="{Binding DisplayAddProvincePopupCommand}"
+          CornerRadius="8"
+          HeightRequest="24"
+          Source="vector_add_black.png"
+          ToolTipProperties.Text="Add Province"
+          WidthRequest="24">
+          <VisualStateManager.VisualStateGroups>
+            <VisualStateGroupList>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateGroupList>
+          </VisualStateManager.VisualStateGroups>
+        </ImageButton>
+        <ImageButton
+          Margin="40,0,0,0"
+          Padding="8"
+          Aspect="AspectFit"
+          BackgroundColor="#EFF3FA"
+          BorderColor="Black"
+          Command="{Binding DisplayUpdateProvincePopupCommand}"
+          CornerRadius="8"
+          HeightRequest="24"
+          Source="vector_update.png"
+          ToolTipProperties.Text="Update Province"
+          WidthRequest="24">
+          <VisualStateManager.VisualStateGroups>
+            <VisualStateGroupList>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateGroupList>
+          </VisualStateManager.VisualStateGroups>
+        </ImageButton>
+        <ImageButton
+          Margin="40,0,0,0"
+          Padding="8"
+          Aspect="AspectFit"
+          BackgroundColor="#EFF3FA"
+          BorderColor="Black"
+          Command="{Binding DeleteProvinceCommand}"
+          CornerRadius="8"
+          HeightRequest="24"
+          Source="vector_delete.png"
+          ToolTipProperties.Text="Delete Province"
+          WidthRequest="24">
+          <VisualStateManager.VisualStateGroups>
+            <VisualStateGroupList>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateGroupList>
+          </VisualStateManager.VisualStateGroups>
+        </ImageButton>
+      </HorizontalStackLayout>
+
+      <HorizontalStackLayout
+        Grid.Column="2"
+        Margin="50,0,0,0"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <ImageButton
+          Padding="8"
+          Aspect="AspectFit"
+          BackgroundColor="#EFF3FA"
+          BorderColor="Black"
+          Command="{Binding DisplayAddDistrictPopupCommand}"
+          CornerRadius="8"
+          HeightRequest="24"
+          Source="vector_add_black.png"
+          ToolTipProperties.Text="Add District"
+          WidthRequest="24">
+          <VisualStateManager.VisualStateGroups>
+            <VisualStateGroupList>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateGroupList>
+          </VisualStateManager.VisualStateGroups>
+        </ImageButton>
+        <ImageButton
+          Margin="40,0,0,0"
+          Padding="8"
+          Aspect="AspectFit"
+          BackgroundColor="#EFF3FA"
+          BorderColor="Black"
+          Command="{Binding DisplayUpdateDistrictPopupCommand}"
+          CornerRadius="8"
+          HeightRequest="24"
+          Source="vector_update.png"
+          ToolTipProperties.Text="Update District"
+          WidthRequest="24">
+          <VisualStateManager.VisualStateGroups>
+            <VisualStateGroupList>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateGroupList>
+          </VisualStateManager.VisualStateGroups>
+        </ImageButton>
+        <ImageButton
+          Margin="40,0,0,0"
+          Padding="8"
+          Aspect="AspectFit"
+          BackgroundColor="#EFF3FA"
+          BorderColor="Black"
+          Command="{Binding DeleteDistrictCommand}"
+          CornerRadius="8"
+          HeightRequest="24"
+          Source="vector_delete.png"
+          ToolTipProperties.Text="Delete District"
+          WidthRequest="24">
+          <VisualStateManager.VisualStateGroups>
+            <VisualStateGroupList>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateGroupList>
+          </VisualStateManager.VisualStateGroups>
+        </ImageButton>
+      </HorizontalStackLayout>
+    </Grid>
+  </Grid>
+</ContentPage>

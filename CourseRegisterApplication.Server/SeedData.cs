@@ -1,17 +1,20 @@
-﻿using System.Globalization;
-
-namespace CourseRegisterApplication.Server
+﻿namespace CourseRegisterApplication.Server
 {
     public static class SeedData
     {
-        private static string USERS_FILE_PATH = "Resources/users.txt";
-        private static string PROVINCES_FILE_PATH = "Resources/provinces.txt";
-        private static string DISTRICTS_FILE_PATH = "Resources/districts.txt";
-        private static string DEPARTMENTS_FILE_PATH = "Resources/departments.txt";
-        private static string BRANCHES_FILE_PATH = "Resources/branches.txt";
-        private static string PRIORITY_TYPES_FILE_PATH = "Resources/priority-types.txt";
-        private static string STUDENTS_FILE_PATH = "Resources/students.txt";
-        private static string STUDENT_PRIORITY_TYPES_FILE_PATH = "Resources/student-priority-types.txt";
+        private static readonly string USERS_FILE_PATH = "Resources/users.txt";
+        private static readonly string PROVINCES_FILE_PATH = "Resources/provinces.txt";
+        private static readonly string DISTRICTS_FILE_PATH = "Resources/districts.txt";
+        private static readonly string DEPARTMENTS_FILE_PATH = "Resources/departments.txt";
+        private static readonly string BRANCHES_FILE_PATH = "Resources/branches.txt";
+        private static readonly string PRIORITY_TYPES_FILE_PATH = "Resources/priority-types.txt";
+        private static readonly string STUDENTS_FILE_PATH = "Resources/students.txt";
+        private static readonly string STUDENT_PRIORITY_TYPES_FILE_PATH = "Resources/student-priority-types.txt";
+        private static readonly string SUBJECT_TYPES_FILE_PATH = "Resources/subject-types.txt";
+        private static readonly string SUBJECTS_FILE_PATH = "Resources/subjects.txt";
+        private static readonly string CURRICULUMS_FILE_PATH = "Resources/curriculums.txt";
+        private static readonly string SEMESTERS_FILE_PATH = "Resources/semesters.txt";
+        private static readonly string AVAILABLE_COURSES_FILE_PATH = "Resources/available-courses.txt";
 
         public static void Initialize(ModelBuilder modelBuilder)
         {
@@ -23,6 +26,11 @@ namespace CourseRegisterApplication.Server
             InitializePriorityTypes(modelBuilder);
             InitializeStudents(modelBuilder);
             InitializeStudentPriorityTypes(modelBuilder);
+            InitializeSubjectTypes(modelBuilder);
+            InitializeSubjects(modelBuilder);
+            InitializeCurriculums(modelBuilder);
+            InitializeSemester(modelBuilder);
+            InitializeAvailableCourses(modelBuilder);
         }
 
         private static void InitializeStudentPriorityTypes(ModelBuilder modelBuilder)
@@ -70,11 +78,12 @@ namespace CourseRegisterApplication.Server
                         {
                             Id = studentId++,
                             StudentSpecificId = studentData[0].Trim(),
+                            Email = studentData[0].Trim() + "@gm.uit.edu.vn",
                             FullName = studentData[1].Trim(),
                             DateOfBirth = DateTime.ParseExact(studentData[2].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture),
                             Gender = (studentData[3].Trim() == "Nam") ? Gender.Male : Gender.Female,
                             DistrictId = int.Parse(studentData[4].Trim()),
-                            BranchId = int.Parse(studentData[5].Trim())
+                            BranchId = int.Parse(studentData[5].Trim()),
                         });
                     }
 
@@ -178,7 +187,7 @@ namespace CourseRegisterApplication.Server
                 {
                     int userId = 1;
                     string? userLine;
-                    
+
                     while ((userLine = sr.ReadLine()) != null)
                     {
                         string[]? userData = userLine!.Split(',');
@@ -260,6 +269,162 @@ namespace CourseRegisterApplication.Server
                     }
 
                     modelBuilder.Entity<District>().HasData(districts);
+                }
+            }
+        }
+
+        public static void InitializeSubjectTypes(ModelBuilder modelBuilder)
+        {
+            var subjectTypes = new List<SubjectType>();
+
+            if (File.Exists(SUBJECT_TYPES_FILE_PATH))
+            {
+                using (StreamReader sr = new StreamReader(SUBJECT_TYPES_FILE_PATH))
+                {
+                    int subjectTypeId = 1;
+                    string? subjectTypeLine;
+
+                    while ((subjectTypeLine = sr.ReadLine()) != null)
+                    {
+                        string[] subjectTypeData = subjectTypeLine!.Split(",");
+
+                        subjectTypes.Add(new SubjectType
+                        {
+                            Id = subjectTypeId++,
+                            Name = subjectTypeData[0].Trim(),
+                            NumberOfLessons = int.Parse(subjectTypeData[1].Trim()),
+                            LessonsCharge = double.Parse(subjectTypeData[2].Trim()),
+                        });
+                    }
+
+                    modelBuilder.Entity<SubjectType>().HasData(subjectTypes);
+                }
+            }
+        }
+
+        public static void InitializeSubjects(ModelBuilder modelBuilder)
+        {
+            var subjects = new List<Subject>();
+
+            if (File.Exists(SUBJECTS_FILE_PATH))
+            {
+                using (StreamReader sr = new StreamReader(SUBJECTS_FILE_PATH))
+                {
+                    int subjectId = 1;
+                    string? subjectLine;
+
+                    while ((subjectLine = sr.ReadLine()) != null)
+                    {
+                        string[] subjectData = subjectLine!.Split(",");
+
+                        subjects.Add(new Subject
+                        {
+                            Id = subjectId++,
+                            SubjectSpecificId = subjectData[0].Trim(),
+                            Name = subjectData[1].Trim(),
+                            NumberOfCredits = int.Parse(subjectData[2].Trim()),
+                            TotalLessons = int.Parse(subjectData[3].Trim()),
+                            TotalCharge = double.Parse(subjectData[4].Trim()),
+                            SubjectTypeId = int.Parse(subjectData[5].Trim()),
+                        });
+                    }
+
+                    modelBuilder.Entity<Subject>().HasData(subjects);
+                }
+            }
+        }
+
+        public static void InitializeCurriculums(ModelBuilder modelBuilder)
+        {
+            var curriculums = new List<Curriculum>();
+
+            if (File.Exists(CURRICULUMS_FILE_PATH))
+            {
+                using (StreamReader sr = new StreamReader(CURRICULUMS_FILE_PATH))
+                {
+                    string? curriculumLine;
+
+                    while ((curriculumLine = sr.ReadLine()) != null)
+                    {
+                        string[]? curriculumData = curriculumLine!.Split(',');
+
+                        curriculums.Add(new Curriculum
+                        {
+                            BranchId = int.Parse(curriculumData[0].Trim()),
+                            SubjectId = int.Parse(curriculumData[1].Trim()),
+                            Semester = int.Parse(curriculumData[2].Trim())
+                        });
+                    }
+
+                    modelBuilder.Entity<Curriculum>().HasData(curriculums);
+                }
+            }
+        }
+
+        public static void InitializeSemester(ModelBuilder modelBuilder)
+        {
+            var semesters = new List<Semester>();
+
+            if (File.Exists(SEMESTERS_FILE_PATH))
+            {
+                using (StreamReader sr = new StreamReader(SEMESTERS_FILE_PATH))
+                {
+                    int semesterId = 1;
+                    string? semesterLine;
+
+                    while ((semesterLine = sr.ReadLine()) != null)
+                    {
+                        string[]? semesterData = semesterLine!.Split(',');
+
+                        SemesterName semesterName = SemesterName.FirstSemester;
+                        if (int.Parse(semesterData[0]) == 2)
+                        {
+                            semesterName = SemesterName.SecondSemester;
+                        }
+                        else if (int.Parse(semesterData[0]) == 3)
+                        {
+                            semesterName = SemesterName.SummerSemester;
+                        }
+
+                        semesters.Add(new Semester
+                        {
+                            Id = semesterId++,
+                            SemesterName = semesterName,
+                            Year = int.Parse(semesterData[1].Trim()),
+                            StartRegistrationDate = DateTime.ParseExact(semesterData[2].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture), 
+                            EndRegistrationDate = DateTime.ParseExact(semesterData[3].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            MinimumCredits = int.Parse(semesterData[4].Trim()),
+                            MaximumCredits = int.Parse(semesterData[5].Trim()),
+                        });
+                    }
+
+                    modelBuilder.Entity<Semester>().HasData(semesters);
+                }
+            }
+        }
+
+        public static void InitializeAvailableCourses(ModelBuilder modelBuilder)
+        {
+            var availableCourses = new List<AvailableCourse>();
+
+            if (File.Exists(AVAILABLE_COURSES_FILE_PATH))
+            {
+                using (StreamReader sr = new StreamReader(AVAILABLE_COURSES_FILE_PATH))
+                {
+                    string? availableCourseLine;
+
+                    while ((availableCourseLine = sr.ReadLine()) != null)
+                    {
+                        string[]? availableCourseData = availableCourseLine!.Split(',');
+
+                        availableCourses.Add(new AvailableCourse
+                        {
+                            SemesterId = int.Parse(availableCourseData[0].Trim()),
+                            SubjectId = int.Parse(availableCourseData[1].Trim()),
+                        });
+                    }
+
+                    modelBuilder.Entity<AvailableCourse>().HasData(availableCourses);
                 }
             }
         }

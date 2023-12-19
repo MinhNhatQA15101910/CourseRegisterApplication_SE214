@@ -17,95 +17,150 @@
       TitleText="Welcome back admin!"
       VerticalOptions="Start" />
     <ScrollView Grid.Row="1">
-      <StackLayout Margin="200,100,0,0">
-        <Label
-          FontFamily="RobotoMedium"
-          FontSize="24"
-          Text="What would you do?"
-          TextColor="#4F4F4F" />
-        <StackLayout Margin="0,48,0,0">
-          <Grid
-            ColumnDefinitions="Auto,*"
-            HorizontalOptions="Start"
-            RowDefinitions="Auto,*"
-            WidthRequest="600">
-            <Grid.GestureRecognizers>
-              <PointerGestureRecognizer PointerEntered="SelectionMouseEnter" PointerExited="SelectionMouseExit" />
-              <TapGestureRecognizer Command="{Binding NavigateToAdminAccountantAccountManagementCommand}" />
-            </Grid.GestureRecognizers>
-            <Image HeightRequest="36" Source="admin_image_1.png" />
-            <Label
-              Grid.Column="1"
-              Margin="24,0,0,0"
-              FontSize="24"
-              Text="Add other admin account"
-              TextColor="#4F4F4F"
-              VerticalOptions="Center" />
-            <Label
-              Grid.Row="1"
-              Grid.Column="1"
-              Margin="24,12,0,0"
-              FontAttributes="Bold"
-              FontFamily="RobotoThin"
-              Text="This feature allows you to give certain individuals elevated privileges for system management."
-              TextColor="#4F4F4F" />
-          </Grid>
-          <Grid
-            Margin="0,48,0,0"
-            ColumnDefinitions="Auto,*"
-            HorizontalOptions="Start"
-            RowDefinitions="Auto,*"
-            WidthRequest="600">
-            <Grid.GestureRecognizers>
-              <PointerGestureRecognizer PointerEntered="SelectionMouseEnter" PointerExited="SelectionMouseExit" />
-              <TapGestureRecognizer Command="{Binding NavigateToAdminAccountantAccountManagementCommand}" />
-            </Grid.GestureRecognizers>
-            <Image HeightRequest="36" Source="admin_image_2.png" />
-            <Label
-              Grid.Column="1"
-              Margin="24,0,0,0"
-              FontSize="24"
-              Text="Add accountant account"
-              TextColor="#4F4F4F"
-              VerticalOptions="Center" />
-            <Label
-              Grid.Row="1"
-              Grid.Column="1"
-              Margin="24,12,0,0"
-              FontAttributes="Bold"
-              FontFamily="RobotoThin"
-              Text="Create specialized accounts for financial professionals to manage financial transactions."
-              TextColor="#4F4F4F" />
-          </Grid>
-          <Grid
-            Margin="0,48,0,0"
-            ColumnDefinitions="Auto,*"
-            HorizontalOptions="Start"
-            RowDefinitions="Auto,*"
-            WidthRequest="600">
-            <Grid.GestureRecognizers>
-              <PointerGestureRecognizer PointerEntered="SelectionMouseEnter" PointerExited="SelectionMouseExit" />
-              <TapGestureRecognizer Command="{Binding NavigateToStudentManagementCommand}" />
-            </Grid.GestureRecognizers>
-            <Image HeightRequest="36" Source="admin_image_3.png" />
-            <Label
-              Grid.Column="1"
-              Margin="24,0,0,0"
-              FontSize="24"
-              Text="Add student account"
-              TextColor="#4F4F4F"
-              VerticalOptions="Center" />
-            <Label
-              Grid.Row="1"
-              Grid.Column="1"
-              Margin="24,12,0,0"
-              FontAttributes="Bold"
-              FontFamily="RobotoThin"
-              Text="Register students on your educational platform to grant them access to course materials and resources."
-              TextColor="#4F4F4F" />
-          </Grid>
+      <Grid ColumnDefinitions="6*,4*">
+        <StackLayout Margin="200,100,0,0">
+          <Label
+            FontFamily="RobotoMedium"
+            FontSize="24"
+            Text="What would you do?"
+            TextColor="#4F4F4F" />
+          <StackLayout Margin="0,48,0,0">
+            <Grid
+              ColumnDefinitions="Auto,*"
+              HorizontalOptions="Start"
+              RowDefinitions="Auto,*"
+              WidthRequest="600">
+              <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToAdminAccountantAccountManagementCommand}" />
+              </Grid.GestureRecognizers>
+              <Image HeightRequest="36" Source="admin_image_1.png" />
+              <Label
+                Grid.Column="1"
+                Margin="24,0,0,0"
+                FontSize="24"
+                Text="Add other admin account"
+                TextColor="#4F4F4F"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="24,12,0,0"
+                FontAttributes="Bold"
+                FontFamily="RobotoThin"
+                Text="This feature allows you to give certain individuals elevated privileges for system management."
+                TextColor="#4F4F4F" />
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Grid>
+            <Grid
+              Margin="0,48,0,0"
+              ColumnDefinitions="Auto,*"
+              HorizontalOptions="Start"
+              RowDefinitions="Auto,*"
+              WidthRequest="600">
+              <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToAdminAccountantAccountManagementCommand}" />
+              </Grid.GestureRecognizers>
+              <Image HeightRequest="36" Source="admin_image_2.png" />
+              <Label
+                Grid.Column="1"
+                Margin="24,0,0,0"
+                FontSize="24"
+                Text="Add accountant account"
+                TextColor="#4F4F4F"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="24,12,0,0"
+                FontAttributes="Bold"
+                FontFamily="RobotoThin"
+                Text="Create specialized accounts for financial professionals to manage financial transactions."
+                TextColor="#4F4F4F" />
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Grid>
+            <Grid
+              Margin="0,48,0,100"
+              ColumnDefinitions="Auto,*"
+              HorizontalOptions="Start"
+              RowDefinitions="Auto,*"
+              WidthRequest="600">
+              <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToStudentManagementCommand}" />
+              </Grid.GestureRecognizers>
+              <Image HeightRequest="36" Source="admin_image_3.png" />
+              <Label
+                Grid.Column="1"
+                Margin="24,0,0,0"
+                FontSize="24"
+                Text="Add student account"
+                TextColor="#4F4F4F"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="24,12,0,0"
+                FontAttributes="Bold"
+                FontFamily="RobotoThin"
+                Text="Register students on your educational platform to grant them access to course materials and resources."
+                TextColor="#4F4F4F" />
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Grid>
+          </StackLayout>
         </StackLayout>
-      </StackLayout>
+        <Image
+          Grid.Column="1"
+          Margin="0,0,200,100"
+          HorizontalOptions="Center"
+          MaximumHeightRequest="300"
+          MaximumWidthRequest="300"
+          Source="university_icon.jpg"
+          VerticalOptions="End" />
+      </Grid>
     </ScrollView>
   </Grid>
 </ContentPage>

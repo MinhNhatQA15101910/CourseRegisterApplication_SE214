@@ -49,5 +49,16 @@
 
             return "Today is " + dateTime.ToString("dddd, MMMM d\"th\", yyyy");
         }
-    }
+
+		public static int CalculateAge(DateTime dateOfBirth)
+		{
+			DateTime currentDate = DateTime.Now;
+			int age = currentDate.Year - dateOfBirth.Year;
+			if (currentDate.Month < dateOfBirth.Month || (currentDate.Month == dateOfBirth.Month && currentDate.Day < dateOfBirth.Day))
+			{
+				age--;
+			}
+			return age;
+		}
+	}
 }

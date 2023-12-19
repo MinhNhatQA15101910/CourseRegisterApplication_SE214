@@ -1,3 +1,5 @@
+using CommunityToolkit.Maui.Views;
+using CourseRegisterApplication.MAUI.ContentViews;
 using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
 
 namespace CourseRegisterApplication.MAUI.Views.AdminViews;

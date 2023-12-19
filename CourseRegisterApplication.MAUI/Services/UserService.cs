@@ -13,7 +13,7 @@ namespace CourseRegisterApplication.MAUI.Services
 
         public async Task<User> AddUser(User user)
         {
-            string apiUrl = $"{GlobalConfig.USER_BASE_URL}";
+            string apiUrl = GlobalConfig.USER_BASE_URL;
 
             var json = JsonConvert.SerializeObject(user);
             var content = new StringContent(json, Encoding.UTF8, "application/json");

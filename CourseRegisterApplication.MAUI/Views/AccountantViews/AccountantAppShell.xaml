@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.AccountantAppShell"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:local="clr-namespace:CourseRegisterApplication.MAUI.Views.AccountantViews"
+  FlyoutBackgroundColor="#152259"
+  FlyoutBehavior="Flyout"
+  FlyoutWidth="240"
+  NavBarIsVisible="False">
+  <Shell.FlyoutHeader>
+    <StackLayout>
+      <StackLayout>
+        <Frame
+          Margin="0,26,0,0"
+          Padding="0"
+          CornerRadius="100"
+          HeightRequest="65"
+          IsClippedToBounds="True"
+          VerticalOptions="Start"
+          WidthRequest="65">
+          <Image Aspect="AspectFill" Source="teacher_icon.png" />
+        </Frame>
+        <Label
+          Margin="0,12,0,0"
+          FontAttributes="Bold"
+          FontSize="14"
+          HorizontalOptions="Center"
+          Text="{Binding Username}"
+          TextColor="White" />
+      </StackLayout>
+      <BoxView
+        Margin="0,12,0,12"
+        HeightRequest="0.5"
+        Color="#BDBDBD" />
+    </StackLayout>
+  </Shell.FlyoutHeader>
+  <Shell.FlyoutFooterTemplate>
+    <DataTemplate>
+      <StackLayout>
+        <BoxView
+          Margin="0,12,0,0"
+          HeightRequest="0.5"
+          Color="#BDBDBD" />
+        <HorizontalStackLayout Margin="0,16,0,16" HorizontalOptions="Center">
+          <Image HeightRequest="20" Source="setting_white.png" />
+          <Label
+            Margin="16,0,0,0"
+            FontFamily="RobotoMedium"
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="Change Password"
+            TextColor="White" />
+          <HorizontalStackLayout.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding NavigateToChangePasswordPageCommand}" />
+          </HorizontalStackLayout.GestureRecognizers>
+        </HorizontalStackLayout>
+      </StackLayout>
+    </DataTemplate>
+  </Shell.FlyoutFooterTemplate>
+
+  <FlyoutItem
+    Title="Dashboard"
+    Icon="home.png"
+    Route="dashboard">
+    <ShellContent ContentTemplate="{DataTemplate local:AccountantDashboardPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Student management"
+    Icon="student.png"
+    Route="studentmanagement">
+    <ShellContent ContentTemplate="{DataTemplate local:StudentManagementPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Subject management"
+    Icon="book.png"
+    Route="subjectmanagement">
+    <ShellContent ContentTemplate="{DataTemplate local:SubjectManagementPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Study program"
+    Icon="book.png"
+    Route="studyprogram">
+    <ShellContent ContentTemplate="{DataTemplate local:StudyProgramPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Open subject"
+    Icon="book.png"
+    Route="opensubject">
+    <ShellContent ContentTemplate="{DataTemplate local:OpenSubjectPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Course management"
+    Icon="bank.png"
+    Route="coursemanagement">
+    <ShellContent ContentTemplate="{DataTemplate local:CourseManagementPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Tuition collection"
+    Icon="bank.png"
+    Route="tuitioncollection">
+    <ShellContent ContentTemplate="{DataTemplate local:TuitionCollectionPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Statistic"
+    Icon="chart.png"
+    Route="statistic">
+    <ShellContent ContentTemplate="{DataTemplate local:StatisticPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Department Management"
+    Icon="student.png"
+    Route="departmentmanagerment">
+    <ShellContent ContentTemplate="{DataTemplate local:DepantmentManagementPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Branch Management"
+    Icon="student.png"
+    Route="branchtmanagerment">
+    <ShellContent ContentTemplate="{DataTemplate local:BranchManagementPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Province, district"
+    Icon="location_icon.png"
+    Route="provincedistrict">
+    <ShellContent ContentTemplate="{DataTemplate local:ProvinceDistrictPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Priority object"
+    Icon="student.png"
+    Route="priorityobject">
+    <ShellContent ContentTemplate="{DataTemplate local:PriorityObjectPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Credits, subject type"
+    Icon="book.png"
+    Route="creditssubjecttype">
+    <ShellContent ContentTemplate="{DataTemplate local:CreditsSubjectTypePage}" Route="details" />
+  </FlyoutItem>
+
+  <Shell.ItemTemplate>
+    <DataTemplate>
+      <Frame
+        Padding="0"
+        BorderColor="Transparent"
+        CornerRadius="5"
+        HasShadow="False"
+        HeightRequest="50"
+        HorizontalOptions="FillAndExpand"
+        WidthRequest="210">
+        <HorizontalStackLayout x:Name="FlyoutItem" HeightRequest="50">
+          <Image
+            Margin="12"
+            HeightRequest="16"
+            HorizontalOptions="Start"
+            Source="{Binding FlyoutIcon}"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="1"
+            FontFamily="OpenSans-Semibold"
+            FontSize="14"
+            Text="{Binding Title}"
+            TextColor="White"
+            VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+        <VisualStateManager.VisualStateGroups>
+          <VisualStateGroupList>
+            <VisualStateGroup x:Name="CommonStates">
+              <VisualState x:Name="Normal">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#152259" />
+                </VisualState.Setters>
+              </VisualState>
+              <VisualState x:Name="Selected">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#509CDB" />
+                </VisualState.Setters>
+              </VisualState>
+            </VisualStateGroup>
+          </VisualStateGroupList>
+        </VisualStateManager.VisualStateGroups>
+      </Frame>
+    </DataTemplate>
+  </Shell.ItemTemplate>
+</Shell>

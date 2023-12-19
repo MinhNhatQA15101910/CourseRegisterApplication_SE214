@@ -1,9 +1,10 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<CourseRegisterManagementDbContext>(options
-    => options.UseSqlServer(builder.Configuration.GetConnectionString("CourseRegisterManagementCS")));
-
+builder.Services.AddDbContext<CourseRegisterManagementDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CourseRegisterManagementCS"));
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -16,6 +17,15 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 }));
 
 var app = builder.Build();
+
+
+// Initialize the database
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+using (var scope = scopeFactory.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<CourseRegisterManagementDbContext>();
+    db.Database.EnsureCreated();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

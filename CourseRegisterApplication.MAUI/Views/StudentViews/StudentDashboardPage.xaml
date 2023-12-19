@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.StudentViews.StudentDashboardPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  NavigationPage.HasNavigationBar="False"
+  Shell.FlyoutBehavior="Flyout">
+  <Grid RowDefinitions="Auto,*">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="{Binding DescriptionText, FallbackValue='Card description text.'}"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="{Binding TitleText, FallbackValue='Title text.'}"
+      VerticalOptions="Start" />
+    <ScrollView Grid.Row="1">
+      <Grid ColumnDefinitions="6*,4*">
+        <StackLayout Margin="200,100,0,0">
+          <Label
+            FontFamily="RobotoMedium"
+            FontSize="24"
+            Text="What would you do?"
+            TextColor="#4F4F4F" />
+          <StackLayout Margin="0,48,0,0">
+            <Grid
+              ColumnDefinitions="Auto,*"
+              HorizontalOptions="Start"
+              RowDefinitions="Auto,*"
+              WidthRequest="600">
+              <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToStudentInfomationCommand}" />
+              </Grid.GestureRecognizers>
+              <Image HeightRequest="36" Source="admin_image_1.png" />
+              <Label
+                Grid.Column="1"
+                Margin="24,0,0,0"
+                FontSize="24"
+                Text="Student infomation"
+                TextColor="#4F4F4F"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="24,12,0,12"
+                FontAttributes="Bold"
+                FontFamily="RobotoThin"
+                Text="This section provides detailed information about the student, including their personal details, academic records, and contact information."
+                TextColor="#4F4F4F" />
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Grid>
+            <Grid
+              Margin="0,36,0,0"
+              ColumnDefinitions="Auto,*"
+              HorizontalOptions="Start"
+              RowDefinitions="Auto,*"
+              WidthRequest="600">
+              <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToCourseRegisterCommand}" />
+              </Grid.GestureRecognizers>
+              <Image HeightRequest="36" Source="admin_image_2.png" />
+              <Label
+                Grid.Column="1"
+                Margin="24,0,0,0"
+                FontSize="24"
+                Text="Course register"
+                TextColor="#4F4F4F"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="24,12,0,12"
+                FontAttributes="Bold"
+                FontFamily="RobotoThin"
+                Text="In this section, students can select and enroll in the courses they wish to attend for the upcoming semester or academic term."
+                TextColor="#4F4F4F" />
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Grid>
+            <Grid
+              Margin="0,36,0,100"
+              ColumnDefinitions="Auto,*"
+              HorizontalOptions="Start"
+              RowDefinitions="Auto,*"
+              WidthRequest="600">
+              <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToTuitionPaymentCommand}" />
+              </Grid.GestureRecognizers>
+              <Image HeightRequest="36" Source="admin_image_3.png" />
+              <Label
+                Grid.Column="1"
+                Margin="24,0,0,0"
+                FontSize="24"
+                Text="Tuition payment"
+                TextColor="#4F4F4F"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="24,12,0,12"
+                FontAttributes="Bold"
+                FontFamily="RobotoThin"
+                Text="Allows students to make payments for their tuition and fees, ensuring they are financially cleared to attend classes and access university resources."
+                TextColor="#4F4F4F" />
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Grid>
+          </StackLayout>
+        </StackLayout>
+        <Image
+          Grid.Column="1"
+          Margin="0,0,200,100"
+          HorizontalOptions="Center"
+          MaximumHeightRequest="300"
+          MaximumWidthRequest="300"
+          Source="university_icon.jpg"
+          VerticalOptions="End" />
+      </Grid>
+    </ScrollView>
+  </Grid>
+</ContentPage>

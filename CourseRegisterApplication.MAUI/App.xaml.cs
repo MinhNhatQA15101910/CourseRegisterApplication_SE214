@@ -10,6 +10,5 @@ namespace CourseRegisterApplication.MAUI
 
             MainPage = page;
         }
-
     }
 }

@@ -11,5 +11,7 @@
         [ForeignKey("Department")]
         public int DepartmentId { get; set; }
         public Department? Department { get; set; } = null!;
+
+        public ICollection<Curriculum>? Curriculums { get; } = null!;
     }
 }

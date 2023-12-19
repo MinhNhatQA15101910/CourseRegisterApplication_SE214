@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.StudentViews.StudentInfomationPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  NavigationPage.HasNavigationBar="False">
+  <Grid RowDefinitions="Auto,*">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="{Binding DescriptionText, FallbackValue='Card description text.'}"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="{Binding TitleText, FallbackValue='Title text.'}"
+      VerticalOptions="Start" />
+    <ScrollView Grid.Row="1">
+      <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Grid
+          ColumnDefinitions="Auto,Auto"
+          HorizontalOptions="Center"
+          VerticalOptions="Center">
+          <StackLayout VerticalOptions="Center">
+            <Border
+              Padding="0"
+              HeightRequest="320"
+              StrokeShape="RoundRectangle 1000,1000,1000,1000"
+              StrokeThickness="0"
+              WidthRequest="320">
+              <Image Aspect="AspectFill" Source="teacher_icon.png" />
+            </Border>
+            <Label
+              Margin="0,24,0,0"
+              FontFamily="RobotoMedium"
+              FontSize="18"
+              HorizontalOptions="Center"
+              Text="{Binding StudentName, FallbackValue='John Dove'}"
+              TextColor="#1A1A1A" />
+            <Label
+              Margin="0,4,0,0"
+              FontFamily="RobotoMedium"
+              FontSize="18"
+              HorizontalOptions="Center"
+              Text="{Binding StudentID}"
+              TextColor="#A7A7A7" />
+          </StackLayout>
+          <StackLayout
+            Grid.Column="1"
+            Margin="100,0,0,0"
+            VerticalOptions="Center"
+            WidthRequest="600">
+            <Grid ColumnDefinitions="*,*" HorizontalOptions="FillAndExpand">
+              <StackLayout>
+                <Label
+                  FontFamily="RobotoMedium"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="Gender"
+                  TextColor="#1A1A1A" />
+                <Label
+                  Margin="0,4,0,0"
+                  FontSize="16"
+                  HorizontalOptions="Start"
+                  Text="{Binding StudentGender}"
+                  TextColor="#A7A7A7" />
+              </StackLayout>
+              <StackLayout Grid.Column="1">
+                <Label
+                  FontFamily="RobotoMedium"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="Age"
+                  TextColor="#1A1A1A" />
+                <Label
+                  Margin="0,4,0,0"
+                  FontSize="16"
+                  HorizontalOptions="Start"
+                  Text="{Binding StudentAge}"
+                  TextColor="#A7A7A7" />
+              </StackLayout>
+            </Grid>
+            <Grid
+              Margin="0,36,0,0"
+              ColumnDefinitions="*,*"
+              HorizontalOptions="FillAndExpand">
+              <StackLayout>
+                <Label
+                  FontFamily="RobotoMedium"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="Branch"
+                  TextColor="#1A1A1A" />
+                <Label
+                  Margin="0,4,0,0"
+                  FontSize="16"
+                  HorizontalOptions="Start"
+                  Text="{Binding StudentBranch}"
+                  TextColor="#A7A7A7" />
+              </StackLayout>
+              <StackLayout Grid.Column="1">
+                <Label
+                  FontFamily="RobotoMedium"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="Department"
+                  TextColor="#1A1A1A" />
+                <Label
+                  Margin="0,4,0,0"
+                  FontSize="16"
+                  HorizontalOptions="Start"
+                  Text="{Binding StudentDepartment}"
+                  TextColor="#A7A7A7" />
+              </StackLayout>
+            </Grid>
+            <Grid Margin="0,36,0,0" ColumnDefinitions="*,*">
+              <Grid RowDefinitions="*,*">
+                <Grid>
+                  <StackLayout Grid.Column="1">
+                    <Label
+                      FontFamily="RobotoMedium"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="Date of birth"
+                      TextColor="#1A1A1A" />
+                    <Label
+                      Margin="0,4,0,0"
+                      FontSize="16"
+                      HorizontalOptions="Start"
+                      Text="{Binding StudentDOB}"
+                      TextColor="#A7A7A7" />
+                  </StackLayout>
+                </Grid>
+                <Grid Grid.Row="1" Margin="0,36,0,0">
+                  <StackLayout Grid.Column="1">
+                    <Label
+                      FontFamily="RobotoMedium"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="Email"
+                      TextColor="#1A1A1A" />
+                    <Label
+                      Margin="0,4,0,0"
+                      FontSize="16"
+                      HorizontalOptions="Start"
+                      Text="{Binding StudentEmail}"
+                      TextColor="#A7A7A7" />
+                  </StackLayout>
+                </Grid>
+              </Grid>
+              <Grid
+                Grid.Column="1"
+                HorizontalOptions="Start"
+                MaximumHeightRequest="120"
+                WidthRequest="240">
+                <ScrollView>
+                  <StackLayout>
+                    <Label
+                      FontFamily="RobotoMedium"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="Priority object"
+                      TextColor="#1A1A1A" />
+                    <StackLayout BindableLayout.ItemsSource="{Binding StudentPriorityObjectList}">
+                      <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                          <Label
+                            Margin="0,4,0,0"
+                            FontSize="16"
+                            HorizontalOptions="Start"
+                            Text="{Binding}"
+                            TextColor="#A7A7A7" />
+                        </DataTemplate>
+                      </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                  </StackLayout>
+                </ScrollView>
+              </Grid>
+            </Grid>
+            <Grid Margin="0,36,0,0" ColumnDefinitions="*,*">
+              <StackLayout>
+                <Label
+                  FontFamily="RobotoMedium"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="Address"
+                  TextColor="#1A1A1A" />
+                <Label
+                  Margin="0,4,0,0"
+                  FontSize="16"
+                  HorizontalOptions="Start"
+                  Text="{Binding StudentDistrictProvince}"
+                  TextColor="#A7A7A7" />
+              </StackLayout>
+            </Grid>
+          </StackLayout>
+        </Grid>
+        <HorizontalStackLayout Margin="0,48,0,0" HorizontalOptions="Center">
+          <Grid HorizontalOptions="Center">
+            <Button
+              Margin="0,0,12,0"
+              BackgroundColor="#EFF3FA"
+              CornerRadius="10"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HeightRequest="40"
+              HorizontalOptions="Center"
+              Text="Course register info"
+              TextColor="#2671B1"
+              WidthRequest="160">
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Button>
+          </Grid>
+          <Grid HorizontalOptions="Center">
+            <Button
+              Margin="12,0,0,0"
+              BackgroundColor="#EFF3FA"
+              CornerRadius="10"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HeightRequest="40"
+              HorizontalOptions="Center"
+              Text="Tuition info"
+              TextColor="#2671B1"
+              WidthRequest="160">
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Button>
+          </Grid>
+        </HorizontalStackLayout>
+      </StackLayout>
+    </ScrollView>
+  </Grid>
+</ContentPage>
