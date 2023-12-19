@@ -1,0 +1,236 @@
+﻿IT001.LT, Nhập môn lập trình (LT), 3, 45, 81000, 1
+IT001.TH, Nhập môn lập trình (TH), 1, 30, 37000, 2
+IT002.LT, Lập trình hướng đối tượng (LT), 3, 45, 81000, 1
+IT002.TH, Lập trình hướng đối tượng (TH), 1, 30, 37000, 2
+IT003.LT, Cấu trúc dữ liệu và giải thuật (LT), 3, 45, 81000, 1
+IT003.TH, Cấu trúc dữ liệu và giải thuật (TH), 1, 30, 37000, 2
+IT004.LT, Cơ sở dữ liệu (LT), 3, 45, 81000, 1
+IT004.TH, Cơ sở dữ liệu (TH), 1, 30, 37000, 2
+IT005.LT, Nhập môn mạng máy tính (LT), 3, 45, 81000, 1
+IT005.TH, Nhập môn mạng máy tính (TH), 1, 30, 37000, 2
+IT006, Kiến trúc máy tính, 3, 45, 81000, 1
+IT007.LT, Hệ điều hành, 3, 45, 81000, 1
+IT007.TH, Hệ điều hành, 1, 30, 37000, 2
+IT008.LT, Lập trình trực quan (LT), 3, 45, 81000, 1
+IT008.TH, Lập trình trực quan (TH), 1, 30, 37000, 2
+IT010, Tổ chức và cấu trúc máy tính, 2, 30, 54000, 1
+IT012.LT, Tổ chức và cấu trúc máy tính II, 3, 45, 81000, 1
+IT012.TH, Tổ chức và cấu trúc máy tính II, 1, 30, 37000, 2
+MA003, Đại số tuyến tính, 3, 45, 81000, 1
+MA004, Cấu trúc rời rạc, 4, 60, 108000, 1
+MA005, Xác suất thống kê, 3, 45, 81000, 1
+MA006, Giải tích, 4, 60, 108000, 1
+SS003, Tư tưởng Hồ Chí Minh, 2, 30, 54000, 1
+SS004, Kỹ năng nghề nghiệp, 2, 30, 54000, 1
+SS006, Pháp luật đại cương, 2, 30, 54000, 1
+SS007, Triết học Mác - Lênin, 3, 45, 81000, 1
+SS008, Kinh tế chính trị Mác - Lênin, 2, 30, 54000, 1
+SS009, Chủ nghĩa xã hội khoa học, 2, 30, 54000, 1
+SS010, Lịch sử Đảng Cộng sản Việt Nam, 2, 30, 54000, 1
+IE005, Giới thiệu ngành Công nghệ Thông tin, 1, 15, 27000, 1
+IE101.LT, Cơ sở hạ tầng công nghệ thông tin (LT), 2, 30, 54000, 1
+IE101.TH, Cơ sở hạ tầng công nghệ thông tin (TH), 1, 30, 37000, 2
+IE103.LT, Quản lý thông tin (LT), 3, 45, 81000, 1
+IE103.TH, Quản lý thông tin (TH), 1, 30, 37000, 2
+IE104.LT, Internet và công nghệ Web (LT), 3, 45, 81000, 1
+IE104.TH, Internet và công nghệ Web (TH), 1, 30, 37000, 2
+IE105.LT, Nhập môn đảm bảo và an ninh thông tin (LT), 3, 45, 81000, 1
+IE105.TH, Nhập môn đảm bảo và an ninh thông tin (TH), 3, 45, 81000, 1
+IE106.LT, Thiết kế giao diện người dùng (LT), 3, 45, 81000, 1
+IE106.TH, Thiết kế giao diện người dùng (TH), 1, 30, 37000, 2
+IE108.LT, Phân tích thiết kế phần mềm (LT), 3, 45, 81000, 1
+IE108.TH, Phân tích thiết kế phần mềm (TH), 1, 30, 37000, 2
+IE207, Đồ án, 2, 60, 37000, 2
+IE505, Khóa luận tốt nghiệp, 10, 150, 270000, 1
+IS005, Giới thiệu ngành hệ thống thông tin, 1, 15, 27000, 1
+IS201.LT, Phân tích thiết kế hệ thống thông tin (LT), 3, 45, 81000, 1
+IS201.TH, Phân tích thiết kế hệ thống thông tin (TH), 1, 30, 37000, 2
+IS207.LT, Phát triển ứng dụng web (LT), 3, 45, 81000, 1
+IS207.TH, Phát triển ứng dụng web (TH), 1, 30, 37000, 2
+IS208.LT, Quản lý dự án công nghệ thông tin (LT), 3, 45, 81000, 1
+IS208.TH, Quản lý dự án công nghệ thông tin (TH), 1, 30, 37000, 2
+IS210.LT, Hệ quản trị cơ sở dữ liệu (LT), 3, 45, 81000, 1
+IS210.TH, Hệ quản trị cơ sở dữ liệu (TH), 1, 30, 37000, 2
+IS211.LT, Cơ sở dữ liệu phân tán (LT), 3, 45, 81000, 1
+IS211.TH, Cơ sở dữ liệu phân tán (TH), 1, 30, 37000, 2
+IS216.LT, Lập trình Java (LT), 3, 45, 81000, 1
+IS216.TH, Lập trình Java (TH), 1, 30, 37000, 2
+IS217, Kho dữ liệu và OLAP, 3, 45, 81000, 1
+IS252.LT, Khai thác dữ liệu (LT), 1, 25, 27000, 1
+IS252.TH, Khai thác dữ liệu (TH), 1, 30, 37000, 2
+IS334, Thương mại điện tử, 3, 45, 81000, 1
+IS336.LT, Hoạch định nguồn lực doanh nghiệp (LT), 3, 45, 81000, 1
+IS336.TH, Hoạch định nguồn lực doanh nghiệp (TH), 1, 30, 37000, 2
+IS401, Khóa luận tốt nghiệp, 10, 150, 270000, 1
+IS403, Phân tích dữ liệu kinh doanh, 3, 45, 81000, 1
+IS405.LT, Dữ liệu lớn (LT), 3, 45, 81000, 1
+IS405.TH, Dữ liệu lớn (TH), 1, 30, 37000, 2
+IS502, Thực tập doanh nghiệp, 2, 30, 54000, 1
+CS005, Giới thiệu ngành Khoa học máy tính, 1, 15, 27000, 1
+CS106.LT, Trí tuệ nhân tạo (LT), 3, 45, 81000, 1
+CS106.TH, Trí tuệ nhân tạo (TH), 1, 30, 37000, 2
+CS112.LT, Phân tích và thiết kế thuật toán (LT), 3, 45, 81000, 1
+CS112.TH, Phân tích và thiết kế thuật toán (TH), 1, 30, 37000, 2
+CS114.LT, Máy học (LT), 3, 45, 81000, 1
+CS114.TH, Máy học (TH), 1, 30, 37000, 2
+CS115, Toán cho Khoa học máy tính, 4, 60, 108000, 1
+CS505, Khóa luận tốt nghiệp, 10, 150, 270000, 1
+AI001, Giới thiệu ngành trí tuệ nhân tạo, 1, 15, 27000, 1
+AI002.LT, Tư duy trí tuệ nhân tạo (LT), 3, 45, 81000, 1
+AI002.TH, Tư duy trí tuệ nhân tạo (TH), 1, 30, 37000, 2
+SE005, Giới thiệu ngành Kỹ thuật Phần mềm, 1, 15, 27000, 1
+SE100.LT, Phương pháp Phát triển phần mềm hướng đối tượng (LT), 3, 45, 81000, 1
+SE100.TH, Phương pháp Phát triển phần mềm hướng đối tượng (TH), 1, 30, 37000, 2
+SE104.LT, Nhập môn Công nghệ phần mềm (LT), 3, 45, 81000, 1
+SE104.TH, Nhập môn Công nghệ phần mềm (TH), 1, 30, 37000, 2
+SE121, Đồ án 1, 2, 30, 54000, 1
+SE122, Đồ án 2, 2, 30, 54000, 1
+SE501, Thực tập tốt nghiệp, 2, 30, 54000, 1
+SE505, Khóa luận tốt nghiệp, 10, 150, 270000, 1
+CE005, Giới thiệu ngành Kỹ Thuật Máy tính, 1, 15, 27000, 1
+CE103.LT, Vi xử lý - vi điều khiển (LT), 3, 45, 81000, 1
+CE103.TH, Vi xử lý - vi điều khiển (TH), 1, 30, 37000, 2
+CE118.LT, Thiết kế luận lý số (LT), 3, 45, 81000, 1
+CE118.TH, Thiết kế luận lý số (TH), 3, 45, 81000, 1
+CE119, Thực hành Kiến trúc máy tính, 1, 15, 27000, 1
+CE121.LT, Lý thuyết mạch điện (LT), 3, 45, 81000, 1
+CE121.TH, Lý thuyết mạch điện (TH), 1, 30, 37000, 2
+CE124.LT, Các thiết bị và mạch điện tử (LT), 3, 45, 81000, 1
+CE124.TH, Các thiết bị và mạch điện tử (TH), 1, 30, 37000, 2
+CE201, Đồ án 1, 2, 30, 54000, 1
+CE206, Đồ án 2, 2, 30, 54000, 1
+CE213.LT, Thiết kế hệ thống số với HDL (LT), 3, 45, 81000, 1
+CE213.TH, Thiết kế hệ thống số với HDL (TH), 1, 30, 37000, 2
+CE224.LT, Thiết kế hệ thống nhúng (LT), 3, 45, 81000, 1
+CE224.TH, Thiết kế hệ thống nhúng (TH), 1, 30, 37000, 2
+CE502, Thực tập doanh nghiệp, 2, 30, 54000, 1
+CE505, Khóa luận tốt nghiệp, 10, 150, 270000, 1
+NT005, Giới thiệu ngành Mạng máy tính và Truyền thông dữ liệu, 1, 15, 27000, 1
+NT015, Giới thiệu ngành An toàn thông tin, 1, 15, 27000, 1
+NT101.LT, An toàn mạng máy tính (LT), 3, 45, 81000, 1
+NT101.TH, An toàn mạng máy tính (TH), 1, 30, 37000, 2
+NT105.LT, Truyền dữ liệu (LT), 3, 45, 81000, 1
+NT105.TH, Truyền dữ liệu (TH), 1, 30, 37000, 2
+NT106.LT, Lập trình mạng căn bản (LT), 2, 30, 54000, 1
+NT106.TH, Lập trình mạng căn bản (TH), 1, 30, 37000, 2
+NT113.LT, Thiết kế mạng (LT), 2, 30, 54000, 1
+NT113.TH, Thiết kế mạng (TH), 1, 30, 37000, 2
+NT114, Đồ án chuyên ngành, 2, 30, 54000, 1
+NT118.LT, Phát triển ứng dụng trên thiết bị di động (LT), 2, 30, 54000, 1
+NT118.TH, Phát triển ứng dụng trên thiết bị di động (TH), 1, 30, 37000, 2
+NT131.LT, Hệ thống nhúng Mạng không dây (LT), 3, 45, 81000, 1
+NT131.TH, Hệ thống nhúng Mạng không dây (TH), 1, 30, 37000, 2
+NT132.LT, Quản trị mạng và hệ thống (LT), 3, 45, 81000, 1
+NT132.TH, Quản trị mạng và hệ thống (TH), 1, 30, 37000, 2
+NT208.LT, Lập trình ứng dụng web (LT), 2, 30, 54000, 1
+NT208.TH, Lập trình ứng dụng web (TH), 1, 30, 37000, 2
+NT209.LT, Lập trình hệ thống (LT), 2, 30, 54000, 1
+NT209.TH, Lập trình hệ thống (TH), 1, 30, 37000, 2
+NT215, Thực tập doanh nghiệp, 2, 30, 54000, 1
+NT219.LT, Mật mã học (LT), 2, 30, 54000, 1
+NT219.TH, Mật mã học (TH), 1, 30, 37000, 2
+NT230.LT, Cơ chế hoạt động của mã độc (LT), 2, 30, 54000, 1
+NT230.TH, Cơ chế hoạt động của mã độc (TH), 1, 30, 37000, 2
+NT505, Khóa luận tốt nghiệp, 10, 150, 270000, 1
+NT521.LT, Lập trình an toàn và khai thác lỗ hổng phần mềm (LT), 3, 45, 81000, 1
+NT521.TH, Lập trình an toàn và khai thác lỗ hổng phần mềm (TH), 1, 30, 37000, 2
+EC001, Kinh tế học đại cương, 4, 60, 108000, 1
+EC005, Giới thiệu ngành Thương mai Điện tử, 1, 15, 27000, 1
+EC101, Marketing căn bản, 3, 45, 81000, 1
+EC201.LT, Phân tích thiết kế quy trình nghiệp vụ doanh nghiệp (LT), 3, 45, 81000, 1
+EC201.TH, Phân tích thiết kế quy trình nghiệp vụ doanh nghiệp (TH), 1, 30, 37000, 2
+EC204.LT, Marketing điện tử (LT), 1, 30, 37000, 2
+EC204.TH, Marketing điện tử (TH), 1, 30, 37000, 2
+EC208, Quản trị dự án TMĐT, 3, 45, 81000, 1
+EC213.LT, Quản trị quan hệ khách hàng và nhà cung cấp (LT), 1, 30, 37000, 2
+EC213.TH, Quản trị quan hệ khách hàng và nhà cung cấp (TH), 1, 30, 37000, 2
+EC222, Thực tập doanh nghiệp, 2, 30, 54000, 1
+EC229, Pháp luật trong thương mai điện tử, 2, 30, 54000, 1
+EC312.LT, Thiết kế hệ thống thương mại điện tử (LT), 2, 30, 54000, 1
+EC312.TH, Thiết kế hệ thống thương mại điện tử (TH), 1, 30, 37000, 2
+EC335, An toán và bảo mật thương mại điện tử, 3, 45, 81000, 1
+EC337, Hệ thống thanh toán trực tuyến, 3, 45, 81000, 1
+EC401, Khóa luận tốt nghiệp, 10, 150, 270000, 1
+DS005, Giới thiệu ngành Khoa học Dữ liệu, 1, 15, 27000, 1
+DS101.LT, Thống kế và xác suất chuyên sâu (LT), 2, 30, 54000, 1
+DS101.TH, Thống kế và xác suất chuyên sâu (TH), 2, 30, 54000, 1
+DS102.LT, Học máy thống kê (LT), 3, 45, 81000, 1
+DS102.TH, Học máy thống kê (TH), 1, 30, 37000, 2
+DS103.LT, Thu thập và tiền xử lý dữ liệu (LT), 3, 45, 81000, 1
+DS103.TH, Thu thập và tiền xử lý dữ liệu (TH), 1, 30, 37000, 2
+DS105.LT, Phân tích và trực quan dữ liệu (LT), 3, 45, 81000, 1
+DS105.TH, Phân tích và trực quan dữ liệu (TH), 1, 30, 37000, 2
+DS107.LT, Tư duy tính toán cho khoa học dữ liệu (LT), 3, 45, 81000, 1
+DS107.TH, Tư duy tính toán cho khoa học dữ liệu (TH), 1, 30, 37000, 2
+DS207, Đồ án, 1, 30, 37000, 2
+DS505, Khóa luận tốt nghiệp, 10, 150, 270000, 1
+PH002.LT, Nhập môn mạch số (LT), 3, 45, 81000, 1
+PH002.TH, Nhập môn mạch số (TH), 1, 30, 37000, 2
+ENG01, Anh văn 1, 4, 60, 108000, 1
+ENG02, Anh văn 2, 4, 60, 108000, 1
+ENG03, Anh văn 3, 4, 60, 108000, 1
+ME001, Giáo dục quốc phòng, 4, 60, 108000, 1
+PE001, Giáo dục thể chất 1, 0, 0, 0, 2
+PE002, Giáo dục thể chất 2, 0, 0, 0, 2
+PE012, Giáo dục thể chất, 0, 0, 0, 2
+CE101, Lý thuyết mạch điện, 3, 45, 81000, 1
+CE102, Hệ thống số, 2, 60, 37000, 2
+CE104, Các thiết bị và mạch điện tử, 1, 30, 37000, 2
+CE105, Xử lý tín hiệu số, 2, 30, 54000, 1
+CE106, Thiết kế mạch với HDL, 3, 45, 81000, 1
+CE107, Hệ thống nhúng, 1, 30, 37000, 2
+CE108, Hệ điều hành nâng cao, 1, 30, 37000, 2
+CE109, Lập trình nhúng căn bản, 2, 60, 37000, 2
+CE110, Lập trình hệ thống với Java, 3, 45, 81000, 1
+CE111, Kiến trúc máy tính nâng cao, 3, 45, 81000, 1
+CE112, Đồ án môn học thiết kế mạch, 1, 15, 27000, 1
+CE113, Điều khiển tự động, 4, 60, 108000, 1
+CE114, Lập trình trên thiết bị di động, 3, 45, 81000, 1
+CE115, Thiết kế mạng, 1, 30, 37000, 2
+CE116, Đồ án môn học ngành KTMT, 2, 60, 37000, 2
+CE117, Thực hành điện - điện tử, 1, 30, 37000, 2
+CE212, Điều khiển tự động, 3, 45, 81000, 1
+CS003, Máy học nâng cao, 3, 45, 81000, 1
+CS004, Máy học trong xử lý ngôn ngữ tự nhiên, 3, 45, 81000, 1
+CS101, Nguyên lý và phương pháp lập trình, 3, 45, 81000, 1
+CS102, Phân tích và thiết kế thuật toán, 3, 45, 81000, 1
+CS103, Cơ sở lập trình, 2, 60, 54000, 1
+CS105, Đồ họa máy tính, 1, 30, 37000, 2
+CS107, Các hệ cơ sở tri thức, 4, 60, 108000, 1
+CS108, Lý thuyết thông tin, 3, 45, 81000, 1
+CS109, Máy học, 4, 60, 108000, 1
+CS110, Nhập môn công nghệ tri thức và máy học, 3, 45, 81000, 1
+CS113, Đồ họa máy tính và xử lý ảnh, 1, 30, 37000, 2
+CS116, Lập trình Python cho máy học, 1, 30, 37000, 2
+CS117, Tư duy tính toán, 2, 30, 54000, 1
+CS211, Trí tuệ nhân tạo nâng cao, 3, 45, 81000, 1
+CS214, Biểu diễn tri thức và suy luận, 2, 60, 37000, 2
+DS104, Tính toán song song và phân tán, 3, 45, 81000, 1
+DS106, Tối ưu hóa ứng dụng, 2, 30, 54000, 1
+DS200, Phân tích dữ liệu lớn, 1, 30, 37000, 2
+DS201, Deep learning trong khoa học dữ liệu, 3, 45, 81000, 1
+DS202, Đồ án khoa học dữ liệu và ứng dụng 1, 2, 60, 37000, 2
+DS203, Đồ án khoa học dữ liệu và ứng dụng 2, 2, 60, 37000, 2
+DS204, Đồ án khoa học dữ liệu và ứng dụng, 1, 30, 37000, 2
+DS300, Hệ khuyến nghị, 3, 45, 81000, 1
+DS301, Các giải thuật khai phá dữ liệu lớn, 1, 30, 37000, 2
+DS302, Phân tích thống kê đa biến, 2, 30, 54000, 1
+DS303, Thống kê Bayes, 2, 30, 54000, 1
+DS304, Thiết kế và phân tích thực nghiệm, 3, 45, 81000, 1
+DS305, Phân tích dữ liệu chuỗi thời gian và ứng dụng, 2, 30, 54000, 1
+DS306, Phân tích dữ liệu lớn trong tài chính, 3, 45, 81000, 1
+DS307, Phân tích dữ liệu truyền thông xã hội, 3, 45, 81000, 1
+EC002, Quản trị doanh nghiệp, 3, 45, 81000, 1
+EC003, Tiếp thị căn bản, 3, 45, 81000, 1
+EC214, Nhập môn quản trị chuỗi cung ứng, 3, 45, 81000, 1
+EC232, Nguyên lý kế toán, 3, 45, 81000, 1
+EC304, Tối ưu hóa công cụ tìm kiếm trong Thương mại điện tử, 3, 45, 81000, 1
+EC311, Tiếp thị trực tuyến, 1, 30, 37000, 2
+EC331, Quản trị chiến lược kinh doanh điện tử, 3, 45, 81000, 1
+EC332, Quản trị sản xuất, 3, 45, 81000, 1
+EC333, Quản trị tài chính doanh nghiệp, 3, 45, 81000, 1
+EC334, Quản trị kênh phân phối, 3, 45, 81000, 1
+EC336, Quản trị nhân lực, 3, 45, 81000, 1
+EC338, Quản trị bán hàng, 3, 45, 81000, 1
+EC402, Phát triển ứng dụng thương mại điện tử, 1, 30, 37000, 2
+EC403, Thương mại xã hội, 3, 45, 81000, 1

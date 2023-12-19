@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.DepartmentManagementPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  Title="DepartmentManagementPage">
+  <Grid RowDefinitions="Auto,*">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="Can add, update, delete departments"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="Department Management Page"
+      VerticalOptions="Start" />
+
+    <Grid
+      Grid.Row="1"
+      ColumnDefinitions="6*,4*"
+      RowDefinitions="200,*">
+
+      <HorizontalStackLayout
+        Grid.Row="0"
+        Grid.Column="0"
+        Margin="100,0,0,0"
+        VerticalOptions="Center">
+
+        <Picker
+          FontSize="14"
+          HorizontalTextAlignment="Center"
+          ItemsSource="{Binding FilterOptions}"
+          SelectedItem="{Binding SelectedFilterOption}"
+          VerticalOptions="Center" />
+
+        <SearchBar
+          Margin="20,0,0,0"
+          BackgroundColor="#FCFAFA"
+          FontFamily="Roboto"
+          FontSize="14"
+          Placeholder="Search for a department by its ID or name"
+          Text="{Binding SearchFilter}"
+          TextColor="Black"
+          VerticalOptions="Center"
+          WidthRequest="500" />
+      </HorizontalStackLayout>
+
+      <Grid
+        Grid.Row="1"
+        Grid.Column="0"
+        Margin="100,0,0,0"
+        RowDefinitions="24,*">
+        <Grid
+          Grid.Row="0"
+          ColumnDefinitions="3*,7*"
+          HeightRequest="50">
+          <Label
+            Grid.Column="0"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="Department ID"
+            VerticalOptions="Center" />
+          <Label
+            Grid.Column="1"
+            FontFamily="RobotoMedium"
+            FontSize="14"
+            Text="Department Name"
+            VerticalOptions="Center" />
+        </Grid>
+
+        <CollectionView
+          Grid.Row="1"
+          Margin="0,0,0,100"
+          ItemsSource="{Binding DepartmentDisplayList}"
+          VerticalScrollBarVisibility="Always">
+          <CollectionView.ItemTemplate>
+            <DataTemplate>
+              <Grid
+                Padding="5"
+                BackgroundColor="{Binding BackgroundColor}"
+                ColumnDefinitions="3*,7*"
+                HeightRequest="50">
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding DisplayDepartmentInformationCommand}" />
+                </Grid.GestureRecognizers>
+                <Label
+                  Grid.Column="0"
+                  FontSize="14"
+                  Text="{Binding DepartmentSpecificId}"
+                  TextColor="#4F4F4F"
+                  VerticalOptions="Center" />
+                <Label
+                  Grid.Column="1"
+                  FontSize="14"
+                  Text="{Binding DepartmentName}"
+                  TextColor="#4F4F4F"
+                  VerticalOptions="Center" />
+              </Grid>
+            </DataTemplate>
+          </CollectionView.ItemTemplate>
+        </CollectionView>
+      </Grid>
+
+      <VerticalStackLayout
+        Grid.Row="1"
+        Grid.Column="1"
+        Margin="0,50,0,0"
+        HorizontalOptions="Center">
+        <VerticalStackLayout
+          Padding="5"
+          BackgroundColor="#FCFAFA"
+          HorizontalOptions="Center">
+          <Label
+            FontFamily="RobotoMedium"
+            FontSize="20"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            Text="{Binding SelectedDepartmentNameDisplayText}" />
+
+          <HorizontalStackLayout Margin="0,5,0,0" HorizontalOptions="Center">
+            <Label
+              Margin="0,0,3,0"
+              FontSize="14"
+              Text="Department ID: " />
+            <Label
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              Text="{Binding SelectedDepartmentSpecificIdDisplayText}" />
+          </HorizontalStackLayout>
+
+          <HorizontalStackLayout Margin="0,30,0,0" HorizontalOptions="Center">
+            <ImageButton
+              Padding="8"
+              Aspect="AspectFit"
+              BackgroundColor="#EFF3FA"
+              BorderColor="Black"
+              Command="{Binding DisplayUpdateDepartmentPopupCommand}"
+              CornerRadius="8"
+              HeightRequest="24"
+              Source="vector_update.png"
+              ToolTipProperties.Text="Update Department"
+              WidthRequest="24">
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </ImageButton>
+            <ImageButton
+              Margin="40,0,0,0"
+              Padding="8"
+              Aspect="AspectFit"
+              BackgroundColor="#EFF3FA"
+              BorderColor="Black"
+              Command="{Binding DeleteDepartmentCommand}"
+              CornerRadius="8"
+              HeightRequest="24"
+              Source="vector_delete.png"
+              ToolTipProperties.Text="Delete Department"
+              WidthRequest="24">
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </ImageButton>
+          </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <Border
+          Margin="0,100,0,0"
+          StrokeShape="RoundRectangle 4,4,4,4"
+          StrokeThickness="0">
+          <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding DisplayAddDepartmentPopupCommand}" />
+          </Border.GestureRecognizers>
+          <HorizontalStackLayout
+            Padding="10"
+            BackgroundColor="#EFF3FA"
+            HorizontalOptions="Center">
+            <Image
+              HeightRequest="24"
+              Source="vector_add.png"
+              VerticalOptions="Center"
+              WidthRequest="24" />
+            <Label
+              Margin="5,0,0,0"
+              FontFamily="RobotoMedium"
+              FontSize="18"
+              Text="Add a new department"
+              TextColor="#2671B1"
+              VerticalOptions="Center" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                    </VisualState.Setters>
+                  </VisualState>
+                  <VisualState x:Name="PointerOver">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                    </VisualState.Setters>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+          </HorizontalStackLayout>
+        </Border>
+      </VerticalStackLayout>
+    </Grid>
+  </Grid>
+</ContentPage>

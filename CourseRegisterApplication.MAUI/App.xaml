@@ -10,33 +10,6 @@
         <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
         <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
       </ResourceDictionary.MergedDictionaries>
-
-      <DataTemplate x:Key="ItemTemplate">
-        <ViewCell>
-          <Frame
-            Margin="36,8,36,0"
-            BackgroundColor="{Binding Color}"
-            BorderColor="{Binding Color}"
-            CornerRadius="8"
-            HasShadow="False"
-            HorizontalOptions="Fill"
-            VerticalOptions="Center">
-            <HorizontalStackLayout VerticalOptions="Center">
-              <Image
-                HeightRequest="16"
-                Source="{Binding Icon}"
-                VerticalOptions="Center" />
-              <Label
-                Margin="8,0,0,0"
-                FontFamily="RobotoMedium"
-                FontSize="16"
-                Text="{Binding Title}"
-                TextColor="White" />
-            </HorizontalStackLayout>
-          </Frame>
-        </ViewCell>
-      </DataTemplate>
-
     </ResourceDictionary>
   </Application.Resources>
 </Application>

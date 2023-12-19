@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.AddUpdateDepartmentPopup"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+  x:Name="addUpdateDepartmentPopup"
+  CanBeDismissedByTappingOutsideOfPopup="False"
+  HorizontalOptions="Center"
+  VerticalOptions="Center"
+  Color="White">
+  <Frame
+    Padding="0"
+    BackgroundColor="White"
+    BorderColor="#4F4F4F"
+    CornerRadius="16"
+    HeightRequest="400"
+    WidthRequest="400">
+    <VerticalStackLayout>
+      <Grid Padding="5" HeightRequest="50">
+        <Label
+          FontFamily="RobotoMedium"
+          FontSize="20"
+          HorizontalOptions="Center"
+          Text="{Binding CommandName}"
+          VerticalOptions="Center" />
+        <Image
+          BackgroundColor="#FFFFFF"
+          HeightRequest="24"
+          HorizontalOptions="End"
+          Source="vector_close.png"
+          VerticalOptions="Center"
+          WidthRequest="24">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ClosePopupCommand}" />
+          </Image.GestureRecognizers>
+        </Image>
+      </Grid>
+
+      <Label
+        Margin="50,50,0,0"
+        FontFamily="RobotoMedium"
+        FontSize="16"
+        Text="Department ID:" />
+      <Entry
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        Text="{Binding DepartmentSpecificId}"
+        WidthRequest="300" />
+      <Label
+        Margin="50,0,0,0"
+        FontSize="12"
+        Text="{Binding DepartmentSpecificIdMessageText}"
+        TextColor="{Binding DepartmentSpecificIdColor}" />
+
+      <Label
+        Margin="50,20,0,0"
+        FontFamily="RobotoMedium"
+        FontSize="16"
+        Text="Department Name:" />
+      <Entry
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        Text="{Binding DepartmentName}"
+        WidthRequest="300" />
+      <Label
+        Margin="50,0,0,0"
+        FontSize="12"
+        Text="{Binding DepartmentNameMessageText}"
+        TextColor="{Binding DepartmentNameColor}" />
+
+      <Button
+        Margin="0,20,0,0"
+        BackgroundColor="#EFF3FA"
+        Command="{Binding AddUpdateDeparmentCommand}"
+        FontFamily="RobotoMedium"
+        FontSize="15"
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        Text="{Binding CommandName}"
+        TextColor="#2671B1"
+        WidthRequest="160">
+        <VisualStateManager.VisualStateGroups>
+          <VisualStateGroupList>
+            <VisualStateGroup x:Name="CommonStates">
+              <VisualState x:Name="Normal">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                </VisualState.Setters>
+              </VisualState>
+              <VisualState x:Name="PointerOver">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                </VisualState.Setters>
+              </VisualState>
+            </VisualStateGroup>
+          </VisualStateGroupList>
+        </VisualStateManager.VisualStateGroups>
+      </Button>
+    </VerticalStackLayout>
+  </Frame>
+</mct:Popup>

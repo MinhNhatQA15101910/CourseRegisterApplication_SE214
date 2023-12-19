@@ -49,6 +49,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\Roboto-Thin.ttf" />
+	  <None Remove="Resources\Images\admin_icon.png" />
 	  <None Remove="Resources\Images\admin_image_1.svg" />
 	  <None Remove="Resources\Images\admin_image_2.svg" />
 	  <None Remove="Resources\Images\admin_image_3.svg" />
@@ -57,6 +58,7 @@
 	  <None Remove="Resources\Images\book.svg" />
 	  <None Remove="Resources\Images\bx_support.svg" />
 	  <None Remove="Resources\Images\call_box.svg" />
+	  <None Remove="Resources\Images\cancel_icon.svg" />
 	  <None Remove="Resources\Images\chart.svg" />
 	  <None Remove="Resources\Images\chart_square.svg" />
 	  <None Remove="Resources\Images\check.svg" />
@@ -65,15 +67,19 @@
 	  <None Remove="Resources\Images\demo_user_image.jpg" />
 	  <None Remove="Resources\Images\dollar_icon.svg" />
 	  <None Remove="Resources\Images\dotnet_bot.svg" />
+	  <None Remove="Resources\Images\down_arrow.svg" />
 	  <None Remove="Resources\Images\eye_close_icon.svg" />
 	  <None Remove="Resources\Images\eye_open_icon.svg" />
 	  <None Remove="Resources\Images\home.svg" />
 	  <None Remove="Resources\Images\info_box.svg" />
+	  <None Remove="Resources\Images\location_icon.svg" />
 	  <None Remove="Resources\Images\message_box.svg" />
 	  <None Remove="Resources\Images\search_icon.svg" />
 	  <None Remove="Resources\Images\setting.svg" />
 	  <None Remove="Resources\Images\setting_White.svg" />
 	  <None Remove="Resources\Images\student.svg" />
+	  <None Remove="Resources\Images\teacher_icon.png" />
+	  <None Remove="Resources\Images\university_icon.jpg" />
 	  <None Remove="Resources\Images\vector_down.svg" />
 	  <None Remove="Resources\Images\vector_left.svg" />
 	  <None Remove="Resources\Images\vector_right.svg" />
@@ -92,15 +98,95 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\AccountantViews\AccountantAppShell.xaml.cs">
+	    <DependentUpon>AccountantAppShell.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\AccountantViews\AccountantDashboardPage.xaml.cs">
+	    <DependentUpon>AccountantDashboardPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\AccountantViews\StudentManagementPage.xaml.cs">
+	    <DependentUpon>StudentManagementPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\AccountantViews\AddUpdateDepartmentPopup.xaml.cs">
+	    <DependentUpon>AddUpdateDepartmentPopup.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\AdminViews\AddAdminAccountantAccountPage.xaml.cs">
 	    <DependentUpon>AddAdminAccountantAccountPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\AdminViews\AdminAccountantAccountManagementPage.xaml.cs">
 	    <DependentUpon>AdminAccountantAccountManagementPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\StudentViews\StudentAppShell.xaml.cs">
+	    <DependentUpon>StudentAppShell.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\AdminViews\StudentAccountManagementPage.xaml.cs">
+	    <DependentUpon>StudentAccountManagementPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\AccountantViews\AddUpdateBranchPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\AddUpdateDepartmentPopup.xaml">
+	  <MauiXaml Update="ContentViews\ManagerAccountFilterPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\AccountantAppShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\AccountantDashboardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\BranchManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\CourseManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\CreditsSubjectTypePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\DepantmentManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\OpenSubjectPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\PriorityObjectPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\ProvinceDistrictPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\StatisticPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\StudentManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\StudyProgramPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\SubjectManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\AddUpdateDistrictPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\AddUpdateProvincePopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\BranchManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\DepartmentManagementPage.xaml">
+	  <MauiXaml Update="Views\AccountantViews\TuitionCollectionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\ProvinceDistrictManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\AddAdminAccountantAccountPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -129,6 +215,21 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\StudentViews\CourseRegistrationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\StudentViews\StudentAppShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\StudentViews\StudentDashboardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\StudentViews\StudentInfomationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\StudentViews\TuitionPaymentPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
