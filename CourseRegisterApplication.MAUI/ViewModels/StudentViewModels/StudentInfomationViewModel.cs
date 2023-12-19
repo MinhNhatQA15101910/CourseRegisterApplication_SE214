@@ -178,7 +178,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 		}
 
 		[RelayCommand]
-		public async Task GetCurrentStudentInfomation()
+		public void GetCurrentStudentInfomation()
 		{
 			foreach (var item in students)
 			{

@@ -129,6 +129,8 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\AddUpdateDepartmentPopup.xaml">
+		<Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="ContentViews\ManagerAccountFilterPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -147,16 +149,10 @@
 	  <MauiXaml Update="Views\AccountantViews\CreditsSubjectTypePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AccountantViews\DepantmentManagementPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\OpenSubjectPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\PriorityObjectPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\AccountantViews\ProvinceDistrictPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\StatisticPage.xaml">
@@ -180,7 +176,9 @@
 	  <MauiXaml Update="Views\AccountantViews\BranchManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AccountantViews\DepartmentManagementPage.xaml">
+		<MauiXaml Update="Views\AccountantViews\DepartmentManagementPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\TuitionCollectionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

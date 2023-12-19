@@ -56,7 +56,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 		#endregion
 
 		[RelayCommand]
-		public async Task GetCurrentStudent()
+		public void GetCurrentStudent()
 		{
 			DescriptionText = Helpers.FormatDateTime(DateTime.Now);
 			string CurrentUsername = GlobalConfig.CurrentUser.Username;

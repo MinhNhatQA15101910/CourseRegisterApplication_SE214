@@ -85,10 +85,8 @@ namespace CourseRegisterApplication.MAUI
 			builder.Services.AddScoped<BranchManagementPage>();
 			builder.Services.AddScoped<CourseManagementPage>();
 			builder.Services.AddScoped<CreditsSubjectTypePage>();
-			builder.Services.AddScoped<DepantmentManagementPage>();
 			builder.Services.AddScoped<OpenSubjectPage>();
 			builder.Services.AddScoped<PriorityObjectPage>();
-			builder.Services.AddScoped<ProvinceDistrictPage>();
 			builder.Services.AddScoped<StatisticPage>();
 			builder.Services.AddScoped<StudyProgramPage>();
 			builder.Services.AddScoped<SubjectManagementPage>();

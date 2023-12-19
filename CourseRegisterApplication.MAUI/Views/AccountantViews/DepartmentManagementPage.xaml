@@ -108,7 +108,7 @@
         Margin="0,50,0,0"
         HorizontalOptions="Center">
         <VerticalStackLayout
-          Padding="5"
+          Padding="20"
           BackgroundColor="#FCFAFA"
           HorizontalOptions="Center">
           <Label

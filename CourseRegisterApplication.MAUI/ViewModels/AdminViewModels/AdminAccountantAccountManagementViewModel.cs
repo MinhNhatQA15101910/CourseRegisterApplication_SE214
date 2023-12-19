@@ -304,7 +304,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 		}
         public void UpdateFilterList()
         {
-            switch(selectedFilterAccountTypeOptions)
+            switch(SelectedFilterAccountTypeOptions)
             {
 				case "Accountant":
 					AdminAccountantAccountList = AdminAccountantAccountList.Where(a => a.RoleName == "Accountant").ToObservableCollection();

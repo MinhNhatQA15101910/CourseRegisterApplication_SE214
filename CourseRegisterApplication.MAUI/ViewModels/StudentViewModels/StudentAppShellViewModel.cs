@@ -61,7 +61,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 		#endregion
 
 		[RelayCommand]
-		public async Task GetCurrentStudent()
+		public void GetCurrentStudent()
 		{
 			foreach (var item in students)
 			{
