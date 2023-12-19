@@ -128,7 +128,7 @@
 	  <MauiXaml Update="Views\AccountantViews\AddUpdateBranchPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AccountantViews\AddUpdateDepartmentPopup.xaml">
+	  <MauiXaml Update="Views\AccountantViews\AddUpdateDepartmentPopup.xaml"/>
 	  <MauiXaml Update="ContentViews\ManagerAccountFilterPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -180,7 +180,7 @@
 	  <MauiXaml Update="Views\AccountantViews\BranchManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AccountantViews\DepartmentManagementPage.xaml">
+	  <MauiXaml Update="Views\AccountantViews\DepartmentManagementPage.xaml"/>
 	  <MauiXaml Update="Views\AccountantViews\TuitionCollectionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

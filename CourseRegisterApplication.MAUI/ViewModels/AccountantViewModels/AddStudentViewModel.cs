@@ -204,7 +204,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task GetDistrict()
         {
-            var districts = await _districtService.GetDistrictsByProvinceID(SelectedProvince.Id);
+            var districts = await _districtService.GetDistrictsByProvinceId(SelectedProvince.Id);
             DistrictList.Clear();
             foreach (var district in districts)
             {
