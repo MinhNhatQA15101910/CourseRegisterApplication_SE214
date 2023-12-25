@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
-    class OpenSubjectViewModel
+    class PriorityTypeManagementViewModel
     {
     }
 }

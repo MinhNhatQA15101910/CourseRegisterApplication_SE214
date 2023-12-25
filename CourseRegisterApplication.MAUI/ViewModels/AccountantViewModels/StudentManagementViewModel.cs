@@ -177,7 +177,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task NavigateToAddStudentPage()
         {
-            await Shell.Current.GoToAsync(nameof(AddStudentPage), true);
+            await Shell.Current.GoToAsync(nameof(AddUpdateStudentPage), true);
         }
 
         [RelayCommand]

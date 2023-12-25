@@ -1,10 +1,9 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views;
-using CourseRegisterApplication.MAUI.Views.AccountantViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
-    public partial class AddStudentViewModel : ObservableObject
+    public partial class AddUpdateStudentViewModel : ObservableObject
     {
         #region Service
         private readonly IServiceProvider _serviceProvider;
@@ -90,7 +89,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #endregion
 
         #region Constructor
-        public AddStudentViewModel(IServiceProvider serviceProvider)
+        public AddUpdateStudentViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _studentService = _serviceProvider.GetRequiredService<IStudentService>();
@@ -108,7 +107,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #endregion
 
         #region Commands
-
         [RelayCommand]
         public async Task GetInformation()
         {
@@ -204,7 +202,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task GetDistrict()
         {
-            var districts = await _districtService.GetDistrictsByProvinceID(SelectedProvince.Id);
+            var districts = await _districtService.GetDistrictsByProvinceId(SelectedProvince.Id);
             DistrictList.Clear();
             foreach (var district in districts)
             {

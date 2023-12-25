@@ -34,13 +34,27 @@ namespace CourseRegisterApplication.MAUI
 		builder.Logging.AddDebug();
 #endif
 
-            // ViewModels
+            #region ViewModels
             builder.Services.AddScoped<LoginViewModel>();
+            builder.Services.AddScoped<ChangePasswordViewModel>();
+
+            #region Admin
             builder.Services.AddScoped<AdminAppShellViewModel>();
             builder.Services.AddScoped<AdminDashboardViewModel>();
             builder.Services.AddScoped<AdminAccountantAccountManagementViewModel>();
-            builder.Services.AddScoped<ChangePasswordViewModel>();
+            builder.Services.AddScoped<StudentAccountManagementViewModel>();
             builder.Services.AddScoped<AddAdminAccountantAccountViewModel>();
+            #endregion
+
+            #region Student
+            builder.Services.AddScoped<StudentAppShellViewModel>();
+            builder.Services.AddScoped<StudentDashboardViewModel>();
+            builder.Services.AddScoped<StudentInfomationViewModel>();
+            #endregion
+
+            #region Accountant
+            builder.Services.AddScoped<AccountantAppShellViewModel>();
+            builder.Services.AddScoped<AccountantDashboardViewModel>();
             builder.Services.AddScoped<DepartmentManagementViewModel>();
             builder.Services.AddScoped<AddUpdateDepartmentViewModel>();
             builder.Services.AddScoped<BranchManagementViewModel>();
@@ -48,72 +62,60 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<ProvinceDistrictManagementViewModel>();
             builder.Services.AddScoped<AddUpdateProvinceViewModel>();
             builder.Services.AddScoped<AddUpdateDistrictViewModel>();
-            builder.Services.AddScoped<AddUpdateDepartmentViewModel>();
-            builder.Services.AddScoped<StudentAccountManagementViewModel>();
-            builder.Services.AddScoped<AddStudentViewModel>();
-			builder.Services.AddScoped<LoginViewModel>();
-			builder.Services.AddScoped<AdminAppShellViewModel>();
-			builder.Services.AddScoped<AdminDashboardViewModel>();
-			builder.Services.AddScoped<AdminAccountantAccountManagementViewModel>();
-			builder.Services.AddScoped<ChangePasswordViewModel>();
-			builder.Services.AddScoped<AddAdminAccountantAccountViewModel>();
-			builder.Services.AddScoped<StudentAppShellViewModel>();
-			builder.Services.AddScoped<StudentDashboardViewModel>();
-			builder.Services.AddScoped<StudentInfomationViewModel>();
-			builder.Services.AddScoped<AccountantAppShellViewModel>();
-			builder.Services.AddScoped<AccountantDashboardViewModel>();
-			builder.Services.AddScoped<BranchManagementViewModel>();
-			builder.Services.AddScoped<CourseManagementViewModel>();
-			builder.Services.AddScoped<CreditsSubjectTypeViewModel>();
-			builder.Services.AddScoped<DepartmentManagementViewModel>();
-			builder.Services.AddScoped<OpenSubjectViewModel>();
-			builder.Services.AddScoped<PriorityObjectViewModel>();
-			builder.Services.AddScoped<ProvinceDistrictViewModel>();
-			builder.Services.AddScoped<StatisticViewModel>();
-			builder.Services.AddScoped<StudentManagementViewModel>();
-			builder.Services.AddScoped<StudyProgramViewModel>();
-			builder.Services.AddScoped<SubjectManagementViewModel>();
-			builder.Services.AddScoped<TuitionCollectionViewModel>();
+            builder.Services.AddScoped<StudentManagementViewModel>();
+            builder.Services.AddScoped<AddUpdateStudentViewModel>();
+            builder.Services.AddScoped<ConfirmCourseRegistrationViewModel>();
+            builder.Services.AddScoped<ConfirmTuitionCollectionViewModel>();
+            builder.Services.AddScoped<SubjectTypeManagementViewModel>();
+            builder.Services.AddScoped<AvailableCourseManagementViewModel>();
+            builder.Services.AddScoped<PriorityTypeManagementViewModel>();
+            builder.Services.AddScoped<UnpayTuitionStudentsReportViewModel>();
+            builder.Services.AddScoped<SubjectManagementViewModel>();
+            #endregion
+            #endregion
 
-            // Views
-            builder.Services.AddTransient<LoginPage>();
-            builder.Services.AddTransient<LoginPage>();
-            builder.Services.AddScoped<AccountantAppShell>();
-			builder.Services.AddScoped<StudentDashboardPage>();
-			builder.Services.AddScoped<StudentInfomationPage>();
-			builder.Services.AddScoped<AccountantDashboardPage>();
-			builder.Services.AddScoped<BranchManagementPage>();
-			builder.Services.AddScoped<CourseManagementPage>();
-			builder.Services.AddScoped<CreditsSubjectTypePage>();
-			builder.Services.AddScoped<DepantmentManagementPage>();
-			builder.Services.AddScoped<OpenSubjectPage>();
-			builder.Services.AddScoped<PriorityObjectPage>();
-			builder.Services.AddScoped<ProvinceDistrictPage>();
-			builder.Services.AddScoped<StatisticPage>();
-			builder.Services.AddScoped<StudyProgramPage>();
-			builder.Services.AddScoped<SubjectManagementPage>();
-			builder.Services.AddScoped<TuitionCollectionPage>();
-			builder.Services.AddScoped<ManagerAccountFilterPopup>();
-			builder.Services.AddScoped<AdminAccountantAccountManagementPage>();
-			builder.Services.AddScoped<ChangePasswordPage>();
-			builder.Services.AddScoped<AddAdminAccountantAccountPage>();
-            builder.Services.AddScoped<AdminAppShell>();
-            builder.Services.AddScoped<StudentAppShell>();
+            #region Views
             builder.Services.AddScoped<NavigationTopBar>();
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddScoped<ChangePasswordPage>();
+
+            #region Admin
+            builder.Services.AddScoped<AdminAppShell>();
             builder.Services.AddScoped<AdminDashboardPage>();
             builder.Services.AddScoped<AdminAccountantAccountManagementPage>();
             builder.Services.AddScoped<StudentAccountManagementPage>();
-            builder.Services.AddScoped<ChangePasswordPage>();
             builder.Services.AddScoped<AddAdminAccountantAccountPage>();
-            builder.Services.AddScoped<DepartmentManagementPage>();
+            #endregion
+
+            #region Accountant
+            builder.Services.AddScoped<AccountantAppShell>();
             builder.Services.AddScoped<AddUpdateDepartmentPopup>();
+            builder.Services.AddScoped<AccountantDashboardPage>();
+            builder.Services.AddScoped<BranchManagementPage>();
+            builder.Services.AddScoped<ConfirmCourseRegistrationPage>();
+            builder.Services.AddScoped<SubjectTypeManagementPage>();
+            builder.Services.AddScoped<DepartmentManagementPage>();
+            builder.Services.AddScoped<AvailableCourseManagementPage>();
+            builder.Services.AddScoped<PriorityTypeManagementPage>();
+            builder.Services.AddScoped<UnpayTuitionStudentsReportPage>();
+            builder.Services.AddScoped<CurriculumManagementPage>();
+            builder.Services.AddScoped<SubjectManagementPage>();
+            builder.Services.AddScoped<ConfirmTuitionCollectionPage>();
             builder.Services.AddScoped<BranchManagementPage>();
             builder.Services.AddScoped<AddUpdateBranchPopup>();
             builder.Services.AddScoped<ProvinceDistrictManagementPage>();
             builder.Services.AddScoped<AddUpdateProvincePopup>();
             builder.Services.AddScoped<AddUpdateDistrictPopup>();
             builder.Services.AddScoped<StudentManagementPage>();
-            builder.Services.AddScoped<AddStudentPage>();
+            builder.Services.AddScoped<AddUpdateStudentPage>();
+            #endregion
+
+            #region Student
+            builder.Services.AddScoped<StudentAppShell>();
+            builder.Services.AddScoped<StudentDashboardPage>();
+            builder.Services.AddScoped<StudentInfomationPage>();
+            #endregion
+            #endregion
 
             // Services
             builder.Services.AddSingleton<HttpClient>();

@@ -1,8 +1,8 @@
 namespace CourseRegisterApplication.MAUI.Views.AccountantViews;
 
-public partial class ProvinceDistrictPage : ContentPage
+public partial class SubjectTypeManagementPage : ContentPage
 {
-	public ProvinceDistrictPage()
+	public SubjectTypeManagementPage()
 	{
 		InitializeComponent();
 	}

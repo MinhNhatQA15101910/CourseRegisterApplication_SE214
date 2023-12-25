@@ -171,9 +171,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         [RelayCommand]
         public async Task OpenPopup()
         {
-			Popup popup = _serviceProvider.GetService<ManagerAccountFilterPopup>();
-			var bindingContext = popup.BindingContext as AdminAccountantAccountManagementViewModel;
-			await Application.Current.MainPage.ShowPopupAsync(popup);
+			//Popup popup = _serviceProvider.GetService<ManagerAccountFilterPopup>();
+			//var bindingContext = popup.BindingContext as AdminAccountantAccountManagementViewModel;
+			//await Application.Current.MainPage.ShowPopupAsync(popup);
 		}
 
         [RelayCommand(CanExecute = nameof(CanDeleteUser))]

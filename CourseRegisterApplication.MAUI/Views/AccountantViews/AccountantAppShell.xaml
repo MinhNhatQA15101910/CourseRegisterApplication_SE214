@@ -81,37 +81,37 @@
     Title="Study program"
     Icon="book.png"
     Route="studyprogram">
-    <ShellContent ContentTemplate="{DataTemplate local:StudyProgramPage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:CurriculumManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Open subject"
     Icon="book.png"
     Route="opensubject">
-    <ShellContent ContentTemplate="{DataTemplate local:OpenSubjectPage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:AvailableCourseManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
-    Title="Course management"
+    Title="Course registration"
     Icon="bank.png"
     Route="coursemanagement">
-    <ShellContent ContentTemplate="{DataTemplate local:CourseManagementPage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:ConfirmCourseRegistrationPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Tuition collection"
     Icon="bank.png"
     Route="tuitioncollection">
-    <ShellContent ContentTemplate="{DataTemplate local:TuitionCollectionPage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:ConfirmCourseRegistrationPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Statistic"
     Icon="chart.png"
     Route="statistic">
-    <ShellContent ContentTemplate="{DataTemplate local:StatisticPage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:UnpayTuitionStudentsReportPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Department Management"
     Icon="student.png"
     Route="departmentmanagerment">
-    <ShellContent ContentTemplate="{DataTemplate local:DepantmentManagementPage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:DepartmentManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Branch Management"
@@ -123,19 +123,19 @@
     Title="Province, district"
     Icon="location_icon.png"
     Route="provincedistrict">
-    <ShellContent ContentTemplate="{DataTemplate local:ProvinceDistrictPage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:ProvinceDistrictManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Priority object"
     Icon="student.png"
     Route="priorityobject">
-    <ShellContent ContentTemplate="{DataTemplate local:PriorityObjectPage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:PriorityTypeManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Credits, subject type"
     Icon="book.png"
     Route="creditssubjecttype">
-    <ShellContent ContentTemplate="{DataTemplate local:CreditsSubjectTypePage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:SubjectTypeManagementPage}" Route="details" />
   </FlyoutItem>
 
   <Shell.ItemTemplate>

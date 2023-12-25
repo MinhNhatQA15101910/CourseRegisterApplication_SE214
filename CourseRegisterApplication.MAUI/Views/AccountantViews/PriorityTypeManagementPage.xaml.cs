@@ -1,8 +1,8 @@
 namespace CourseRegisterApplication.MAUI.Views.AccountantViews;
 
-public partial class StudyProgramPage : ContentPage
+public partial class PriorityTypeManagementPage : ContentPage
 {
-	public StudyProgramPage()
+	public PriorityTypeManagementPage()
 	{
 		InitializeComponent();
 	}
