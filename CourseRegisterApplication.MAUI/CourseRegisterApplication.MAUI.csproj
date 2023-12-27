@@ -140,6 +140,9 @@
 	  <Compile Update="Views\AdminViews\ManagerAccountManagementPage.xaml.cs">
 	    <DependentUpon>ManagerAccountManagementPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\AdminViews\FilterManagerAccountPopup.xaml.cs">
+	    <DependentUpon>FilterManagerAccountPopup.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\StudentViews\StudentAppShell.xaml.cs">
 	    <DependentUpon>StudentAppShell.xaml</DependentUpon>
 	  </Compile>
@@ -216,6 +219,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\ManagerAccountManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AdminViews\FilterManagerAccountPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\StudentAccountManagementPage.xaml">
