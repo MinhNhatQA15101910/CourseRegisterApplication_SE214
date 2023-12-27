@@ -1,4 +1,5 @@
 using CourseRegisterApplication.MAUI.ViewModels;
+
 namespace CourseRegisterApplication.MAUI.Views;
 
 public partial class ChangePasswordPage : ContentPage

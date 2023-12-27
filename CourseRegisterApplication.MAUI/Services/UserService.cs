@@ -48,7 +48,7 @@ namespace CourseRegisterApplication.MAUI.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<List<User>> GetAdminAccountantUsers()
+        public async Task<List<User>> GetManagerUsers()
         {
             var response = await _httpClient.GetAsync(new Uri(GlobalConfig.USER_BASE_URL));
             if (response.IsSuccessStatusCode)

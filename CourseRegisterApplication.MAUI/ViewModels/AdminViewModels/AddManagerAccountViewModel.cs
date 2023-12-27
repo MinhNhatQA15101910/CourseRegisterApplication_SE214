@@ -3,7 +3,7 @@ using CourseRegisterApplication.MAUI.Views;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 {
-    public partial class AddAdminAccountantAccountViewModel : ObservableObject
+    public partial class AddManagerAccountViewModel : ObservableObject
     {
 		#region Services
 		private readonly IServiceProvider _serviceProvider;
@@ -72,7 +72,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #endregion
 
         #region Constructor
-        public AddAdminAccountantAccountViewModel(IServiceProvider serviceProvider)
+        public AddManagerAccountViewModel(IServiceProvider serviceProvider)
 		{
 			_serviceProvider = serviceProvider;
 			_userService = serviceProvider.GetService<IUserService>();

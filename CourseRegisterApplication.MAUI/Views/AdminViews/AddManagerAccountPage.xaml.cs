@@ -2,12 +2,12 @@ using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
 
 namespace CourseRegisterApplication.MAUI.Views.AdminViews;
 
-public partial class AddAdminAccountantAccountPage : ContentPage
+public partial class AddManagerAccountPage : ContentPage
 {
-	public AddAdminAccountantAccountPage(AddAdminAccountantAccountViewModel addAdminAccountantAccountViewModel)
+	public AddManagerAccountPage(AddManagerAccountViewModel addManagerAccountViewModel)
 	{
 		InitializeComponent();
-		BindingContext = addAdminAccountantAccountViewModel;
+		BindingContext = addManagerAccountViewModel;
 	}
 
 	private void OnEyeTapped(object sender, EventArgs e)

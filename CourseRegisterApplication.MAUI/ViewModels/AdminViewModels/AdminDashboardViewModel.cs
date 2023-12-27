@@ -30,9 +30,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         }
 
         [RelayCommand]
-        public async Task NavigateToAdminAccountantAccountManagement()
+        public async Task NavigateToManagerAccountManagement()
         {
-            await Shell.Current.GoToAsync("//adminaccountant/details", true);
+            await Shell.Current.GoToAsync("//manager/details", true);
         }
 
         [RelayCommand]

@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Views;
-using CourseRegisterApplication.MAUI.ContentViews;
-using CourseRegisterApplication.MAUI.IServices;
+﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AdminViews;
 
@@ -93,7 +91,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
     #endregion
 
     #region Main ViewModel
-    public partial class AdminAccountantAccountManagementViewModel : ObservableObject, IUserRequester
+    public partial class ManagerAccountManagementViewModel : ObservableObject, IUserRequester
     {
         #region Services
         private readonly IServiceProvider _serviceProvider;
@@ -101,14 +99,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #endregion
 
         #region Properties
-        private List<UserDisplay> primaryAdminAccountantAccountList = new();
+        private readonly List<UserDisplay> primaryManagerAccountList = new();
 
         [ObservableProperty]
-        private ObservableCollection<UserDisplay> adminAccountantAccountList = new();
+        private ObservableCollection<UserDisplay> managerAccountList = new();
 
         public ObservableCollection<string> FilterAccountTypeOptions { get; set; } = new() { "All", "Admin", "Accountant" };
 
-        public int Id { get; set; }
+        public int Id { get; set; } = -1;
 
         [ObservableProperty]
         private string avatarUri = "blank_avatar.jpg";
@@ -143,7 +141,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 		#endregion
 
 		#region Constructor
-		public AdminAccountantAccountManagementViewModel(IServiceProvider serviceProvider)
+		public ManagerAccountManagementViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _userService = serviceProvider.GetService<IUserService>();
@@ -162,18 +160,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         }
 
         [RelayCommand]
-        public async Task GetAdminAccountantAccount()
+        public async Task GetManagerAccount()
         {
-            var accountList = await _userService.GetAdminAccountantUsers();
-            ReloadAdminAccountantAccountList(accountList);
+            var accountList = await _userService.GetManagerUsers();
+            ReloadManagerAccountList(accountList);
         }
 
         [RelayCommand]
         public async Task OpenPopup()
         {
-			//Popup popup = _serviceProvider.GetService<ManagerAccountFilterPopup>();
-			//var bindingContext = popup.BindingContext as AdminAccountantAccountManagementViewModel;
-			//await Application.Current.MainPage.ShowPopupAsync(popup);
 		}
 
         [RelayCommand(CanExecute = nameof(CanDeleteUser))]
@@ -192,7 +187,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                 if (deleteResult)
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "The user account has been deleted", "OK");
-                    await GetAdminAccountantAccountCommand.ExecuteAsync(null);
+                    await GetManagerAccountCommand.ExecuteAsync(null);
                 }
             }
         }
@@ -206,9 +201,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         public async Task SaveChanges()
         {
             // Filter accounts need to be updated
-            List<User> users = await _userService.GetAdminAccountantUsers();
+            List<User> users = await _userService.GetManagerUsers();
             List<User> updateUsers = users
-                .Where(u => primaryAdminAccountantAccountList
+                .Where(u => primaryManagerAccountList
                 .Find(ud => ud.Username == u.Username && ud.RoleName != ud.PrimaryRoleName) != null)
                 .ToList();
 
@@ -227,7 +222,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                 bool result = true;
                 foreach (var updateUser in updateUsers)
                 {
-                    Role updateRole = primaryAdminAccountantAccountList
+                    Role updateRole = primaryManagerAccountList
                         .Find(u => u.Username == updateUser.Username).RoleName == "Admin" ? Role.Admin : Role.Accountant;
 
                     result = result && await _userService.UpdateRole(updateUser, updateRole);
@@ -236,31 +231,31 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                 if (result)
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "Changes saved!", "OK");
-                    GetAdminAccountantAccountCommand.Execute(null);
+                    GetManagerAccountCommand.Execute(null);
                 }
             }
         }
 
         public bool CanSaveChanges()
         {
-            var account = primaryAdminAccountantAccountList.Find(a => a.RoleName != a.PrimaryRoleName);
+            var account = primaryManagerAccountList.Find(a => a.RoleName != a.PrimaryRoleName);
 
             return (account != null);
         }
 
         [RelayCommand]
-        public async Task NavigateToAddAdminAccountantAccountPage()
+        public async Task NavigateToAddManagerAccountPage()
         {
-            await Shell.Current.GoToAsync(nameof(AddAdminAccountantAccountPage), true);
+            await Shell.Current.GoToAsync(nameof(AddManagerAccountPage), true);
         }
         #endregion
 
         #region Implement IUserRequester
         public void ResetItemBackgrounds()
         {
-            for (int i = 0; i < AdminAccountantAccountList.Count; i++)
+            for (int i = 0; i < ManagerAccountList.Count; i++)
             {
-				AdminAccountantAccountList[i].BackgroundColor = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
+                ManagerAccountList[i].BackgroundColor = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
 			}
         }
 
@@ -277,29 +272,29 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #region Property Changed
         public void UpdateSortList()
         {
-            if(UsernameAZChecked==true)
+            if(UsernameAZChecked)
             {
-				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.Username).ToObservableCollection();
+				ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.Username).ToObservableCollection();
 			}
-			if (UsernameZAChecked == true)
+			if (UsernameZAChecked)
 			{
-				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderByDescending(a => a.Username).ToObservableCollection();
+				ManagerAccountList = primaryManagerAccountList.OrderByDescending(a => a.Username).ToObservableCollection();
 			}
-			if (EmailAZChecked == true)
+			if (EmailAZChecked)
 			{
-				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.Email).ToObservableCollection();
+				ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.Email).ToObservableCollection();
 			}
-			if (EmailZAChecked == true)
+			if (EmailZAChecked)
 			{
-				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderByDescending(a => a.Email).ToObservableCollection();
+				ManagerAccountList = primaryManagerAccountList.OrderByDescending(a => a.Email).ToObservableCollection();
 			}
-			if (RoleAZChecked == true)
+			if (RoleAZChecked)
 			{
-				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.RoleName).ToObservableCollection();
+				ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.RoleName).ToObservableCollection();
 			}
-			if (RoleZAChecked == true)
+			if (RoleZAChecked)
 			{
-				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderByDescending(a => a.RoleName).ToObservableCollection();
+				ManagerAccountList = primaryManagerAccountList.OrderByDescending(a => a.RoleName).ToObservableCollection();
 			}
 		}
         public void UpdateFilterList()
@@ -307,10 +302,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             switch(selectedFilterAccountTypeOptions)
             {
 				case "Accountant":
-					AdminAccountantAccountList = AdminAccountantAccountList.Where(a => a.RoleName == "Accountant").ToObservableCollection();
+					ManagerAccountList = ManagerAccountList.Where(a => a.RoleName == "Accountant").ToObservableCollection();
 					break;
 				case "Admin":
-					AdminAccountantAccountList = AdminAccountantAccountList.Where(a => a.RoleName == "Admin").ToObservableCollection();
+                    ManagerAccountList = ManagerAccountList.Where(a => a.RoleName == "Admin").ToObservableCollection();
 					break;
 			}
         }
@@ -330,7 +325,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         {
 			if (oldValue != newValue)
 			{
-				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.Username).ToObservableCollection();
+                ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.Username).ToObservableCollection();
                 UpdateFilterList();
 				ResetAccountInformation();
 				ResetItemBackgrounds();
@@ -340,7 +335,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 		{
 			if (oldValue != newValue)
 			{
-				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderByDescending(a => a.Username).ToObservableCollection();
+                ManagerAccountList = primaryManagerAccountList.OrderByDescending(a => a.Username).ToObservableCollection();
 				UpdateFilterList(); 
                 ResetAccountInformation();
 				ResetItemBackgrounds();
@@ -350,7 +345,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 		{
 			if (oldValue != newValue)
 			{
-				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.Email).ToObservableCollection();
+                ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.Email).ToObservableCollection();
 				UpdateFilterList(); 
                 ResetAccountInformation();
 				ResetItemBackgrounds();
@@ -360,7 +355,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 		{
 			if (oldValue != newValue)
 			{
-				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderByDescending(a => a.Email).ToObservableCollection();
+                ManagerAccountList = primaryManagerAccountList.OrderByDescending(a => a.Email).ToObservableCollection();
 				UpdateFilterList(); 
                 ResetAccountInformation();
 				ResetItemBackgrounds();
@@ -370,7 +365,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 		{
 			if (oldValue != newValue)
 			{
-				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.RoleName).ToObservableCollection();
+                ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.RoleName).ToObservableCollection();
 				UpdateFilterList(); 
                 ResetAccountInformation();
 				ResetItemBackgrounds();
@@ -380,7 +375,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 		{
 			if (oldValue != newValue)
 			{
-				AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderByDescending(a => a.RoleName).ToObservableCollection();
+				ManagerAccountList = primaryManagerAccountList.OrderByDescending(a => a.RoleName).ToObservableCollection();
 				UpdateFilterList(); 
                 ResetAccountInformation();
 				ResetItemBackgrounds();
@@ -391,23 +386,23 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         {
 			UpdateSortList();
 			UpdateFilterList();
-			AdminAccountantAccountList = AdminAccountantAccountList
-				.Where(a => a.Username.Contains(newValue) || a.Email.Contains(newValue) || a.RoleName.Contains(newValue)).ToObservableCollection();
+            ManagerAccountList = ManagerAccountList
+                .Where(a => a.Username.Contains(newValue) || a.Email.Contains(newValue) || a.RoleName.Contains(newValue)).ToObservableCollection();
 			ResetItemBackgrounds();
 			ResetAccountInformation();
 		}
         #endregion
 
         #region Helpers
-        private void ReloadAdminAccountantAccountList(List<User> accountList)
+        private void ReloadManagerAccountList(List<User> accountList)
         {
-			primaryAdminAccountantAccountList.Clear();
+			primaryManagerAccountList.Clear();
 
             if (accountList.Count > 0)
             {
 				for (int i = 0; i < accountList.Count; i++)
                 {
-                    primaryAdminAccountantAccountList.Add(new UserDisplay
+                    primaryManagerAccountList.Add(new UserDisplay
                     {
                         Id = accountList[i].Id,
                         Username = accountList[i].Username,
@@ -422,17 +417,17 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     });
                 }
 
-                AdminAccountantAccountList = primaryAdminAccountantAccountList.OrderBy(a => a.Username).ToObservableCollection();
-                for (int i = 0; i < primaryAdminAccountantAccountList.Count; i++)
+                ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.Username).ToObservableCollection();
+                for (int i = 0; i < primaryManagerAccountList.Count; i++)
                 {
-                    AdminAccountantAccountList[i].BackgroundColor = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
+                    ManagerAccountList[i].BackgroundColor = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
                 }
             }
         }
 
-        private void ResetAccountInformation()
+        public void ResetAccountInformation()
         {
-            Id = 0;
+            Id = -1;
             AvatarUri = "blank_avatar.jpg";
             Username = "";
             Email = "";

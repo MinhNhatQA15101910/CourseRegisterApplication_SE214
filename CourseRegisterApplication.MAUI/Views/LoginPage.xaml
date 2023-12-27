@@ -109,13 +109,30 @@
           TextColor="{Binding PasswordMessageColor}" />
         <Button
           Margin="0,36,0,0"
-          BackgroundColor="#2D88D4"
+          BackgroundColor="#509CDB"
           Command="{Binding LoginUserCommand}"
           FontFamily="OpenSans-Semibold"
           FontSize="14"
           HeightRequest="40"
           Text="Login"
-          WidthRequest="250" />
+          WidthRequest="250">
+          <VisualStateManager.VisualStateGroups>
+            <VisualStateGroupList>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#509CDB" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#3F83BC" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateGroupList>
+          </VisualStateManager.VisualStateGroups>
+        </Button>
         <ActivityIndicator Margin="10,0,0,0" IsRunning="{Binding IsLoading}" />
       </VerticalStackLayout>
     </VerticalStackLayout>

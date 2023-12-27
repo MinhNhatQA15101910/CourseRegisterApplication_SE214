@@ -134,11 +134,11 @@
 	  <Compile Update="Views\AccountantViews\AddUpdateDepartmentPopup.xaml.cs">
 	    <DependentUpon>AddUpdateDepartmentPopup.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\AdminViews\AddAdminAccountantAccountPage.xaml.cs">
-	    <DependentUpon>AddAdminAccountantAccountPage.xaml</DependentUpon>
+	  <Compile Update="Views\AdminViews\AddManagerAccountPage.xaml.cs">
+	    <DependentUpon>AddManagerAccountPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\AdminViews\AdminAccountantAccountManagementPage.xaml.cs">
-	    <DependentUpon>AdminAccountantAccountManagementPage.xaml</DependentUpon>
+	  <Compile Update="Views\AdminViews\ManagerAccountManagementPage.xaml.cs">
+	    <DependentUpon>ManagerAccountManagementPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\StudentViews\StudentAppShell.xaml.cs">
 	    <DependentUpon>StudentAppShell.xaml</DependentUpon>
@@ -206,7 +206,7 @@
 	  <MauiXaml Update="Views\AccountantViews\ProvinceDistrictManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AdminViews\AddAdminAccountantAccountPage.xaml">
+	  <MauiXaml Update="Views\AdminViews\AddManagerAccountPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\AdminAppShell.xaml">
@@ -215,7 +215,7 @@
 	  <MauiXaml Update="Views\AdminViews\AdminDashboardPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AdminViews\AdminAccountantAccountManagementPage.xaml">
+	  <MauiXaml Update="Views\AdminViews\ManagerAccountManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\StudentAccountManagementPage.xaml">
