@@ -142,7 +142,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 
         [ObservableProperty]
         private string searchFilter = "";
-
         #endregion
 
         #region Constructor
@@ -262,6 +261,20 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             DateOfBirth = studentDisplay.DateOfBirth.ToString("dd/MM/yyyy");
             Branch = studentDisplay.BranchName;
             Department = studentDisplay.DepartmentName;
+        }
+        #endregion
+
+        #region Property Changed
+        partial void OnSearchFilterChanged(string value)
+        {
+            StudentAccountList = primaryStudentAccountList
+                .Where(a => a.FullName.ToLower().Contains(value.ToLower()) ||
+                            a.StudentSpecificId.ToLower().Contains(value.ToLower()) ||
+                            a.Email.ToLower().Contains(value.ToLower()))
+                .ToObservableCollection();
+
+            ResetItemBackgrounds();
+            ResetAccountInformation();
         }
         #endregion
 
