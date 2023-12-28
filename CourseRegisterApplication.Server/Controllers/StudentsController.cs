@@ -29,7 +29,7 @@
             return Ok(students);
         }
 
-        [HttpGet("{studentSpecificId}")]
+        [HttpGet("specificId/{studentSpecificId}")]
         public async Task<ActionResult<Student>> GetStudentBySpecificID(string studentSpecificId)
         {
             try

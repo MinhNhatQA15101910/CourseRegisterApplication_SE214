@@ -1,5 +1,5 @@
-﻿using CourseRegisterApplication.MAUI.Views;
-using CourseRegisterApplication.MAUI.IServices;
+﻿using CourseRegisterApplication.MAUI.IServices;
+using CourseRegisterApplication.MAUI.Views;
 
 
 namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
@@ -8,26 +8,23 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
     {
 		#region Services
 		private readonly IServiceProvider _serviceProvider;
-		private readonly IUserService _userService;
-		private readonly IStudentService _studentService;
 		#endregion
 
 		#region Constructor
 		public StudentAppShellViewModel(IServiceProvider serviceProvider)
 		{
 			_serviceProvider = serviceProvider;
-			_userService = serviceProvider.GetService<IUserService>();
-			_studentService = serviceProvider.GetService<IStudentService>();
 		}
 		#endregion
 
-		[ObservableProperty]
-		private string avatar = "demo_icon.png";
+		#region Properties
+		[ObservableProperty] private string avatar;
 
-		[ObservableProperty]
-		private string studentName = "";
+		[ObservableProperty] private string studentName;
+        #endregion
 
-		[RelayCommand]
+        #region Commands
+        [RelayCommand]
 		public async Task NavigateToChangePasswordPage()
 		{
 			if (Shell.Current.CurrentPage is not ChangePasswordPage)
@@ -35,41 +32,19 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 				await Shell.Current.GoToAsync(nameof(ChangePasswordPage), true);
 			}
 		}
-
-		#region Demo student
-		public static List<Student> students = new List<Student>()
-		{
-			new()
-			{
-				Id = 1,
-				StudentSpecificId="SV21520007",
-				FullName="Mai Hoàng Nhật Suy",
-			},
-			new()
-			{
-				Id = 2,
-				StudentSpecificId="SV21520008",
-				FullName="Mai Hoàng Nhật Duy",
-			},
-			new()
-			{
-				Id = 3,
-				StudentSpecificId="SV21520009",
-				FullName="Mai Hoàng Nhật Huy",
-			}
-		};
 		#endregion
 
 		[RelayCommand]
 		public async Task GetCurrentStudent()
 		{
-			foreach (var item in students)
+			IStudentService studentService = _serviceProvider.GetService<IStudentService>();
+
+			string studentSpecificId = GlobalConfig.CurrentUser.Username;
+			Student student = await studentService.GetStudentBySpecificId(studentSpecificId);
+			if (student != null)
 			{
-				if (item.StudentSpecificId == GlobalConfig.CurrentUser.Username)
-				{
-					StudentName = item.FullName;
-					break;
-				}
+				Avatar = student.ImageUrl;
+				StudentName = student.FullName;
 			}
 		}
 	}

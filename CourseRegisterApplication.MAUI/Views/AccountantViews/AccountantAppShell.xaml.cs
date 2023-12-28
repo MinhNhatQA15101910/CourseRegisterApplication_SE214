@@ -11,10 +11,4 @@ public partial class AccountantAppShell : Shell
 
 		Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
 	}
-	/*protected override void OnAppearing()
-	{
-		base.OnAppearing();
-
-		(BindingContext as StudentAppShellViewModel).GetCurrentStudentCommand.Execute(null);
-	}*/
 }
