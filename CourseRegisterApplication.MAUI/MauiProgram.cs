@@ -45,6 +45,7 @@ public static class MauiProgram
         builder.Services.AddScoped<AdminDashboardViewModel>();
         builder.Services.AddScoped<StudentAccountManagementViewModel>();
         builder.Services.AddScoped<FilterManagerAccountViewModel>();
+        builder.Services.AddScoped<FilterStudentAccountViewModel>();
 
         #endregion
 
@@ -77,7 +78,7 @@ public static class MauiProgram
         #endregion
 
         #region Views
-        builder.Services.AddScoped<NavigationTopBar>();
+        builder.Services.AddTransient<NavigationTopBar>();
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddScoped<ChangePasswordPage>();
 
@@ -88,6 +89,7 @@ public static class MauiProgram
         builder.Services.AddScoped<StudentAccountManagementPage>();
         builder.Services.AddScoped<AddManagerAccountPage>();
         builder.Services.AddScoped<FilterManagerAccountPopup>();
+        builder.Services.AddScoped<FilterStudentAccountPopup>();
         #endregion
 
         #region Accountant

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <mct:Popup
-  x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.FilterManagerAccountPopup"
+  x:Class="CourseRegisterApplication.MAUI.Views.AdminViews.FilterStudentAccountPopup"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -41,16 +41,15 @@
           <Label
             FontFamily="RobotoMedium"
             FontSize="14"
-            Text="Account type :"
+            Text="Active Status :"
             TextColor="#424242"
             VerticalOptions="Center" />
           <Picker
-            x:Name="AccountTypePicker"
             Margin="12,0,0,0"
             FontSize="14"
-            ItemsSource="{Binding FilterAccountTypeOptions}"
+            ItemsSource="{Binding FilterActiveStatusOptions}"
             MaximumHeightRequest="30"
-            SelectedItem="{Binding SelectedFilterAccountType}"
+            SelectedItem="{Binding SelectedActiveStatus}"
             VerticalOptions="Center"
             WidthRequest="124" />
         </HorizontalStackLayout>
@@ -69,29 +68,29 @@
         Margin="12,12,12,24"
         ColumnDefinitions="*,*"
         RowDefinitions="Auto,Auto,Auto">
-        <RadioButton Content="Username A → Z" IsChecked="{Binding UsernameAZChecked}" />
+        <RadioButton Content="Student Name A → Z" IsChecked="{Binding StudentNameAZChecked}" />
         <RadioButton
           Grid.Column="1"
-          Content="Username Z → A"
-          IsChecked="{Binding UsernameZAChecked}" />
+          Content="Student Name Z → A"
+          IsChecked="{Binding StudentNameZAChecked}" />
         <RadioButton
           Grid.Row="1"
+          Content="Student ID A → Z"
+          IsChecked="{Binding StudentIdAZChecked}" />
+        <RadioButton
+          Grid.Row="1"
+          Grid.Column="1"
+          Content="Student ID Z → A"
+          IsChecked="{Binding StudentIdZAChecked}" />
+        <RadioButton
+          Grid.Row="2"
           Content="Email A → Z"
           IsChecked="{Binding EmailAZChecked}" />
         <RadioButton
-          Grid.Row="1"
+          Grid.Row="2"
           Grid.Column="1"
           Content="Email Z → A"
           IsChecked="{Binding EmailZAChecked}" />
-        <RadioButton
-          Grid.Row="2"
-          Content="Role A → Z"
-          IsChecked="{Binding RoleAZChecked}" />
-        <RadioButton
-          Grid.Row="2"
-          Grid.Column="1"
-          Content="Role Z → A"
-          IsChecked="{Binding RoleZAChecked}" />
       </Grid>
 
       <Button

@@ -16,9 +16,19 @@ public class StudentService : IStudentService
         throw new NotImplementedException();
     }
 
-    public Task<List<Student>> GetStudents()
+    public async Task<List<Student>> GetAllStudents()
     {
-        throw new NotImplementedException();
+        string apiUrl = GlobalConfig.STUDENT_BASE_URL;
+
+        var response = await _httpClient.GetAsync(new Uri(apiUrl));
+        if (response.IsSuccessStatusCode)
+        {
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            var studentList = JsonConvert.DeserializeObject<List<Student>>(jsonResponse);
+            return studentList;
+        }
+
+        return null;
     }
 
     public async Task<List<Student>> GetStudentsByBranchId(int branchId)

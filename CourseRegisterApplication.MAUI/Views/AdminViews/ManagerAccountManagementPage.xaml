@@ -142,8 +142,8 @@
           Grid.Row="1"
           Grid.Column="0"
           Margin="100,24,0,80"
-          ColumnDefinitions="7*, 3*"
-          RowDefinitions="Auto, *">
+          ColumnDefinitions="7*,3*"
+          RowDefinitions="Auto,*">
           <Grid
             Grid.Row="0"
             Padding="5,0,0,0"

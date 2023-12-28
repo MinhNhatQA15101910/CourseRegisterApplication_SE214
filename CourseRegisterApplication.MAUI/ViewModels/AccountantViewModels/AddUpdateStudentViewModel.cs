@@ -134,7 +134,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 IsLoading = true;
 
                 // If there is already a user with the same username with the input, display error
-                List<Student> students = await _studentService.GetStudents();
+                List<Student> students = await _studentService.GetAllStudents();
                 Student student = students.Find(s => s.StudentSpecificId == StudentId);
                 if (student != null)
                 {
