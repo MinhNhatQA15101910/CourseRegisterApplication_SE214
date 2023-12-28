@@ -10,7 +10,10 @@
     BackgroundColor="White"
     BorderColor="#4F4F4F"
     CornerRadius="16">
-    <VerticalStackLayout Margin="24,16,16,0" WidthRequest="600">
+    <VerticalStackLayout
+      Margin="24,16,16,0"
+      HeightRequest="400"
+      WidthRequest="600">
       <Grid>
         <Label
           FontFamily="RobotoMedium"
@@ -47,7 +50,7 @@
             FontSize="14"
             ItemsSource="{Binding FilterAccountTypeOptions}"
             MaximumHeightRequest="30"
-            SelectedItem="{Binding SelectedFilterAccountTypeOptions}"
+            SelectedItem="{Binding SelectedFilterAccountType}"
             VerticalOptions="Center"
             WidthRequest="124" />
         </HorizontalStackLayout>
@@ -90,6 +93,35 @@
           Content="Role Z → A"
           IsChecked="{Binding RoleZAChecked}" />
       </Grid>
+
+      <Button
+        Margin="0,20,0,0"
+        BackgroundColor="#EFF3FA"
+        Command="{Binding ConfirmSortCommand}"
+        FontFamily="RobotoMedium"
+        FontSize="15"
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        Text="Confirm"
+        TextColor="#2671B1"
+        WidthRequest="160">
+        <VisualStateManager.VisualStateGroups>
+          <VisualStateGroupList>
+            <VisualStateGroup x:Name="CommonStates">
+              <VisualState x:Name="Normal">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                </VisualState.Setters>
+              </VisualState>
+              <VisualState x:Name="PointerOver">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                </VisualState.Setters>
+              </VisualState>
+            </VisualStateGroup>
+          </VisualStateGroupList>
+        </VisualStateManager.VisualStateGroups>
+      </Button>
     </VerticalStackLayout>
   </Frame>
 </mct:Popup>

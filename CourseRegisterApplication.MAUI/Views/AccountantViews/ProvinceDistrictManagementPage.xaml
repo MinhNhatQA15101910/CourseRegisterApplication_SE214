@@ -115,6 +115,9 @@
           Margin="0,10,0,0"
           ItemsSource="{Binding ProvinceDisplayList}"
           VerticalScrollBarVisibility="Always">
+          <CollectionView.ItemsLayout>
+            <LinearItemsLayout Orientation="Vertical" />
+          </CollectionView.ItemsLayout>
           <CollectionView.ItemTemplate>
             <DataTemplate>
               <Grid
@@ -190,6 +193,9 @@
           Margin="0,10,0,0"
           ItemsSource="{Binding DistrictDisplayList}"
           VerticalScrollBarVisibility="Always">
+          <CollectionView.ItemsLayout>
+            <LinearItemsLayout Orientation="Vertical" />
+          </CollectionView.ItemsLayout>
           <CollectionView.ItemTemplate>
             <DataTemplate>
               <Grid

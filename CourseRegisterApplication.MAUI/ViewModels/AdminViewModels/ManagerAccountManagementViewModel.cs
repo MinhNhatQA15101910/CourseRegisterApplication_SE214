@@ -4,6 +4,18 @@ using CourseRegisterApplication.MAUI.Views.AdminViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 {
+    #region Enums
+    public enum ManagerAccountSortType
+    {
+        UsernameAZ,
+        UsernameZA,
+        EmailAZ,
+        EmailZA,
+        RoleAZ,
+        RoleZA
+    }
+    #endregion
+
     #region Displays
     public partial class UserDisplay : ObservableObject
     {
@@ -99,12 +111,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #endregion
 
         #region Properties
-        private readonly List<UserDisplay> primaryManagerAccountList = new();
+        private readonly List<UserDisplay> originalPrimaryManagerAccountList = new();
+
+        private List<UserDisplay> primaryManagerAccountList = new();
 
         [ObservableProperty]
         private ObservableCollection<UserDisplay> managerAccountList = new();
-
-        public ObservableCollection<string> FilterAccountTypeOptions { get; set; } = new() { "All", "Admin", "Accountant" };
 
         public int Id { get; set; } = -1;
 
@@ -121,23 +133,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         private string email = "";
 
         [ObservableProperty]
-        private string selectedFilterAccountTypeOptions = "All";
-
-        [ObservableProperty]
         private string searchFilter = "";
-
-		[ObservableProperty]
-		private bool usernameAZChecked = true;
-		[ObservableProperty]
-		private bool usernameZAChecked = false;
-		[ObservableProperty]
-		private bool emailAZChecked = false;
-		[ObservableProperty]
-		private bool emailZAChecked = false;
-		[ObservableProperty]
-		private bool roleAZChecked = false;
-		[ObservableProperty]
-		private bool roleZAChecked = false;
 		#endregion
 
 		#region Constructor
@@ -205,7 +201,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             // Filter accounts need to be updated
             List<User> users = await _userService.GetManagerUsers();
             List<User> updateUsers = users
-                .Where(u => primaryManagerAccountList
+                .Where(u => originalPrimaryManagerAccountList
                 .Find(ud => ud.Username == u.Username && ud.RoleName != ud.PrimaryRoleName) != null)
                 .ToList();
 
@@ -224,7 +220,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                 bool result = true;
                 foreach (var updateUser in updateUsers)
                 {
-                    Role updateRole = primaryManagerAccountList
+                    Role updateRole = originalPrimaryManagerAccountList
                         .Find(u => u.Username == updateUser.Username).RoleName == "Admin" ? Role.Admin : Role.Accountant;
 
                     result = result && await _userService.UpdateRole(updateUser, updateRole);
@@ -240,7 +236,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 
         public bool CanSaveChanges()
         {
-            var account = primaryManagerAccountList.Find(a => a.RoleName != a.PrimaryRoleName);
+            var account = originalPrimaryManagerAccountList.Find(a => a.RoleName != a.PrimaryRoleName);
 
             return (account != null);
         }
@@ -272,125 +268,155 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #endregion
 
         #region Property Changed
-        public void UpdateSortList()
+        public void UpdateSortList(ManagerAccountSortType managerAccountSortType, string selectedFilterType)
         {
-            if(UsernameAZChecked)
+            switch (selectedFilterType)
             {
-				ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.Username).ToObservableCollection();
-			}
-			if (UsernameZAChecked)
-			{
-				ManagerAccountList = primaryManagerAccountList.OrderByDescending(a => a.Username).ToObservableCollection();
-			}
-			if (EmailAZChecked)
-			{
-				ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.Email).ToObservableCollection();
-			}
-			if (EmailZAChecked)
-			{
-				ManagerAccountList = primaryManagerAccountList.OrderByDescending(a => a.Email).ToObservableCollection();
-			}
-			if (RoleAZChecked)
-			{
-				ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.RoleName).ToObservableCollection();
-			}
-			if (RoleZAChecked)
-			{
-				ManagerAccountList = primaryManagerAccountList.OrderByDescending(a => a.RoleName).ToObservableCollection();
-			}
-		}
-        public void UpdateFilterList()
-        {
-            switch(selectedFilterAccountTypeOptions)
-            {
-				case "Accountant":
-					ManagerAccountList = ManagerAccountList.Where(a => a.RoleName == "Accountant").ToObservableCollection();
-					break;
-				case "Admin":
-                    ManagerAccountList = ManagerAccountList.Where(a => a.RoleName == "Admin").ToObservableCollection();
-					break;
-			}
-        }
-		partial void OnSelectedFilterAccountTypeOptionsChanged(string oldValue, string newValue)
-        {
-            if (oldValue != newValue && newValue != null)
-            {
-                UpdateSortList();
-                UpdateFilterList();
-                SearchFilter = "";
-                ResetAccountInformation();
-                ResetItemBackgrounds();
+                case "All":
+                    switch (managerAccountSortType)
+                    {
+                        case ManagerAccountSortType.UsernameAZ:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .OrderBy(a => a.Username)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.UsernameZA:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .OrderByDescending(a => a.Username)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.EmailAZ:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .OrderBy(a => a.Email)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.EmailZA:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .OrderByDescending(a => a.Email)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.RoleAZ:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .OrderBy(a => a.RoleName)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.RoleZA:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .OrderByDescending(a => a.RoleName)
+                                .ToList();
+                            break;
+                    }
+
+                    ManagerAccountList = primaryManagerAccountList.ToObservableCollection();
+
+                    break;
+                case "Admin":
+                    switch (managerAccountSortType)
+                    {
+                        case ManagerAccountSortType.UsernameAZ:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .Where(a => a.RoleName == "Admin")
+                                .OrderBy(a => a.Username)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.UsernameZA:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .Where(a => a.RoleName == "Admin")
+                                .OrderByDescending(a => a.Username)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.EmailAZ:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .Where(a => a.RoleName == "Admin")
+                                .OrderBy(a => a.Email)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.EmailZA:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .Where(a => a.RoleName == "Admin")
+                                .OrderByDescending(a => a.Email)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.RoleAZ:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .Where(a => a.RoleName == "Admin")
+                                .OrderBy(a => a.RoleName)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.RoleZA:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .Where(a => a.RoleName == "Admin")
+                                .OrderByDescending(a => a.RoleName)
+                                .ToList();
+                            break;
+                    }
+
+                    ManagerAccountList = primaryManagerAccountList.ToObservableCollection();
+
+                    break;
+                case "Accountant":
+                    switch (managerAccountSortType)
+                    {
+                        case ManagerAccountSortType.UsernameAZ:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .Where(a => a.RoleName == "Accountant")
+                                .OrderBy(a => a.Username)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.UsernameZA:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .Where(a => a.RoleName == "Accountant")
+                                .OrderByDescending(a => a.Username)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.EmailAZ:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .Where(a => a.RoleName == "Accountant")
+                                .OrderBy(a => a.Email)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.EmailZA:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .Where(a => a.RoleName == "Accountant")
+                                .OrderByDescending(a => a.Email)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.RoleAZ:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .Where(a => a.RoleName == "Accountant")
+                                .OrderBy(a => a.RoleName)
+                                .ToList();
+                            break;
+                        case ManagerAccountSortType.RoleZA:
+                            primaryManagerAccountList = originalPrimaryManagerAccountList
+                                .Where(a => a.RoleName == "Accountant")
+                                .OrderByDescending(a => a.RoleName)
+                                .ToList();
+                            break;
+                    }
+
+                    ManagerAccountList = primaryManagerAccountList.ToObservableCollection();
+
+                    break;
             }
+
+            // Clear Search Filter
+            SearchFilter = "";
+
+            // Reset list state
+            ResetItemBackgrounds();
+            ResetAccountInformation();
         }
 
-        partial void OnUsernameAZCheckedChanged(bool oldValue, bool newValue)
+		partial void OnSearchFilterChanged(string value)
         {
-			if (oldValue != newValue)
-			{
-                ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.Username).ToObservableCollection();
-                UpdateFilterList();
-				ResetAccountInformation();
-				ResetItemBackgrounds();
-			}
-		}
-		partial void OnUsernameZACheckedChanged(bool oldValue, bool newValue)
-		{
-			if (oldValue != newValue)
-			{
-                ManagerAccountList = primaryManagerAccountList.OrderByDescending(a => a.Username).ToObservableCollection();
-				UpdateFilterList(); 
-                ResetAccountInformation();
-				ResetItemBackgrounds();
-			}
-		}
-		partial void OnEmailAZCheckedChanged(bool oldValue, bool newValue)
-		{
-			if (oldValue != newValue)
-			{
-                ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.Email).ToObservableCollection();
-				UpdateFilterList(); 
-                ResetAccountInformation();
-				ResetItemBackgrounds();
-			}
-		}
-		partial void OnEmailZACheckedChanged(bool oldValue, bool newValue)
-		{
-			if (oldValue != newValue)
-			{
-                ManagerAccountList = primaryManagerAccountList.OrderByDescending(a => a.Email).ToObservableCollection();
-				UpdateFilterList(); 
-                ResetAccountInformation();
-				ResetItemBackgrounds();
-			}
-		}
-		partial void OnRoleAZCheckedChanged(bool oldValue, bool newValue)
-		{
-			if (oldValue != newValue)
-			{
-                ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.RoleName).ToObservableCollection();
-				UpdateFilterList(); 
-                ResetAccountInformation();
-				ResetItemBackgrounds();
-			}
-		}
-		partial void OnRoleZACheckedChanged(bool oldValue, bool newValue)
-		{
-			if (oldValue != newValue)
-			{
-				ManagerAccountList = primaryManagerAccountList.OrderByDescending(a => a.RoleName).ToObservableCollection();
-				UpdateFilterList(); 
-                ResetAccountInformation();
-				ResetItemBackgrounds();
-			}
-		}
+            // Update list
+            ManagerAccountList = primaryManagerAccountList
+                .Where(a => a.Username.Contains(value) || a.Email.Contains(value) || a.RoleName.Contains(value))
+                .ToObservableCollection();
 
-		partial void OnSearchFilterChanged(string oldValue, string newValue)
-        {
-			UpdateSortList();
-			UpdateFilterList();
-            ManagerAccountList = ManagerAccountList
-                .Where(a => a.Username.Contains(newValue) || a.Email.Contains(newValue) || a.RoleName.Contains(newValue)).ToObservableCollection();
-			ResetItemBackgrounds();
+            // Reset list state
+            ResetItemBackgrounds();
 			ResetAccountInformation();
 		}
         #endregion
@@ -398,13 +424,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #region Helpers
         private void ReloadManagerAccountList(List<User> accountList)
         {
-			primaryManagerAccountList.Clear();
+            originalPrimaryManagerAccountList.Clear();
 
             if (accountList.Count > 0)
             {
 				for (int i = 0; i < accountList.Count; i++)
                 {
-                    primaryManagerAccountList.Add(new UserDisplay
+                    originalPrimaryManagerAccountList.Add(new UserDisplay
                     {
                         Id = accountList[i].Id,
                         Username = accountList[i].Username,
@@ -419,6 +445,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     });
                 }
 
+                primaryManagerAccountList = originalPrimaryManagerAccountList;
                 ManagerAccountList = primaryManagerAccountList.OrderBy(a => a.Username).ToObservableCollection();
                 for (int i = 0; i < primaryManagerAccountList.Count; i++)
                 {
