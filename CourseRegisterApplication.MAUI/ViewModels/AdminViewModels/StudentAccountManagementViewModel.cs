@@ -132,7 +132,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         private string email;
 
         [ObservableProperty]
-        private Gender gender;
+        private string gender;
 
         [ObservableProperty]
         private string branch;
@@ -257,7 +257,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             FullName = studentDisplay.FullName;
             StudentSpecificId = studentDisplay.StudentSpecificId;
             Email = studentDisplay.Email;
-            Gender = studentDisplay.Gender;
+            Gender = (studentDisplay.Gender == Shared.Gender.Male) ? "Male" : "Female";
             DateOfBirth = studentDisplay.DateOfBirth.ToString("dd/MM/yyyy");
             Branch = studentDisplay.BranchName;
             Department = studentDisplay.DepartmentName;
@@ -326,6 +326,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             FullName = "";
             StudentSpecificId = "";
             Email = "";
+            Gender = "";
             Department = "";
             DateOfBirth = null;
             Branch = "";
