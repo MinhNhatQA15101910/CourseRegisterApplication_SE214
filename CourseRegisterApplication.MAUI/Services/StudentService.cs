@@ -11,6 +11,7 @@ namespace CourseRegisterApplication.MAUI.Services
         {
             _httpClient = httpClient;
         }
+            
 
         public Task<Student> AddStudent(Student student)
         {

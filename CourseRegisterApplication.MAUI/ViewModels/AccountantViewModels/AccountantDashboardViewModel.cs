@@ -16,13 +16,16 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 		#region Properties
 		[ObservableProperty]
 		private string descriptionText = Helpers.FormatDateTime(DateTime.Now);
-		#endregion
+        #endregion
 
-		public AccountantDashboardViewModel(IServiceProvider serviceProvider)
+        #region Constructor
+        public AccountantDashboardViewModel(IServiceProvider serviceProvider)
 		{
 			_serviceProvider = serviceProvider;
 		}
+		#endregion
 
+		#region Command
 		[RelayCommand]
 		public async Task Logout()
 		{
@@ -50,5 +53,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 		{
 			await Shell.Current.GoToAsync("//tuitioncollection/details", true);
 		}
-	}
+        #endregion
+    }
 }

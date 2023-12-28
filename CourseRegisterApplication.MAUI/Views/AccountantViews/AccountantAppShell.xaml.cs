@@ -10,11 +10,6 @@ public partial class AccountantAppShell : Shell
 		BindingContext = accountantAppShellViewModel;
 
 		Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
-	}
-	/*protected override void OnAppearing()
-	{
-		base.OnAppearing();
-
-		(BindingContext as StudentAppShellViewModel).GetCurrentStudentCommand.Execute(null);
-	}*/
+		Routing.RegisterRoute(nameof(UpdateCurriculumPage), typeof(UpdateCurriculumPage));
+    }
 }

@@ -78,16 +78,16 @@
     <ShellContent ContentTemplate="{DataTemplate local:SubjectManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
-    Title="Study program"
+    Title="C"
     Icon="book.png"
     Route="studyprogram">
     <ShellContent ContentTemplate="{DataTemplate local:StudyProgramPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
-    Title="Open subject"
+    Title="Curriculum management"
     Icon="book.png"
-    Route="opensubject">
-    <ShellContent ContentTemplate="{DataTemplate local:OpenSubjectPage}" Route="details" />
+    Route="curriculummanagement">
+    <ShellContent ContentTemplate="{DataTemplate local:CurriculumManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Course management"

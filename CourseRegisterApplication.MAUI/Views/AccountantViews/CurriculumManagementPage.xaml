@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.CurriculumManagementPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  xmlns:mauiToolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+  Title="CurriculumManagementPage"
+  NavigationPage.HasNavigationBar="False"
+  Shell.FlyoutBehavior="Flyout">
+  <Grid RowDefinitions="Auto,*">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="Can add, update, delete a study program"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="Curriculum management page"
+      VerticalOptions="Start" />
+    <ScrollView Grid.Row="1">
+      <Grid
+        Grid.Row="1"
+        ColumnDefinitions="7*, 3*"
+        RowDefinitions="0.5*, 8*, 1.5*">
+        <HorizontalStackLayout
+          Grid.Row="0"
+          Grid.Column="0"
+          Margin="100,50,0,0"
+          Spacing="24"
+          VerticalOptions="Center">
+          <HorizontalStackLayout>
+            <Label
+              Margin="12"
+              FontFamily="RobotoRegular"
+              FontSize="14"
+              Text="Department:"
+              TextColor="#8A8A8A"
+              VerticalOptions="Center" />
+            <Picker
+              ItemsSource="{Binding DepartmentFilterOptions}"
+              SelectedItem="{Binding SelectedDepartmentFilterOption}"
+              VerticalOptions="Center" />
+          </HorizontalStackLayout>
+          <HorizontalStackLayout>
+            <Label
+              Margin="12"
+              FontFamily="RobotoRegular"
+              FontSize="14"
+              Text="Branch:"
+              TextColor="#8A8A8A"
+              VerticalOptions="Center" />
+            <Picker
+              ItemsSource="{Binding BranchFilterOptions}"
+              SelectedItem="{Binding SelectedBranchFilterOption}"
+              VerticalOptions="Center" />
+          </HorizontalStackLayout>
+          <HorizontalStackLayout>
+            <Label
+              Margin="12"
+              FontFamily="RobotoRegular"
+              FontSize="14"
+              Text="Semester:"
+              TextColor="#8A8A8A"
+              VerticalOptions="Center" />
+            <Picker
+              ItemsSource="{Binding SemesterFilterOptions}"
+              SelectedItem="{Binding SelectedSemesterFilterOption}"
+              VerticalOptions="Center" />
+          </HorizontalStackLayout>
+        </HorizontalStackLayout>
+        <Grid
+          Grid.Row="1"
+          Grid.Column="0"
+          Margin="100,20,0,80"
+          RowDefinitions="Auto, *"
+          VerticalOptions="Start">
+          <Grid
+            Grid.Row="0"
+            BackgroundColor="Transparent"
+            ColumnDefinitions="2*,4*,2*, 2*"
+            HeightRequest="40"
+            VerticalOptions="Center">
+            <Label
+              Grid.Column="0"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Subject ID"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="1"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Subject name"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="2"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Number of credits"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="3"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Semester"
+              VerticalOptions="Center" />
+          </Grid>
+
+          <CollectionView
+            Grid.Row="1"
+            Grid.Column="0"
+            HeightRequest="400"
+            ItemsSource="{Binding SubjectDisplayList}"
+            VerticalScrollBarVisibility="Always">
+            <CollectionView.ItemTemplate>
+              <DataTemplate>
+                <Grid
+                  Padding="12,16,0,16"
+                  BackgroundColor="{Binding BackgroundColor}"
+                  ColumnDefinitions="2*,4*,2*, 2*"
+                  VerticalOptions="Center">
+                  <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChooseSubjectCommand}" />
+                  </Grid.GestureRecognizers>
+                  <Label
+                    Grid.Column="0"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SubjectID}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+                  <Label
+                    Grid.Column="1"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SubjectName}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+                  <Label
+                    Grid.Column="2"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding NumberOfCredits}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+
+                  <Label
+                    Grid.Column="3"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding Semester}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+                </Grid>
+              </DataTemplate>
+            </CollectionView.ItemTemplate>
+          </CollectionView>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+          <StackLayout
+            Margin="0,100,0,0"
+            HorizontalOptions="Center"
+            Spacing="24">
+            <Button
+              Command="{Binding UpdateCurriculumCommand}"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HeightRequest="40"
+              HorizontalOptions="End"
+              ImageSource="update_vector.png"
+              Text="Update Curriculum"
+              TextColor="#2671B1"
+              VerticalOptions="Start"
+              WidthRequest="200">
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Button>
+            <Button
+              Command="{Binding DeleteCurriculumCommand}"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HeightRequest="40"
+              HorizontalOptions="End"
+              ImageSource="delete_vector.png"
+              Text="Delete Curriculum"
+              TextColor="#2671B1"
+              VerticalOptions="Start"
+              WidthRequest="200">
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Button>
+          </StackLayout>
+        </Grid>
+      </Grid>
+    </ScrollView>
+  </Grid>
+</ContentPage>

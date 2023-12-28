@@ -62,7 +62,7 @@
 	  <None Remove="Resources\Images\chart.svg" />
 	  <None Remove="Resources\Images\chart_square.svg" />
 	  <None Remove="Resources\Images\check.svg" />
-	  <None Remove="Resources\Images\demo_avatar.png" />
+	  <None Remove="Resources\Images\delete_vector.svg" />
 	  <None Remove="Resources\Images\demo_icon.png" />
 	  <None Remove="Resources\Images\demo_user_image.jpg" />
 	  <None Remove="Resources\Images\dollar_icon.svg" />
@@ -80,6 +80,9 @@
 	  <None Remove="Resources\Images\student.svg" />
 	  <None Remove="Resources\Images\teacher_icon.png" />
 	  <None Remove="Resources\Images\university_icon.jpg" />
+	  <None Remove="Resources\Images\update_vector.svg" />
+	  <None Remove="Resources\Images\vector_add_to_left.svg" />
+	  <None Remove="Resources\Images\vector_add_to_right.svg" />
 	  <None Remove="Resources\Images\vector_down.svg" />
 	  <None Remove="Resources\Images\vector_left.svg" />
 	  <None Remove="Resources\Images\vector_right.svg" />
@@ -103,6 +106,9 @@
 	  </Compile>
 	  <Compile Update="Views\AccountantViews\AccountantDashboardPage.xaml.cs">
 	    <DependentUpon>AccountantDashboardPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\AccountantViews\CurriculumManagementPage.xaml.cs">
+	    <DependentUpon>CurriculumManagementPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\AccountantViews\StudentManagementPage.xaml.cs">
 	    <DependentUpon>StudentManagementPage.xaml</DependentUpon>
@@ -128,7 +134,7 @@
 	  <MauiXaml Update="Views\AccountantViews\AddUpdateBranchPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AccountantViews\AddUpdateDepartmentPopup.xaml"/>
+	  <MauiXaml Update="Views\AccountantViews\AddUpdateDepartmentPopup.xaml" />
 	  <MauiXaml Update="ContentViews\ManagerAccountFilterPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -150,7 +156,7 @@
 	  <MauiXaml Update="Views\AccountantViews\DepantmentManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AccountantViews\OpenSubjectPage.xaml">
+	  <MauiXaml Update="Views\AccountantViews\CurriculumManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\PriorityObjectPage.xaml">
@@ -180,11 +186,14 @@
 	  <MauiXaml Update="Views\AccountantViews\BranchManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AccountantViews\DepartmentManagementPage.xaml"/>
+	  <MauiXaml Update="Views\AccountantViews\DepartmentManagementPage.xaml" />
 	  <MauiXaml Update="Views\AccountantViews\TuitionCollectionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\ProvinceDistrictManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\UpdateCurriculumPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\AddAdminAccountantAccountPage.xaml">

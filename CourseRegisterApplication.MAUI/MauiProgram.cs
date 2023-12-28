@@ -66,8 +66,9 @@ namespace CourseRegisterApplication.MAUI
 			builder.Services.AddScoped<CourseManagementViewModel>();
 			builder.Services.AddScoped<CreditsSubjectTypeViewModel>();
 			builder.Services.AddScoped<DepartmentManagementViewModel>();
-			builder.Services.AddScoped<OpenSubjectViewModel>();
-			builder.Services.AddScoped<PriorityObjectViewModel>();
+			builder.Services.AddScoped<CurriculumManagementViewModel>();
+            builder.Services.AddScoped<UpdateCurriculumViewModel>();
+            builder.Services.AddScoped<PriorityObjectViewModel>();
 			builder.Services.AddScoped<ProvinceDistrictViewModel>();
 			builder.Services.AddScoped<StatisticViewModel>();
 			builder.Services.AddScoped<StudentManagementViewModel>();
@@ -86,8 +87,9 @@ namespace CourseRegisterApplication.MAUI
 			builder.Services.AddScoped<CourseManagementPage>();
 			builder.Services.AddScoped<CreditsSubjectTypePage>();
 			builder.Services.AddScoped<DepantmentManagementPage>();
-			builder.Services.AddScoped<OpenSubjectPage>();
-			builder.Services.AddScoped<PriorityObjectPage>();
+			builder.Services.AddScoped<CurriculumManagementPage>();
+            builder.Services.AddScoped<UpdateCurriculumPage>();
+            builder.Services.AddScoped<PriorityObjectPage>();
 			builder.Services.AddScoped<ProvinceDistrictPage>();
 			builder.Services.AddScoped<StatisticPage>();
 			builder.Services.AddScoped<StudyProgramPage>();
@@ -128,8 +130,9 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<IStudentPriorityTypeService, StudentPriorityTypeService>();
             builder.Services.AddScoped<IProvinceService, ProvinceService>();
             builder.Services.AddScoped<IDistrictService, DistrictService>();
+            builder.Services.AddScoped<ISubjectService, SubjectService>();
 
-			return builder.Build();
+            return builder.Build();
         }
     }
 }
