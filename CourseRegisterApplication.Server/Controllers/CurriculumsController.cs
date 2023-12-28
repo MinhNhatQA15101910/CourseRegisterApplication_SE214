@@ -10,17 +10,56 @@
         {
             _context = context;
         }
+        
+        [HttpGet()]
+        public async Task<ActionResult<IEnumerable<Curriculum>>> GetAllCurriculums()
+        {
+            try
+            {
+                if (_context.Curriculums == null)
+                {
+                    return new NotFoundResult();
+                }
 
-        [HttpGet("branch/{branchId}")]
+                var curriculums = await _context.Curriculums.ToListAsync();
+
+                if (curriculums == null)
+                {
+                    return NotFound("No curriculum found, please search again!");
+                }
+
+                return Ok(curriculums);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+        }
+
+        [HttpGet("{branchId}")]
         public async Task<ActionResult<IEnumerable<Curriculum>>> GetCurriculumsByBranchId(int branchId)
         {
-            if (_context.Curriculums == null)
+            try
             {
-                return NotFound();
-            }
+                if (_context.Curriculums == null)
+                {
+                    return new NotFoundResult();
+                }
 
-            var result = await _context.Curriculums.Where(c => c.BranchId == branchId).ToListAsync();
-            return result;
+                var curriculums = await _context.Curriculums.Where(c => c.BranchId == branchId).FirstOrDefaultAsync();
+
+                if (curriculums == null)
+                {
+                    return NotFound("No curriculum found, please search again!");
+                }
+
+                return Ok(curriculums);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
         }
+
     }
 }
