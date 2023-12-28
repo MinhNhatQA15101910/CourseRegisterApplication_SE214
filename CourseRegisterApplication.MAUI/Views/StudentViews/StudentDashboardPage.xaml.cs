@@ -1,5 +1,6 @@
-namespace CourseRegisterApplication.MAUI.Views.StudentViews;
 using CourseRegisterApplication.MAUI.ViewModels.StudentViewModels;
+
+namespace CourseRegisterApplication.MAUI.Views.StudentViews;
 
 public partial class StudentDashboardPage : ContentPage
 {
@@ -12,6 +13,6 @@ public partial class StudentDashboardPage : ContentPage
 	{
 		base.OnAppearing();
 
-		(BindingContext as StudentDashboardViewModel).GetCurrentStudentCommand.Execute(null);
+		(BindingContext as StudentDashboardViewModel).InitialCommand.Execute(null);
 	}
 }

@@ -1,7 +1,6 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views;
 
-
 namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 {
     public partial class StudentAppShellViewModel : ObservableObject
@@ -32,9 +31,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 				await Shell.Current.GoToAsync(nameof(ChangePasswordPage), true);
 			}
 		}
-		#endregion
+        #endregion
 
-		[RelayCommand]
+        #region Commands
+        [RelayCommand]
 		public async Task GetCurrentStudent()
 		{
 			IStudentService studentService = _serviceProvider.GetService<IStudentService>();
@@ -47,5 +47,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 				StudentName = student.FullName;
 			}
 		}
-	}
+        #endregion
+    }
 }
