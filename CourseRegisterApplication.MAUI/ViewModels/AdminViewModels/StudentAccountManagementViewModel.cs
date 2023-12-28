@@ -4,6 +4,18 @@ using CourseRegisterApplication.MAUI.Views.AdminViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 {
+    #region Enums
+    public enum StudentAccountSortType
+    {
+        StudentNameAZ,
+        StudentNameZA,
+        StudentIdAZ,
+        StudentIdZA,
+        EmailAZ,
+        EmailZA
+    }
+    #endregion
+
     #region Displays
     public partial class StudentDisplay : ObservableObject
     {
@@ -94,7 +106,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #endregion
 
         #region Properties
-        private readonly List<StudentDisplay> originalPrimaryStudentDisplayList = new();
+        private readonly List<StudentDisplay> originalPrimaryStudentAccountList = new();
 
         private List<StudentDisplay> primaryStudentAccountList = new();
 
@@ -256,7 +268,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         #region Helpers
         private async Task ReloadStudentAccountList(List<Student> accountList)
         {
-            originalPrimaryStudentDisplayList.Clear();
+            originalPrimaryStudentAccountList.Clear();
 
             if (accountList.Count > 0)
             {
@@ -268,7 +280,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     Branch accountBranch = await branchService.GetBranchById(account.BranchId);
                     Department accountDepartment = await departmentService.GetDepartmentById(accountBranch.DepartmentId);
 
-                    originalPrimaryStudentDisplayList.Add(new StudentDisplay
+                    originalPrimaryStudentAccountList.Add(new StudentDisplay
                     {
                         FullName = account.FullName,
                         StudentSpecificId = account.StudentSpecificId,
@@ -286,7 +298,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     });
                 }
 
-                primaryStudentAccountList = originalPrimaryStudentDisplayList;
+                primaryStudentAccountList = originalPrimaryStudentAccountList;
                 StudentAccountList = primaryStudentAccountList.OrderBy(a => a.FullName).ToObservableCollection();
                 for (int i = 0; i < StudentAccountList.Count; i++)
                 {
@@ -303,7 +315,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             Email = "";
             Department = "";
             DateOfBirth = null;
-            Branch = null;
+            Branch = "";
         }
 
         private async Task<bool> IsStudentHasAccount(Student student)
@@ -324,6 +336,146 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         public void NotifyCanSaveChanges()
         {
             SaveChangesCommand.NotifyCanExecuteChanged();
+        }
+
+        public void UpdateSortList(StudentAccountSortType studentAccountSortType, string selectedActiveStatus)
+        {
+            switch (selectedActiveStatus)
+            {
+                case "All":
+                    switch (studentAccountSortType)
+                    {
+                        case StudentAccountSortType.StudentNameAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .OrderBy(a => a.FullName)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentNameZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .OrderByDescending(a => a.FullName)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentIdAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .OrderBy(a => a.StudentSpecificId)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentIdZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .OrderByDescending(a => a.StudentSpecificId)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.EmailAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .OrderBy(a => a.Email)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.EmailZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .OrderByDescending(a => a.Email)
+                                .ToList();
+                            break;
+                    }
+
+                    StudentAccountList = primaryStudentAccountList.ToObservableCollection();
+
+                    break;
+                case "Enable":
+                    switch (studentAccountSortType)
+                    {
+                        case StudentAccountSortType.StudentNameAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => a.ActivateStatus)
+                                .OrderBy(a => a.FullName)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentNameZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => a.ActivateStatus)
+                                .OrderByDescending(a => a.FullName)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentIdAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => a.ActivateStatus)
+                                .OrderBy(a => a.StudentSpecificId)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentIdZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => a.ActivateStatus)
+                                .OrderByDescending(a => a.StudentSpecificId)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.EmailAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => a.ActivateStatus)
+                                .OrderBy(a => a.Email)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.EmailZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => a.ActivateStatus)
+                                .OrderByDescending(a => a.Email)
+                                .ToList();
+                            break;
+                    }
+
+                    StudentAccountList = primaryStudentAccountList.ToObservableCollection();
+
+                    break;
+                case "Disable":
+                    switch (studentAccountSortType)
+                    {
+                        case StudentAccountSortType.StudentNameAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => !a.ActivateStatus)
+                                .OrderBy(a => a.FullName)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentNameZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => !a.ActivateStatus)
+                                .OrderByDescending(a => a.FullName)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentIdAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => !a.ActivateStatus)
+                                .OrderBy(a => a.StudentSpecificId)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentIdZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => !a.ActivateStatus)
+                                .OrderByDescending(a => a.StudentSpecificId)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.EmailAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => !a.ActivateStatus)
+                                .OrderBy(a => a.Email)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.EmailZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => !a.ActivateStatus)
+                                .OrderByDescending(a => a.Email)
+                                .ToList();
+                            break;
+                    }
+
+                    StudentAccountList = primaryStudentAccountList.ToObservableCollection();
+
+                    break;
+            }
+
+            // Clear Search Filter
+            SearchFilter = "";
+
+            // Reset list state
+            ResetItemBackgrounds();
+            ResetAccountInformation();
         }
 
         #endregion

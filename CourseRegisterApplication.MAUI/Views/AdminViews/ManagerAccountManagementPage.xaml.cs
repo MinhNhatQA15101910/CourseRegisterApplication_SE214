@@ -14,6 +14,7 @@ public partial class ManagerAccountManagementPage : ContentPage
     {
         base.OnAppearing();
 
+        (BindingContext as ManagerAccountManagementViewModel).ResetItemBackgrounds();
         (BindingContext as ManagerAccountManagementViewModel).ResetAccountInformation();
         (BindingContext as ManagerAccountManagementViewModel).GetManagerAccountCommand.Execute(null);
     }

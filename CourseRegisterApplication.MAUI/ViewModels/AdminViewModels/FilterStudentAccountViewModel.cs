@@ -51,32 +51,32 @@ public partial class FilterStudentAccountViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanConfirmSortCommandExecuted))]
     public async Task ConfirmSort()
     {
-        //ManagerAccountManagementViewModel managerAccountManagementViewModel = _serviceProvider.GetService<ManagerAccountManagementViewModel>();
+        StudentAccountManagementViewModel studentAccountManagementViewModel = _serviceProvider.GetService<StudentAccountManagementViewModel>();
 
-        //if (UsernameAZChecked)
-        //{
-        //    managerAccountManagementViewModel.UpdateSortList(ManagerAccountSortType.UsernameAZ, SelectedFilterAccountType);
-        //}
-        //else if (UsernameZAChecked)
-        //{
-        //    managerAccountManagementViewModel.UpdateSortList(ManagerAccountSortType.UsernameZA, SelectedFilterAccountType);
-        //}
-        //else if (EmailAZChecked)
-        //{
-        //    managerAccountManagementViewModel.UpdateSortList(ManagerAccountSortType.EmailAZ, SelectedFilterAccountType);
-        //}
-        //else if (EmailZAChecked)
-        //{
-        //    managerAccountManagementViewModel.UpdateSortList(ManagerAccountSortType.EmailAZ, SelectedFilterAccountType);
-        //}
-        //else if (RoleAZChecked)
-        //{
-        //    managerAccountManagementViewModel.UpdateSortList(ManagerAccountSortType.RoleAZ, SelectedFilterAccountType);
-        //}
-        //else if (RoleZAChecked)
-        //{
-        //    managerAccountManagementViewModel.UpdateSortList(ManagerAccountSortType.RoleZA, SelectedFilterAccountType);
-        //}
+        if (StudentNameAZChecked)
+        {
+            studentAccountManagementViewModel.UpdateSortList(StudentAccountSortType.StudentNameAZ, SelectedActiveStatus);
+        }
+        else if (StudentNameZAChecked)
+        {
+            studentAccountManagementViewModel.UpdateSortList(StudentAccountSortType.StudentNameZA, SelectedActiveStatus);
+        }
+        else if (StudentIdAZChecked)
+        {
+            studentAccountManagementViewModel.UpdateSortList(StudentAccountSortType.StudentIdAZ, SelectedActiveStatus);
+        }
+        else if (StudentIdZAChecked)
+        {
+            studentAccountManagementViewModel.UpdateSortList(StudentAccountSortType.StudentIdZA, SelectedActiveStatus);
+        }
+        else if (EmailAZChecked)
+        {
+            studentAccountManagementViewModel.UpdateSortList(StudentAccountSortType.EmailAZ, SelectedActiveStatus);
+        }
+        else if (EmailZAChecked)
+        {
+            studentAccountManagementViewModel.UpdateSortList(StudentAccountSortType.EmailAZ, SelectedActiveStatus);
+        }
 
         await ClosePopup();
     }
