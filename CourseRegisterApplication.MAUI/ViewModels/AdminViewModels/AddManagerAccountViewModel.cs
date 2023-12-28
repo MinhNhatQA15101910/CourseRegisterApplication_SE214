@@ -89,7 +89,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                 IsLoading = true;
 
                 // If there is already a user with the same username with the input, display error
-                List<User> users = await _userService.GetUsers();
+                List<User> users = await _userService.GetAllUsers();
                 User user = users.Find(u => u.Username == Username);
                 if (user != null)
                 {

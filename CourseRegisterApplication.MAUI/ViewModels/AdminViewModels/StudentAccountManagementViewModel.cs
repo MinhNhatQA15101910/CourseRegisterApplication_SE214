@@ -71,7 +71,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 
         partial void OnActivateStatusChanged(bool oldValue, bool newValue)
         {
-            if(newValue != PrimaryStatus)
+            if (newValue != PrimaryStatus)
             {
                 CheckBoxColor = Color.FromArgb("#DE3226");
             }
@@ -206,8 +206,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                         User newUser = new()
                         {
                             Username = account.StudentSpecificId,
-                            //Password = Helpers.EncryptData(Helpers.GeneratePassword()),
-                            Password = "12345678",
+                            Password = Helpers.EncryptData("12345678"),
                             Email = account.Email,
                             Role = Role.Student,
                         };
@@ -223,8 +222,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     else
                     {
                         // Delete user from database
-                        User deleteUser = studentUserList.Find(u => u.Username == account.StudentSpecificId);
-                        await userService.DeleteUser(deleteUser.Id);
+                        User deletedUser = studentUserList.Find(u => u.Username == account.StudentSpecificId);
+                        await userService.DeleteUser(deletedUser.Id);
                     }
                 }
                 await Application.Current.MainPage.DisplayAlert("Success", "Changes have been saved", "OK");
@@ -235,7 +234,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 
         public bool CanSaveChanges()
         {
-            var account = primaryStudentAccountList.Find(a => a.PrimaryStatus != a.ActivateStatus);
+            var account = originalPrimaryStudentAccountList.Find(a => a.PrimaryStatus != a.ActivateStatus);
 
             return account != null;
         }

@@ -7,7 +7,7 @@ public interface IUserService
     Task<User> AddUser(User user);
     Task<List<User>> GetManagerUsers();
     Task<List<User>> GetStudentUsers();
-    Task<List<User>> GetUsers();
+    Task<List<User>> GetAllUsers();
     Task<bool> DeleteUser(int id);
     Task<bool> UpdateRole(User user, Role role);
 }
