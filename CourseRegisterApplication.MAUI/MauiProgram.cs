@@ -128,13 +128,11 @@ public static class MauiProgram
         builder.Services.AddScoped<IStudentService, StudentService>();
         builder.Services.AddScoped<IDepartmentService, DepartmentService>();
         builder.Services.AddScoped<IBranchService, BranchService>();
-        builder.Services.AddScoped<IStudentService, StudentService>();
         builder.Services.AddScoped<ICurriculumService, CurriculumService>();
-        builder.Services.AddScoped<IProvinceService, ProvinceService>();
-        builder.Services.AddScoped<IDistrictService, DistrictService>();
         builder.Services.AddScoped<IStudentPriorityTypeService, StudentPriorityTypeService>();
         builder.Services.AddScoped<IProvinceService, ProvinceService>();
         builder.Services.AddScoped<IDistrictService, DistrictService>();
+        builder.Services.AddScoped<IPriorityTypeService, PriorityTypeService>();
         #endregion
 
         return builder.Build();

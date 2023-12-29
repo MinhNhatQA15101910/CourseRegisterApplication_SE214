@@ -54,6 +54,84 @@
             }
         }
 
+        /// <summary>
+        /// Return full information of a student.
+        /// </summary>
+        /// <param name="studentSpecificId">Specific Id of student.</param>
+        /// <returns></returns>
+        [HttpGet("full/specificId/{studentSpecificId}")]
+        public async Task<ActionResult<Student>> GetFullInformationOfStudentBySpecificID(string studentSpecificId)
+        {
+            // Get student
+            var parameter = new SqlParameter("studentSpecificId", studentSpecificId);
+            Student result = await _context.Students
+                    .FromSqlRaw(
+                        "SELECT * FROM dbo.Students s " +
+                        "WHERE s.StudentSpecificId = @studentSpecificId",
+                        parameter)
+                    .FirstAsync();
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            // Get branch
+            parameter = new SqlParameter("branchId", result.BranchId);
+            result.Branch = await _context.Branches
+                    .FromSqlRaw(
+                        "SELECT * FROM dbo.Branches b " +
+                        "WHERE b.Id = @branchId",
+                        parameter)
+                    .FirstAsync();
+            if (result.Branch != null)
+            {
+                // Get department
+                parameter = new SqlParameter("departmentId", result.Branch.DepartmentId);
+                result.Branch.Department = await _context.Departments
+                        .FromSqlRaw(
+                            "SELECT * FROM dbo.Departments d " +
+                            "WHERE d.Id = @departmentId",
+                            parameter)
+                        .FirstAsync();
+                if (result.Branch.Department == null)
+                {
+                    return NotFound();
+                }
+            }
+
+            // Get district
+            parameter = new SqlParameter("districtId", result.DistrictId);
+            result.District = await _context.Districts
+                    .FromSqlRaw(
+                        "SELECT * FROM dbo.Districts d " +
+                        "WHERE d.Id = @districtId",
+                        parameter)
+                    .FirstAsync();
+            if (result.District != null)
+            {
+                // Get province
+                parameter = new SqlParameter("provinceId", result.District.ProvinceId);
+                result.District.Province = await _context.Provinces
+                        .FromSqlRaw(
+                            "SELECT * FROM dbo.Provinces p " +
+                            "WHERE p.Id = @provinceId",
+                            parameter)
+                        .FirstAsync();
+                if (result.District.Province == null)
+                {
+                    return NotFound();
+                }
+            }
+
+            // Get priority type list
+            string json = JsonConvert.SerializeObject(result, Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            return Ok(json);
+        }
+
         [HttpGet("branch/{branchId}")]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudentsByBranchId(int branchId)
         {

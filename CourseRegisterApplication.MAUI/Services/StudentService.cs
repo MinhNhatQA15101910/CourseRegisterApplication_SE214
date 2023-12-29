@@ -31,6 +31,20 @@ public class StudentService : IStudentService
         return null;
     }
 
+    public async Task<Student> GetFullInformationOfStudentBySpecificId(string studentSpecificId)
+    {
+        string apiUrl = $"{GlobalConfig.STUDENT_BASE_URL}full/specificId/{studentSpecificId}";
+
+        var response = await _httpClient.GetAsync(new Uri(apiUrl));
+        if (response.IsSuccessStatusCode)
+        {
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Student>(jsonResponse);
+        }
+
+        return null;
+    }
+
     public async Task<Student> GetStudentBySpecificId(string studentSpecificId)
     {
         string apiUrl = $"{GlobalConfig.STUDENT_BASE_URL}specificId/{studentSpecificId}";
