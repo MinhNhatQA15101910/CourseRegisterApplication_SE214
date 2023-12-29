@@ -3,6 +3,7 @@
     public interface IStudentService
     {
         Task<List<Student>> GetAllStudents();
+        Task<List<Student>> GetFullInformationOfAllStudents();
         Task<Student> GetStudentBySpecificId(string studentSpecificId);
         Task<Student> GetFullInformationOfStudentBySpecificId(string studentSpecificId);
         Task<List<Student>> GetStudentsByBranchId(int branchId);

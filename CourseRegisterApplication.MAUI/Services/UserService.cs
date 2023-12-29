@@ -117,5 +117,19 @@ namespace CourseRegisterApplication.MAUI.Services
 
             return response.IsSuccessStatusCode;
         }
+
+        public async Task<User> GetUserByUsername(string username)
+        {
+            string apiUrl = $"{GlobalConfig.USER_BASE_URL}username/{username}";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<User>(jsonResponse);
+            }
+
+            return null;
+        }
     }
 }

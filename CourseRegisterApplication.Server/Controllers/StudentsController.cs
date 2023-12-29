@@ -29,6 +29,77 @@
             return Ok(students);
         }
 
+        /// <summary>
+        /// Get full information of all students in the list.
+        /// </summary>
+        /// <returns>Student List with all its information.</returns>
+        [HttpGet("full")]
+        public async Task<ActionResult<IEnumerable<Student>>> GetFullInformationOfAllStudents()
+        {
+            if (_context.Students == null)
+            {
+                return new NotFoundResult();
+            }
+
+            var students = await _context.Students
+                .FromSqlRaw("SELECT * FROM dbo.Students")
+                .ToListAsync();
+            if (students == null)
+            {
+                return new NotFoundResult();
+            }
+
+            foreach (var student in students)
+            {
+                // Get branch
+                var parameter = new SqlParameter("branchId", student.BranchId);
+                student.Branch = await _context.Branches
+                    .FromSqlRaw(
+                        "SELECT * FROM dbo.Branches b " +
+                        "WHERE b.Id = @branchId", 
+                        parameter
+                    )
+                    .FirstAsync();
+
+                // Get department
+                parameter = new SqlParameter("departmentId", student.Branch.DepartmentId);
+                student.Branch.Department = await _context.Departments
+                    .FromSqlRaw(
+                        "SELECT * FROM dbo.Departments d " +
+                        "WHERE d.Id = @departmentId",
+                        parameter
+                    )
+                    .FirstAsync();
+
+                // Get district
+                parameter = new SqlParameter("districtId", student.DistrictId);
+                student.District = await _context.Districts
+                    .FromSqlRaw(
+                        "SELECT * FROM dbo.Districts d " +
+                        "WHERE d.Id = @districtId",
+                        parameter
+                    )
+                    .FirstAsync();
+
+                // Get province
+                parameter = new SqlParameter("provinceId", student.District.ProvinceId);
+                student.District.Province = await _context.Provinces
+                    .FromSqlRaw(
+                        "SELECT * FROM dbo.Provinces p " +
+                        "WHERE p.Id = @provinceId",
+                        parameter
+                    )
+                    .FirstAsync();
+            }
+
+            string json = JsonConvert.SerializeObject(students, Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            return Ok(json);
+        }
+
         [HttpGet("specificId/{studentSpecificId}")]
         public async Task<ActionResult<Student>> GetStudentBySpecificID(string studentSpecificId)
         {
@@ -123,7 +194,6 @@
                 }
             }
 
-            // Get priority type list
             string json = JsonConvert.SerializeObject(result, Formatting.Indented, new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore

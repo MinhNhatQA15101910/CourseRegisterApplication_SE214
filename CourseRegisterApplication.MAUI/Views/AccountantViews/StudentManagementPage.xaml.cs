@@ -9,10 +9,12 @@ public partial class StudentManagementPage : ContentPage
 		InitializeComponent();
 		BindingContext = studentManagementViewModel;
 	}
+
 	protected override void OnAppearing()
 	{
         base.OnAppearing();
 
-        (BindingContext as StudentManagementViewModel).GetStudentAccountCommand.Execute(null);
+        (BindingContext as StudentManagementViewModel).ResetStudentInformation();
+        (BindingContext as StudentManagementViewModel).GetStudentsCommand.Execute(null);
     }
 }
