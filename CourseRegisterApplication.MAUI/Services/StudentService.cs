@@ -23,6 +23,16 @@ namespace CourseRegisterApplication.MAUI.Services
             throw new NotImplementedException();
         }
 
+        public Task<Student> AddStudent(Student student)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Student>> GetStudents()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<Student>> GetStudentsByBranchId(int branchId)
         {
             string apiUrl = $"{GlobalConfig.STUDENT_BASE_URL}branch/{branchId}";

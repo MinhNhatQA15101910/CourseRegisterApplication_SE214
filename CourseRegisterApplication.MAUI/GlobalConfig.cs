@@ -12,6 +12,7 @@
         public const string DISTRICT_BASE_URL = "https://localhost:7182/api/Districts/";
         public const string STUDENT_PRIORITY_TYPE_BASE_URL = "https://localhost:7182/api/StudentPriorityTypes/";
         public const string SUBJECT_BASE_URL = "https://localhost:7182/api/Subjects/";
+        public const string SUBJECT_TYPE_BASE_URL = "https://localhost:7182/api/SubjectTypes/";
         #endregion
 
         public static User CurrentUser { get; set; } = new User();
