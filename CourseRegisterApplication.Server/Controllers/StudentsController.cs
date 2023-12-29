@@ -11,7 +11,7 @@
             _context = context;
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<ActionResult<Student[]>> GetAllStudents()
         {
             if (_context.Students == null)
@@ -179,6 +179,40 @@
             {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
+        }
+
+        [HttpPut("{studentId}")]
+        public async Task<IActionResult> PutStudent(int studentId, Student student)
+        {
+            if (studentId != student.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(student).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!StudentExists(studentId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool StudentExists(int studentId)
+        {
+            return (_context.Students?.Any(s => s.Id == studentId)).GetValueOrDefault();
         }
     }
 }

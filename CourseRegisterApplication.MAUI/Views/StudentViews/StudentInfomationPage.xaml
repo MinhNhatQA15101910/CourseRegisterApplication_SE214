@@ -28,7 +28,14 @@
               StrokeShape="RoundRectangle 1000,1000,1000,1000"
               StrokeThickness="0"
               WidthRequest="320">
-              <Image Aspect="AspectFill" Source="{Binding ImageUrl}" />
+              <Image
+                Aspect="AspectFill"
+                Source="{Binding ImageUrl}"
+                ToolTipProperties.Text="Change Image">
+                <Image.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding ChooseAndUploadImageCommand}" />
+                </Image.GestureRecognizers>
+              </Image>
             </Border>
             <Label
               Margin="0,24,0,0"

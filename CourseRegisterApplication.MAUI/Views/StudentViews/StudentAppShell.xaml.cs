@@ -11,6 +11,7 @@ public partial class StudentAppShell : Shell
 
 		Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
 	}
+
 	protected override void OnAppearing()
 	{
 		base.OnAppearing();

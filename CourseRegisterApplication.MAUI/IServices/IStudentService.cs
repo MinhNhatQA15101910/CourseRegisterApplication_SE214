@@ -8,5 +8,6 @@
         Task<List<Student>> GetStudentsByBranchId(int branchId);
         Task<List<Student>> GetStudentsByDistrictId(int districtId);
         Task<Student> AddStudent(Student student);
+        Task<bool> UpdateImageUrl(Student student, string newImageUrl);
     }
 }

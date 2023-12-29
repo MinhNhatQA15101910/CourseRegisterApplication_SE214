@@ -7,6 +7,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 	{
 		#region Services
 		private readonly IServiceProvider _serviceProvider;
+		private readonly FirebaseStorage _firebaseStorage = new FirebaseStorage("courseregistrationfirebase.appspot.com");
 		#endregion
 
 		#region Constructor
@@ -38,9 +39,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 		[ObservableProperty] private string studentDistrictProvince;
 
 		[ObservableProperty] private ObservableCollection<PriorityType> studentPriorityTypeList = new();
-		#endregion
+        #endregion
 
-		[RelayCommand]
+        #region Commands
+        [RelayCommand]
 		public async Task Logout()
 		{
 			bool result = await Application.Current.MainPage.DisplayAlert("Question?", "Do you want to logout?", "Yes", "No");
@@ -76,5 +78,47 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 StudentPriorityTypeList = (await priorityTypeService.GetPriorityTypesFromStudentIdAsync(currentStudent.Id)).ToObservableCollection();
 			}
 		}
-	}
+
+		[RelayCommand]
+		public async Task ChooseAndUploadImage()
+		{
+			var result = await FilePicker.Default.PickAsync(new PickOptions
+			{
+				PickerTitle = "Please select an image file.",
+				FileTypes = FilePickerFileType.Images
+			});
+
+            if (result != null && 
+				(result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
+				result.FileName.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) ||
+                result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase) ||
+                result.FileName.EndsWith("svg", StringComparison.OrdinalIgnoreCase) ||
+                result.FileName.EndsWith("gif", StringComparison.OrdinalIgnoreCase)))
+            {
+                // Upload Image
+                using var stream = await result.OpenReadAsync();
+                var newImageUrl = await _firebaseStorage
+                    .Child("Images")
+                    .Child("Avatar")
+                    .Child($"{GlobalConfig.CurrentUser.Username}-Avatar")
+                    .PutAsync(stream);
+
+                if (!string.IsNullOrEmpty(newImageUrl))
+                {
+                    // Update UI
+                    ImageUrl = newImageUrl;
+
+                    // Update database
+                    IStudentService studentService = _serviceProvider.GetService<IStudentService>();
+                    Student currentStudent = await studentService.GetStudentBySpecificId(GlobalConfig.CurrentUser.Username);
+                    await studentService.UpdateImageUrl(currentStudent, newImageUrl);
+
+                    // Reload information in StudentAppShell
+                    StudentAppShellViewModel studentAppShellViewModel = _serviceProvider.GetService<StudentAppShellViewModel>();
+					await studentAppShellViewModel.GetCurrentStudentCommand.ExecuteAsync(null);
+                }
+            }
+        }
+        #endregion
+    }
 }

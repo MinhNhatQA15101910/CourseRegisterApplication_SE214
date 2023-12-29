@@ -88,4 +88,17 @@ public class StudentService : IStudentService
 
         return null;
     }
+
+    public async Task<bool> UpdateImageUrl(Student student, string newImageUrl)
+    {
+        student.ImageUrl = newImageUrl;
+
+        string apiUrl = $"{GlobalConfig.STUDENT_BASE_URL}{student.Id}";
+
+        var json = JsonConvert.SerializeObject(student);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
+
+        return response.IsSuccessStatusCode;
+    }
 }
