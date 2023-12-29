@@ -243,7 +243,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                         ReloadItemsBackground2();
                     }
                 }
-                selectedSubjectId2 = null;
+                selectedSubjectId = null;
             }
         }
 

@@ -75,6 +75,7 @@ namespace CourseRegisterApplication.MAUI
 			builder.Services.AddScoped<StudyProgramViewModel>();
 			builder.Services.AddScoped<SubjectManagementViewModel>();
 			builder.Services.AddScoped<TuitionCollectionViewModel>();
+            builder.Services.AddScoped<CourseRegistrationViewModel>();
 
             // Views
             builder.Services.AddTransient<LoginPage>();
@@ -116,6 +117,7 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<AddUpdateDistrictPopup>();
             builder.Services.AddScoped<StudentManagementPage>();
             builder.Services.AddScoped<AddStudentPage>();
+            builder.Services.AddScoped<CourseRegistrationPage>();
 
             // Services
             builder.Services.AddSingleton<HttpClient>();

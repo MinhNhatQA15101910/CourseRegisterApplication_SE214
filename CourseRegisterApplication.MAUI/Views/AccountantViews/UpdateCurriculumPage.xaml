@@ -140,7 +140,7 @@
           <Grid
             Grid.Row="2"
             Grid.Column="0"
-            Margin="0,20,0,80"
+            Margin="0,20,0,00"
             RowDefinitions="Auto, *"
             VerticalOptions="Start">
             <Grid
@@ -296,7 +296,7 @@
           <Grid
             Grid.Row="2"
             Grid.Column="2"
-            Margin="0,20,0,80"
+            Margin="0,20,0,0"
             RowDefinitions="Auto, *"
             VerticalOptions="Start">
             <Grid

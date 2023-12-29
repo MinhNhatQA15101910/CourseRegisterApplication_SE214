@@ -11,6 +11,18 @@
             _context = context;
         }
 
+        [HttpGet("{districtId}")]
+        public async Task<ActionResult<District>> GetDistrictById(int districtId)
+        {
+            if (_context.Districts == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _context.Districts.FirstAsync(b => b.Id == districtId);
+            return result;
+        }
+
         [HttpGet("province/{provinceId}")]
         public async Task<ActionResult<IEnumerable<District>>> GetDistrictsByProvinceId(int provinceId)
         {

@@ -1,12 +1,405 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CourseRegisterApplication.MAUI.Views.StudentViews.CourseRegisterPage"
-             Title="CourseRegisterPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.StudentViews.CourseRegistrationPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  Title="CourseRegisterPage"
+  NavigationPage.HasNavigationBar="False">
+  <Grid RowDefinitions="Auto,*">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="{Binding DescriptionText, FallbackValue='Card description text.'}"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="{Binding TitleText, FallbackValue='Title text.'}"
+      VerticalOptions="Start" />
+    <ScrollView Grid.Row="1">
+      <Grid Row="1" RowDefinitions="*,auto">
+        <Grid
+          Grid.Row="0"
+          Margin="50,0,50,0"
+          ColumnDefinitions="*, auto, *"
+          RowDefinitions="auto, auto, *">
+          <Grid
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,24,0,0"
+            ColumnDefinitions="auto, *"
+            VerticalOptions="Center">
+            <HorizontalStackLayout Grid.Column="0">
+              <Label
+                Margin="0,0,12,0"
+                FontFamily="RobotoRegular"
+                FontSize="14"
+                Text="Sort by:"
+                TextColor="#8A8A8A"
+                VerticalOptions="Center" />
+              <Picker
+                ItemsSource="{Binding FilterOptions}"
+                SelectedItem="{Binding SelectedFilterOption}"
+                VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <Border
+              Grid.Column="1"
+              Margin="16,0,0,0"
+              BackgroundColor="#FCFAFA"
+              HeightRequest="50"
+              StrokeShape="RoundRectangle 0,5,0,5"
+              StrokeThickness="0"
+              VerticalOptions="Center">
+              <Grid ColumnDefinitions="auto,*">
+                <Image
+                  Grid.Column="0"
+                  Margin="16,0,8,0"
+                  HeightRequest="16"
+                  Source="search_icon.png" />
+                <Border
+                  Grid.Column="1"
+                  BackgroundColor="#FCFAFA"
+                  HeightRequest="50"
+                  StrokeThickness="0">
+                  <Entry
+                    FontFamily="RobotoRegular"
+                    FontSize="14"
+                    HeightRequest="52"
+                    HorizontalOptions="Fill"
+                    Placeholder="Search for subjects by name or id"
+                    PlaceholderColor="#8A8A8A"
+                    Text="{Binding SearchFilter}"
+                    TextColor="#8A8A8A" />
+                </Border>
+              </Grid>
+            </Border>
+          </Grid>
+          <Grid
+            Grid.Row="0"
+            Grid.Column="2"
+            Margin="0,24,0,0"
+            ColumnDefinitions="*,*">
+            <StackLayout Grid.Column="0">
+              <Label
+                FontFamily="RobotoMedium"
+                FontSize="16"
+                HorizontalOptions="Start"
+                Text="Term"
+                TextColor="#1A1A1A" />
+              <Label
+                Margin="0,4,0,0"
+                FontSize="18"
+                HorizontalOptions="Start"
+                Text="{Binding StudentAge, FallbackValue='Null'}"
+                TextColor="#A7A7A7" />
+            </StackLayout>
+            <StackLayout Grid.Column="1">
+              <Label
+                FontFamily="RobotoMedium"
+                FontSize="16"
+                HorizontalOptions="Start"
+                Text="School year"
+                TextColor="#1A1A1A" />
+              <Label
+                Margin="0,4,0,0"
+                FontSize="18"
+                HorizontalOptions="Start"
+                Text="{Binding StudentAge, FallbackValue='Null'}"
+                TextColor="#A7A7A7" />
+            </StackLayout>
+          </Grid>
+          <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,24,0,0"
+            FontFamily="RobotoBold"
+            FontSize="20"
+            Text="Subject list" />
+          <Label
+            Grid.Row="1"
+            Grid.Column="2"
+            Margin="0,24,0,0"
+            FontFamily="RobotoBold"
+            FontSize="20"
+            Text="Subject choosed list" />
+          <Grid
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="0,20,0,00"
+            RowDefinitions="Auto, *"
+            VerticalOptions="Start">
+            <Grid
+              Grid.Row="0"
+              BackgroundColor="Transparent"
+              ColumnDefinitions="2*,4*,2*, 2*"
+              HeightRequest="40"
+              VerticalOptions="Center">
+              <Label
+                Grid.Column="0"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Subject ID"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="1"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Subject name"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="2"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Number of credits"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="3"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Subject type"
+                VerticalOptions="Center" />
+            </Grid>
+
+            <CollectionView
+              Grid.Row="2"
+              Grid.Column="0"
+              HeightRequest="400"
+              ItemsSource="{Binding SubjectDisplayList2}"
+              VerticalScrollBarVisibility="Always">
+              <CollectionView.ItemTemplate>
+                <DataTemplate>
+                  <Grid
+                    Padding="12,16,0,16"
+                    BackgroundColor="{Binding BackgroundColor2}"
+                    ColumnDefinitions="2*,4*,2*, 2*"
+                    VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                      <TapGestureRecognizer Command="{Binding ChooseSubject2Command}" />
+                    </Grid.GestureRecognizers>
+                    <Label
+                      Grid.Column="0"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding SubjectID2}"
+                      TextColor="#4F4F4F"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="1"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding SubjectName2}"
+                      TextColor="#4F4F4F"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="2"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding NumberOfCredits2}"
+                      TextColor="#4F4F4F"
+                      VerticalOptions="Center" />
+
+                    <Label
+                      Grid.Column="3"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding SubjectType2}"
+                      TextColor="#4F4F4F"
+                      VerticalOptions="Center" />
+                  </Grid>
+                </DataTemplate>
+              </CollectionView.ItemTemplate>
+            </CollectionView>
+          </Grid>
+          <Grid Grid.Row="2" Grid.Column="1">
+            <StackLayout
+              Margin="24"
+              HorizontalOptions="Center"
+              Spacing="12"
+              VerticalOptions="Center">
+              <ImageButton
+                Padding="8"
+                Aspect="AspectFit"
+                BackgroundColor="#509CDB"
+                BorderColor="Black"
+                Command="{Binding AddToCurriculumCommand}"
+                CornerRadius="8"
+                HeightRequest="24"
+                Source="vector_add_to_right.png"
+                ToolTipProperties.Text="Update Department"
+                WidthRequest="24">
+                <VisualStateManager.VisualStateGroups>
+                  <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                      <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#509CDB" />
+                        </VisualState.Setters>
+                      </VisualState>
+                      <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#3F83BC" />
+                        </VisualState.Setters>
+                      </VisualState>
+                    </VisualStateGroup>
+                  </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+              </ImageButton>
+              <ImageButton
+                Padding="8"
+                Aspect="AspectFit"
+                BackgroundColor="#509CDB"
+                BorderColor="Black"
+                Command="{Binding DeleteFromCurriculumCommand}"
+                CornerRadius="8"
+                HeightRequest="24"
+                Source="vector_add_to_left.png"
+                ToolTipProperties.Text="Update Department"
+                WidthRequest="24">
+                <VisualStateManager.VisualStateGroups>
+                  <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                      <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#509CDB" />
+                        </VisualState.Setters>
+                      </VisualState>
+                      <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#3F83BC" />
+                        </VisualState.Setters>
+                      </VisualState>
+                    </VisualStateGroup>
+                  </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+              </ImageButton>
+            </StackLayout>
+          </Grid>
+          <Grid
+            Grid.Row="2"
+            Grid.Column="2"
+            Margin="0,20,0,0"
+            RowDefinitions="Auto, *"
+            VerticalOptions="Start">
+            <Grid
+              Grid.Row="0"
+              BackgroundColor="Transparent"
+              ColumnDefinitions="2*,4*,2*, 2*"
+              HeightRequest="40"
+              VerticalOptions="Center">
+              <Label
+                Grid.Column="0"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Subject ID"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="1"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Subject name"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="2"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Number of credits"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="3"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Subjec type"
+                VerticalOptions="Center" />
+            </Grid>
+
+            <CollectionView
+              Grid.Row="2"
+              Grid.Column="2"
+              HeightRequest="400"
+              ItemsSource="{Binding SubjectDisplayList}"
+              VerticalScrollBarVisibility="Always">
+              <CollectionView.ItemTemplate>
+                <DataTemplate>
+                  <Grid
+                    Padding="12,16,0,16"
+                    BackgroundColor="{Binding BackgroundColor}"
+                    ColumnDefinitions="2*,4*,2*, 2*"
+                    VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                      <TapGestureRecognizer Command="{Binding ChooseSubjectCommand}" />
+                    </Grid.GestureRecognizers>
+                    <Label
+                      Grid.Column="0"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding SubjectID}"
+                      TextColor="#4F4F4F"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="1"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding SubjectName}"
+                      TextColor="#4F4F4F"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="2"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding NumberOfCredits}"
+                      TextColor="#4F4F4F"
+                      VerticalOptions="Center" />
+
+                    <Label
+                      Grid.Column="3"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding SubjectType}"
+                      TextColor="#4F4F4F"
+                      VerticalOptions="Center" />
+                  </Grid>
+                </DataTemplate>
+              </CollectionView.ItemTemplate>
+            </CollectionView>
+          </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Margin="24">
+          <Button
+            BackgroundColor="#509CDB"
+            Command="{Binding SaveChangedCommand}"
+            FontFamily="RobotoMedium"
+            HeightRequest="40"
+            HorizontalOptions="Center"
+            Text="Save changed"
+            VerticalOptions="Center"
+            WidthRequest="120">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#509CDB" />
+                    </VisualState.Setters>
+                  </VisualState>
+                  <VisualState x:Name="PointerOver">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#3F83BC" />
+                    </VisualState.Setters>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+          </Button>
+        </Grid>
+      </Grid>
+    </ScrollView>
+  </Grid>
 </ContentPage>
