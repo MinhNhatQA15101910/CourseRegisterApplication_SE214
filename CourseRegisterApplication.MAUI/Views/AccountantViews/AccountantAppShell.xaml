@@ -111,7 +111,7 @@
     Title="Department Management"
     Icon="student.png"
     Route="departmentmanagerment">
-    <ShellContent ContentTemplate="{DataTemplate local:DepantmentManagementPage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:DepartmentManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Branch Management"

@@ -89,7 +89,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
     }
     #endregion
 
-
     #region Main ViewModel
     public partial class StudentManagementViewModel : ObservableObject, IStudentRequester
     {

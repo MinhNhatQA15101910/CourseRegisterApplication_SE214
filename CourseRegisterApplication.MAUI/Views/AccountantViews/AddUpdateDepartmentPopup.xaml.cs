@@ -9,9 +9,4 @@ public partial class AddUpdateDepartmentPopup : Popup
 		InitializeComponent();
 		BindingContext = addUpdateDepartmentViewModel;
 	}
-
-    private void ClosePopup(object sender, TappedEventArgs e)
-    {
-		Close();
-    }
 }
