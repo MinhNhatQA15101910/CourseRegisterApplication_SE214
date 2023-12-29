@@ -21,6 +21,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         private string semester;
 
         [ObservableProperty]
+        private string subjectType;
+
+        [ObservableProperty]
         private Color backgroundColor;
         #endregion
 
@@ -57,7 +60,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #region Properties
         private List<Department> departmentList = new();
         private List<Branch> branchList = new();
-        private int selectedDepartmentID;
         private int selectedBranchID;
         private int selectedSemester;
         private string selectedSubjectId;
@@ -172,7 +174,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 {
                     if (item.DepartmentName == newValue)
                     {
-                        selectedDepartmentID = item.Id;
                         foreach (var item2 in branchList)
                         {
                             if (item.Id == item2.DepartmentId)

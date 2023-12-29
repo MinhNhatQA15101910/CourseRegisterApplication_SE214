@@ -41,8 +41,8 @@
                 TextColor="#8A8A8A"
                 VerticalOptions="Center" />
               <Picker
-                ItemsSource="{Binding DepartmentFilterOptions}"
-                SelectedItem="{Binding SelectedDepartmentFilterOption}"
+                ItemsSource="{Binding FilterOptions}"
+                SelectedItem="{Binding SelectedFilterOption}"
                 VerticalOptions="Center" />
             </HorizontalStackLayout>
             <Border
@@ -69,7 +69,7 @@
                     FontSize="14"
                     HeightRequest="52"
                     HorizontalOptions="Fill"
-                    Placeholder="Search for a teachers by name, email or id"
+                    Placeholder="Search for subjects by name or id"
                     PlaceholderColor="#8A8A8A"
                     Text="{Binding SearchFilter}"
                     TextColor="#8A8A8A" />
@@ -175,7 +175,7 @@
                 FontFamily="RobotoMedium"
                 FontSize="14"
                 HorizontalOptions="Start"
-                Text="Semester"
+                Text="Subject type"
                 VerticalOptions="Center" />
             </Grid>
 
@@ -221,7 +221,7 @@
                       Grid.Column="3"
                       FontSize="14"
                       HorizontalOptions="Start"
-                      Text="{Binding Semester2}"
+                      Text="{Binding SubjectType2}"
                       TextColor="#4F4F4F"
                       VerticalOptions="Center" />
                   </Grid>
@@ -331,7 +331,7 @@
                 FontFamily="RobotoMedium"
                 FontSize="14"
                 HorizontalOptions="Start"
-                Text="Semester"
+                Text="Subjec type"
                 VerticalOptions="Center" />
             </Grid>
 
@@ -377,7 +377,7 @@
                       Grid.Column="3"
                       FontSize="14"
                       HorizontalOptions="Start"
-                      Text="{Binding Semester}"
+                      Text="{Binding SubjectType}"
                       TextColor="#4F4F4F"
                       VerticalOptions="Center" />
                   </Grid>

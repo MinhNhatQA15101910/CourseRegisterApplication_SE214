@@ -10,7 +10,7 @@
         {
             _context = context;
         }
-        
+
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<Curriculum>>> GetAllCurriculums()
         {
@@ -38,39 +38,16 @@
 
         [HttpGet("{branchId}")]
         public async Task<ActionResult<IEnumerable<Curriculum>>> GetCurriculumsByBranchId(int branchId)
-
-        // GET: api/Curriculums
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Curriculum>>> GetCurriculums()
         {
-            try
-            {
-                if (_context.Curriculums == null)
-                {
-                    return new NotFoundResult();
-                }
-
-                var curriculums = await _context.Curriculums.Where(c => c.BranchId == branchId).FirstOrDefaultAsync();
-
-                if (curriculums == null)
-                {
-                    return NotFound("No curriculum found, please search again!");
-                }
             if (_context.Curriculums == null)
             {
                 return NotFound();
             }
-            return await _context.Curriculums.ToListAsync();
+
+            var result = await _context.Curriculums.Where(b => b.BranchId == branchId).ToListAsync();
+            return result;
         }
 
-                return Ok(curriculums);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex}");
-            }
-        // POST: api/Curriculum
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Curriculum>> PostCurriculum(Curriculum curriculum)
         {
@@ -101,6 +78,5 @@
 
             return NoContent(); // Successfully deleted
         }
-
     }
 }

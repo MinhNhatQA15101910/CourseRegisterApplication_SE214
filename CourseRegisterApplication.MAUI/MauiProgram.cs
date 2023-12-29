@@ -131,6 +131,7 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<IProvinceService, ProvinceService>();
             builder.Services.AddScoped<IDistrictService, DistrictService>();
             builder.Services.AddScoped<ISubjectService, SubjectService>();
+            builder.Services.AddScoped<ISubjectTypeService, SubjectTypeService>();
 
             return builder.Build();
         }
