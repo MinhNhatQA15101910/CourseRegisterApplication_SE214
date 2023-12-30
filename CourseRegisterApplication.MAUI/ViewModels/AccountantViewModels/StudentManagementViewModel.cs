@@ -73,50 +73,35 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         public ObservableCollection<string> FilterOptions { get; set; } = new() { "Name", "Student ID" };
 
-        [ObservableProperty]
-        private string avatarUri = "blank_avatar.jpg";
+        [ObservableProperty] private string avatarUri = "blank_avatar.jpg";
 
-        [ObservableProperty]
-        private string fullName = "";
+        [ObservableProperty] private string fullName = "";
 
-        [ObservableProperty]
-        private string studentSpecificId = "";
+        [ObservableProperty] private string studentSpecificId = "";
 
-        [ObservableProperty]
-        private string activateStatus;
+        [ObservableProperty] private string activateStatus;
 
-        [ObservableProperty]
-        private string dateOfBirth;
+        [ObservableProperty] private string dateOfBirth;
 
-        [ObservableProperty]
-        private string email;
+        [ObservableProperty] private string email;
 
-        [ObservableProperty]
-        private string gender;
+        [ObservableProperty] private string gender;
 
-        [ObservableProperty]
-        private string branchName;
+        [ObservableProperty] private string branchName;
 
-        [ObservableProperty]
-        private string departmentName;
+        [ObservableProperty] private string departmentName;
 
-        [ObservableProperty]
-        private string district;
+        [ObservableProperty] private string district;
 
-        [ObservableProperty]
-        private string province;
+        [ObservableProperty] private string province;
 
-        [ObservableProperty]
-        private string address;
+        [ObservableProperty] private string address;
 
-        [ObservableProperty]
-        private string age;
+        [ObservableProperty] private string age;
 
-        [ObservableProperty]
-        private string selectedFilterOption = "Name";
+        [ObservableProperty] private string selectedFilterOption = "Name";
 
-        [ObservableProperty]
-        private string searchFilter;
+        [ObservableProperty] private string searchFilter;
 
         #endregion
 

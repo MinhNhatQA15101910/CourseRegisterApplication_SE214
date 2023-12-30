@@ -242,6 +242,7 @@
               HorizontalOptions="Center"
               Spacing="30">
               <ImageButton
+                Padding="8"
                 Aspect="AspectFit"
                 BackgroundColor="#EFF3FA"
                 BorderColor="Black"
@@ -268,6 +269,7 @@
                 </VisualStateManager.VisualStateGroups>
               </ImageButton>
               <ImageButton
+                Padding="8"
                 Aspect="AspectFit"
                 BackgroundColor="#EFF3FA"
                 BorderColor="Black"
