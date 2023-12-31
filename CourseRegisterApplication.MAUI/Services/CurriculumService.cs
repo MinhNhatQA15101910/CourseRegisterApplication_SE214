@@ -26,6 +26,23 @@ namespace CourseRegisterApplication.MAUI.Services
             return null;
         }
 
+        public async Task<List<Curriculum>> GetCurriculumSubjectsByBranchIdAndSemester(int branchId, int semester)
+        {
+            string apiUrl = $"{GlobalConfig.CURRICULUM_BASE_URL}branch/{branchId}";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var curriculumList = JsonConvert.DeserializeObject<List<Curriculum>>(jsonResponse);
+
+                var semeterSubjectList = curriculumList.Where(c => c.Semester == semester).ToList();
+                return semeterSubjectList;
+            }
+
+            return null;
+        }
+
         public async Task<List<Curriculum>> GetCurriculumsBySubjectId(int subjectId)
         {
             throw new NotImplementedException();

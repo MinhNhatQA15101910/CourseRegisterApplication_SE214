@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace CourseRegisterApplication.Shared
+﻿namespace CourseRegisterApplication.Shared
 {
     public class Semester
     {
