@@ -13,6 +13,21 @@ namespace CourseRegisterApplication.MAUI.Services
             _httpClient = httpClient;
         }
 
+        public async Task<List<CourseRegistrationDetail>> GetAllCRD()
+        {
+            string apiUrl = GlobalConfig.COURSE_REGISTRATION_DETAIL_BASE_URL;
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var courseRegistrationDetails = JsonConvert.DeserializeObject<List<CourseRegistrationDetail>>(jsonResponse);
+                return courseRegistrationDetails;
+            }
+
+            return null;
+        }
+
         public async Task<CourseRegistrationDetail> CreateCourseRegistrationDetail(CourseRegistrationDetail courseRegistrationDetail)
         {
             string apiUrl = GlobalConfig.COURSE_REGISTRATION_DETAIL_BASE_URL;
@@ -44,6 +59,21 @@ namespace CourseRegisterApplication.MAUI.Services
             {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<CourseRegistrationDetail>(jsonResponse);
+            }
+
+            return null;
+        }
+
+        public async Task<List<CourseRegistrationDetail>> GetCourseRegistrationDetailBySubjectId(int subjectId)
+        {
+            string apiUrl = GlobalConfig.COURSE_REGISTRATION_DETAIL_BASE_URL;
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var courseRegistrationDetails = JsonConvert.DeserializeObject<List<CourseRegistrationDetail>>(jsonResponse);
+                return courseRegistrationDetails.Where(crd => crd.SubjectId == subjectId).ToList();
             }
 
             return null;
