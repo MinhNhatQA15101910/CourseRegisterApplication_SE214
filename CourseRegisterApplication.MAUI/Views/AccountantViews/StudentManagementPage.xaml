@@ -104,7 +104,7 @@
             <Label
               Grid.Column="3"
               FontFamily="RobotoMedium"
-              FontSize="16"
+              FontSize="14"
               HorizontalOptions="Start"
               Text="Activate status"
               VerticalOptions="Center" />

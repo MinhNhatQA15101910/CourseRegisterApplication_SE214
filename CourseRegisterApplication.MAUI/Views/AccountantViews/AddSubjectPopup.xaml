@@ -14,7 +14,7 @@
     BackgroundColor="White"
     BorderColor="#4F4F4F"
     CornerRadius="16"
-    HeightRequest="400"
+    HeightRequest="600"
     WidthRequest="400">
     <VerticalStackLayout>
       <Grid Padding="5" HeightRequest="50">
@@ -26,11 +26,11 @@
           VerticalOptions="Center" />
         <Image
           BackgroundColor="#FFFFFF"
-          HeightRequest="24"
+          HeightRequest="20"
           HorizontalOptions="End"
           Source="vector_close.png"
           VerticalOptions="Center"
-          WidthRequest="24">
+          WidthRequest="20">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding ClosePopupCommand}" />
           </Image.GestureRecognizers>
@@ -41,7 +41,7 @@
         Margin="50,50,0,0"
         FontFamily="RobotoMedium"
         FontSize="16"
-        Text="Department ID:" />
+        Text="Subject ID:" />
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
@@ -57,7 +57,38 @@
         Margin="50,20,0,0"
         FontFamily="RobotoMedium"
         FontSize="16"
-        Text="Department Name:" />
+        Text="Subject Name:" />
+      <Entry
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        Text="{Binding DepartmentName}"
+        WidthRequest="300" />
+      <Label
+        Margin="50,0,0,0"
+        FontSize="12"
+        Text="{Binding DepartmentNameMessageText}"
+        TextColor="{Binding DepartmentNameColor}" />
+
+      <Label
+        Margin="50,20,0,0"
+        FontFamily="RobotoMedium"
+        FontSize="16"
+        Text="Subject Type:" />
+      <Picker
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        WidthRequest="300" />
+      <Label
+        Margin="50,0,0,0"
+        FontSize="12"
+        Text="{Binding DepartmentNameMessageText}"
+        TextColor="{Binding DepartmentNameColor}" />
+
+      <Label
+        Margin="50,20,0,0"
+        FontFamily="RobotoMedium"
+        FontSize="16"
+        Text="Number of periods:" />
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"

@@ -13,4 +13,11 @@ public partial class AddSubjectPopup : Popup
     {
         Close();
     }
+    public void ShowPopup()
+    {
+        // Code to show the popup goes here
+
+        // After the popup is displayed, execute the command
+        (BindingContext as AddSubjectViewModel).GetInformationCommand.Execute(null);
+    }
 }

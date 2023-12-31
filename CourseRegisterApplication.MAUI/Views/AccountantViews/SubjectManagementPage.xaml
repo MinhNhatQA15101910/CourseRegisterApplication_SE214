@@ -315,6 +315,7 @@
               </VisualStateManager.VisualStateGroups>
             </Button>
             <Button
+              Command="{Binding DisplayUpdateSubjectPopupCommand}"
               FontFamily="RobotoMedium"
               FontSize="14"
               HeightRequest="40"

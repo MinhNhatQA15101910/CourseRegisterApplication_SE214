@@ -96,6 +96,12 @@
     <ShellContent ContentTemplate="{DataTemplate local:CourseManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
+    Title="Course registration confirm"
+    Icon="book.png"
+    Route="courseconfirm">
+    <ShellContent ContentTemplate="{DataTemplate local:CourseConfirmationPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
     Title="Tuition collection"
     Icon="bank.png"
     Route="tuitioncollection">

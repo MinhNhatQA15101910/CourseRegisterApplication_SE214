@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.CourseConfirmationPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:accountantViewModels="clr-namespace:CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  xmlns:mauiToolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+  NavigationPage.HasNavigationBar="False"
+  Shell.FlyoutBehavior="Flyout">
+
+  <Grid RowDefinitions="Auto, *">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="Can view, confirm course registration"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="Course registration confirm page"
+      VerticalOptions="Start" />
+
+    <ScrollView Grid.Row="1">
+      <VerticalStackLayout Padding="20,0,0,0" Spacing="40">
+        <HorizontalStackLayout>
+          <Label
+            Margin="0,0,10,0"
+            FontFamily="RobotoRegular"
+            FontSize="14"
+            Text="Filter by:"
+            TextColor="#8A8A8A"
+            VerticalOptions="Center" />
+          <Picker
+            ItemsSource="{Binding FilterOptions}"
+            SelectedItem="{Binding SelectedFilterOption}"
+            VerticalOptions="Center" />
+          <Border
+            Margin="20,0,0,0"
+            BackgroundColor="#FCFAFA"
+            HeightRequest="50"
+            StrokeShape="RoundRectangle 0,5,0,5"
+            StrokeThickness="0"
+            WidthRequest="500">
+            <HorizontalStackLayout>
+              <Image
+                Margin="16,0,8,0"
+                HeightRequest="16"
+                Source="search_icon.png" />
+              <Border
+                BackgroundColor="#FCFAFA"
+                HeightRequest="50"
+                StrokeThickness="0"
+                WidthRequest="500">
+                <Entry
+                  FontFamily="RobotoRegular"
+                  FontSize="14"
+                  HeightRequest="50"
+                  Placeholder="Search for a student by name, email or id"
+                  PlaceholderColor="#8A8A8A"
+                  Text="{Binding SearchFilter}"
+                  TextColor="#8A8A8A"
+                  WidthRequest="500" />
+              </Border>
+            </HorizontalStackLayout>
+          </Border>
+        </HorizontalStackLayout>
+        <Grid ColumnDefinitions="5*, 5*">
+          <VerticalStackLayout Grid.Column="0">
+            <Label
+              FontFamily="RobotoBold"
+              FontSize="Title"
+              Text="Course registration form list" />
+
+            <Grid
+              BackgroundColor="Transparent"
+              ColumnDefinitions="2*, 2*, 2*, 2*, 2*"
+              ColumnSpacing="40"
+              HeightRequest="40"
+              HorizontalOptions="Start"
+              VerticalOptions="Center">
+
+              <Label
+                Grid.Column="0"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Form ID"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="1"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Student ID"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="2"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Semester ID"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="3"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Created date"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="4"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="State"
+                VerticalOptions="Center" />
+            </Grid>
+          </VerticalStackLayout>
+        </Grid>
+      </VerticalStackLayout>
+    </ScrollView>
+
+  </Grid>
+</ContentPage>
