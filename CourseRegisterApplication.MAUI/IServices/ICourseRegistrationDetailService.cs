@@ -2,7 +2,7 @@
 {
     public interface ICourseRegistrationDetailService
     {
-        Task<CourseRegistrationDetail> CreateCourseRegistrationDetail(Branch branch);
+        Task<CourseRegistrationDetail> CreateCourseRegistrationDetail(CourseRegistrationDetail courseRegistrationDetail);
 
         Task<bool> DeleteCourseRegistrationDetail(int crdId);
 

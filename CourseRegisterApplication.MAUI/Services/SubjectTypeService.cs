@@ -40,5 +40,10 @@ namespace CourseRegisterApplication.MAUI.Services
 
             return null;
         }
+
+        public Task<SubjectType> GetSubjectTypeById(int subjectTypeId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

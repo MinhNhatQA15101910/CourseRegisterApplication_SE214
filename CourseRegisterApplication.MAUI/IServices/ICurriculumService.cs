@@ -5,6 +5,6 @@
         Task<List<Curriculum>> GetCurriculumsByBranchId(int branchId);
 
         Task<List<Curriculum>> GetCurriculumSubjectsByBranchIdAndSemester(int branchId, int semester);
-        Task<List<Curriculum>> GetCurriculumsBySubjectId(int branchId);
+        Task<List<Curriculum>> GetCurriculumsBySubjectId(int subjectId);
     }
 }

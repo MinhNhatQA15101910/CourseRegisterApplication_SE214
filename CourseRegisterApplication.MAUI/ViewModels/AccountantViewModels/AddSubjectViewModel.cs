@@ -7,6 +7,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
     {
         #region Services
         private readonly IServiceProvider _serviceProvider;
+        private readonly ISubjectTypeService _subjectType;
         #endregion
 
         #region Properties
@@ -45,6 +46,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         public AddSubjectViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+            _subjectType =  _serviceProvider.GetRequiredService<ISubjectTypeService>();
         }
         #endregion
 
@@ -61,7 +63,11 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task GetInformation()
         {
-            await Application.Current.MainPage.DisplayAlert("Warning!", "You cannot delete this subject because it is in available course!", "OK");
+            var subjectTypes = await _subjectType.GetAllSubjectType();
+            foreach (var subjectType in subjectTypes)
+            {
+                SubjectTypesList.Add(subjectType);
+            }
         }
 
         /*[RelayCommand(CanExecute = nameof(CanAddUpdateSubjectExecuted))]
