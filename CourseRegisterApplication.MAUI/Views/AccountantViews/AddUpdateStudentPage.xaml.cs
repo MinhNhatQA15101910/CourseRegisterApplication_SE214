@@ -14,7 +14,6 @@ public partial class AddUpdateStudentPage : ContentPage
     {
         base.OnAppearing();
 
-        (BindingContext as AddUpdateStudentViewModel).GetInformationCommand.Execute(null);
+        (BindingContext as AddUpdateStudentViewModel).Clear();
     }
-
 }

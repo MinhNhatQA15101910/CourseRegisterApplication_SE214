@@ -41,5 +41,17 @@
 
             return Ok(priorityTypes);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<PriorityType>>> GetAllPriorityTypes()
+        {
+            var priorityTypes = await _context.PriorityTypes
+                    .FromSqlRaw(
+                        "SELECT * " +
+                        "FROM dbo.PriorityTypes")
+                    .ToListAsync();
+
+            return Ok(priorityTypes);
+        }
     }
 }

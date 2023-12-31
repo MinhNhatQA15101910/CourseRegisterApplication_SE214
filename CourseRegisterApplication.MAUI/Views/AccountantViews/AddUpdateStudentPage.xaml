@@ -24,7 +24,7 @@
 
     <ScrollView Grid.Row="1" BackgroundColor="White">
       <Grid
-        ColumnDefinitions="2.5*, 2.5*, 2.5*, 2.5*"
+        ColumnDefinitions="*,*,*,*"
         ColumnSpacing="100"
         HorizontalOptions="FillAndExpand"
         RowDefinitions="*, 7*, 2*"
@@ -33,8 +33,7 @@
         <Label
           Grid.Row="0"
           Grid.ColumnSpan="4"
-          FontAttributes="Bold"
-          FontFamily="RobotoRegular"
+          FontFamily="RobotoMedium"
           FontSize="Header"
           HorizontalOptions="Center"
           Text="Student Information"
@@ -47,18 +46,39 @@
           Spacing="20"
           WidthRequest="200">
           <Frame
-            CornerRadius="100"
-            HeightRequest="150"
+            CornerRadius="125"
+            HeightRequest="250"
             IsClippedToBounds="True"
-            WidthRequest="150">
-            <Image Aspect="AspectFill" Source="blank.png" />
+            WidthRequest="250">
+            <Image Aspect="AspectFill" Source="{Binding ImageUrl}" />
           </Frame>
-          <Picker
-            HorizontalOptions="Center"
-            ItemsSource="{Binding FilterOptions}"
-            SelectedItem="{Binding SelectedFilterOption}" />
+          <Button
+            Margin="0,5,0,0"
+            BackgroundColor="#EFF3FA"
+            FontSize="14"
+            HeightRequest="50"
+            Text="Add an avatar"
+            TextColor="#2671B1"
+            VerticalOptions="Center"
+            WidthRequest="160">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                    </VisualState.Setters>
+                  </VisualState>
+                  <VisualState x:Name="PointerOver">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                    </VisualState.Setters>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+          </Button>
         </VerticalStackLayout>
-
 
         <VerticalStackLayout
           Grid.Row="1"
@@ -68,14 +88,17 @@
           WidthRequest="200">
           <VerticalStackLayout>
             <Label
-              FontAttributes="Bold"
               FontFamily="RobotoMedium"
+              FontSize="16"
               Text="Student ID:"
               TextColor="#000000" />
             <Entry
+              Margin="50,0,0,0"
               FontFamily="RobotoRegular"
+              HeightRequest="50"
               Placeholder="Enter student ID"
-              Text="{Binding StudentId}" />
+              Text="{Binding StudentId}"
+              WidthRequest="250" />
             <Label
               FontSize="12"
               Text="{Binding StudentIdMessageText}"
@@ -83,14 +106,17 @@
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
-              FontAttributes="Bold"
               FontFamily="RobotoMedium"
+              FontSize="16"
               Text="Student name:"
               TextColor="#000000" />
             <Entry
+              Margin="50,0,0,0"
               FontFamily="RobotoRegular"
+              HeightRequest="50"
               Placeholder="Enter student name"
-              Text="{Binding StudentName}" />
+              Text="{Binding StudentName}"
+              WidthRequest="250" />
             <Label
               FontSize="12"
               Text="{Binding StudentNameMessageText}"
@@ -98,29 +124,33 @@
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
-              FontAttributes="Bold"
               FontFamily="RobotoMedium"
+              FontSize="16"
               Text="Gender:"
               TextColor="#000000" />
             <Picker
+              Margin="50,0,0,0"
               FontFamily="RobotoRegular"
+              HeightRequest="50"
               ItemsSource="{Binding GenderList}"
               SelectedItem="{Binding SelectedGender}"
-              WidthRequest="200" />
+              WidthRequest="250" />
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
-              FontAttributes="Bold"
               FontFamily="RobotoMedium"
+              FontSize="16"
               Text="Date of birth:"
               TextColor="#000000" />
 
             <DatePicker
+              Margin="50,0,0,0"
               Date="{Binding DateOfBirth}"
               FontFamily="RobotoRegular"
               Format="dd/MM/yyyy"
+              HeightRequest="50"
               TextColor="#000000"
-              WidthRequest="200" />
+              WidthRequest="250" />
           </VerticalStackLayout>
         </VerticalStackLayout>
 
@@ -132,57 +162,66 @@
           WidthRequest="200">
           <VerticalStackLayout>
             <Label
-              FontAttributes="Bold"
               FontFamily="RobotoMedium"
+              FontSize="16"
               Text="Province:"
               TextColor="#000000" />
             <Picker
+              Margin="50,0,0,0"
               FontFamily="RobotoRegular"
+              HeightRequest="50"
               ItemDisplayBinding="{Binding ProvinceName}"
-              ItemsSource="{Binding PronvinceList}"
+              ItemsSource="{Binding ProvinceList}"
               SelectedItem="{Binding SelectedProvince}"
-              WidthRequest="200" />
+              WidthRequest="250" />
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
-              FontAttributes="Bold"
+              Margin="0,10,0,0"
               FontFamily="RobotoMedium"
+              FontSize="16"
               Text="District:"
               TextColor="#000000" />
             <Picker
+              Margin="50,0,0,0"
               FontFamily="RobotoRegular"
-              IsEnabled="{Binding DistrictEnable}"
+              HeightRequest="50"
               ItemDisplayBinding="{Binding DistrictName}"
               ItemsSource="{Binding DistrictList}"
               SelectedItem="{Binding SelectedDistrict}"
-              WidthRequest="200" />
+              WidthRequest="250" />
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
-              FontAttributes="Bold"
+              Margin="0,10,0,0"
               FontFamily="RobotoMedium"
+              FontSize="16"
               Text="Department:"
               TextColor="#000000" />
             <Picker
+              Margin="50,0,0,0"
               FontFamily="RobotoRegular"
+              HeightRequest="50"
               ItemDisplayBinding="{Binding DepartmentName}"
               ItemsSource="{Binding DepartmentList}"
               SelectedItem="{Binding SelectedDepartment}"
-              WidthRequest="200" />
+              WidthRequest="250" />
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
-              FontAttributes="Bold"
+              Margin="0,10,0,0"
               FontFamily="RobotoMedium"
+              FontSize="16"
               Text="Branch:"
               TextColor="#000000" />
             <Picker
+              Margin="50,0,0,0"
               FontFamily="RobotoRegular"
-              IsEnabled="{Binding BranchEnable}"
+              HeightRequest="50"
               ItemDisplayBinding="{Binding BranchName}"
               ItemsSource="{Binding BranchList}"
               SelectedItem="{Binding SelectedBranch}"
-              WidthRequest="200" />
+              WidthRequest="250" />
           </VerticalStackLayout>
         </VerticalStackLayout>
 
@@ -190,34 +229,92 @@
           Grid.Row="1"
           Grid.Column="3"
           HorizontalOptions="Start"
-          Spacing="20"
-          WidthRequest="200">
+          Spacing="20">
           <VerticalStackLayout>
             <Label
-              FontAttributes="Bold"
               FontFamily="RobotoMedium"
+              FontSize="16"
+              HorizontalOptions="Start"
               Text="Email:"
               TextColor="#000000" />
             <Entry
               FontFamily="RobotoRegular"
+              HeightRequest="50"
+              HorizontalOptions="Start"
               Placeholder="Enter the mail"
-              Text="{Binding Email}" />
+              Text="{Binding Email}"
+              WidthRequest="250" />
             <Label
               FontSize="12"
+              HorizontalOptions="Start"
               Text="{Binding EmailMessageText}"
               TextColor="{Binding EmailColor}" />
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
-              FontAttributes="Bold"
               FontFamily="RobotoMedium"
+              FontSize="16"
+              HorizontalOptions="Start"
               Text="Priority type:"
               TextColor="#000000" />
             <Picker
               FontFamily="RobotoRegular"
-              ItemsSource="{Binding StudentTypes}"
-              SelectedItem="{Binding SelectedStudentType}"
-              WidthRequest="200" />
+              HeightRequest="50"
+              HorizontalOptions="Start"
+              ItemDisplayBinding="{Binding PriorityName}"
+              ItemsSource="{Binding PriorityTypeList}"
+              SelectedItem="{Binding SelectedPriorityType}"
+              WidthRequest="250" />
+            <Image
+              Margin="25,10,0,0"
+              HeightRequest="24"
+              HorizontalOptions="Center"
+              Source="vector_double_down.png"
+              WidthRequest="24">
+              <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding SelectPriorityType}" />
+              </Image.GestureRecognizers>
+            </Image>
+            <Border
+              Margin="0,10,0,0"
+              HeightRequest="150"
+              HorizontalOptions="Center"
+              WidthRequest="250">
+              <CollectionView
+                EmptyView="Please wait..."
+                HeightRequest="400"
+                ItemsSource="{Binding SelectedPriorityTypeList}"
+                VerticalScrollBarVisibility="Always">
+                <CollectionView.ItemsLayout>
+                  <LinearItemsLayout Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                  <DataTemplate>
+                    <Grid
+                      Padding="5"
+                      VerticalOptions="Center"
+                      WidthRequest="240">
+                      <Label
+                        FontFamily="RobotoRegular"
+                        FontSize="14"
+                        HorizontalOptions="Start"
+                        Text="{Binding PriorityName}"
+                        VerticalOptions="Center" />
+                      <Image
+                        HeightRequest="12"
+                        HorizontalOptions="End"
+                        Source="vector_close.png"
+                        VerticalOptions="Center"
+                        WidthRequest="12">
+                        <Image.GestureRecognizers>
+                          <TapGestureRecognizer Command="{Binding UnselectPriorityType}" />
+                        </Image.GestureRecognizers>
+                      </Image>
+                    </Grid>
+                  </DataTemplate>
+                </CollectionView.ItemTemplate>
+              </CollectionView>
+            </Border>
           </VerticalStackLayout>
         </VerticalStackLayout>
 
@@ -252,8 +349,8 @@
             </VisualStateGroupList>
           </VisualStateManager.VisualStateGroups>
         </Button>
+        <ActivityIndicator Margin="10,0,0,0" IsRunning="{Binding IsLoading}" />
       </Grid>
     </ScrollView>
   </Grid>
-
 </ContentPage>

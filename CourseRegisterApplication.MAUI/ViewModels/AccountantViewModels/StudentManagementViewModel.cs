@@ -68,8 +68,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #region Properties
         private readonly List<StudentDisplay> primaryStudentList = new();
 
-        [ObservableProperty]
-        private ObservableCollection<StudentDisplay> studentList = new();
+        [ObservableProperty] private ObservableCollection<StudentDisplay> studentList = new();
 
         public ObservableCollection<string> FilterOptions { get; set; } = new() { "Name", "Student ID" };
 
@@ -126,6 +125,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task NavigateToAddStudentPage()
         {
+            AddUpdateStudentViewModel addUpdateStudentViewModel = _serviceProvider.GetService<AddUpdateStudentViewModel>();
+            addUpdateStudentViewModel.GetInformationCommand.Execute(null);
+
             await Shell.Current.GoToAsync(nameof(AddUpdateStudentPage), true);
         }
 

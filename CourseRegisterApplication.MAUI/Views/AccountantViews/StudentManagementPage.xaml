@@ -113,6 +113,7 @@
           <CollectionView
             Grid.Row="1"
             Grid.Column="0"
+            EmptyView="Please wait..."
             HeightRequest="400"
             ItemsSource="{Binding StudentList}"
             VerticalScrollBarVisibility="Always">
@@ -186,6 +187,7 @@
           Grid.Row="2"
           Grid.Column="0"
           Margin="0,0,0,50"
+          Command="{Binding NavigateToAddStudentPageCommand}"
           FontFamily="RobotoMedium"
           FontSize="14"
           HeightRequest="40"

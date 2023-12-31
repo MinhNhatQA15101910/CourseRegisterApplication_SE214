@@ -10,5 +10,6 @@ public partial class AccountantAppShell : Shell
 		BindingContext = accountantAppShellViewModel;
 
 		Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
-	}
+		Routing.RegisterRoute(nameof(AddUpdateStudentPage), typeof(AddUpdateStudentPage));
+    }
 }

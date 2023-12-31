@@ -3,100 +3,78 @@ using CourseRegisterApplication.MAUI.Views;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
+    public partial class SelectedPriorityTypeDisplay : ObservableObject
+    {
+        [ObservableProperty] private string priorityName;
+    }
+
     public partial class AddUpdateStudentViewModel : ObservableObject
     {
         #region Service
         private readonly IServiceProvider _serviceProvider;
-        private readonly IStudentService _studentService;
-        private readonly IDepartmentService _departmentService;
-        private readonly IBranchService _branchService;
-        private readonly IProvinceService _provinceService;
-        private readonly IDistrictService _districtService;
-
         #endregion
 
         #region Properties
+        [ObservableProperty] private string imageUrl = "https://static.wixstatic.com/media/8027bc_6d79e9c44bae49de97c018a781738884~mv2.jpg/v1/fill/w_987,h_1096,al_c,q_90/file.jpg";
 
         [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddStudentCommand))]
         private string studentId;
 
-        [ObservableProperty]
-        private string studentIdMessageText;
+        [ObservableProperty] private string studentIdMessageText;
 
-        [ObservableProperty]
-        private Color studentIdColor;
+        [ObservableProperty] private Color studentIdColor;
 
         [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddStudentCommand))]
         private string studentName;
 
-        [ObservableProperty]
-        private string studentNameMessageText;
+        [ObservableProperty] private string studentNameMessageText;
 
-        [ObservableProperty]
-        private Color studentNameColor;
+        [ObservableProperty] private Color studentNameColor;
 
         [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddStudentCommand))]
         private string email;
 
-        [ObservableProperty]
-        private string emailMessageText;
+        [ObservableProperty] private string emailMessageText;
 
-        [ObservableProperty]
-        private Color emailColor;
+        [ObservableProperty] private Color emailColor;
 
-        [ObservableProperty]
-        private DateTime dateOfBirth;
+        [ObservableProperty] private DateTime dateOfBirth;
 
-        [ObservableProperty]
-        private ObservableCollection<string> genderList = new() { "Male", "Female" };
+        [ObservableProperty] private ObservableCollection<string> genderList = new() { "Male", "Female" };
 
-        [ObservableProperty]
-        private ObservableCollection<Province> provinceList = new();
+        [ObservableProperty] private ObservableCollection<Province> provinceList = new() { new() { Id = 0, ProvinceName = "- Select province -" } };
 
-        [ObservableProperty]
-        private ObservableCollection<District> districtList = new();
+        [ObservableProperty] private ObservableCollection<District> districtList = new() { new() { Id = 0, DistrictName = "- Select district -" } };
 
-        [ObservableProperty]
-        private ObservableCollection<Department> departmentList = new();
+        [ObservableProperty] private ObservableCollection<Department> departmentList = new() { new() { Id = 0, DepartmentName = "- Select department -" } };
 
-        [ObservableProperty]
-        private ObservableCollection<Branch> branchList = new();
+        [ObservableProperty] private ObservableCollection<Branch> branchList = new() { new() { Id = 0, BranchName = "- Select branch -" } };
 
-        [ObservableProperty]
-        private string selectedGender;
+        private List<PriorityType> primaryPriorityTypeList = new();
 
-        [ObservableProperty]
-        private Province selectedProvince;
+        [ObservableProperty] private ObservableCollection<PriorityType> priorityTypeList = new() { new() { Id = 0, PriorityName = "- Select priority type -" } };
 
-        [ObservableProperty]
-        private District selectedDistrict;
+        [ObservableProperty] private ObservableCollection<SelectedPriorityTypeDisplay> selectedPriorityTypeList = new();
 
-        [ObservableProperty]
-        private Branch selectedBranch;
+        [ObservableProperty] private string selectedGender = "Male";
 
-        [ObservableProperty]
-        private Department selectedDepartment;
+        [ObservableProperty] private Province selectedProvince;
 
-        [ObservableProperty]
-        private bool districtEnable = false;
+        [ObservableProperty] private District selectedDistrict;
 
-        [ObservableProperty]
-        private bool branchEnable = false;
+        [ObservableProperty] private Branch selectedBranch;
 
-        [ObservableProperty]
-        private bool isLoading = false;
+        [ObservableProperty] private Department selectedDepartment;
 
+        [ObservableProperty] private PriorityType selectedPriorityType;
+
+        [ObservableProperty] private bool isLoading;
         #endregion
 
         #region Constructor
         public AddUpdateStudentViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _studentService = _serviceProvider.GetRequiredService<IStudentService>();
-            _departmentService = _serviceProvider.GetRequiredService<IDepartmentService>();
-            _branchService = _serviceProvider.GetRequiredService<IBranchService>();
-            _provinceService = _serviceProvider.GetRequiredService<IProvinceService>();
-            _districtService = _serviceProvider.GetRequiredService<IDistrictService>();
         }
         #endregion
 
@@ -110,66 +88,89 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task GetInformation()
         {
-            //Department
-            var departments = await _departmentService.GetAllDepartments();
-            foreach (var department in departments)
-            {
-                DepartmentList.Add(department);
-            }
+            // Department
+            IDepartmentService departmentService = _serviceProvider.GetService<IDepartmentService>();
+            DepartmentList = (await departmentService.GetAllDepartments()).ToObservableCollection();
+            DepartmentList.Insert(0, new() { Id = 0, DepartmentName = "- Select department -" });
 
-            //Province
-            /*var provinces = await _provinceService.GetAllProvince();
-            foreach (var province in provinces)
-            {
-                Province.Add(province);
-            }*/
+            SelectedDepartment = DepartmentList[0];
+
+            // Branch
+            BranchList.Add(new() { Id = 0, BranchName = "- Select branch -" });
+
+            SelectedBranch = BranchList[0];
+
+            // Province
+            IProvinceService provinceService = _serviceProvider.GetService<IProvinceService>();
+            ProvinceList = (await provinceService.GetAllProvinces()).ToObservableCollection();
+            ProvinceList.Insert(0, new() { Id = 0, ProvinceName = "- Select province -" });
+
+            SelectedProvince = ProvinceList[0];
+
+            // District
+            DistrictList.Add(new() { Id = 0, DistrictName = "- Select district -" });
+
+            SelectedDistrict = DistrictList[0];
+
+            // Priority Types
+            IPriorityTypeService priorityTypeService = _serviceProvider.GetService<IPriorityTypeService>();
+            primaryPriorityTypeList = (await priorityTypeService.GetAllPriorityTypesAsync()).ToList();
+
+            PriorityType nonePriorityType = primaryPriorityTypeList.First(pt => pt.Id == 1);
+            SelectedPriorityTypeList.Add(new() { PriorityName = nonePriorityType.PriorityName });
+
+            PriorityTypeList = primaryPriorityTypeList
+                .Where(pt => pt.Id != 1 && pt.Id != 2)
+                .ToObservableCollection();
+            PriorityTypeList.Insert(0, new() { Id = 0, PriorityName = "- Select priority type -" });
+
+            SelectedPriorityType = PriorityTypeList[0];
         }
 
         [RelayCommand(CanExecute = nameof(CanAddStudentExecuted))]
         public async Task AddStudent()
         {
-            bool accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to add this student?", "Yes", "No");
-            if (accept)
-            {
-                IsLoading = true;
+            //bool accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to add this student?", "Yes", "No");
+            //if (accept)
+            //{
+            //    IsLoading = true;
 
-                // If there is already a user with the same username with the input, display error
-                List<Student> students = await _studentService.GetAllStudents();
-                Student student = students.Find(s => s.StudentSpecificId == StudentId);
-                if (student != null)
-                {
-                    IsLoading = false;
-                    await Application.Current.MainPage.DisplayAlert("Error", "Student has already existed!", "OK");
-                    return;
-                }
+            //    // If there is already a user with the same username with the input, display error
+            //    List<Student> students = await _studentService.GetAllStudents();
+            //    Student student = students.Find(s => s.StudentSpecificId == StudentId);
+            //    if (student != null)
+            //    {
+            //        IsLoading = false;
+            //        await Application.Current.MainPage.DisplayAlert("Error", "Student has already existed!", "OK");
+            //        return;
+            //    }
 
-                student = new Student
-                {
-                    StudentSpecificId = StudentId,
-                    FullName = StudentName,
-                    Gender = (SelectedGender == "Male") ? Gender.Male : Gender.Female,
-                    DateOfBirth = DateOfBirth,
-                    DistrictId = SelectedDistrict.Id,
-                    District = SelectedDistrict,
-                    BranchId = SelectedBranch.Id,
-                    Branch = SelectedBranch
-                };
+            //    student = new Student
+            //    {
+            //        StudentSpecificId = StudentId,
+            //        FullName = StudentName,
+            //        Gender = (SelectedGender == "Male") ? Gender.Male : Gender.Female,
+            //        DateOfBirth = DateOfBirth,
+            //        DistrictId = SelectedDistrict.Id,
+            //        District = SelectedDistrict,
+            //        BranchId = SelectedBranch.Id,
+            //        Branch = SelectedBranch
+            //    };
 
-                Student resultStudent = await _studentService.AddStudent(student);
-                if (resultStudent != null)
-                {
-                    IsLoading = false;
-                    await Application.Current.MainPage.DisplayAlert("Success", "Add student successfully!", "OK");
-                    Clear();
-                }
-                else
-                {
-                    IsLoading = false;
-                    await Application.Current.MainPage.DisplayAlert("Failed", "Error occurred!", "OK");
-                }
-            }
+            //    Student resultStudent = await _studentService.AddStudent(student);
+            //    if (resultStudent != null)
+            //    {
+            //        IsLoading = false;
+            //        await Application.Current.MainPage.DisplayAlert("Success", "Add student successfully!", "OK");
+            //        Clear();
+            //    }
+            //    else
+            //    {
+            //        IsLoading = false;
+            //        await Application.Current.MainPage.DisplayAlert("Failed", "Error occurred!", "OK");
+            //    }
+            //}
         }
-
 
         [RelayCommand]
         public async Task Logout()
@@ -190,35 +191,35 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task GetBranch()
         {
-            var branches = await _branchService.GetBranchesByDepartmentId(SelectedDepartment.Id);
-            BranchList.Clear();
-            foreach (var branch in branches)
-            {
-                BranchList.Add(branch);
-            }
-            BranchEnable = true;
+            //var branches = await _branchService.GetBranchesByDepartmentId(SelectedDepartment.Id);
+            //BranchList.Clear();
+            //foreach (var branch in branches)
+            //{
+            //    BranchList.Add(branch);
+            //}
+            //BranchEnable = true;
         }
 
         [RelayCommand]
         public async Task GetDistrict()
         {
-            var districts = await _districtService.GetDistrictsByProvinceId(SelectedProvince.Id);
-            DistrictList.Clear();
-            foreach (var district in districts)
-            {
-                DistrictList.Add(district);
-            }
-            DistrictEnable = true;
+            //var districts = await _districtService.GetDistrictsByProvinceId(SelectedProvince.Id);
+            //DistrictList.Clear();
+            //foreach (var district in districts)
+            //{
+            //    DistrictList.Add(district);
+            //}
+            //DistrictEnable = true;
         }
 
         partial void OnSelectedDepartmentChanged(Department value)
         {
-            GetBranchCommand.Execute(null);
+            // GetBranchCommand.Execute(null);
         }
 
         partial void OnSelectedProvinceChanged(Province value)
         {
-            getDistrictCommand.Execute(null);
+            // getDistrictCommand.Execute(null);
         }
 
         public bool CanAddStudentExecuted()
@@ -305,18 +306,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #endregion
 
         #region Helper
-
-        private void Clear()
+        public void Clear()
         {
             StudentName = "";
             Email = "";
-            SelectedGender = "";
-            SelectedProvince = null;
-            SelectedDistrict = null;
-            SelectedBranch = null;
-            SelectedDepartment = null;
-            DistrictEnable = false;
-            BranchEnable = false;
+            SelectedGender = "Male";
+            SelectedProvince = ProvinceList[0];
+            SelectedDistrict = DistrictList[0];
+            SelectedBranch = BranchList[0];
+            SelectedDepartment = DepartmentList[0];
         }
 
         private bool ValidateEmail(string email)
