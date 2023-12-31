@@ -13,7 +13,22 @@ namespace CourseRegisterApplication.MAUI.Services
 
         public async Task<List<Curriculum>> GetCurriculumsByBranchId(int branchId)
         {
-            string apiUrl = $"{GlobalConfig.CURRICULUM_BASE_URL}branch/{branchId}";
+            string apiUrl = $"{GlobalConfig.CURRICULUM_BASE_URL}ByBranch/{branchId}";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var curriculumList = JsonConvert.DeserializeObject<List<Curriculum>>(jsonResponse);
+                return curriculumList;
+            }
+
+            return null;
+        }
+
+        public async Task<List<Curriculum>> GetCurriculumsBySubjectId(int subjectId)
+        {
+            string apiUrl = $"{GlobalConfig.CURRICULUM_BASE_URL}BySubject/{subjectId}";
 
             var response = await _httpClient.GetAsync(new Uri(apiUrl));
             if (response.IsSuccessStatusCode)

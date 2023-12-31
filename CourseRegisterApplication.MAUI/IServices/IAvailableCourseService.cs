@@ -4,5 +4,6 @@
     {
         Task<List<AvailableCourse>> GetAllAvailableCourse();
         Task<List<AvailableCourse>> GetAvailableCourseBySemesterId(int semesterId);
+        Task<List<AvailableCourse>> GetAvailableCourseBySubjectId(int subjectId);
     }
 }
