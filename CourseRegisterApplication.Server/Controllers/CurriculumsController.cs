@@ -103,5 +103,21 @@
                 return StatusCode(500, $"Internal server error: {ex}");
             }
         }
+
+        [HttpDelete("{branchId}/{subjectId}")]
+        public async Task<IActionResult> DeleteCurriculum(int branchId, int subjectId)
+        {
+            var curriculum = await _context.Curriculums.FirstAsync(c => c.BranchId == branchId && c.SubjectId == subjectId);
+
+            if (curriculum == null)
+            {
+                return NotFound("No curriculum of those Ids found!");
+            }
+
+            _context.Curriculums.Remove(curriculum);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

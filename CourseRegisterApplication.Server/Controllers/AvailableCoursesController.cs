@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CourseRegisterApplication.Shared;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourseRegisterApplication.Server.Controllers
@@ -36,6 +37,23 @@ namespace CourseRegisterApplication.Server.Controllers
             {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
+        }
+
+        [HttpDelete("{semesterId}/{subjectId}")]
+        public async Task<IActionResult> DeleteAvaibleCourse(int semesterId, int subjectId)
+        {
+            var availableCourse = await _context.AvailableCourses
+                .FirstAsync(ac => ac.SemesterId == semesterId && ac.SubjectId == subjectId);
+
+            if (availableCourse == null)
+            {
+                return NotFound();
+            }
+
+            _context.AvailableCourses.Remove(availableCourse);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }
