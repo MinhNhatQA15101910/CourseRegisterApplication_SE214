@@ -36,7 +36,7 @@
             }
         }
 
-        [HttpGet("{branchId}")]
+        [HttpGet("ByBranch/{branchId}")]
         public async Task<ActionResult<IEnumerable<Curriculum>>> GetCurriculumsByBranchId(int branchId)
         {
             if (_context.Curriculums == null)
