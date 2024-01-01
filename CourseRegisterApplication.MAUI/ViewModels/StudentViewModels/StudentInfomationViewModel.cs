@@ -1,8 +1,5 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
 using CourseRegisterApplication.MAUI.Views;
-using Microsoft.Maui;
-using System.Collections.Generic;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 {
@@ -18,6 +15,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         private readonly IProvinceService _provinceService;
         private readonly IDistrictService _districtService;
         private readonly IStudentPriorityTypeService _studentPriorityTypeService;
+        private readonly IPriorityType _priorityType;
         #endregion
 
         #region Constructor
@@ -30,6 +28,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
             _provinceService = serviceProvider.GetService<IProvinceService>();
             _districtService = serviceProvider.GetService<IDistrictService>();
             _studentPriorityTypeService = serviceProvider.GetService<IStudentPriorityTypeService>();
+			_priorityType = serviceProvider.GetService<IPriorityType>();
         }
 		#endregion
 
@@ -109,13 +108,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 					District district = await _districtService.GetDistrictById(item.DistrictId);
 					Province province = await _provinceService.GetProvinceById(district.ProvinceId);
 					StudentDistrictProvince = district.DistrictName + ", " + province.ProvinceName;
-
-                    List<StudentPriorityType> priorityList = await _studentPriorityTypeService.GetStudentPriorityTypesByStudentId(item.Id);
+                    List <StudentPriorityType> priorityList = await _studentPriorityTypeService.GetStudentPriorityTypesByStudentId(item.Id);
 					if (priorityList.Count > 0)
 					{
 						foreach(var item2 in  priorityList)
 						{
-                            StudentPriorityObjectList.Add(item2.PriorityTypeId.ToString());
+                            StudentPriorityObjectList.Add(item2.PriorityType.PriorityName.ToString());
                         }
 					}
 					

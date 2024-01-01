@@ -1,5 +1,4 @@
-﻿using AuthenticationServices;
-using CourseRegisterApplication.MAUI.IServices;
+﻿using CourseRegisterApplication.MAUI.IServices;
 
 namespace CourseRegisterApplication.MAUI.Services
 {

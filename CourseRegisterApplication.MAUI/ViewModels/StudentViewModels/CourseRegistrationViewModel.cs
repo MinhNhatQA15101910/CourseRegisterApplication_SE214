@@ -68,7 +68,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         private string currentSemester;
 
         [ObservableProperty]
-        private string currentYear;
+        private string currentYear; 
+
+        [ObservableProperty]
+        private int currentTotalCredits;
 
         [ObservableProperty]
         private string buttonText;
@@ -128,27 +131,53 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 }
                 else
                 {
-                    IsVisbleUnableCourseRegistration = false;
-                    IsVisbleCourseRegistration = true;
-
                     await GetAvailableCourseBySemesterId(thisSemester.Id);
                     thisStudent = studentList.Find(item => item.StudentSpecificId == GlobalConfig.CurrentUser.Username);
                     await GetCourseRegistrationFormByStudentIdAndSemesterId(thisStudent.Id, thisSemester.Id);
-                    CheckedButtontext();
+                    if(courseRegistrationForm.State==CourseRegistrationFormState.Confirmed)
+                    {
+                        IsVisbleUnableCourseRegistration = true;
+                        IsVisbleCourseRegistration = false;
+                        UnableNotificationText = "Your course registration form has been confirmed.";
+                    }
+                    else if(courseRegistrationForm.State == CourseRegistrationFormState.Expired)
+                    {
+                        IsVisbleUnableCourseRegistration = true;
+                        IsVisbleCourseRegistration = false;
+                        UnableNotificationText = "Your course registration form has been expired.";
+                    }
+                    else
+                    {
+                        IsVisbleUnableCourseRegistration = false;
+                        IsVisbleCourseRegistration = true;
 
-                    CurrentSemester = thisSemester.SemesterName.ToString();
-                    CurrentYear = thisSemester.Year.ToString();
+                        CheckedButtontext();
 
-                    FilterOptions.Add("Subject ID");
-                    FilterOptions.Add("Subject Name");
-                    SelectedFilterOption = FilterOptions[0];
+                        if (thisSemester.SemesterName.ToString() == "FirstSemester")
+                        {
+                            CurrentSemester = "Học kỳ I";
+                        }
+                        else if (thisSemester.SemesterName.ToString() == "SecondSemester")
+                        {
+                            CurrentSemester = "Học kỳ II";
+                        }
+                        else if (thisSemester.SemesterName.ToString() == "SummerSemester")
+                        {
+                            CurrentSemester = "Học kỳ hè";
+                        }
+                        CurrentYear = thisSemester.Year.ToString();
 
-                    GetAvailableSubjectList();
-                    ReloadSubjectDisplays2(availableSubjectList);
+                        FilterOptions.Add("Subject ID");
+                        FilterOptions.Add("Subject Name");
+                        SelectedFilterOption = FilterOptions[0];
 
-                    await GetCurrentSubjectList(thisStudent.Id, thisSemester.Id);
-                    ReloadSubjectDisplays(currentSubjectList);
+                        GetAvailableSubjectList();
+                        ReloadSubjectDisplays2(availableSubjectList);
 
+                        await GetCurrentSubjectList(thisStudent.Id, thisSemester.Id);
+                        ReloadSubjectDisplays(currentSubjectList);
+                        CheckedSubjectDisplayList2();
+                    }
                 }
             }
         }
@@ -178,10 +207,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                         SubjectDisplayList = primarySubjectDisplayList.OrderBy(d => d.SubjectID).ToObservableCollection();
                         SubjectDisplayList2 = primarySubjectDisplayList2.OrderBy(d => d.SubjectID2).ToObservableCollection();
 
+                        CheckedTotalCredits();
                         FilterChange();
                         SearchFilter = "";
                         ReloadItemsBackground();
                         ReloadItemsBackground2();
+                        CheckedSubjectDisplayList2();
                     }
                 }
                 selectedSubjectId2 = null;
@@ -213,10 +244,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                         SubjectDisplayList = primarySubjectDisplayList.OrderBy(d => d.SubjectID).ToObservableCollection();
                         SubjectDisplayList2 = primarySubjectDisplayList2.OrderBy(d => d.SubjectID2).ToObservableCollection();
 
+                        CheckedTotalCredits();
                         FilterChange();
                         SearchFilter = "";
                         ReloadItemsBackground();
                         ReloadItemsBackground2();
+                        CheckedSubjectDisplayList2();
                     }
                 }
                 selectedSubjectId = null;
@@ -226,50 +259,99 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         [RelayCommand]
         public async Task SaveChanged()
         {
-            if(courseRegistrationForm == null)
-            {     
-                CourseRegistrationForm cRF = new CourseRegistrationForm();
-                cRF.CreatedDate= DateTime.Now;
-                cRF.StudentId = thisStudent.Id;
-                cRF.SemesterId = thisSemester.Id;
-                cRF.CourseRegistrationFormSpecificId = thisStudent.StudentSpecificId+"-"+thisSemester.SemesterName+"-"+thisSemester.Year;
-                cRF.State = CourseRegistrationFormState.Pending;
-                await _courseRegistrationFormService.CreateCourseRegistrationForm(cRF);
-                await GetCourseRegistrationFormByStudentIdAndSemesterId(cRF.StudentId, cRF.SemesterId);
-                CheckedButtontext();
+            if(CurrentTotalCredits < thisSemester.MinimumCredits || CurrentTotalCredits > thisSemester.MaximumCredits)
+            {
+                string alert = "Your credits must be within the range of " + thisSemester.MinimumCredits + " to " + thisSemester.MaximumCredits;
+                await Application.Current.MainPage.DisplayAlert("Warning!", alert, "Cancel");
             }
-
-            List<Subject> deleteSubjectList = currentSubjectList
-                .Where(c => !primarySubjectDisplayList.Select(c => c.SubjectID).Contains(c.SubjectSpecificId))
-                .Select(c => new Subject { SubjectSpecificId = c.SubjectSpecificId, Id = c.Id })
-                .ToList();
-            List<AvailableCourse> addSubjectList = primarySubjectDisplayList
-                .Where(c => !currentSubjectList.Select(c => c.SubjectSpecificId).Contains(c.SubjectID))
-                .Select(c =>
+            else
+            {
+                bool accept;
+                if (courseRegistrationForm != null)
                 {
-                    var newItem = new Subject { SubjectSpecificId = c.SubjectID };
-                    var matchingItem = subjectList.Find(item2 => item2.SubjectSpecificId == newItem.SubjectSpecificId);
-                    if (matchingItem != null)
+                    accept = await Application.Current.MainPage.DisplayAlert("Warning!", "Do you want to update this course regstration form?", "Yes", "No");
+                }
+                else
+                {
+                    accept = await Application.Current.MainPage.DisplayAlert("Warning!", "Do you want to create this course regstration form?", "Yes", "No");
+                }
+                if (accept)
+                {
+                    if (courseRegistrationForm == null)
                     {
-                        return new AvailableCourse
-                        {
-                            SubjectId = matchingItem.Id,
-                        };
+                        CourseRegistrationForm cRF = new CourseRegistrationForm();
+                        cRF.CreatedDate = DateTime.Now;
+                        cRF.StudentId = thisStudent.Id;
+                        cRF.SemesterId = thisSemester.Id;
+                        cRF.CourseRegistrationFormSpecificId = thisStudent.StudentSpecificId + "-" + thisSemester.SemesterName + "-" + thisSemester.Year;
+                        cRF.State = CourseRegistrationFormState.Pending;
+                        await _courseRegistrationFormService.CreateCourseRegistrationForm(cRF);
+                        await GetCourseRegistrationFormByStudentIdAndSemesterId(cRF.StudentId, cRF.SemesterId);
+                        CheckedButtontext();
                     }
-                    return null;
-                })
-                .Where(curriculum => curriculum != null)
-                .ToList();
 
+                    List<Subject> deleteSubjectList = currentSubjectList
+                        .Where(c => !primarySubjectDisplayList.Select(c => c.SubjectID).Contains(c.SubjectSpecificId))
+                        .Select(c => new Subject { SubjectSpecificId = c.SubjectSpecificId, Id = c.Id })
+                        .ToList();
+                    List<CourseRegistrationDetail> addSubjectList = primarySubjectDisplayList
+                        .Where(c => !currentSubjectList.Select(c => c.SubjectSpecificId).Contains(c.SubjectID))
+                        .Select(c =>
+                        {
+                            var newItem = new Subject { SubjectSpecificId = c.SubjectID };
+                            var matchingItem = subjectList.Find(item2 => item2.SubjectSpecificId == newItem.SubjectSpecificId);
+                            if (matchingItem != null)
+                            {
+                                return new CourseRegistrationDetail
+                                {
+                                    CourseRegistrationFormId = courseRegistrationForm.Id,
+                                    SubjectId = matchingItem.Id,
+                                };
+                            }
+                            return null;
+                        })
+                        .Where(curriculum => curriculum != null)
+                        .ToList();
+                    foreach (var item in deleteSubjectList)
+                    {
+                        await _courseRegistrationDetailService.DeleteCourseRegistrationDetail(courseRegistrationForm.Id, item.Id);
+                    }
+                    foreach (var item in addSubjectList)
+                    {
+                        await _courseRegistrationDetailService.CreateCourseRegistrationDetail(item);
+                    }
+                    await GetCurrentSubjectList(thisStudent.Id, thisSemester.Id);
+                    ReloadSubjectDisplays(currentSubjectList);
+                    CheckedSubjectDisplayList2();
+                }
+            }
         }
         #endregion
 
         #region Property Changed
+        partial void OnSelectedFilterOptionChanged(string oldValue, string newValue)
+        {
+            if (oldValue != newValue)
+            {
+                SearchFilter = "";
+                FilterChange();
+                CheckedSubjectDisplayList2();
+            }
+        }
+
+        partial void OnSearchFilterChanged(string oldValue, string newValue)
+        {
+            SubjectDisplayList2 = primarySubjectDisplayList2.ToObservableCollection();
+            FilterChange();
+            SubjectDisplayList2 = SubjectDisplayList2.Where(a => a.SubjectName2.ToLower().Contains(newValue.ToLower()) || a.SubjectID2.ToLower().Contains(newValue.ToLower())).ToObservableCollection();
+            ReloadItemsBackground2();
+        }
         #endregion
 
         #region Helper
         public void GetAvailableSubjectList()
         {
+            availableSubjectList.Clear();
             availableSubjectList.AddRange(
                from item in availableCourseList
                join item2 in subjectList on item.SubjectId equals item2.Id
@@ -278,6 +360,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 
         public async Task GetCurrentSubjectList(int studentId, int semesterId)
         {
+            currentSubjectList.Clear();
             await GetCourseRegistrationFormByStudentIdAndSemesterId(studentId, semesterId);
             List<CourseRegistrationDetail> courseRegistrationDetailList = await _courseRegistrationDetailService.GetAllCRD();
             var curentCRDList = courseRegistrationDetailList.Where(item => item.CourseRegistrationFormId == courseRegistrationForm.Id).ToList();
@@ -331,22 +414,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                     NumberOfCredits = item.NumberOfCredits,
                     SubjectType = item2.Name,
                 });
-
                 SubjectDisplayList = primarySubjectDisplayList.OrderBy(d => d.SubjectID).ToObservableCollection();
+                CheckedTotalCredits();
                 FilterChange();
                 ReloadItemsBackground();
-            }
-        }
-
-        private void CheckedButtontext()
-        {
-            if (courseRegistrationForm == null)
-            {
-                ButtonText = "Register";
-            }
-            else
-            {
-                ButtonText = "Save changed";
             }
         }
 
@@ -413,6 +484,33 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 ReloadItemsBackground();
             }
         }
+
+        private void CheckedButtontext()
+        {
+            if (courseRegistrationForm == null)
+            {
+                ButtonText = "Register";
+            }
+            else
+            {
+                ButtonText = "Save changed";
+            }
+        }
+
+        private void CheckedTotalCredits()
+        {
+            CurrentTotalCredits = 0;
+            foreach (var item in SubjectDisplayList)
+            {
+                CurrentTotalCredits += item.NumberOfCredits;
+            }
+        }
+        private void CheckedSubjectDisplayList2()
+        {
+            SubjectDisplayList2 = SubjectDisplayList2.Where(s2 => !SubjectDisplayList.Any(s1 => s1.SubjectID == s2.SubjectID2)).ToObservableCollection();
+            ReloadItemsBackground2();
+        }
+
         public void FilterChange()
         {
             if (FilterOptions.Count > 0)
@@ -430,7 +528,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                     {
                         SubjectDisplayList2 = SubjectDisplayList2.OrderBy(item => item.SubjectName2).ToObservableCollection();
                     }
-
                 }
             }
         }

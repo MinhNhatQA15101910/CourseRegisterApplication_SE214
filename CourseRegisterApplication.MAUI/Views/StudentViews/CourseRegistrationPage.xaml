@@ -9,12 +9,12 @@
   <Grid RowDefinitions="Auto,*">
     <contentViews:NavigationTopBar
       Grid.Row="0"
-      DescriptionText="{Binding DescriptionText, FallbackValue='Card description text.'}"
+      DescriptionText="Can register a course in a semester and a school year"
       IsBackVisible="False"
       IsControlVisible="True"
       IsTitleVisible="True"
       LogoutCommand="{Binding LogoutCommand}"
-      TitleText="{Binding TitleText, FallbackValue='Title text.'}"
+      TitleText="Course registration page"
       VerticalOptions="Start" />
     <ScrollView Grid.Row="1" IsVisible="{Binding IsVisbleUnableCourseRegistration}">
       <StackLayout
@@ -25,7 +25,7 @@
           Margin="0,24,0,0"
           HeightRequest="350"
           HorizontalOptions="Center"
-          Source="image_no_notification.png" />
+          Source="image_no_notification.png"/>
         <Label
           Margin="0,24,0,0"
           FontFamily="RobotoBold"
@@ -40,7 +40,7 @@
           Text="{Binding UnableNotificationText, FallbackValue='No notification text'}"
           TextColor="#4F4F4F" />
       </StackLayout>
-    </ScrollView >
+    </ScrollView>
     <ScrollView Grid.Row="1" IsVisible="{Binding IsVisbleCourseRegistration}">
       <Grid Row="1" RowDefinitions="*,auto">
         <Grid
@@ -103,7 +103,7 @@
             Grid.Row="0"
             Grid.Column="2"
             Margin="0,24,0,0"
-            ColumnDefinitions="*,*">
+            ColumnDefinitions="*,*,*">
             <StackLayout Grid.Column="0">
               <Label
                 FontFamily="RobotoMedium"
@@ -130,6 +130,20 @@
                 FontSize="18"
                 HorizontalOptions="Start"
                 Text="{Binding CurrentYear, FallbackValue='Null'}"
+                TextColor="#A7A7A7" />
+            </StackLayout>
+            <StackLayout Grid.Column="2">
+              <Label
+                FontFamily="RobotoMedium"
+                FontSize="16"
+                HorizontalOptions="Start"
+                Text="Total credits"
+                TextColor="#1A1A1A" />
+              <Label
+                Margin="0,4,0,0"
+                FontSize="18"
+                HorizontalOptions="Start"
+                Text="{Binding CurrentTotalCredits, FallbackValue='Null'}"
                 TextColor="#A7A7A7" />
             </StackLayout>
           </Grid>

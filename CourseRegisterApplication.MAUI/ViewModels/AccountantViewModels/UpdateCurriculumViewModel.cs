@@ -209,33 +209,32 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task SaveChanged()
         {
-            List<Subject> deleteSubjectList = currentSubjectList
-                .Where(c => !primarySubjectDisplayList.Select(c => c.SubjectID).Contains(c.SubjectSpecificId))
-                .Select(c => new Subject { SubjectSpecificId = c.SubjectSpecificId, Id=c.Id })
-                .ToList();
-            List<Curriculum> addSubjectList = primarySubjectDisplayList
-                .Where(c => !currentSubjectList.Select(c => c.SubjectSpecificId).Contains(c.SubjectID))
-                .Select(c =>
-                {
-                    var newItem = new Subject { SubjectSpecificId = c.SubjectID };
-                    var matchingItem = subjectList.Find(item2 => item2.SubjectSpecificId == newItem.SubjectSpecificId);
-                    if (matchingItem != null)
-                    {
-                        return new Curriculum
-                        {
-                            BranchId = selectedBranchID,
-                            SubjectId = matchingItem.Id,
-                            Semester = selectedSemester
-                        };
-                    }
-                    return null;
-                })
-                .Where(curriculum => curriculum != null)
-                .ToList();
-
             bool accept = await Application.Current.MainPage.DisplayAlert("Warning!", "Do you want to update this curriculum", "Yes", "No");
             if (accept)
             {
+                List<Subject> deleteSubjectList = currentSubjectList
+                .Where(c => !primarySubjectDisplayList.Select(c => c.SubjectID).Contains(c.SubjectSpecificId))
+                .Select(c => new Subject { SubjectSpecificId = c.SubjectSpecificId, Id = c.Id })
+                .ToList();
+                List<Curriculum> addSubjectList = primarySubjectDisplayList
+                    .Where(c => !currentSubjectList.Select(c => c.SubjectSpecificId).Contains(c.SubjectID))
+                    .Select(c =>
+                    {
+                        var newItem = new Subject { SubjectSpecificId = c.SubjectID };
+                        var matchingItem = subjectList.Find(item2 => item2.SubjectSpecificId == newItem.SubjectSpecificId);
+                        if (matchingItem != null)
+                        {
+                            return new Curriculum
+                            {
+                                BranchId = selectedBranchID,
+                                SubjectId = matchingItem.Id,
+                                Semester = selectedSemester
+                            };
+                        }
+                        return null;
+                    })
+                    .Where(curriculum => curriculum != null)
+                    .ToList();
                 foreach (var item in deleteSubjectList)
                 {
                     await _curriculumService.DeleteCurriculum(selectedBranchID, item.Id);

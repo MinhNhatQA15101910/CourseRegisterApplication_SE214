@@ -71,14 +71,6 @@ namespace CourseRegisterApplication.MAUI.Services
             return null;
         }
 
-        public async Task<bool> DeleteCurriculum(int branchId, int subjectId)
-        {
-            string apiUrl = $"{GlobalConfig.CURRICULUM_BASE_URL}{branchId}/{subjectId}";
-            var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
-
-            return response.IsSuccessStatusCode;
-        }
-
         public async Task<List<Curriculum>> GetCurriculumSubjectsByBranchIdAndSemester(int branchId, int semester)
         {
             string apiUrl = $"{GlobalConfig.CURRICULUM_BASE_URL}branch/{branchId}";
