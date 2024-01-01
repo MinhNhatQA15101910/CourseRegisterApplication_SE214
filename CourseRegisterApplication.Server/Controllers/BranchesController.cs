@@ -12,7 +12,7 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Branch>>> GetBranches()
+        public async Task<ActionResult<IEnumerable<Branch>>> GetAllBranches()
         {
             if (_context.Branches == null)
             {

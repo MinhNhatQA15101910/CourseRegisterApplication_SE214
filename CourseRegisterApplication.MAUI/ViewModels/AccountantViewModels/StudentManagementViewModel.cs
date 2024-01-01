@@ -74,9 +74,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         [ObservableProperty] private string avatarUri = "blank_avatar.jpg";
 
-        [ObservableProperty] private string fullName = "";
+        [ObservableProperty] private string fullName;
 
-        [ObservableProperty] private string studentSpecificId = "";
+        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(NavigateToUpdateStudentPageCommand))]
+        private string studentSpecificId;
 
         [ObservableProperty] private string activateStatus;
 
@@ -129,6 +130,20 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             addUpdateStudentViewModel.GetInformationCommand.Execute(null);
 
             await Shell.Current.GoToAsync(nameof(AddUpdateStudentPage), true);
+        }
+
+        [RelayCommand(CanExecute = nameof(CanNavigateToUpdateStudentPageCommandExecuted))]
+        public async Task NavigateToUpdateStudentPage()
+        {
+            AddUpdateStudentViewModel addUpdateStudentViewModel = _serviceProvider.GetService<AddUpdateStudentViewModel>();
+            addUpdateStudentViewModel.GetInformationCommand.Execute(StudentSpecificId);
+
+            await Shell.Current.GoToAsync(nameof(AddUpdateStudentPage), true);
+        }
+
+        public bool CanNavigateToUpdateStudentPageCommandExecuted()
+        {
+            return !string.IsNullOrEmpty(StudentSpecificId);
         }
 
         [RelayCommand]

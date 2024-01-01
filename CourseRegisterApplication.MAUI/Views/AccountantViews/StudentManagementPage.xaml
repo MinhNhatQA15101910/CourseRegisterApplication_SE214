@@ -275,6 +275,7 @@
                 Aspect="AspectFit"
                 BackgroundColor="#EFF3FA"
                 BorderColor="Black"
+                Command="{Binding NavigateToUpdateStudentPageCommand}"
                 CornerRadius="8"
                 HeightRequest="16"
                 Source="info_box.png"

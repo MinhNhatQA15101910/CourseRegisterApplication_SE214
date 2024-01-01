@@ -18,11 +18,11 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [ObservableProperty] private string imageUrl = "https://static.wixstatic.com/media/8027bc_6d79e9c44bae49de97c018a781738884~mv2.jpg/v1/fill/w_987,h_1096,al_c,q_90/file.jpg";
 
         [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddStudentCommand))]
-        private string studentId;
+        private string studentSpecificId;
 
-        [ObservableProperty] private string studentIdMessageText;
+        [ObservableProperty] private string studentSpecificIdMessageText;
 
-        [ObservableProperty] private Color studentIdColor;
+        [ObservableProperty] private Color studentSpecificIdColor;
 
         [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddStudentCommand))]
         private string studentName;
@@ -42,17 +42,17 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         [ObservableProperty] private ObservableCollection<string> genderList = new() { "Male", "Female" };
 
-        [ObservableProperty] private ObservableCollection<Province> provinceList = new() { new() { Id = 0, ProvinceName = "- Select province -" } };
+        [ObservableProperty] private ObservableCollection<Province> provinceList = new();
 
-        [ObservableProperty] private ObservableCollection<District> districtList = new() { new() { Id = 0, DistrictName = "- Select district -" } };
+        [ObservableProperty] private ObservableCollection<District> districtList = new();
 
-        [ObservableProperty] private ObservableCollection<Department> departmentList = new() { new() { Id = 0, DepartmentName = "- Select department -" } };
+        [ObservableProperty] private ObservableCollection<Department> departmentList = new();
 
-        [ObservableProperty] private ObservableCollection<Branch> branchList = new() { new() { Id = 0, BranchName = "- Select branch -" } };
+        [ObservableProperty] private ObservableCollection<Branch> branchList = new();
 
         private List<PriorityType> primaryPriorityTypeList = new();
 
-        [ObservableProperty] private ObservableCollection<PriorityType> priorityTypeList = new() { new() { Id = 0, PriorityName = "- Select priority type -" } };
+        [ObservableProperty] private ObservableCollection<PriorityType> priorityTypeList = new();
 
         [ObservableProperty] private ObservableCollection<SelectedPriorityTypeDisplay> selectedPriorityTypeList = new();
 
@@ -86,45 +86,133 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         #region Commands
         [RelayCommand]
-        public async Task GetInformation()
+        public async Task GetInformation(string studentSpecificId)
         {
-            // Department
-            IDepartmentService departmentService = _serviceProvider.GetService<IDepartmentService>();
-            DepartmentList = (await departmentService.GetAllDepartments()).ToObservableCollection();
-            DepartmentList.Insert(0, new() { Id = 0, DepartmentName = "- Select department -" });
+            // Add student
+            if (string.IsNullOrEmpty(studentSpecificId))
+            {
+                // Department
+                IDepartmentService departmentService = _serviceProvider.GetService<IDepartmentService>();
+                DepartmentList = (await departmentService.GetAllDepartments()).ToObservableCollection();
+                DepartmentList.Insert(0, new() { Id = 0, DepartmentName = "- Select department -" });
 
-            SelectedDepartment = DepartmentList[0];
+                SelectedDepartment = DepartmentList[0];
 
-            // Branch
-            BranchList.Add(new() { Id = 0, BranchName = "- Select branch -" });
+                // Branch
+                BranchList = new() { new() { BranchName = "- Select branch -" } };
 
-            SelectedBranch = BranchList[0];
+                SelectedBranch = BranchList[0];
 
-            // Province
-            IProvinceService provinceService = _serviceProvider.GetService<IProvinceService>();
-            ProvinceList = (await provinceService.GetAllProvinces()).ToObservableCollection();
-            ProvinceList.Insert(0, new() { Id = 0, ProvinceName = "- Select province -" });
+                // Province
+                IProvinceService provinceService = _serviceProvider.GetService<IProvinceService>();
+                ProvinceList = (await provinceService.GetAllProvinces()).ToObservableCollection();
+                ProvinceList.Insert(0, new() { Id = 0, ProvinceName = "- Select province -" });
 
-            SelectedProvince = ProvinceList[0];
+                SelectedProvince = ProvinceList[0];
 
-            // District
-            DistrictList.Add(new() { Id = 0, DistrictName = "- Select district -" });
+                // District
+                DistrictList = new() { new() { DistrictName = "- Select district -" } };
 
-            SelectedDistrict = DistrictList[0];
+                SelectedDistrict = DistrictList[0];
 
-            // Priority Types
-            IPriorityTypeService priorityTypeService = _serviceProvider.GetService<IPriorityTypeService>();
-            primaryPriorityTypeList = (await priorityTypeService.GetAllPriorityTypesAsync()).ToList();
+                // Priority Types
+                IPriorityTypeService priorityTypeService = _serviceProvider.GetService<IPriorityTypeService>();
+                primaryPriorityTypeList = (await priorityTypeService.GetAllPriorityTypesAsync()).ToList();
 
-            PriorityType nonePriorityType = primaryPriorityTypeList.First(pt => pt.Id == 1);
-            SelectedPriorityTypeList.Add(new() { PriorityName = nonePriorityType.PriorityName });
+                PriorityType nonePriorityType = primaryPriorityTypeList.First(pt => pt.Id == 1);
+                SelectedPriorityTypeList = new() { new() { PriorityName = nonePriorityType.PriorityName } };
 
-            PriorityTypeList = primaryPriorityTypeList
-                .Where(pt => pt.Id != 1 && pt.Id != 2)
-                .ToObservableCollection();
-            PriorityTypeList.Insert(0, new() { Id = 0, PriorityName = "- Select priority type -" });
+                PriorityTypeList = primaryPriorityTypeList
+                    .Where(pt => pt.Id != 1 && pt.Id != 2)
+                    .ToObservableCollection();
+                PriorityTypeList.Insert(0, new() { Id = 0, PriorityName = "- Select priority type -" });
 
-            SelectedPriorityType = PriorityTypeList[0];
+                SelectedPriorityType = PriorityTypeList[0];
+            }
+            // Update student
+            else
+            {
+                IStudentService studentService = _serviceProvider.GetService<IStudentService>();
+                Student student = await studentService.GetFullInformationOfStudentBySpecificId(studentSpecificId);
+
+                ImageUrl = student.ImageUrl;
+                StudentSpecificId = student.StudentSpecificId;
+                StudentName = student.FullName;
+                Email = student.Email;
+                DateOfBirth = student.DateOfBirth;
+
+                // DepartmentList
+                DepartmentList.Clear();
+
+                IDepartmentService departmentService = _serviceProvider.GetService<IDepartmentService>();
+                DepartmentList = (await departmentService.GetAllDepartments()).ToObservableCollection();
+                DepartmentList.Insert(0, new() { Id = 0, DepartmentName = "- Select department -" });
+
+                // SelectedDepartment
+                SelectedDepartment = DepartmentList.First(d => d.Id == student.Branch.DepartmentId);
+
+                // Branch
+                BranchList.Clear();
+
+                IBranchService branchService = _serviceProvider.GetService<IBranchService>();
+                BranchList = (await branchService.GetBranchesByDepartmentId(student.Branch.DepartmentId)).ToObservableCollection();
+                BranchList.Insert(0, new() { Id = 0, BranchName = "- Select branch -" });
+
+                // SelectedBranch
+                SelectedBranch = BranchList.First(b => b.Id == student.BranchId);
+
+                // Province
+                ProvinceList.Clear();
+                
+                IProvinceService provinceService = _serviceProvider.GetService<IProvinceService>();
+                ProvinceList = (await provinceService.GetAllProvinces()).ToObservableCollection();
+                ProvinceList.Insert(0, new() { Id = 0, ProvinceName = "- Select province -" });
+
+                // SelectedProvince
+                SelectedProvince = ProvinceList.First(p => p.Id == student.District.Province.Id);
+
+                // District
+                DistrictList.Clear();
+
+                IDistrictService districtService = _serviceProvider.GetService<IDistrictService>();
+                DistrictList = (await districtService.GetDistrictsByProvinceId(student.District.ProvinceId)).ToObservableCollection();
+                DistrictList.Insert(0, new() { Id = 0, DistrictName = "- Select district -" });
+
+                // SelectedDistrict
+                SelectedDistrict = DistrictList.First(d => d.Id == student.DistrictId);
+
+                // PrimaryPriorityTypeList
+                IPriorityTypeService priorityTypeService = _serviceProvider.GetService<IPriorityTypeService>();
+                primaryPriorityTypeList = (await priorityTypeService.GetAllPriorityTypesAsync()).ToList();
+
+                // SelectedPriorityTypeList
+                SelectedPriorityTypeList.Clear();
+
+                var selectedPriorityTypeListFromDatabase = (await priorityTypeService.GetPriorityTypesFromStudentIdAsync(student.Id)).ToObservableCollection();
+                foreach (var priorityType in selectedPriorityTypeListFromDatabase)
+                {
+                    if (priorityType.Id != 2)
+                    {
+                        SelectedPriorityTypeList.Add(new() { PriorityName = priorityType.PriorityName });
+                    }
+                }
+
+                if (SelectedPriorityTypeList.Count <= 0) 
+                {
+                    PriorityType nonePriorityType = primaryPriorityTypeList.First(pt => pt.Id == 1);
+                    SelectedPriorityTypeList.Add(new() { PriorityName = nonePriorityType.PriorityName });
+                }
+
+                PriorityTypeList = primaryPriorityTypeList
+                    .Where(pt => 
+                        pt.Id != 1 && 
+                        pt.Id != 2 &&
+                        !selectedPriorityTypeListFromDatabase.Any(spt => spt.Id == pt.Id))
+                    .ToObservableCollection();
+                PriorityTypeList.Insert(0, new() { Id = 0, PriorityName = "- Select priority type -" });
+
+                SelectedPriorityType = PriorityTypeList[0];
+            }
         }
 
         [RelayCommand(CanExecute = nameof(CanAddStudentExecuted))]
@@ -137,7 +225,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
             //    // If there is already a user with the same username with the input, display error
             //    List<Student> students = await _studentService.GetAllStudents();
-            //    Student student = students.Find(s => s.StudentSpecificId == StudentId);
+            //    Student student = students.Find(s => s.StudentSpecificId == StudentSpecificId);
             //    if (student != null)
             //    {
             //        IsLoading = false;
@@ -147,7 +235,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
             //    student = new Student
             //    {
-            //        StudentSpecificId = StudentId,
+            //        StudentSpecificId = StudentSpecificId,
             //        FullName = StudentName,
             //        Gender = (SelectedGender == "Male") ? Gender.Male : Gender.Female,
             //        DateOfBirth = DateOfBirth,
@@ -228,25 +316,25 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             int index2 = 0;
             int index3 = 0;
 
-            //validate StudentId
-            if (string.IsNullOrEmpty(StudentId))
+            //validate StudentSpecificId
+            if (string.IsNullOrEmpty(StudentSpecificId))
             {
                 if (globalVariable1 == 0)
                 {
-                    StudentIdColor = Color.FromArgb("#FFFFFF");
+                    StudentSpecificIdColor = Color.FromArgb("#FFFFFF");
                 }
                 else
                 {
-                    StudentIdColor = Color.FromArgb("#BF1D28");
+                    StudentSpecificIdColor = Color.FromArgb("#BF1D28");
                 }
-                StudentIdMessageText = "Student ID cannot be empty.";
+                StudentSpecificIdMessageText = "Student ID cannot be empty.";
                 index1++;
             }
             else
             {
                 globalVariable1 = 1;
-                StudentIdColor = Color.FromArgb("#007D3A");
-                StudentIdMessageText = "Valid student ID.";
+                StudentSpecificIdColor = Color.FromArgb("#007D3A");
+                StudentSpecificIdMessageText = "Valid student ID.";
                 index1 = 0;
             }
 
@@ -311,10 +399,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             StudentName = "";
             Email = "";
             SelectedGender = "Male";
-            SelectedProvince = ProvinceList[0];
-            SelectedDistrict = DistrictList[0];
-            SelectedBranch = BranchList[0];
-            SelectedDepartment = DepartmentList[0];
         }
 
         private bool ValidateEmail(string email)
