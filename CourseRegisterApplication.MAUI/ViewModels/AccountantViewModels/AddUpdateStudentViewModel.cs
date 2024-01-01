@@ -38,7 +38,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         [ObservableProperty] private Color emailColor;
 
-        [ObservableProperty] private DateTime dateOfBirth;
+        [ObservableProperty] private DateTime dateOfBirth = DateTime.Now;
 
         [ObservableProperty] private ObservableCollection<string> genderList = new() { "Male", "Female" };
 
@@ -276,40 +276,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             await Shell.Current.GoToAsync("..", true);
         }
 
-        [RelayCommand]
-        public async Task GetBranch()
-        {
-            //var branches = await _branchService.GetBranchesByDepartmentId(SelectedDepartment.Id);
-            //BranchList.Clear();
-            //foreach (var branch in branches)
-            //{
-            //    BranchList.Add(branch);
-            //}
-            //BranchEnable = true;
-        }
-
-        [RelayCommand]
-        public async Task GetDistrict()
-        {
-            //var districts = await _districtService.GetDistrictsByProvinceId(SelectedProvince.Id);
-            //DistrictList.Clear();
-            //foreach (var district in districts)
-            //{
-            //    DistrictList.Add(district);
-            //}
-            //DistrictEnable = true;
-        }
-
-        partial void OnSelectedDepartmentChanged(Department value)
-        {
-            // GetBranchCommand.Execute(null);
-        }
-
-        partial void OnSelectedProvinceChanged(Province value)
-        {
-            // getDistrictCommand.Execute(null);
-        }
-
         public bool CanAddStudentExecuted()
         {
             int index1 = 0;
@@ -361,7 +327,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
 
             //validate Email
-            if (string.IsNullOrEmpty(Email))
+            if (!ValidateEmail(Email))
             {
                 if (globalVariable3 == 0)
                 {
@@ -390,19 +356,70 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
             return true;
         }
+        #endregion
 
+        #region Property Changed
+        async partial void OnSelectedDepartmentChanged(Department value)
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            if (value.DepartmentName == "- Select department -")
+            {
+                BranchList = new() { new() { BranchName = "- Select branch -" } };
+            }
+            else
+            {
+                IBranchService branchService = _serviceProvider.GetService<IBranchService>();
+                BranchList = (await branchService.GetBranchesByDepartmentId(value.Id)).ToObservableCollection();
+                BranchList.Insert(0, new() { Id = 0, BranchName = "- Select branch -" });
+            }
+
+            SelectedBranch = BranchList[0];
+        }
+
+        async partial void OnSelectedProvinceChanged(Province value)
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            if (value.ProvinceName == "- Select province -")
+            {
+                DistrictList = new() { new() { DistrictName = "- Select district -" } };
+            }
+            else
+            {
+                IDistrictService districtService = _serviceProvider.GetService<IDistrictService>();
+                DistrictList = (await districtService.GetDistrictsByProvinceId(value.Id)).ToObservableCollection();
+                DistrictList.Insert(0, new() { Id = 0, DistrictName = "- Select district -" });
+            }
+
+            SelectedDistrict = DistrictList[0];
+        }
         #endregion
 
         #region Helper
         public void Clear()
         {
+            StudentSpecificId = "";
             StudentName = "";
             Email = "";
             SelectedGender = "Male";
+            ImageUrl = "https://static.wixstatic.com/media/8027bc_6d79e9c44bae49de97c018a781738884~mv2.jpg/v1/fill/w_987,h_1096,al_c,q_90/file.jpg";
+            DateOfBirth = DateTime.Now;
         }
 
         private bool ValidateEmail(string email)
         {
+            if (email == null)
+            {
+                return false;
+            }
+
             try
             {
                 if (email.EndsWith('.'))
@@ -418,7 +435,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 return false;
             }
         }
-
         #endregion
     }
 }
