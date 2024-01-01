@@ -215,6 +215,26 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
         }
 
+        [RelayCommand]
+        public async Task ChooseImage()
+        {
+            var result = await FilePicker.Default.PickAsync(new PickOptions
+            {
+                PickerTitle = "Please select an image file.",
+                FileTypes = FilePickerFileType.Images
+            });
+
+            if (result != null &&
+                (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
+                result.FileName.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) ||
+                result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase) ||
+                result.FileName.EndsWith("svg", StringComparison.OrdinalIgnoreCase) ||
+                result.FileName.EndsWith("gif", StringComparison.OrdinalIgnoreCase)))
+            {
+                ImageUrl = result.FullPath;
+            }
+        }
+
         [RelayCommand(CanExecute = nameof(CanAddStudentExecuted))]
         public async Task AddStudent()
         {
