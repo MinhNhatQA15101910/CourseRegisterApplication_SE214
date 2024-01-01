@@ -45,7 +45,7 @@ namespace CourseRegisterApplication.MAUI.Services
         }
         public async Task<bool> DeleteCourseRegistrationDetail(int courseRegistrationFormId, int subjectId)
         {
-            string apiUrl = $"{GlobalConfig.COURSE_REGISTRATION_DETAIL_BASE_URL}{courseRegistrationFormId}{subjectId}";
+            string apiUrl = $"{GlobalConfig.COURSE_REGISTRATION_DETAIL_BASE_URL}{courseRegistrationFormId}/{subjectId}";
             var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
 
             return response.IsSuccessStatusCode;

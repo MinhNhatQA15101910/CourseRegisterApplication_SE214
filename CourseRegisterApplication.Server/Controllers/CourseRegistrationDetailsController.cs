@@ -77,7 +77,7 @@
         public async Task<IActionResult> DeleteCourseRegistrationDetail(int courseRegistrationFormId, int subjectId)
         {
             var courseRegistrationDetail = await _context.CourseRegistrationDetails
-                .FirstOrDefaultAsync(c => c.CourseRegistrationFormId == courseRegistrationFormId && c.SubjectId == subjectId);
+                .FirstAsync(c => c.CourseRegistrationFormId == courseRegistrationFormId && c.SubjectId == subjectId);
 
             if (courseRegistrationDetail == null)
             {
