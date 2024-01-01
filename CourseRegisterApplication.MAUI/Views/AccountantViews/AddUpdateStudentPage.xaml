@@ -166,14 +166,42 @@
               FontSize="16"
               Text="Province:"
               TextColor="#000000" />
-            <Picker
-              Margin="50,0,0,0"
-              FontFamily="RobotoRegular"
-              HeightRequest="50"
-              ItemDisplayBinding="{Binding ProvinceName}"
-              ItemsSource="{Binding ProvinceList}"
-              SelectedItem="{Binding SelectedProvince}"
-              WidthRequest="250" />
+            <HorizontalStackLayout>
+              <Picker
+                FontFamily="RobotoRegular"
+                HeightRequest="50"
+                ItemDisplayBinding="{Binding ProvinceName}"
+                ItemsSource="{Binding ProvinceList}"
+                SelectedItem="{Binding SelectedProvince}"
+                WidthRequest="250" />
+              <ImageButton
+                Margin="10,0,0,0"
+                Padding="16"
+                BackgroundColor="#EFF3FA"
+                CornerRadius="12"
+                HeightRequest="8"
+                Source="vector_add_small.png"
+                ToolTipProperties.Text="Add new province"
+                VerticalOptions="Center"
+                WidthRequest="8">
+                <VisualStateManager.VisualStateGroups>
+                  <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                      <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                        </VisualState.Setters>
+                      </VisualState>
+                      <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                        </VisualState.Setters>
+                      </VisualState>
+                    </VisualStateGroup>
+                  </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+              </ImageButton>
+            </HorizontalStackLayout>
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
@@ -182,14 +210,42 @@
               FontSize="16"
               Text="District:"
               TextColor="#000000" />
-            <Picker
-              Margin="50,0,0,0"
-              FontFamily="RobotoRegular"
-              HeightRequest="50"
-              ItemDisplayBinding="{Binding DistrictName}"
-              ItemsSource="{Binding DistrictList}"
-              SelectedItem="{Binding SelectedDistrict}"
-              WidthRequest="250" />
+            <HorizontalStackLayout>
+              <Picker
+                FontFamily="RobotoRegular"
+                HeightRequest="50"
+                ItemDisplayBinding="{Binding DistrictName}"
+                ItemsSource="{Binding DistrictList}"
+                SelectedItem="{Binding SelectedDistrict}"
+                WidthRequest="250" />
+              <ImageButton
+                Margin="10,0,0,0"
+                Padding="16"
+                BackgroundColor="#EFF3FA"
+                CornerRadius="12"
+                HeightRequest="8"
+                Source="vector_add_small.png"
+                ToolTipProperties.Text="Add new district"
+                VerticalOptions="Center"
+                WidthRequest="8">
+                <VisualStateManager.VisualStateGroups>
+                  <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                      <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                        </VisualState.Setters>
+                      </VisualState>
+                      <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                        </VisualState.Setters>
+                      </VisualState>
+                    </VisualStateGroup>
+                  </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+              </ImageButton>
+            </HorizontalStackLayout>
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
@@ -198,14 +254,42 @@
               FontSize="16"
               Text="Department:"
               TextColor="#000000" />
-            <Picker
-              Margin="50,0,0,0"
-              FontFamily="RobotoRegular"
-              HeightRequest="50"
-              ItemDisplayBinding="{Binding DepartmentName}"
-              ItemsSource="{Binding DepartmentList}"
-              SelectedItem="{Binding SelectedDepartment}"
-              WidthRequest="250" />
+            <HorizontalStackLayout>
+              <Picker
+                FontFamily="RobotoRegular"
+                HeightRequest="50"
+                ItemDisplayBinding="{Binding DepartmentName}"
+                ItemsSource="{Binding DepartmentList}"
+                SelectedItem="{Binding SelectedDepartment}"
+                WidthRequest="250" />
+              <ImageButton
+                Margin="10,0,0,0"
+                Padding="16"
+                BackgroundColor="#EFF3FA"
+                CornerRadius="12"
+                HeightRequest="8"
+                Source="vector_add_small.png"
+                ToolTipProperties.Text="Add new department"
+                VerticalOptions="Center"
+                WidthRequest="8">
+                <VisualStateManager.VisualStateGroups>
+                  <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                      <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                        </VisualState.Setters>
+                      </VisualState>
+                      <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                        </VisualState.Setters>
+                      </VisualState>
+                    </VisualStateGroup>
+                  </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+              </ImageButton>
+            </HorizontalStackLayout>
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
@@ -214,14 +298,42 @@
               FontSize="16"
               Text="Branch:"
               TextColor="#000000" />
-            <Picker
-              Margin="50,0,0,0"
-              FontFamily="RobotoRegular"
-              HeightRequest="50"
-              ItemDisplayBinding="{Binding BranchName}"
-              ItemsSource="{Binding BranchList}"
-              SelectedItem="{Binding SelectedBranch}"
-              WidthRequest="250" />
+            <HorizontalStackLayout>
+              <Picker
+                FontFamily="RobotoRegular"
+                HeightRequest="50"
+                ItemDisplayBinding="{Binding BranchName}"
+                ItemsSource="{Binding BranchList}"
+                SelectedItem="{Binding SelectedBranch}"
+                WidthRequest="250" />
+              <ImageButton
+                Margin="10,0,0,0"
+                Padding="16"
+                BackgroundColor="#EFF3FA"
+                CornerRadius="12"
+                HeightRequest="8"
+                Source="vector_add_small.png"
+                ToolTipProperties.Text="Add new branch"
+                VerticalOptions="Center"
+                WidthRequest="8">
+                <VisualStateManager.VisualStateGroups>
+                  <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                      <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                        </VisualState.Setters>
+                      </VisualState>
+                      <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                        </VisualState.Setters>
+                      </VisualState>
+                    </VisualStateGroup>
+                  </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+              </ImageButton>
+            </HorizontalStackLayout>
           </VerticalStackLayout>
         </VerticalStackLayout>
 
@@ -257,28 +369,57 @@
               HorizontalOptions="Start"
               Text="Priority type:"
               TextColor="#000000" />
-            <Picker
-              FontFamily="RobotoRegular"
-              HeightRequest="50"
-              HorizontalOptions="Start"
-              ItemDisplayBinding="{Binding PriorityName}"
-              ItemsSource="{Binding PriorityTypeList}"
-              SelectedItem="{Binding SelectedPriorityType}"
-              WidthRequest="250" />
+            <HorizontalStackLayout>
+              <Picker
+                FontFamily="RobotoRegular"
+                HeightRequest="50"
+                HorizontalOptions="Start"
+                ItemDisplayBinding="{Binding PriorityName}"
+                ItemsSource="{Binding PriorityTypeList}"
+                SelectedItem="{Binding SelectedPriorityType}"
+                WidthRequest="250" />
+              <ImageButton
+                Margin="10,0,0,0"
+                Padding="16"
+                BackgroundColor="#EFF3FA"
+                CornerRadius="12"
+                HeightRequest="8"
+                Source="vector_add_small.png"
+                ToolTipProperties.Text="Add new priority type"
+                VerticalOptions="Center"
+                WidthRequest="8">
+                <VisualStateManager.VisualStateGroups>
+                  <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                      <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                        </VisualState.Setters>
+                      </VisualState>
+                      <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                        </VisualState.Setters>
+                      </VisualState>
+                    </VisualStateGroup>
+                  </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+              </ImageButton>
+            </HorizontalStackLayout>
             <Image
-              Margin="25,10,0,0"
+              Margin="-25,10,0,0"
               HeightRequest="24"
               HorizontalOptions="Center"
               Source="vector_double_down.png"
               WidthRequest="24">
               <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding SelectPriorityType}" />
+                <TapGestureRecognizer Command="{Binding SelectPriorityTypeCommand}" />
               </Image.GestureRecognizers>
             </Image>
             <Border
               Margin="0,10,0,0"
               HeightRequest="150"
-              HorizontalOptions="Center"
+              HorizontalOptions="Start"
               WidthRequest="250">
               <CollectionView
                 EmptyView="Please wait..."
@@ -307,7 +448,7 @@
                         VerticalOptions="Center"
                         WidthRequest="12">
                         <Image.GestureRecognizers>
-                          <TapGestureRecognizer Command="{Binding UnselectPriorityType}" />
+                          <TapGestureRecognizer Command="{Binding UnselectPriorityTypeCommand}" />
                         </Image.GestureRecognizers>
                       </Image>
                     </Grid>
@@ -326,7 +467,7 @@
           BackgroundColor="#2D88D4"
           Command="{Binding AddStudentCommand}"
           CornerRadius="10"
-          FontAttributes="Bold"
+          FontFamily="RobotoMedium"
           FontSize="16"
           HeightRequest="40"
           IsEnabled="True"

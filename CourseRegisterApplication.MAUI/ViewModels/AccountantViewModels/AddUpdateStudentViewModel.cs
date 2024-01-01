@@ -5,10 +5,28 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
     public partial class SelectedPriorityTypeDisplay : ObservableObject
     {
+        public ISelectedPriorityTypeRequester SelectedPriorityTypeRequester { get; set; }
+
+        public int Id { get; set; }
+
         [ObservableProperty] private string priorityName;
+
+        [RelayCommand]
+        public void UnselectPriorityType()
+        {
+            if (Id != 1)
+            {
+                SelectedPriorityTypeRequester.UnselectPriorityType(this);
+            }
+        }
     }
 
-    public partial class AddUpdateStudentViewModel : ObservableObject
+    public interface ISelectedPriorityTypeRequester
+    {
+        void UnselectPriorityType(SelectedPriorityTypeDisplay selectedPriorityTypeDisplay);
+    }
+
+    public partial class AddUpdateStudentViewModel : ObservableObject, ISelectedPriorityTypeRequester
     {
         #region Service
         private readonly IServiceProvider _serviceProvider;
@@ -120,7 +138,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 primaryPriorityTypeList = (await priorityTypeService.GetAllPriorityTypesAsync()).ToList();
 
                 PriorityType nonePriorityType = primaryPriorityTypeList.First(pt => pt.Id == 1);
-                SelectedPriorityTypeList = new() { new() { PriorityName = nonePriorityType.PriorityName } };
+                SelectedPriorityTypeList = new() { new() { SelectedPriorityTypeRequester = this, Id = nonePriorityType.Id, PriorityName = nonePriorityType.PriorityName } };
 
                 PriorityTypeList = primaryPriorityTypeList
                     .Where(pt => pt.Id != 1 && pt.Id != 2)
@@ -193,14 +211,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 {
                     if (priorityType.Id != 2)
                     {
-                        SelectedPriorityTypeList.Add(new() { PriorityName = priorityType.PriorityName });
+                        SelectedPriorityTypeList.Add(new() { SelectedPriorityTypeRequester = this, Id = priorityType.Id, PriorityName = priorityType.PriorityName });
                     }
                 }
 
                 if (SelectedPriorityTypeList.Count <= 0) 
                 {
                     PriorityType nonePriorityType = primaryPriorityTypeList.First(pt => pt.Id == 1);
-                    SelectedPriorityTypeList.Add(new() { PriorityName = nonePriorityType.PriorityName });
+                    SelectedPriorityTypeList.Add(new() { SelectedPriorityTypeRequester = this, Id = nonePriorityType.Id, PriorityName = nonePriorityType.PriorityName });
                 }
 
                 PriorityTypeList = primaryPriorityTypeList
@@ -232,6 +250,28 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 result.FileName.EndsWith("gif", StringComparison.OrdinalIgnoreCase)))
             {
                 ImageUrl = result.FullPath;
+            }
+        }
+
+        [RelayCommand]
+        public void SelectPriorityType()
+        {
+            if (SelectedPriorityType.PriorityName != "- Select priority type -")
+            {
+                foreach (var priorityType in SelectedPriorityTypeList)
+                {
+                    if (priorityType.Id == 1)
+                    {
+                        SelectedPriorityTypeList.Remove(priorityType);
+                        break;
+                    }
+                }
+
+                SelectedPriorityTypeList.Add(new() { SelectedPriorityTypeRequester = this, Id = SelectedPriorityType.Id, PriorityName = SelectedPriorityType.PriorityName });
+
+                PriorityTypeList.Remove(SelectedPriorityType);
+
+                SelectedPriorityType = PriorityTypeList[0];
             }
         }
 
@@ -375,6 +415,24 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
 
             return true;
+        }
+        #endregion
+
+        #region Implement ISelectedPriorityTypeRequester
+        public void UnselectPriorityType(SelectedPriorityTypeDisplay selectedPriorityTypeDisplay)
+        {
+            SelectedPriorityTypeList.Remove(selectedPriorityTypeDisplay);
+
+            if (SelectedPriorityTypeList.Count == 0)
+            {
+                PriorityType nonePriorityType = primaryPriorityTypeList.First(pt => pt.Id == 1);
+                SelectedPriorityTypeList.Add(new() { SelectedPriorityTypeRequester = this, Id = nonePriorityType.Id, PriorityName = nonePriorityType.PriorityName });
+            }
+
+            PriorityType priorityType = primaryPriorityTypeList.First(pt => pt.Id == selectedPriorityTypeDisplay.Id);
+            PriorityTypeList.Add(priorityType);
+
+            SelectedPriorityType = PriorityTypeList[0];
         }
         #endregion
 
