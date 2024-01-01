@@ -9,9 +9,6 @@ namespace CourseRegisterApplication.MAUI.IServices
     public interface ISubjectService
     {
         Task<List<Subject>> GetAllSubjects();
-        Task<List<Subject>> GetSubjectsByBranchIDSemester(int branchID, int semester);
-        Task<List<Subject>> GetSubjectsByID(int subjectId);
-        Task<List<Subject>> GetAllSubject();
         Task<Subject> GetSubjectById(int subjectId);
         Task<Subject> CreateSubject(Subject subject);
         Task<bool> DeleteSubject(int subjectId);

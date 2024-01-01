@@ -29,7 +29,6 @@ namespace CourseRegisterApplication.MAUI.Services
         public async Task<List<Curriculum>> GetAllCurriculums()
         {
             string apiUrl = GlobalConfig.CURRICULUM_BASE_URL;
-            string apiUrl = $"{GlobalConfig.CURRICULUM_BASE_URL}ByBranch/{branchId}";
 
             var response = await _httpClient.GetAsync(new Uri(apiUrl));
             if (response.IsSuccessStatusCode)

@@ -78,5 +78,30 @@
 
             return NoContent(); // Successfully deleted
         }
+
+        [HttpGet("BySubject/{subjectId}")]
+        public async Task<ActionResult<IEnumerable<Curriculum>>> GetCurriculumsBySubjectId(int subjectId)
+        {
+            try
+            {
+                if (_context.Curriculums == null)
+                {
+                    return new NotFoundResult();
+                }
+
+                var curriculums = await _context.Curriculums.Where(c => c.SubjectId == subjectId).ToListAsync();
+
+                if (curriculums == null)
+                {
+                    return NotFound("No curriculum found, please search again!");
+                }
+
+                return Ok(curriculums);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+        }
     }
 }

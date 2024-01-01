@@ -71,6 +71,7 @@
 	  <None Remove="Resources\Images\eye_close_icon.svg" />
 	  <None Remove="Resources\Images\eye_open_icon.svg" />
 	  <None Remove="Resources\Images\home.svg" />
+	  <None Remove="Resources\Images\image_no_notification.png" />
 	  <None Remove="Resources\Images\info_box.svg" />
 	  <None Remove="Resources\Images\location_icon.svg" />
 	  <None Remove="Resources\Images\message_box.svg" />

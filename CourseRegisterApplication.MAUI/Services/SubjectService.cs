@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
-    class SubjectService : ISubjectService
     public class SubjectService : ISubjectService
     {
         private readonly HttpClient _httpClient;
@@ -18,35 +17,14 @@ namespace CourseRegisterApplication.MAUI.Services
             _httpClient = httpClient;
         }
 
-        public async Task<List<Subject>> GetAllSubject()
-        {
-
-            string apiUrl = GlobalConfig.SUBJECT_BASE_URL;
-
-            var response = await _httpClient.GetAsync(new Uri(apiUrl));
-            if (response.IsSuccessStatusCode)
-            {
-                string jsonResponse = await response.Content.ReadAsStringAsync();
-                var subjectList = JsonConvert.DeserializeObject<List<Subject>>(jsonResponse);
-                return subjectList;
-                var subjects = JsonConvert.DeserializeObject<List<Subject>>(jsonResponse);
-                return subjects;
-            }
-
-            return null;
-        }
-        public async Task<List<Subject>> GetSubjectsByBranchIDSemester(int branchID, int semester)
         public async Task<Subject> GetSubjectById(int subjectId)
         {
-            string apiUrl = $"{GlobalConfig.SUBJECT_BASE_URL}curriculum/{branchID}/{semester}";
             string apiUrl = $"{GlobalConfig.SUBJECT_BASE_URL}{subjectId}";
 
             var response = await _httpClient.GetAsync(new Uri(apiUrl));
             if (response.IsSuccessStatusCode)
             {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
-                var subjectList = JsonConvert.DeserializeObject<List<Subject>>(jsonResponse);
-                return subjectList;
                 var subject = JsonConvert.DeserializeObject<Subject>(jsonResponse);
                 return subject;
             }
@@ -54,16 +32,16 @@ namespace CourseRegisterApplication.MAUI.Services
             return null;
         }
 
-        public async Task<List<Subject>> GetSubjectsByID(int subjectId)
+        public async Task<List<Subject>> GetAllSubjects()
         {
-            string apiUrl = $"{GlobalConfig.SUBJECT_BASE_URL}/{subjectId}";
+            string apiUrl = GlobalConfig.SUBJECT_BASE_URL;
 
             var response = await _httpClient.GetAsync(new Uri(apiUrl));
             if (response.IsSuccessStatusCode)
             {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
-                var subjectList = JsonConvert.DeserializeObject<List<Subject>>(jsonResponse);
-                return subjectList;
+                var subjects = JsonConvert.DeserializeObject<List<Subject>>(jsonResponse);
+                return subjects;
             }
 
             return null;
@@ -102,5 +80,6 @@ namespace CourseRegisterApplication.MAUI.Services
 
             return response.IsSuccessStatusCode;
         }
+
     }
 }

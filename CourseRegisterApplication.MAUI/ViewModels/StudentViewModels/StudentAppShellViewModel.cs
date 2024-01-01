@@ -36,34 +36,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 			}
 		}
 
-		#region Demo student
-		public static List<Student> students = new List<Student>()
-		{
-			new()
-			{
-				Id = 1,
-				StudentSpecificId="SV21520007",
-				FullName="Mai Hoàng Nhật Suy",
-			},
-			new()
-			{
-				Id = 2,
-				StudentSpecificId="SV21520008",
-				FullName="Mai Hoàng Nhật Duy",
-			},
-			new()
-			{
-				Id = 3,
-				StudentSpecificId="SV21520009",
-				FullName="Mai Hoàng Nhật Huy",
-			}
-		};
-		#endregion
-
 		[RelayCommand]
 		public async Task GetCurrentStudent()
 		{
-			foreach (var item in students)
+			List<Student> studentList = await _studentService.GetStudents();
+
+            foreach (var item in studentList)
 			{
 				if (item.StudentSpecificId == GlobalConfig.CurrentUser.Username)
 				{

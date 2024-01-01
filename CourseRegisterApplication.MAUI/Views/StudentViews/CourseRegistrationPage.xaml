@@ -16,7 +16,32 @@
       LogoutCommand="{Binding LogoutCommand}"
       TitleText="{Binding TitleText, FallbackValue='Title text.'}"
       VerticalOptions="Start" />
-    <ScrollView Grid.Row="1">
+    <ScrollView Grid.Row="1" IsVisible="{Binding IsVisbleUnableCourseRegistration}">
+      <StackLayout
+        Grid.Row="1"
+        Margin="200,100,200,100"
+        BackgroundColor="#FCFAFA">
+        <Image
+          Margin="0,24,0,0"
+          HeightRequest="350"
+          HorizontalOptions="Center"
+          Source="image_no_notification.png" />
+        <Label
+          Margin="0,24,0,0"
+          FontFamily="RobotoBold"
+          FontSize="24"
+          HorizontalOptions="Center"
+          Text="No course registration at this time"
+          TextColor="#4F4F4F" />
+        <Label
+          Margin="0,4,0,24"
+          FontSize="14"
+          HorizontalOptions="Center"
+          Text="{Binding UnableNotificationText, FallbackValue='No notification text'}"
+          TextColor="#4F4F4F" />
+      </StackLayout>
+    </ScrollView >
+    <ScrollView Grid.Row="1" IsVisible="{Binding IsVisbleCourseRegistration}">
       <Grid Row="1" RowDefinitions="*,auto">
         <Grid
           Grid.Row="0"
@@ -84,13 +109,13 @@
                 FontFamily="RobotoMedium"
                 FontSize="16"
                 HorizontalOptions="Start"
-                Text="Term"
+                Text="Semester"
                 TextColor="#1A1A1A" />
               <Label
                 Margin="0,4,0,0"
                 FontSize="18"
                 HorizontalOptions="Start"
-                Text="{Binding StudentAge, FallbackValue='Null'}"
+                Text="{Binding CurrentSemester, FallbackValue='Null'}"
                 TextColor="#A7A7A7" />
             </StackLayout>
             <StackLayout Grid.Column="1">
@@ -104,7 +129,7 @@
                 Margin="0,4,0,0"
                 FontSize="18"
                 HorizontalOptions="Start"
-                Text="{Binding StudentAge, FallbackValue='Null'}"
+                Text="{Binding CurrentYear, FallbackValue='Null'}"
                 TextColor="#A7A7A7" />
             </StackLayout>
           </Grid>
@@ -225,7 +250,7 @@
                 Aspect="AspectFit"
                 BackgroundColor="#509CDB"
                 BorderColor="Black"
-                Command="{Binding AddToCurriculumCommand}"
+                Command="{Binding AddToCourseRegistrationFormCommand}"
                 CornerRadius="8"
                 HeightRequest="24"
                 Source="vector_add_to_right.png"
@@ -253,7 +278,7 @@
                 Aspect="AspectFit"
                 BackgroundColor="#509CDB"
                 BorderColor="Black"
-                Command="{Binding DeleteFromCurriculumCommand}"
+                Command="{Binding DeleteFromCourseRegistrationFormCommand}"
                 CornerRadius="8"
                 HeightRequest="24"
                 Source="vector_add_to_left.png"
@@ -378,7 +403,7 @@
             FontFamily="RobotoMedium"
             HeightRequest="40"
             HorizontalOptions="Center"
-            Text="Save changed"
+            Text="{Binding ButtonText}"
             VerticalOptions="Center"
             WidthRequest="120">
             <VisualStateManager.VisualStateGroups>

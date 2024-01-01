@@ -14,66 +14,62 @@ namespace CourseRegisterApplication.Server.Controllers
             _context = context;
         }
 
+        private bool SubjectExists(int id)
+        {
+            return (_context.Subjects?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
         // GET: api/Subjects
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Subject>>> GetSubjects()
+        public async Task<ActionResult<IEnumerable<Subject>>> GetAllSubject()
         {
             try
             {
                 if (_context.Subjects == null)
                 {
-                return NotFound();
-                }
-            return await _context.Subjects.ToListAsync();
-                }
-        [HttpGet("curriculum/{branchId}/{semester}")]
-        public async Task<ActionResult<IEnumerable<Subject>>> GetSubjectsByBranchAndSemester(int? branchId, int? semester)
-            {
-            if (_context.Curriculums == null)
-        {
-                return NotFound();
+                    return new NotFoundResult();
                 }
 
-            var query = _context.Curriculums.AsQueryable();
+                var subjects = await _context.Subjects.ToListAsync();
 
-            if (branchId != null)
+                if (subjects == null)
                 {
-                query = query.Where(c => c.BranchId == branchId);
+                    return NotFound("No subjects found!");
                 }
 
-            if (semester != null)
+                return Ok(subjects);
+            }
+            catch (Exception ex)
             {
-                query = query.Where(c => c.Semester == semester);
+                return StatusCode(500, $"Internal server error: {ex}");
             }
         }
 
-            var subjects = await query
-                .Select(c => c.Subject)
-                .Distinct()
-                .ToListAsync();
 
-            return subjects;
-        }
 
-        [HttpGet("{subjectId}")]
-        public async Task<ActionResult<Subject>> GetSubjectById(int subjectId)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Subject>> GetSubjectById(int id)
         {
-            if (_context.Subjects == null)
+            try
             {
-                return new NotFoundResult();
+                if (_context.Subjects == null)
+                {
+                    return new NotFoundResult();
+                }
+
+                var subject = await _context.Subjects.Where(s => s.Id == id).FirstOrDefaultAsync();
+
+                if (subject == null)
+                {
+                    return NotFound("No subject of that Id found!");
+                }
+
+                return Ok(subject);
             }
-
-            var subject = await _context.Subjects.FindAsync(id);
-
-            if (subject == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(500, $"Internal server error: {ex}");
             }
-
-            _context.Subjects.Remove(subject);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         [HttpPut("{id}")]
@@ -101,9 +97,29 @@ namespace CourseRegisterApplication.Server.Controllers
                     return StatusCode(500, "Concurrency issue occurred");
                 }
             }
-
-            var result = await _context.Subjects.FirstAsync(b => b.Id == subjectId);
-            return result;
+            return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSubject(int id)
+        {
+            if (_context.Subjects == null)
+            {
+                return new NotFoundResult();
+            }
+
+            var subject = await _context.Subjects.FindAsync(id);
+
+            if (subject == null)
+            {
+                return NotFound();
+            }
+
+            _context.Subjects.Remove(subject);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
     }
 }
