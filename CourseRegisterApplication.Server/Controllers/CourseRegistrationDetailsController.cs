@@ -73,14 +73,12 @@
             return Ok(courseRegistrationDetail);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCourseRegistrationDetail(int id)
+        [HttpDelete("{courseRegistrationFormId}/{subjectId}")]
+        public async Task<IActionResult> DeleteCourseRegistrationDetail(int courseRegistrationFormId, int subjectId)
         {
-            if (_context.CourseRegistrationDetails == null)
-            {
-                return NotFound();
-            }
-            var courseRegistrationDetail = await _context.CourseRegistrationDetails.FindAsync(id);
+            var courseRegistrationDetail = await _context.CourseRegistrationDetails
+                .FirstOrDefaultAsync(c => c.CourseRegistrationFormId == courseRegistrationFormId && c.SubjectId == subjectId);
+
             if (courseRegistrationDetail == null)
             {
                 return NotFound();
