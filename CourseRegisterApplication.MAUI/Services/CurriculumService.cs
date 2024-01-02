@@ -57,10 +57,5 @@ namespace CourseRegisterApplication.MAUI.Services
 
             return null;
         }
-
-        public async Task<List<Curriculum>> GetCurriculumsBySubjectId(int subjectId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

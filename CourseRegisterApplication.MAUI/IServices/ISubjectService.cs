@@ -2,10 +2,7 @@
 {
     public interface ISubjectService
     {
-       
-        Task<Subject> AddSubject(Subject subject);
-        
-        Task<List<Subject>> GetAllSubjects();
+        Task<List<Subject>> GetAllSubject();
         Task<Subject> GetSubjectById(int subjectId);
         Task<Subject> CreateSubject(Subject subject);
         Task<bool> DeleteSubject(int subjectId);

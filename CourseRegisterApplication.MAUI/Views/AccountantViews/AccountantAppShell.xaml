@@ -96,6 +96,12 @@
     <ShellContent ContentTemplate="{DataTemplate local:CourseManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
+    Title="Subject type management"
+    Icon="book.png"
+    Route="subjectype">
+    <ShellContent ContentTemplate="{DataTemplate local:SubjectTypeManagementPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
     Title="Course registration confirm"
     Icon="book.png"
     Route="courseconfirm">

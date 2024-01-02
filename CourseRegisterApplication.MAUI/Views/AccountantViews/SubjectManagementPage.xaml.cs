@@ -13,6 +13,6 @@ public partial class SubjectManagementPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-
+        (BindingContext as SubjectManagementViewModel).GetAllSubjectCommand.Execute(null);
     }
 }

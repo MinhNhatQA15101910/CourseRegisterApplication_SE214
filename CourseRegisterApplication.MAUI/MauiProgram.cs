@@ -74,8 +74,10 @@ namespace CourseRegisterApplication.MAUI
 			builder.Services.AddScoped<StudyProgramViewModel>();
 			builder.Services.AddScoped<SubjectManagementViewModel>();
 			builder.Services.AddScoped<TuitionCollectionViewModel>();
-			builder.Services.AddScoped<AddSubjectViewModel>();
+			builder.Services.AddScoped<AddUpdateSubjectViewModel>();
             builder.Services.AddScoped<CourseConfirmationViewModel>();
+            builder.Services.AddScoped<SubjectTypeManagementViewModel>();
+            builder.Services.AddScoped<AddUpdateSubjectTypeViewModel>();
 
             // Views
             builder.Services.AddTransient<LoginPage>();
@@ -116,8 +118,10 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<AddUpdateDistrictPopup>();
             builder.Services.AddScoped<StudentManagementPage>();
             builder.Services.AddScoped<AddStudentPage>();
-            builder.Services.AddScoped<AddSubjectPopup>();
+            builder.Services.AddScoped<AddUpdateSubjectPopup>();
             builder.Services.AddScoped<CourseConfirmationPage>();
+            builder.Services.AddScoped<SubjectTypeManagementPage>();
+            builder.Services.AddScoped<AddUpdateSubjectTypePopup>();
 
             // Services
             builder.Services.AddSingleton<HttpClient>();
@@ -133,6 +137,7 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<IProvinceService, ProvinceService>();
             builder.Services.AddScoped<IDistrictService, DistrictService>();
             builder.Services.AddScoped<ISubjectService, SubjectService>();
+            builder.Services.AddScoped<ISubjectTypeService, SubjectTypeService>();
             builder.Services.AddScoped<IAvailableCoursesService, AvailableCoursesService>();
             builder.Services.AddScoped<ICourseRegistrationDetailService, CourseRegistrationDetailService>();
 

@@ -1,6 +1,8 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AccountantViews;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
@@ -9,6 +11,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
     {
         #region Properties
         public ISubjectRequester SubjectRequester { get; set; }
+
+        public int SubjectId { get; set; }
 
         [ObservableProperty]
         private string specificId;
@@ -52,6 +56,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         #region Services
         private readonly IServiceProvider _serviceProvider;
+        private readonly ISubjectTypeService _subjectTypeService;
         #endregion
 
         #region Properties
@@ -65,7 +70,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         [ObservableProperty] private string searchFilter;
 
-        private int subjectId;
+        private int selectedSubjectId;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(DeleteSubjectCommand))]
@@ -79,16 +84,20 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [ObservableProperty] private string totalLesson;
 
         [ObservableProperty] private string numberOfCredit;
+
+        public ISubjectRequester SubjectRequester { get; set; }
         #endregion
 
         #region Constructor
         public SubjectManagementViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+            _subjectTypeService = _serviceProvider.GetRequiredService<ISubjectTypeService>();
         }
         #endregion
 
         #region Commands
+
         [RelayCommand]
         public async Task Logout()
         {
@@ -103,16 +112,16 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         public async Task GetAllSubject()
         {
             var subjectService = _serviceProvider.GetService<ISubjectService>();
-            var subjectList = await subjectService.GetAllSubjects();
+            var subjectList = await subjectService.GetAllSubject();
 
-            ReloadSubjectDisplays(subjectList);
+            await ReloadSubjectDisplays(subjectList);
         }
 
         [RelayCommand(CanExecute = nameof(CanDeleteUpdateSubjectExecuted))]
         public async Task DeleteSubject()
         {
             var subjectService = _serviceProvider.GetService<ISubjectService>();
-            var availableCourseService = _serviceProvider.GetService<IAvailableCoursesService>();
+            var availableCourseService = _serviceProvider.GetService<IAvailableCourseService>();
             var courseRegistrationDetailService = _serviceProvider.GetService<ICourseRegistrationDetailService>();
             var curriculumService = _serviceProvider.GetService<ICurriculumService>();
 
@@ -120,7 +129,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             if (accept)
             {
                 //if the available course has this subject, display not allow alert
-                var availableCourseList = await availableCourseService.GetAvailableCoursesBySubjectId(subjectId);
+                var availableCourseList = await availableCourseService.GetAvailableCourseBySubjectId(selectedSubjectId);
                 if (availableCourseList.Count > 0)
                 {
                     await Application.Current.MainPage.DisplayAlert("Warning!", "You cannot delete this subject because it is in available course!", "OK");
@@ -128,7 +137,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 }
 
                 //if there is any course registration detail that has this subject, display not allow alert
-                var courseRegistrationDetailList = await courseRegistrationDetailService.GetCourseRegistrationDetailBySubjectId(subjectId);
+                var courseRegistrationDetailList = await courseRegistrationDetailService.GetCourseRegistrationDetailBySubjectId(selectedSubjectId);
                 if (courseRegistrationDetailList.Count > 0)
                 {
                     await Application.Current.MainPage.DisplayAlert("Warning!", "You cannot delete this subject because there is course registration detail contain its Subject ID!", "OK");
@@ -136,11 +145,19 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 }
 
                 //if there is any curriculum that has this subject, display not allow alert
-                var curriculumList = await curriculumService.GetCurriculumsBySubjectId(subjectId);
+                var curriculumList = await curriculumService.GetCurriculumsBySubjectId(selectedSubjectId);
                 if (curriculumList.Count > 0)
                 {
                     await Application.Current.MainPage.DisplayAlert("Warning!", "You cannot delete this subject because there is curriculum contain its Subject ID!", "OK");
                     return;
+                }
+
+                //delete subject
+                var result = await subjectService.DeleteSubject(selectedSubjectId);
+                if (result)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success!", "Delete subject successfully!", "OK");
+                    GetAllSubjectCommand.Execute(null);
                 }
             }
         }
@@ -148,8 +165,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task DisplayAddSubjectPopup()
         {
-            var addSubjectPopup = _serviceProvider.GetService<AddSubjectPopup>();
-            var addSubjectViewModel = _serviceProvider.GetService<AddSubjectViewModel>();
+            var addSubjectPopup = _serviceProvider.GetService<AddUpdateSubjectPopup>();
+            var addSubjectViewModel = _serviceProvider.GetService<AddUpdateSubjectViewModel>();
 
             addSubjectViewModel.CommandName = "Add Subject";
 
@@ -159,12 +176,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task DisplayUpdateSubjectPopup()
         {
-            var addSubjectPopup = _serviceProvider.GetService<AddSubjectPopup>();
-            var addSubjectViewModel = _serviceProvider.GetService<AddSubjectViewModel>();
+            var addUpdateSubjectPopup = _serviceProvider.GetService<AddUpdateSubjectPopup>();
+            var addUpdateSubjectViewModel = _serviceProvider.GetService<AddUpdateSubjectViewModel>();
 
-            addSubjectViewModel.CommandName = "Update Subject";
+            addUpdateSubjectViewModel.SubjectId = selectedSubjectId;
+            addUpdateSubjectViewModel.CommandName = "Update Subject";
 
-            await Application.Current.MainPage.ShowPopupAsync(addSubjectPopup);
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateSubjectPopup);
         }
 
         public bool CanDeleteUpdateSubjectExecuted()
@@ -190,45 +208,50 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
             SearchFilter = "";
             ReloadItemsBackground();
-            DisplaySubjectInformation(new()
+            ResetSubjectInformation();
+        }
+
+        partial void OnSearchFilterChanged(string oldValue, string newValue)
+        {
+            switch(SelectedFilterOption)
             {
-                Name = "",
-                SpecificId = "",
-                TotalLessons = 0,
-                TypeName = "",
-                NumberOfCredits = 0,
-            });
-        }   
+                case "ID":
+                    SubjectDisplayList = primarySubjectDisplayList.Where(b => b.SpecificId.ToLower().Contains(newValue.ToLower())).OrderBy(a => a.SpecificId).ToObservableCollection();
+                    break;
+                case "Name":
+                    SearchSubjectByName(newValue);
+                    break;
+                case "Type":
+                    SearchSubjectByTypeName(newValue);
+                    break;
+            }
+        }
         #endregion
 
         #region Helpers
-        private void ReloadSubjectDisplays(List<Subject> subjectList)
+        private async Task ReloadSubjectDisplays(List<Subject> subjectList)
         {
             primarySubjectDisplayList.Clear();
-
             if (subjectList.Count > 0)
             {
                 foreach (var subject in subjectList)
                 {
-
+                    var subjectType = await _subjectTypeService.GetSubjectTypeById(subject.SubjectTypeId);
                     primarySubjectDisplayList.Add(new()
                     {
                         SubjectRequester = this,
+                        SubjectId = subject.Id,
                         SpecificId = subject.SubjectSpecificId,
                         Name = subject.Name,
+                        TypeName = subjectType.Name,
+                        TotalLessons = subject.TotalLessons,
+                        NumberOfCredits = subject.NumberOfCredits,
                     });
                 }
 
                 SubjectDisplayList = primarySubjectDisplayList.OrderBy(b => b.SpecificId).ToObservableCollection();
                 ReloadItemsBackground();
-                DisplaySubjectInformation(new()
-                {
-                    Name = "",
-                    SpecificId = "",
-                    TotalLessons = 0,
-                    TypeName = "",
-                    NumberOfCredits = 0,
-                });
+                ResetSubjectInformation();
             }
         }
 
@@ -242,10 +265,65 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         public void DisplaySubjectInformation(SubjectDisplay SubjectDisplay)
         {
+            selectedSubjectId = SubjectDisplay.SubjectId;
             SubjectSpecificId = SubjectDisplay.SpecificId;
             SubjectName = SubjectDisplay.Name;
             TotalLesson = SubjectDisplay.TotalLessons.ToString();
             SubjectType = SubjectDisplay.TypeName;
+            NumberOfCredit = SubjectDisplay.NumberOfCredits.ToString();
+        }
+
+        private void ResetSubjectInformation()
+        {
+            selectedSubjectId = -1;
+            SubjectSpecificId = "";
+            SubjectName = "";
+            TotalLesson = "";
+            SubjectType = "";
+            NumberOfCredit = "";
+        }
+
+        static string RemoveAccents(string input)
+        {
+            string normalizedString = input.Normalize(NormalizationForm.FormD);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (char c in normalizedString)
+            {
+                UnicodeCategory unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+        void SearchSubjectByName(string newValue)
+        {
+            string normalizedValue = SubjectManagementViewModel.RemoveAccents(newValue);
+
+            string pattern = string.Join(".*", normalizedValue.Select(c => Regex.Escape(c.ToString())));
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+            SubjectDisplayList = primarySubjectDisplayList
+                .Where(a => regex.IsMatch(SubjectManagementViewModel.RemoveAccents(a.Name)))
+                .OrderBy(a => a.Name)
+                .ToObservableCollection();
+        }
+
+        void SearchSubjectByTypeName(string newValue)
+        {
+            string normalizedValue = SubjectManagementViewModel.RemoveAccents(newValue);
+
+            string pattern = string.Join(".*", normalizedValue.Select(c => Regex.Escape(c.ToString())));
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+            SubjectDisplayList = primarySubjectDisplayList
+                .Where(a => regex.IsMatch(SubjectManagementViewModel.RemoveAccents(a.TypeName)))
+                .OrderBy(a => a.Name)
+                .ToObservableCollection();
         }
         #endregion
     }

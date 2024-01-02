@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <mct:Popup
-  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.AddSubjectPopup"
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.AddUpdateSubjectPopup"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -45,13 +45,13 @@
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
-        Text="{Binding DepartmentSpecificId}"
+        Text="{Binding SubjectSpecificId}"
         WidthRequest="300" />
       <Label
         Margin="50,0,0,0"
         FontSize="12"
-        Text="{Binding DepartmentSpecificIdMessageText}"
-        TextColor="{Binding DepartmentSpecificIdColor}" />
+        Text="{Binding SubjectSpecificIdMessageText}"
+        TextColor="{Binding SubjectSpecificIdColor}" />
 
       <Label
         Margin="50,20,0,0"
@@ -61,13 +61,13 @@
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
-        Text="{Binding DepartmentName}"
+        Text="{Binding SubjectName}"
         WidthRequest="300" />
       <Label
         Margin="50,0,0,0"
         FontSize="12"
-        Text="{Binding DepartmentNameMessageText}"
-        TextColor="{Binding DepartmentNameColor}" />
+        Text="{Binding SubjectNameMessageText}"
+        TextColor="{Binding SubjectNameColor}" />
 
       <Label
         Margin="50,20,0,0"
@@ -77,12 +77,10 @@
       <Picker
         HeightRequest="50"
         HorizontalOptions="Center"
+        ItemsSource="{Binding SubjectTypesList}"
+        ItemDisplayBinding="{Binding Name}"
+        SelectedItem="{Binding SelectedSubjectType}"
         WidthRequest="300" />
-      <Label
-        Margin="50,0,0,0"
-        FontSize="12"
-        Text="{Binding DepartmentNameMessageText}"
-        TextColor="{Binding DepartmentNameColor}" />
 
       <Label
         Margin="50,20,0,0"
@@ -92,18 +90,18 @@
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
-        Text="{Binding DepartmentName}"
+        Text="{Binding TotalLesson}"
         WidthRequest="300" />
       <Label
         Margin="50,0,0,0"
         FontSize="12"
-        Text="{Binding DepartmentNameMessageText}"
-        TextColor="{Binding DepartmentNameColor}" />
+        Text="{Binding TotalLessonMessageText}"
+        TextColor="{Binding TotalLessonColor}" />
 
       <Button
         Margin="0,20,0,0"
         BackgroundColor="#EFF3FA"
-        Command="{Binding AddUpdateDeparmentCommand}"
+        Command="{Binding AddUpdateSubjectCommand}"
         FontFamily="RobotoMedium"
         FontSize="15"
         HeightRequest="50"

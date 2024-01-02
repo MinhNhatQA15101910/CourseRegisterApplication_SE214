@@ -27,7 +27,7 @@ namespace CourseRegisterApplication.MAUI.Services
             return null;
         }
 
-        public async Task<SubjectType> GetAllSubjectType(int subjectTypeId)
+        public async Task<SubjectType> GetSubjectTypeById(int subjectTypeId)
         {
             string apiUrl = $"{GlobalConfig.SUBJECT_TYPE_BASE_URL}{subjectTypeId}";
 
@@ -39,11 +39,6 @@ namespace CourseRegisterApplication.MAUI.Services
             }
 
             return null;
-        }
-
-        public Task<SubjectType> GetSubjectTypeById(int subjectTypeId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

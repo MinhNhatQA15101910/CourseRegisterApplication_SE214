@@ -77,7 +77,7 @@
           <Grid
             Grid.Row="0"
             BackgroundColor="Transparent"
-            ColumnDefinitions="2.5*,2.5*,2.5*, 2.5*"
+            ColumnDefinitions="2.5*,3*,2*, 2.5*"
             HeightRequest="40"
             VerticalOptions="Center">
             <Label
@@ -114,49 +114,33 @@
             Grid.Row="1"
             Grid.Column="0"
             HeightRequest="400"
-            ItemsSource="{Binding StudentAccountList}"
+            ItemsSource="{Binding SubjectDisplayList}"
             MaximumHeightRequest="600"
             VerticalScrollBarVisibility="Always">
             <CollectionView.ItemTemplate>
               <DataTemplate>
                 <Grid
                   BackgroundColor="{Binding BackgroundColor}"
-                  ColumnDefinitions="2.5*,2.5*,2.5*, 2.5*"
+                  ColumnDefinitions="2.5*,3*,2.*, 2.5*"
+                  HeightRequest="40"
                   VerticalOptions="Center">
                   <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ChooseStudentAccountCommand}" />
+                    <TapGestureRecognizer Command="{Binding DisplaySubjectInformationCommand}" />
                   </Grid.GestureRecognizers>
-                  <Grid
-                    Grid.Column="0"
-                    ColumnDefinitions="Auto,Auto"
-                    HorizontalOptions="Start"
-                    VerticalOptions="Center">
-                    <HorizontalStackLayout Grid.Column="0" Margin="0">
-                      <Frame
-                        Grid.Column="0"
-                        Margin="8,12,8,12"
-                        Padding="0"
-                        CornerRadius="15"
-                        HeightRequest="24"
-                        IsClippedToBounds="True"
-                        WidthRequest="24">
-                        <Image Aspect="AspectFill" Source="{Binding Avatar}" />
-                      </Frame>
-                      <Label
-                        Grid.Column="1"
-                        FontSize="14"
-                        Text="{Binding FullName}"
-                        TextColor="#4F4F4F"
-                        VerticalOptions="Center" />
-                    </HorizontalStackLayout>
 
-                  </Grid>
+                  <Label
+                    Grid.Column="0"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SpecificId}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
 
                   <Label
                     Grid.Column="1"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding StudentSpecificId}"
+                    Text="{Binding Name}"
                     TextColor="#4F4F4F"
                     VerticalOptions="Center" />
 
@@ -164,7 +148,7 @@
                     Grid.Column="2"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding Email}"
+                    Text="{Binding TypeName}"
                     TextColor="#4F4F4F"
                     VerticalOptions="Center" />
 
@@ -172,8 +156,7 @@
                     Grid.Column="3"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding ActivateStatus}"
-                    TextColor="{Binding StatusColor}"
+                    Text="{Binding TotalLessons}"
                     VerticalOptions="Center" />
                 </Grid>
               </DataTemplate>
@@ -216,7 +199,7 @@
                 <Label
                   FontSize="13"
                   HorizontalOptions="Start"
-                  Text="{Binding Department}"
+                  Text="{Binding SubjectSpecificId}"
                   TextColor="#A7A7A7" />
               </VerticalStackLayout>
               <VerticalStackLayout Grid.Row="0" Grid.Column="1">
@@ -229,7 +212,7 @@
                 <Label
                   FontSize="13"
                   HorizontalOptions="Start"
-                  Text="{Binding Department}"
+                  Text="{Binding TotalLesson}"
                   TextColor="#A7A7A7" />
               </VerticalStackLayout>
               <VerticalStackLayout Grid.Row="1" Grid.Column="0">
@@ -242,7 +225,7 @@
                 <Label
                   FontSize="13"
                   HorizontalOptions="Start"
-                  Text="{Binding Department}"
+                  Text="{Binding SubjectType}"
                   TextColor="#A7A7A7" />
               </VerticalStackLayout>
               <VerticalStackLayout Grid.Row="1" Grid.Column="1">
@@ -255,7 +238,7 @@
                 <Label
                   FontSize="13"
                   HorizontalOptions="Start"
-                  Text="{Binding Department}"
+                  Text="{Binding NumberOfCredit}"
                   TextColor="#A7A7A7" />
               </VerticalStackLayout>
             </Grid>
