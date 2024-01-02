@@ -79,6 +79,7 @@
 	  <None Remove="Resources\Images\setting.svg" />
 	  <None Remove="Resources\Images\setting_White.svg" />
 	  <None Remove="Resources\Images\student.svg" />
+	  <None Remove="Resources\Images\svg_info_circle.svg" />
 	  <None Remove="Resources\Images\teacher_icon.png" />
 	  <None Remove="Resources\Images\university_icon.jpg" />
 	  <None Remove="Resources\Images\update_vector.svg" />
@@ -242,6 +243,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\StudentViews\StudentInfomationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\StudentViews\TuitionInfoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\StudentViews\TuitionPaymentPage.xaml">

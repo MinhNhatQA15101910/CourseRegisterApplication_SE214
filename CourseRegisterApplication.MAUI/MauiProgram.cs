@@ -76,7 +76,9 @@ namespace CourseRegisterApplication.MAUI
 			builder.Services.AddScoped<SubjectManagementViewModel>();
 			builder.Services.AddScoped<TuitionCollectionViewModel>();
             builder.Services.AddScoped<CourseRegistrationViewModel>(); 
-            builder.Services.AddScoped<CourseRegisTrationInfoViewModel>();
+            builder.Services.AddScoped<CourseRegisTrationInfoViewModel>(); 
+            builder.Services.AddScoped<TuitionInfoViewModel>();
+
 
             // Views
             builder.Services.AddTransient<LoginPage>();
@@ -120,6 +122,7 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<AddStudentPage>();
             builder.Services.AddScoped<CourseRegistrationPage>(); 
             builder.Services.AddScoped<CourseRegistrationInfoPage>();
+            builder.Services.AddScoped<TuitionInfoPage>();
 
             // Services
             builder.Services.AddSingleton<HttpClient>();
@@ -139,7 +142,9 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<ISemesterService, SemesterService>();
             builder.Services.AddScoped<IAvailableCourseService, AvailableCourseService>();
             builder.Services.AddScoped<ICourseRegistrationFormService, CourseRegistrationFormService>();
-            builder.Services.AddScoped<ICourseRegistrationDetailService, CourseRegistrationDetailService>(); 
+            builder.Services.AddScoped<ICourseRegistrationDetailService, CourseRegistrationDetailService>();
+            builder.Services.AddScoped<IPriorityTypeService, PriorityTypeService>();
+            builder.Services.AddScoped<ITuitionFeeReceiptService, TuitionFeeReceiptService>();
             return builder.Build(); 
         }
     }

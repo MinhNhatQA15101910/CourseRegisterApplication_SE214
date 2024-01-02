@@ -1,6 +1,6 @@
 ﻿namespace CourseRegisterApplication.MAUI.IServices
 {
-    public interface IPriorityType
+    public interface IPriorityTypeService
     {
         Task<List<PriorityType>> GetAllPriorityType();
     }

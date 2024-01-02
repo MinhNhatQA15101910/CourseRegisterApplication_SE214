@@ -3,7 +3,7 @@ using CourseRegisterApplication.Shared;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
-    public class PriorityTypeService : IPriorityType
+    public class PriorityTypeService : IPriorityTypeService
     {
         private readonly HttpClient _httpClient;
 

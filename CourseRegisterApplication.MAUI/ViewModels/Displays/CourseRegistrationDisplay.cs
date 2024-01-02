@@ -27,6 +27,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.Displays
         private string courseRegistrationStatus;
 
         [ObservableProperty]
+        private string lastPaidTuitionDate;
+
+        [ObservableProperty]
         private Color statusTextColor;
 
         [ObservableProperty]

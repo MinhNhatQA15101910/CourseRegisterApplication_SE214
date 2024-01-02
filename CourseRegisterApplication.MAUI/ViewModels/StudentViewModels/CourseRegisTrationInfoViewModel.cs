@@ -45,7 +45,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         private readonly List<SubjectDisplay> primarySubjectDisplayList = new();
 
         [ObservableProperty]
-        private ObservableCollection<SubjectDisplay> subjectDisplayList = new(); 
+        private ObservableCollection<SubjectDisplay> subjectDisplayList = new();
 
         [ObservableProperty]
         private int totalCredits;
@@ -82,7 +82,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         {
             studentList = await _studentService.GetStudents();
             Student thisStudent = studentList.Find(item => item.StudentSpecificId == GlobalConfig.CurrentUser.Username);
-            if(thisStudent != null)
+            if (thisStudent != null)
             {
                 courseRegistrationFormList = await _courseRegistrationFormService.GetCourseRegistrationFormByStudentId(thisStudent.Id);
                 subjectList = await _subjectService.GetAllSubjects();
@@ -181,7 +181,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         }
         private Color GetFormattedColor(CourseRegistrationFormState courseRegistrationFormState)
         {
-            if(courseRegistrationFormState == CourseRegistrationFormState.Expired)
+            if (courseRegistrationFormState == CourseRegistrationFormState.Expired)
             {
                 return Color.FromArgb("#BF1D28");
             }

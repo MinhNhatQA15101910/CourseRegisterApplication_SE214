@@ -17,7 +17,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         private readonly IProvinceService _provinceService;
         private readonly IDistrictService _districtService;
         private readonly IStudentPriorityTypeService _studentPriorityTypeService;
-        private readonly IPriorityType _priorityType;
+        private readonly IPriorityTypeService _priorityTypeService;
         #endregion
 
         #region Constructor
@@ -30,7 +30,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
             _provinceService = serviceProvider.GetService<IProvinceService>();
             _districtService = serviceProvider.GetService<IDistrictService>();
             _studentPriorityTypeService = serviceProvider.GetService<IStudentPriorityTypeService>();
-			_priorityType = serviceProvider.GetService<IPriorityType>();
+            _priorityTypeService = serviceProvider.GetService<IPriorityTypeService>();
         }
 		#endregion
 
@@ -110,15 +110,24 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 					District district = await _districtService.GetDistrictById(item.DistrictId);
 					Province province = await _provinceService.GetProvinceById(district.ProvinceId);
 					StudentDistrictProvince = district.DistrictName + ", " + province.ProvinceName;
-                    List <StudentPriorityType> priorityList = await _studentPriorityTypeService.GetStudentPriorityTypesByStudentId(item.Id);
-					if (priorityList.Count > 0)
+                    List <StudentPriorityType> studentPriorityList = await _studentPriorityTypeService.GetStudentPriorityTypesByStudentId(item.Id);
+					List<PriorityType> priorityList = await _priorityTypeService.GetAllPriorityType();
+
+                    if (studentPriorityList.Count > 0)
 					{
-						foreach(var item2 in  priorityList)
+						StudentPriorityObjectList.Clear();
+
+                        foreach (var item2 in studentPriorityList)
 						{
-                            StudentPriorityObjectList.Add(item2.PriorityTypeId.ToString());
+							foreach(var item3 in priorityList)
+							{
+								if (item2.PriorityTypeId == item3.Id)
+								{
+                                    StudentPriorityObjectList.Add(item3.PriorityName);
+                                }
+                            }
                         }
-					}
-					
+					}				
 					break;
 				}
 
@@ -134,7 +143,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         [RelayCommand]
         public async Task TuitionInfoButton()
         {
-
+            await Shell.Current.GoToAsync(nameof(TuitionInfoPage), true);
         }
 
     }

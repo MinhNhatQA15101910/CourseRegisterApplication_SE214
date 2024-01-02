@@ -167,6 +167,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                         }
                         CurrentYear = thisSemester.Year.ToString();
 
+                        FilterOptions.Clear();
                         FilterOptions.Add("Subject ID");
                         FilterOptions.Add("Subject Name");
                         SelectedFilterOption = FilterOptions[0];
@@ -283,7 +284,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                         cRF.CreatedDate = DateTime.Now;
                         cRF.StudentId = thisStudent.Id;
                         cRF.SemesterId = thisSemester.Id;
-                        cRF.CourseRegistrationFormSpecificId = thisStudent.StudentSpecificId + "-" + thisSemester.SemesterName + "-" + thisSemester.Year;
+                        cRF.CourseRegistrationFormSpecificId = "CRF" + cRF.Id;
                         cRF.State = CourseRegistrationFormState.Pending;
                         await _courseRegistrationFormService.CreateCourseRegistrationForm(cRF);
                         await GetCourseRegistrationFormByStudentIdAndSemesterId(cRF.StudentId, cRF.SemesterId);
