@@ -45,6 +45,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         public int Id { get; set; } = -1;
 
+        public string OldImageUrl { get; set; }
+
         [ObservableProperty] private string imageUrl = "https://static.wixstatic.com/media/8027bc_6d79e9c44bae49de97c018a781738884~mv2.jpg/v1/fill/w_987,h_1096,al_c,q_90/file.jpg";
 
         [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateStudentCommand))]
@@ -167,6 +169,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 Student student = await studentService.GetFullInformationOfStudentBySpecificId(studentSpecificId);
 
                 Id = student.Id;
+                OldImageUrl = student.ImageUrl;
 
                 ImageUrl = student.ImageUrl;
                 StudentSpecificId = student.StudentSpecificId;
@@ -585,7 +588,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 List<Student> studentList = await studentService.GetAllStudents();
 
                 // Check if there is any student in the database with the same StudentSpecificId
-                List<Student> sameSpecifcIdStudents = studentList.Where(d => d.StudentSpecificId.ToLower() == StudentSpecificId.ToLower()).ToList();
+                List<Student> sameSpecifcIdStudents = studentList
+                    .Where(s => s.StudentSpecificId.ToLower() == StudentSpecificId.ToLower())
+                    .ToList();
                 if (sameSpecifcIdStudents.Any())
                 {
                     await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this student because there is another student with the same Id!", "OK");
@@ -635,6 +640,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                     {
                         await Application.Current.MainPage.DisplayAlert("Success", "Add student successfully!", "OK");
 
+                        StudentManagementViewModel studentManagementViewModel = _serviceProvider.GetService<StudentManagementViewModel>();
+                        await studentManagementViewModel.ReloadStudentListWhenAddNewStudent(await studentService.GetFullInformationOfStudentBySpecificId(StudentSpecificId));
+
                         NavigateBackCommand.Execute(null);
                     }
                     else
@@ -647,7 +655,77 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         private async Task UpdateStudent()
         {
+            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to update this student?", "Yes", "No");
+            if (accept)
+            {
+                IStudentService studentService = _serviceProvider.GetService<IStudentService>();
+                List<Student> studentList = await studentService.GetAllStudents();
 
+                // Check if there is any student in the database with the same StudentSpecificId
+                List<Student> sameSpecifcIdStudents = studentList
+                    .Where(s => s.StudentSpecificId.ToLower() == StudentSpecificId.ToLower() && s.Id != Id)
+                    .ToList();
+                if (sameSpecifcIdStudents.Any())
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot update this student because there is another student with the same specific Id!", "OK");
+                    return;
+                }
+
+                // Update student
+                string newImageUrl;
+                if (ImageUrl != OldImageUrl)
+                {
+                    using var stream = await imageResult.OpenReadAsync();
+                    newImageUrl = await _firebaseStorage
+                        .Child("Images")
+                        .Child("Avatar")
+                        .Child($"{StudentSpecificId.Trim()}-Avatar")
+                        .PutAsync(stream);
+                }
+                else
+                {
+                    newImageUrl = ImageUrl;
+                }
+
+                if (!string.IsNullOrEmpty(newImageUrl))
+                {
+                    // Update database
+                    Student student = new()
+                    {
+                        Id = Id,
+                        StudentSpecificId = StudentSpecificId.Trim(),
+                        FullName = StudentName.Trim(),
+                        DateOfBirth = DateOfBirth,
+                        Email = Email,
+                        Gender = (SelectedGender == "Male") ? Gender.Male : Gender.Female,
+                        BranchId = SelectedBranch.Id,
+                        Branch = null,
+                        DistrictId = SelectedDistrict.Id,
+                        District = null,
+                        ImageUrl = newImageUrl
+                    };
+                    List<PriorityType> priorityTypes = new();
+                    foreach (var priorityType in SelectedPriorityTypeList)
+                    {
+                        priorityTypes.Add(primaryPriorityTypeList.First(pt => pt.Id == priorityType.Id));
+                    }
+
+                    bool result = await studentService.UpdateStudent(Id, student, priorityTypes);
+                    if (result)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Success", "Update student successfully!", "OK");
+
+                        StudentManagementViewModel studentManagementViewModel = _serviceProvider.GetService<StudentManagementViewModel>();
+                        await studentManagementViewModel.ReloadStudentListWhenUpdateStudent(await studentService.GetFullInformationOfStudentBySpecificId(StudentSpecificId));
+
+                        NavigateBackCommand.Execute(null);
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Failed", "Update student failed!", "OK");
+                    }
+                }
+            }
         }
         #endregion
     }

@@ -263,6 +263,62 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
         }
 
+        public async Task ReloadStudentListWhenAddNewStudent(Student student)
+        {
+            primaryStudentList.Add(new StudentDisplay
+            {
+                FullName = student.FullName,
+                StudentSpecificId = student.StudentSpecificId,
+                Email = student.Email,
+                Gender = student.Gender,
+                DateOfBirth = student.DateOfBirth,
+                Branch = student.Branch,
+                Department = student.Branch.Department,
+                Address = $"{student.District.DistrictName}, {student.District.Province.ProvinceName}",
+                Avatar = student.ImageUrl,
+                ActivateStatus = await IsStudentHasAccount(student) ? "Activated" : "Pending",
+                StatusColor = await IsStudentHasAccount(student) ? Color.FromArgb("#007D3A") : Color.FromArgb("#CC8100"),
+                BackgroundColor = Color.FromArgb("#EBF6FF"),
+                StudentRequester = this,
+            });
+
+            StudentList = primaryStudentList.OrderBy(a => a.FullName).ToObservableCollection();
+
+            ResetItemBackgrounds();
+            ResetStudentInformation();
+        }
+
+        public async Task ReloadStudentListWhenUpdateStudent(Student student)
+        {
+            StudentDisplay studentDisplay = primaryStudentList.First(sd => sd.StudentSpecificId == student.StudentSpecificId);
+            if (studentDisplay != null)
+            {
+                primaryStudentList.Remove(studentDisplay);
+            }
+
+            primaryStudentList.Add(new StudentDisplay
+            {
+                FullName = student.FullName,
+                StudentSpecificId = student.StudentSpecificId,
+                Email = student.Email,
+                Gender = student.Gender,
+                DateOfBirth = student.DateOfBirth,
+                Branch = student.Branch,
+                Department = student.Branch.Department,
+                Address = $"{student.District.DistrictName}, {student.District.Province.ProvinceName}",
+                Avatar = student.ImageUrl,
+                ActivateStatus = await IsStudentHasAccount(student) ? "Activated" : "Pending",
+                StatusColor = await IsStudentHasAccount(student) ? Color.FromArgb("#007D3A") : Color.FromArgb("#CC8100"),
+                BackgroundColor = Color.FromArgb("#EBF6FF"),
+                StudentRequester = this,
+            });
+
+            StudentList = primaryStudentList.OrderBy(a => a.FullName).ToObservableCollection();
+
+            ResetItemBackgrounds();
+            ResetStudentInformation();
+        }
+
         public void ResetStudentInformation()
         {
             AvatarUri = "blank_avatar.jpg";

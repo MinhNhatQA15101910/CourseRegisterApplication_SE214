@@ -180,4 +180,64 @@ public class StudentService : IStudentService
 
         return response.IsSuccessStatusCode;
     }
+
+    public async Task<bool> UpdateStudent(int studentId, Student student, List<PriorityType> priorityTypes)
+    {
+        HttpClient httpClient = _serviceProvider.GetService<HttpClient>();
+
+        string apiUrl = $"{GlobalConfig.STUDENT_BASE_URL}{studentId}";
+
+        var json = JsonConvert.SerializeObject(student);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await httpClient.PutAsync(new Uri(apiUrl), content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            // If student district is priority, add priority type with Id = 2.
+            IDistrictService districtService = _serviceProvider.GetService<IDistrictService>();
+            District district = await districtService.GetDistrictById(student.DistrictId);
+            if (district.IsPriority)
+            {
+                IPriorityTypeService priorityTypeService = _serviceProvider.GetService<IPriorityTypeService>();
+                List<PriorityType> priorityTypeList = (await priorityTypeService.GetAllPriorityTypesAsync()).ToList();
+                PriorityType priorityType = priorityTypeList.First(pt => pt.Id == 2);
+
+                priorityTypes.Add(priorityType);
+
+                priorityType = priorityTypes.First(pt => pt.Id == 1);
+                if (priorityType.Id == 1)
+                {
+                    priorityTypes.Remove(priorityType);
+                }
+            }
+
+            // Delete old priority types
+            IStudentPriorityTypeService studentPriorityTypeService = _serviceProvider.GetService<IStudentPriorityTypeService>();
+            List<StudentPriorityType> studentPriorityTypes = await studentPriorityTypeService.GetStudentPriorityTypesByStudentId(student.Id);
+            foreach (var studentPriorityType in studentPriorityTypes)
+            {
+                await studentPriorityTypeService.DeleteStudentPriorityType(studentPriorityType.StudentId, studentPriorityType.PriorityTypeId);
+            }
+
+            // Add new priority types
+            foreach (var priorityType in priorityTypes)
+            {
+                StudentPriorityType studentPriorityType = new()
+                {
+                    PriorityTypeId = priorityType.Id,
+                    StudentId = student.Id
+                };
+
+                StudentPriorityType result = await studentPriorityTypeService.AddStudentPriorityType(studentPriorityType);
+                if (result == null)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 }
