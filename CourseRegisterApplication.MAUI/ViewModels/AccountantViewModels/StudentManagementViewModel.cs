@@ -233,6 +233,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         private async Task ReloadStudentList(List<Student> studentList)
         {
             primaryStudentList.Clear();
+            StudentList.Clear();
 
             if (studentList.Count > 0)
             {

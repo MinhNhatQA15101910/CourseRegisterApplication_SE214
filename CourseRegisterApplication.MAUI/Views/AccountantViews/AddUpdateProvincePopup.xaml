@@ -44,6 +44,7 @@
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
+        Placeholder="Province Name"
         Text="{Binding ProvinceName}"
         WidthRequest="300" />
       <Label

@@ -1,8 +1,10 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views;
+using CourseRegisterApplication.MAUI.Views.AccountantViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
+    #region Displays
     public partial class SelectedPriorityTypeDisplay : ObservableObject
     {
         public ISelectedPriorityTypeRequester SelectedPriorityTypeRequester { get; set; }
@@ -20,36 +22,46 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
         }
     }
+    #endregion
 
+    #region Requesters
     public interface ISelectedPriorityTypeRequester
     {
         void UnselectPriorityType(SelectedPriorityTypeDisplay selectedPriorityTypeDisplay);
     }
+    #endregion
 
+    #region Main ViewModel
     public partial class AddUpdateStudentViewModel : ObservableObject, ISelectedPriorityTypeRequester
     {
         #region Service
         private readonly IServiceProvider _serviceProvider;
+        private readonly FirebaseStorage _firebaseStorage = new("courseregistrationfirebase.appspot.com");
+        private FileResult imageResult;
         #endregion
 
         #region Properties
+        public string CommandName { get; set; }
+
+        public int Id { get; set; } = -1;
+
         [ObservableProperty] private string imageUrl = "https://static.wixstatic.com/media/8027bc_6d79e9c44bae49de97c018a781738884~mv2.jpg/v1/fill/w_987,h_1096,al_c,q_90/file.jpg";
 
-        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddStudentCommand))]
+        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateStudentCommand))]
         private string studentSpecificId;
 
         [ObservableProperty] private string studentSpecificIdMessageText;
 
         [ObservableProperty] private Color studentSpecificIdColor;
 
-        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddStudentCommand))]
+        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateStudentCommand))]
         private string studentName;
 
         [ObservableProperty] private string studentNameMessageText;
 
         [ObservableProperty] private Color studentNameColor;
 
-        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddStudentCommand))]
+        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateStudentCommand))]
         private string email;
 
         [ObservableProperty] private string emailMessageText;
@@ -76,11 +88,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         [ObservableProperty] private string selectedGender = "Male";
 
-        [ObservableProperty] private Province selectedProvince;
+        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(DisplayAddDistrictPopupCommand))]
+        private Province selectedProvince;
 
-        [ObservableProperty] private District selectedDistrict;
+        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateStudentCommand))]
+        private District selectedDistrict;
 
-        [ObservableProperty] private Branch selectedBranch;
+        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateStudentCommand))]
+        private Branch selectedBranch;
 
         [ObservableProperty] private Department selectedDepartment;
 
@@ -96,12 +111,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         }
         #endregion
 
-        #region Variables 
-        private int globalVariable1 = 0;
-        private int globalVariable2 = 0;
-        private int globalVariable3 = 0;
-        #endregion
-
         #region Commands
         [RelayCommand]
         public async Task GetInformation(string studentSpecificId)
@@ -109,6 +118,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             // Add student
             if (string.IsNullOrEmpty(studentSpecificId))
             {
+                CommandName = "Add student";
+
                 // Department
                 IDepartmentService departmentService = _serviceProvider.GetService<IDepartmentService>();
                 DepartmentList = (await departmentService.GetAllDepartments()).ToObservableCollection();
@@ -150,8 +161,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             // Update student
             else
             {
+                CommandName = "Update student";
+
                 IStudentService studentService = _serviceProvider.GetService<IStudentService>();
                 Student student = await studentService.GetFullInformationOfStudentBySpecificId(studentSpecificId);
+
+                Id = student.Id;
 
                 ImageUrl = student.ImageUrl;
                 StudentSpecificId = student.StudentSpecificId;
@@ -181,7 +196,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
                 // Province
                 ProvinceList.Clear();
-                
+
                 IProvinceService provinceService = _serviceProvider.GetService<IProvinceService>();
                 ProvinceList = (await provinceService.GetAllProvinces()).ToObservableCollection();
                 ProvinceList.Insert(0, new() { Id = 0, ProvinceName = "- Select province -" });
@@ -215,15 +230,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                     }
                 }
 
-                if (SelectedPriorityTypeList.Count <= 0) 
+                if (SelectedPriorityTypeList.Count <= 0)
                 {
                     PriorityType nonePriorityType = primaryPriorityTypeList.First(pt => pt.Id == 1);
                     SelectedPriorityTypeList.Add(new() { SelectedPriorityTypeRequester = this, Id = nonePriorityType.Id, PriorityName = nonePriorityType.PriorityName });
                 }
 
                 PriorityTypeList = primaryPriorityTypeList
-                    .Where(pt => 
-                        pt.Id != 1 && 
+                    .Where(pt =>
+                        pt.Id != 1 &&
                         pt.Id != 2 &&
                         !selectedPriorityTypeListFromDatabase.Any(spt => spt.Id == pt.Id))
                     .ToObservableCollection();
@@ -236,20 +251,20 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task ChooseImage()
         {
-            var result = await FilePicker.Default.PickAsync(new PickOptions
+            imageResult = await FilePicker.Default.PickAsync(new PickOptions
             {
                 PickerTitle = "Please select an image file.",
                 FileTypes = FilePickerFileType.Images
             });
 
-            if (result != null &&
-                (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
-                result.FileName.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) ||
-                result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase) ||
-                result.FileName.EndsWith("svg", StringComparison.OrdinalIgnoreCase) ||
-                result.FileName.EndsWith("gif", StringComparison.OrdinalIgnoreCase)))
+            if (imageResult != null &&
+                (imageResult.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
+                imageResult.FileName.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) ||
+                imageResult.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase) ||
+                imageResult.FileName.EndsWith("svg", StringComparison.OrdinalIgnoreCase) ||
+                imageResult.FileName.EndsWith("gif", StringComparison.OrdinalIgnoreCase)))
             {
-                ImageUrl = result.FullPath;
+                ImageUrl = imageResult.FullPath;
             }
         }
 
@@ -275,49 +290,74 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
         }
 
-        [RelayCommand(CanExecute = nameof(CanAddStudentExecuted))]
-        public async Task AddStudent()
+        [RelayCommand]
+        public async Task DisplayAddProvincePopup()
         {
-            //bool accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to add this student?", "Yes", "No");
-            //if (accept)
-            //{
-            //    IsLoading = true;
+            AddUpdateProvincePopup addUpdateProvincePopup = _serviceProvider.GetService<AddUpdateProvincePopup>();
 
-            //    // If there is already a user with the same username with the input, display error
-            //    List<Student> students = await _studentService.GetAllStudents();
-            //    Student student = students.Find(s => s.StudentSpecificId == StudentSpecificId);
-            //    if (student != null)
-            //    {
-            //        IsLoading = false;
-            //        await Application.Current.MainPage.DisplayAlert("Error", "Student has already existed!", "OK");
-            //        return;
-            //    }
+            AddUpdateProvinceViewModel addUpdateProvinceViewModel = _serviceProvider.GetService<AddUpdateProvinceViewModel>();
+            addUpdateProvinceViewModel.CommandName = "Add province";
 
-            //    student = new Student
-            //    {
-            //        StudentSpecificId = StudentSpecificId,
-            //        FullName = StudentName,
-            //        Gender = (SelectedGender == "Male") ? Gender.Male : Gender.Female,
-            //        DateOfBirth = DateOfBirth,
-            //        DistrictId = SelectedDistrict.Id,
-            //        District = SelectedDistrict,
-            //        BranchId = SelectedBranch.Id,
-            //        Branch = SelectedBranch
-            //    };
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateProvincePopup);
+        }
 
-            //    Student resultStudent = await _studentService.AddStudent(student);
-            //    if (resultStudent != null)
-            //    {
-            //        IsLoading = false;
-            //        await Application.Current.MainPage.DisplayAlert("Success", "Add student successfully!", "OK");
-            //        Clear();
-            //    }
-            //    else
-            //    {
-            //        IsLoading = false;
-            //        await Application.Current.MainPage.DisplayAlert("Failed", "Error occurred!", "OK");
-            //    }
-            //}
+        [RelayCommand(CanExecute = nameof(CanDisplayAddDistrictPopupCommandExecuted))]
+        public async Task DisplayAddDistrictPopup()
+        {
+            var addUpdateDistrictPopup = _serviceProvider.GetService<AddUpdateDistrictPopup>();
+            var addUpdateDistrictViewModel = _serviceProvider.GetService<AddUpdateDistrictViewModel>();
+
+            addUpdateDistrictViewModel.CommandName = "Add district";
+            addUpdateDistrictViewModel.ProvinceId = SelectedProvince.Id;
+            addUpdateDistrictViewModel.ProvinceName = SelectedProvince.ProvinceName;
+
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateDistrictPopup);
+        }
+
+        [RelayCommand]
+        public async Task DisplayAddDepartmentPopup()
+        {
+            AddUpdateDepartmentPopup addUpdateDepartmentPopup = _serviceProvider.GetService<AddUpdateDepartmentPopup>();
+            AddUpdateDepartmentViewModel addUpdateDepartmentViewModel = _serviceProvider.GetService<AddUpdateDepartmentViewModel>();
+
+            addUpdateDepartmentViewModel.CommandName = "Add department";
+
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateDepartmentPopup);
+        }
+
+        [RelayCommand]
+        public async Task DisplayAddBranchPopup()
+        {
+            AddUpdateBranchPopup addUpdateBranchPopup = _serviceProvider.GetService<AddUpdateBranchPopup>();
+            AddUpdateBranchViewModel addUpdateBranchViewModel = _serviceProvider.GetService<AddUpdateBranchViewModel>();
+
+            addUpdateBranchViewModel.CommandName = "Add branch";
+
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateBranchPopup);
+        }
+
+        [RelayCommand]
+        public async Task DisplayAddPriorityTypePopup()
+        {
+            // TODO: Display Add Priority Type Popup to add new priority type.
+        }
+
+        private bool CanDisplayAddDistrictPopupCommandExecuted()
+        {
+            return (SelectedProvince != null) && (SelectedProvince.ProvinceName != "- Select province -");
+        }
+
+        [RelayCommand(CanExecute = nameof(CanAddStudentExecuted))]
+        public async Task AddUpdateStudent()
+        {
+            if (CommandName == "Add student")
+            {
+                await AddStudent();
+            }
+            else if (CommandName == "Update student")
+            {
+                await UpdateStudent();
+            }
         }
 
         [RelayCommand]
@@ -333,88 +373,59 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task NavigateBack()
         {
+            Clear();
+
             await Shell.Current.GoToAsync("..", true);
         }
 
         public bool CanAddStudentExecuted()
         {
-            int index1 = 0;
-            int index2 = 0;
-            int index3 = 0;
+            bool isValidStudentSpecificId = true;
+            bool isValidStudentName = true;
+            bool isValidEmail = true;
+            bool isValidBranch = (SelectedBranch != null) && (SelectedBranch.BranchName != "- Select branch -");
+            bool isValidDistrict = (SelectedDistrict != null) && SelectedDistrict.DistrictName != "- Select district -";
 
-            //validate StudentSpecificId
+            // Validate StudentSpecificId
             if (string.IsNullOrEmpty(StudentSpecificId))
             {
-                if (globalVariable1 == 0)
-                {
-                    StudentSpecificIdColor = Color.FromArgb("#FFFFFF");
-                }
-                else
-                {
-                    StudentSpecificIdColor = Color.FromArgb("#BF1D28");
-                }
+                StudentSpecificIdColor = Color.FromArgb("#BF1D28");
                 StudentSpecificIdMessageText = "Student ID cannot be empty.";
-                index1++;
+                isValidStudentSpecificId = false;
             }
             else
             {
-                globalVariable1 = 1;
                 StudentSpecificIdColor = Color.FromArgb("#007D3A");
                 StudentSpecificIdMessageText = "Valid student ID.";
-                index1 = 0;
             }
 
-            //validate StudentName
+            // Validate StudentName
             if (string.IsNullOrEmpty(StudentName))
             {
-                if (globalVariable2 == 0)
-                {
-                    StudentNameColor = Color.FromArgb("#FFFFFF");
-                }
-                else
-                {
-                    StudentNameColor = Color.FromArgb("#BF1D28");
-                }
+                StudentNameColor = Color.FromArgb("#BF1D28");
                 StudentNameMessageText = "Student name cannot be empty.";
-                index2++;
+                isValidStudentName = false;
             }
             else
             {
-                globalVariable2 = 1;
                 StudentNameColor = Color.FromArgb("#007D3A");
                 StudentNameMessageText = "Valid student name.";
-                index2 = 0;
             }
 
-            //validate Email
+            // Validate Email
             if (!ValidateEmail(Email))
             {
-                if (globalVariable3 == 0)
-                {
-                    EmailColor = Color.FromArgb("#FFFFFF");
-                }
-                else
-                {
-                    EmailColor = Color.FromArgb("#BF1D28");
-                }
-                EmailMessageText = "Email cannot be empty.";
-                index3++;
+                EmailColor = Color.FromArgb("#BF1D28");
+                EmailMessageText = "Invalid Email.";
+                isValidEmail = false;
             }
             else
             {
-                globalVariable3 = 1;
                 EmailColor = Color.FromArgb("#007D3A");
                 EmailMessageText = "Valid email.";
-                index3 = 0;
             }
 
-
-            if (index1 > 0 || index2 > 0 || index3 > 0)
-            {
-                return false;
-            }
-
-            return true;
+            return isValidStudentSpecificId && isValidStudentName && isValidEmail && isValidBranch && isValidDistrict;
         }
         #endregion
 
@@ -483,6 +494,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #region Helper
         public void Clear()
         {
+            CommandName = "";
+            Id = -1;
             StudentSpecificId = "";
             StudentName = "";
             Email = "";
@@ -513,6 +526,131 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 return false;
             }
         }
+
+        public async Task ReloadProvinceList()
+        {
+            IProvinceService provinceService = _serviceProvider.GetService<IProvinceService>();
+            ProvinceList = (await provinceService.GetAllProvinces()).ToObservableCollection();
+            ProvinceList.Insert(0, new() { Id = 0, ProvinceName = "- Select province -" });
+
+            SelectedProvince = ProvinceList[0];
+        }
+
+        public async Task ReloadDistrictList()
+        {
+            IDistrictService districtService = _serviceProvider.GetService<IDistrictService>();
+            DistrictList = (await districtService.GetDistrictsByProvinceId(SelectedProvince.Id)).ToObservableCollection();
+            DistrictList.Insert(0, new() { Id = 0, DistrictName = "- Select district -" });
+
+            SelectedDistrict = DistrictList[0];
+        }
+
+        public async Task ReloadDepartmentList()
+        {
+            IDepartmentService departmentService = _serviceProvider.GetService<IDepartmentService>();
+            DepartmentList = (await departmentService.GetAllDepartments()).ToObservableCollection();
+            DepartmentList.Insert(0, new() { Id = 0, DepartmentName = "- Select department -" });
+
+            SelectedDepartment = DepartmentList[0];
+        }
+
+        public async Task ReloadBranchList()
+        {
+            IBranchService branchService = _serviceProvider.GetService<IBranchService>();
+            BranchList = (await branchService.GetBranchesByDepartmentId(SelectedDepartment.Id)).ToObservableCollection();
+            BranchList.Insert(0, new() { Id = 0, BranchName = "- Select branch -" });
+
+            SelectedBranch = BranchList[0];
+        }
+
+        public async Task ReloadPriorityTypeList()
+        {
+            IPriorityTypeService priorityTypeService = _serviceProvider.GetService<IPriorityTypeService>();
+            primaryPriorityTypeList = (await priorityTypeService.GetAllPriorityTypesAsync()).ToList();
+
+            PriorityTypeList = primaryPriorityTypeList
+                    .Where(pt => pt.Id != 1 && pt.Id != 2)
+                    .ToObservableCollection();
+            PriorityTypeList.Insert(0, new() { Id = 0, PriorityName = "- Select priority type -" });
+
+            SelectedPriorityType = PriorityTypeList[0];
+        }
+
+        private async Task AddStudent()
+        {
+            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to add this new student?", "Yes", "No");
+            if (accept)
+            {
+                IStudentService studentService = _serviceProvider.GetService<IStudentService>();
+                List<Student> studentList = await studentService.GetAllStudents();
+
+                // Check if there is any student in the database with the same StudentSpecificId
+                List<Student> sameSpecifcIdStudents = studentList.Where(d => d.StudentSpecificId.ToLower() == StudentSpecificId.ToLower()).ToList();
+                if (sameSpecifcIdStudents.Any())
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this student because there is another student with the same Id!", "OK");
+                    return;
+                }
+
+                // Add student
+                string newImageUrl;
+                if (ImageUrl != "https://static.wixstatic.com/media/8027bc_6d79e9c44bae49de97c018a781738884~mv2.jpg/v1/fill/w_987,h_1096,al_c,q_90/file.jpg")
+                {
+                    using var stream = await imageResult.OpenReadAsync();
+                    newImageUrl = await _firebaseStorage
+                        .Child("Images")
+                        .Child("Avatar")
+                        .Child($"{StudentSpecificId.Trim()}-Avatar")
+                        .PutAsync(stream);
+                }
+                else
+                {
+                    newImageUrl = ImageUrl;
+                }
+
+                if (!string.IsNullOrEmpty(newImageUrl))
+                {
+                    // Update database
+                    Student student = new()
+                    {
+                        StudentSpecificId = StudentSpecificId.Trim(),
+                        FullName = StudentName.Trim(),
+                        DateOfBirth = DateOfBirth,
+                        Email = Email,
+                        Gender = (SelectedGender == "Male") ? Gender.Male : Gender.Female,
+                        BranchId = SelectedBranch.Id,
+                        Branch = null,
+                        DistrictId = SelectedDistrict.Id,
+                        District = null,
+                        ImageUrl = newImageUrl
+                    };
+                    List<PriorityType> priorityTypes = new();
+                    foreach (var priorityType in SelectedPriorityTypeList)
+                    {
+                        priorityTypes.Add(primaryPriorityTypeList.First(pt => pt.Id == priorityType.Id));
+                    }
+
+                    Student result = await studentService.AddStudent(student, priorityTypes);
+                    if (result != null)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Success", "Add student successfully!", "OK");
+
+                        NavigateBackCommand.Execute(null);
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Failed", "Add student failed!", "OK");
+                    }
+                }
+            }
+        }
+
+        private async Task UpdateStudent()
+        {
+
+        }
         #endregion
     }
+
+    #endregion
 }

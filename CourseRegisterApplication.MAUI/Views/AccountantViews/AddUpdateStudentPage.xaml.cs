@@ -9,11 +9,4 @@ public partial class AddUpdateStudentPage : ContentPage
 		InitializeComponent();
 		BindingContext = addUpdateStudentViewModel;
 	}
-
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-
-        (BindingContext as AddUpdateStudentViewModel).Clear();
-    }
 }

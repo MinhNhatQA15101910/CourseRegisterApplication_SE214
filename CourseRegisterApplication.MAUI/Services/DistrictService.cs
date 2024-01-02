@@ -37,6 +37,20 @@ public class DistrictService : IDistrictService
         return response.IsSuccessStatusCode;
     }
 
+    public async Task<District> GetDistrictById(int districtId)
+    {
+        string apiUrl = $"{GlobalConfig.DISTRICT_BASE_URL}{districtId}";
+
+        var response = await _httpClient.GetAsync(new Uri(apiUrl));
+        if (response.IsSuccessStatusCode)
+        {
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<District>(jsonResponse);
+        }
+
+        return null;
+    }
+
     public async Task<List<District>> GetDistrictsByProvinceId(int provinceId)
     {
         string apiUrl = $"{GlobalConfig.DISTRICT_BASE_URL}province/{provinceId}";

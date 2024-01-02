@@ -44,6 +44,7 @@
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
+        Placeholder="Branch ID"
         Text="{Binding BranchSpecificId}"
         WidthRequest="300" />
       <Label
@@ -60,6 +61,7 @@
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
+        Placeholder="Branch Name"
         Text="{Binding BranchName}"
         WidthRequest="300" />
       <Label

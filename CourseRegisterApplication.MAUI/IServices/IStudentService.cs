@@ -8,7 +8,7 @@
         Task<Student> GetFullInformationOfStudentBySpecificId(string studentSpecificId);
         Task<List<Student>> GetStudentsByBranchId(int branchId);
         Task<List<Student>> GetStudentsByDistrictId(int districtId);
-        Task<Student> AddStudent(Student student);
+        Task<Student> AddStudent(Student student, List<PriorityType> priorityTypes);
         Task<bool> UpdateImageUrl(Student student, string newImageUrl);
     }
 }
