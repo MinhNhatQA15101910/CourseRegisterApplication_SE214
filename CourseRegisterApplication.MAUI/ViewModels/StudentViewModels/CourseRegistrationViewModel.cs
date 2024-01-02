@@ -345,7 +345,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
             SubjectDisplayList2 = primarySubjectDisplayList2.ToObservableCollection();
             FilterChange();
             SubjectDisplayList2 = SubjectDisplayList2.Where(a => a.SubjectName2.ToLower().Contains(newValue.ToLower()) || a.SubjectID2.ToLower().Contains(newValue.ToLower())).ToObservableCollection();
-            ReloadItemsBackground2();
+            CheckedSubjectDisplayList2();
         }
         #endregion
 
@@ -508,8 +508,11 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         }
         private void CheckedSubjectDisplayList2()
         {
-            SubjectDisplayList2 = SubjectDisplayList2.Where(s2 => !SubjectDisplayList.Any(s1 => s1.SubjectID == s2.SubjectID2)).ToObservableCollection();
-            ReloadItemsBackground2();
+            if (SubjectDisplayList2 != null && SubjectDisplayList != null)
+            {
+                SubjectDisplayList2 = SubjectDisplayList2.Where(s2 => !SubjectDisplayList.Any(s1 => s1.SubjectID == s2.SubjectID2)).ToObservableCollection();
+                ReloadItemsBackground2();
+            }
         }
 
         public void FilterChange()

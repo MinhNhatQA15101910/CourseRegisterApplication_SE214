@@ -92,7 +92,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 		[RelayCommand]
 		public async Task NavigateToCourseRegister()
 		{
-			await Shell.Current.GoToAsync("//courseregister/details", true);
+			await Shell.Current.GoToAsync("//courseregistration/details", true);
 		}
 
 		[RelayCommand]

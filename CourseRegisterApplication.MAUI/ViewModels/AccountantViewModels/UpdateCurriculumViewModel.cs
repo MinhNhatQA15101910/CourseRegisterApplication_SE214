@@ -18,7 +18,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #region Properties
         private List<Department> departmentList = new();
         private List<Branch> branchList = new();
-        private int selectedBranchID = 0;
+        private int selectedBranchID = 1;
         private int selectedSemester = 0;
         private string selectedSubjectId;
         private string selectedSubjectId2;
@@ -126,7 +126,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             SelectedSemesterFilterOption = SemesterFilterOptions[0];
             ReloadSubjectDisplays(currentSubjectList);
 
-            await GetUnselectedSubject(selectedBranchID);
+            GetUnselectedSubject();
             ReloadSubjectDisplays2(unselectedSubjectList);
         }
 
@@ -248,7 +248,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 GetSubjectList(selectedBranchID, selectedSemester);
                 ReloadSubjectDisplays(currentSubjectList);
 
-                await GetUnselectedSubject(selectedBranchID);
+                GetUnselectedSubject();
                 ReloadSubjectDisplays2(unselectedSubjectList);
             }
 
@@ -295,8 +295,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 }
                 SearchFilter = "";
                 GetSubjectList(selectedBranchID, selectedSemester);
+                GetUnselectedSubject();
                 ReloadSubjectDisplays(currentSubjectList);
-                GetUnselectedSubject(selectedBranchID);
                 ReloadSubjectDisplays2(unselectedSubjectList);
             }
         }
@@ -309,7 +309,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 selectedSemester = SemesterFilterOptions.IndexOf(SelectedSemesterFilterOption)+1;
                 GetSubjectList(selectedBranchID, selectedSemester);
                 ReloadSubjectDisplays(currentSubjectList);
-                GetUnselectedSubject(selectedBranchID);
+                GetUnselectedSubject();
                 ReloadSubjectDisplays2(unselectedSubjectList);
             }
         }
@@ -328,6 +328,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             SubjectDisplayList2 = primarySubjectDisplayList2.ToObservableCollection();
             FilterChange();
             SubjectDisplayList2 = SubjectDisplayList2.Where(a => a.SubjectName2.ToLower().Contains(newValue.ToLower()) || a.SubjectID2.ToLower().Contains(newValue.ToLower())).ToObservableCollection();
+            CheckedSubjectDisplayList2();
         }
         #endregion
 
@@ -350,10 +351,16 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 select item2);
         }
 
-        public async Task GetUnselectedSubject(int selectedBranchID)
+        public void GetUnselectedSubject()
         {
-            curriculumList = await _curriculumService.GetAllCurriculums();
-            List<Curriculum> curriculumByBranch = await _curriculumService.GetCurriculumsByBranchId(selectedBranchID);
+            List<Curriculum> curriculumByBranch = new List<Curriculum>();
+            foreach(var item in curriculumList)
+            {
+                if(item.BranchId == selectedBranchID)
+                {
+                    curriculumByBranch.Add(item);
+                }
+            }
             unselectedSubjectList = subjectList
                 .Where(subject => !curriculumByBranch.Exists(item => item.SubjectId == subject.Id))
                 .ToList();
@@ -422,10 +429,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                     NumberOfCredits2 = item.NumberOfCredits,
                     SubjectType2 = item2.Name,
                 });
-                var differenceList = primarySubjectDisplayList2
-                    .Where(c => !primarySubjectDisplayList.Exists(d => d.SubjectID == c.SubjectID2))
-                    .ToList();
-                SubjectDisplayList2 = differenceList.OrderBy(d => d.SubjectID2).ToObservableCollection();
+                SubjectDisplayList2 = primarySubjectDisplayList2.OrderBy(d => d.SubjectID2).ToObservableCollection();
+                CheckedSubjectDisplayList2();
                 FilterChange();
                 ReloadItemsBackground2();
             }
@@ -452,10 +457,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         public void ReloadItemsBackground2()
         {
-            for (int i = 0; i < SubjectDisplayList2.Count; i++)
+            if (SubjectDisplayList2 != null)
             {
-                SubjectDisplayList2[i].BackgroundColor2 = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
+                for (int i = 0; i < SubjectDisplayList2.Count; i++)
+                {
+                    SubjectDisplayList2[i].BackgroundColor2 = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
+                }
             }
+            
         }
 
         public void ChooseSubject2(SubjectDisplay2 subjectDisplay2)
@@ -467,6 +476,16 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 ReloadItemsBackground();
             }
         }
+
+        private void CheckedSubjectDisplayList2()
+        {
+            if (SubjectDisplayList2 != null && SubjectDisplayList != null)
+            {
+                SubjectDisplayList2 = SubjectDisplayList2.Where(s2 => !SubjectDisplayList.Any(s1 => s1.SubjectID == s2.SubjectID2)).ToObservableCollection();
+                ReloadItemsBackground2();
+            }
+        }
+
         public void FilterChange()
         {
             if (FilterOptions.Count > 0)
