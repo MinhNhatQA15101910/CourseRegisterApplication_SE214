@@ -206,6 +206,7 @@
               HeightRequest="40"
               HorizontalOptions="Center"
               Text="Course register info"
+              Command="{Binding CourseRegistrationInfoButtonCommand}"
               TextColor="#2671B1"
               WidthRequest="160">
               <VisualStateManager.VisualStateGroups>
@@ -237,6 +238,7 @@
               HorizontalOptions="Center"
               Text="Tuition info"
               TextColor="#2671B1"
+              Command="{Binding TuitionInfoButtonCommand}"
               WidthRequest="160">
               <VisualStateManager.VisualStateGroups>
                 <VisualStateGroupList>

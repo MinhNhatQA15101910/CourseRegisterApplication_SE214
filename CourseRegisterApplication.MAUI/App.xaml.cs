@@ -1,5 +1,6 @@
 ﻿using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AccountantViews;
+using CourseRegisterApplication.MAUI.Views.StudentViews;
 
 namespace CourseRegisterApplication.MAUI
 {

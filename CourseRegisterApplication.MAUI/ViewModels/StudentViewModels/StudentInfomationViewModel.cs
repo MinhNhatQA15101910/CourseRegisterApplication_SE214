@@ -1,5 +1,7 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
+using CourseRegisterApplication.MAUI.ViewModels.AdminViewModels;
 using CourseRegisterApplication.MAUI.Views;
+using CourseRegisterApplication.MAUI.Views.StudentViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 {
@@ -113,7 +115,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 					{
 						foreach(var item2 in  priorityList)
 						{
-                            StudentPriorityObjectList.Add(item2.PriorityType.PriorityName.ToString());
+                            StudentPriorityObjectList.Add(item2.PriorityTypeId.ToString());
                         }
 					}
 					
@@ -122,5 +124,18 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 
 			}
 		}
-	}
+
+		[RelayCommand]
+		public async Task CourseRegistrationInfoButton()
+		{
+            await Shell.Current.GoToAsync(nameof(CourseRegistrationInfoPage), true);
+        }
+
+        [RelayCommand]
+        public async Task TuitionInfoButton()
+        {
+
+        }
+
+    }
 }
