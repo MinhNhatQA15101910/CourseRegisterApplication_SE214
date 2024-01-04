@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace CourseRegisterApplication.Shared
+﻿namespace CourseRegisterApplication.Shared
 {
     public class Semester
     {
@@ -20,6 +18,7 @@ namespace CourseRegisterApplication.Shared
         [Required(AllowEmptyStrings = false, ErrorMessage = "Maximum credits is required!"), Range(minimum: 0, maximum: 40, ErrorMessage = "Out of range!")]
         [CustomValidation(typeof(Semester), "ValidateCredits")]
         public int MaximumCredits { get; set; }
+        public bool IsEnded { get; set; }
 
         public static ValidationResult ValidateRegistrationDate(Semester semester)
         {

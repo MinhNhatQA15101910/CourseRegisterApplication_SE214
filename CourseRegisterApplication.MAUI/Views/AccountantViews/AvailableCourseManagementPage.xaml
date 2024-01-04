@@ -3,11 +3,563 @@
   x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.AvailableCourseManagementPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
   Title="AvailableCourseManagementPage">
-  <VerticalStackLayout>
-    <Label
-      HorizontalOptions="Center"
-      Text="Welcome to .NET MAUI!"
-      VerticalOptions="Center" />
-  </VerticalStackLayout>
+  <Grid RowDefinitions="Auto,*">
+    <!--  Top Bar  -->
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="Can add, update, delete current available courses"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="Available Courses Management Page"
+      VerticalOptions="Start" />
+
+    <!--  Main content  -->
+    <ScrollView Grid.Row="1">
+      <Grid ColumnDefinitions="*,100,*" RowDefinitions="150,*, 100">
+        <!--  Filter and search bar  -->
+        <HorizontalStackLayout
+          Grid.Row="0"
+          Grid.Column="0"
+          Margin="100,0,0,20"
+          HorizontalOptions="Start">
+          <!--  Filter  -->
+          <Picker
+            Title="Choose filter"
+            Margin="0,0,0,5"
+            FontSize="14"
+            ItemsSource="{Binding SubjectFilterOptions}"
+            SelectedItem="{Binding SelectedSubjectFilterOption}"
+            VerticalOptions="End" />
+
+          <!--  Search Bar  -->
+          <SearchBar
+            Margin="20,0,0,0"
+            Placeholder="Search for a subject by its ID or name"
+            VerticalOptions="End"
+            WidthRequest="600" />
+        </HorizontalStackLayout>
+
+        <!--  Search previous courses and end semester buttons  -->
+        <HorizontalStackLayout
+          Grid.Row="0"
+          Grid.Column="2"
+          Margin="0,0,100,20"
+          HorizontalOptions="End"
+          VerticalOptions="End">
+          <!--  End semester button  -->
+          <Border
+            Padding="10"
+            BackgroundColor="#FFDBDE"
+            HeightRequest="45"
+            StrokeShape="RoundRectangle 8,8,8,8"
+            VerticalOptions="Center">
+            <HorizontalStackLayout
+              Background="Transparent"
+              HorizontalOptions="Center"
+              VerticalOptions="Center">
+              <Image
+                HeightRequest="24"
+                Source="vector_end_semester.png"
+                VerticalOptions="Center"
+                WidthRequest="24" />
+              <Label
+                Margin="10,0,0,0"
+                FontFamily="RobotoMedium"
+                Text="End this semester"
+                TextColor="#BF1D28"
+                VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#FFDBDE" />
+                    </VisualState.Setters>
+                  </VisualState>
+                  <VisualState x:Name="PointerOver">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#FFB3BA" />
+                    </VisualState.Setters>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+          </Border>
+
+          <!--  View previous courses button  -->
+          <Border
+            Margin="10,0,0,0"
+            Padding="10"
+            BackgroundColor="#FFDBDE"
+            HeightRequest="45"
+            StrokeShape="RoundRectangle 8,8,8,8"
+            VerticalOptions="Center">
+            <HorizontalStackLayout
+              Background="Transparent"
+              HorizontalOptions="Center"
+              VerticalOptions="Center">
+              <Image
+                HeightRequest="24"
+                Source="vector_view_list.png"
+                VerticalOptions="Center"
+                WidthRequest="24" />
+              <Label
+                Margin="10,0,0,0"
+                FontFamily="RobotoMedium"
+                Text="View previous courses"
+                TextColor="#2671B1"
+                VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                    </VisualState.Setters>
+                  </VisualState>
+                  <VisualState x:Name="PointerOver">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                    </VisualState.Setters>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+          </Border>
+        </HorizontalStackLayout>
+
+        <!--  Subject List  -->
+        <VerticalStackLayout
+          Grid.Row="1"
+          Grid.Column="0"
+          Margin="100,0,0,0">
+          <!--  Subject List text  -->
+          <Label
+            FontFamily="RobotoMedium"
+            FontSize="24"
+            Text="Subject list" />
+
+          <!--  Column Names  -->
+          <Grid Margin="0,10,0,0" ColumnDefinitions="*,2*,*,*">
+            <Label
+              Grid.Column="0"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              Text="Subject ID"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="1"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              Text="Subject name"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="2"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              Text="Number of Credits"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="3"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              Text="Total Lessons"
+              VerticalOptions="Center" />
+          </Grid>
+
+          <!--  Subject list  -->
+          <CollectionView
+            Margin="0,10,0,0"
+            EmptyView="Please wait..."
+            HeightRequest="600"
+            ItemsSource="{Binding SubjectDisplayList}"
+            VerticalScrollBarVisibility="Always">
+            <CollectionView.ItemsLayout>
+              <LinearItemsLayout Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+              <DataTemplate>
+                <Grid
+                  BackgroundColor="{Binding BackgroundColor}"
+                  ColumnDefinitions="*,2*,*,*"
+                  HeightRequest="50">
+                  <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SaveSubjectCommand}" />
+                  </Grid.GestureRecognizers>
+                  <Label
+                    Grid.Column="0"
+                    Padding="5"
+                    FontSize="14"
+                    Text="{Binding SubjectSpecificId}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+                  <Label
+                    Grid.Column="1"
+                    Padding="5"
+                    FontSize="14"
+                    Text="{Binding SubjectName}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+                  <Label
+                    Grid.Column="2"
+                    Padding="5"
+                    FontSize="14"
+                    Text="{Binding NumberOfCredits}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+                  <Label
+                    Grid.Column="3"
+                    Padding="5"
+                    FontSize="14"
+                    Text="{Binding TotalLessons}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+                </Grid>
+              </DataTemplate>
+            </CollectionView.ItemTemplate>
+          </CollectionView>
+        </VerticalStackLayout>
+
+        <!--  Selected Subject List  -->
+        <VerticalStackLayout
+          Grid.Row="1"
+          Grid.Column="2"
+          Margin="0,0,100,0">
+          <!--  Selected Subject List text  -->
+          <Label
+            FontFamily="RobotoMedium"
+            FontSize="24"
+            Text="Selected subject list" />
+
+          <!--  Column Names  -->
+          <Grid Margin="0,10,0,0" ColumnDefinitions="*,2*,*,*">
+            <Label
+              Grid.Column="0"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              Text="Subject ID"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="1"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              Text="Subject name"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="2"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              Text="Number of Credits"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="3"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              Text="Total Lessons"
+              VerticalOptions="Center" />
+          </Grid>
+
+          <!--  Selected Subject list  -->
+          <CollectionView
+            Margin="0,10,0,0"
+            EmptyView="Please wait..."
+            HeightRequest="350"
+            ItemsSource="{Binding SelectedSubjectDisplayList}"
+            VerticalScrollBarVisibility="Always">
+            <CollectionView.ItemsLayout>
+              <LinearItemsLayout Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+              <DataTemplate>
+                <Grid
+                  BackgroundColor="{Binding BackgroundColor}"
+                  ColumnDefinitions="*,2*,*,*"
+                  HeightRequest="50">
+                  <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SaveSubjectCommand}" />
+                  </Grid.GestureRecognizers>
+                  <Label
+                    Grid.Column="0"
+                    Padding="5"
+                    FontSize="14"
+                    Text="{Binding SubjectSpecificId}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+                  <Label
+                    Grid.Column="1"
+                    Padding="5"
+                    FontSize="14"
+                    Text="{Binding SubjectName}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+                  <Label
+                    Grid.Column="2"
+                    Padding="5"
+                    FontSize="14"
+                    Text="{Binding NumberOfCredits}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+                  <Label
+                    Grid.Column="3"
+                    Padding="5"
+                    FontSize="14"
+                    Text="{Binding TotalLessons}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+                </Grid>
+              </DataTemplate>
+            </CollectionView.ItemTemplate>
+          </CollectionView>
+
+          <!--  Semester information  -->
+          <Grid
+            Margin="0,20,0,0"
+            Padding="10"
+            BackgroundColor="#FCFAFA"
+            ColumnDefinitions="*,*,2*"
+            HeightRequest="200"
+            RowDefinitions="*,*,*,*">
+            <!--  Semester text  -->
+            <Label
+              Grid.Row="0"
+              Grid.Column="0"
+              FontFamily="RobotoMedium"
+              FontSize="16"
+              HorizontalOptions="Start"
+              Text="Semester"
+              VerticalOptions="Center" />
+
+            <!--  Semester name  -->
+            <Label
+              Grid.Row="1"
+              Grid.Column="0"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="{Binding SemesterName}"
+              VerticalOptions="Center" />
+
+            <!--  Year text  -->
+            <Label
+              Grid.Row="2"
+              Grid.Column="0"
+              FontFamily="RobotoMedium"
+              FontSize="16"
+              HorizontalOptions="Start"
+              Text="Year"
+              VerticalOptions="Center" />
+
+            <!--  Actual year  -->
+            <Label
+              Grid.Row="3"
+              Grid.Column="0"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="{Binding Year}"
+              VerticalOptions="Center" />
+
+            <!--  Credit limit text  -->
+            <Label
+              Grid.Row="0"
+              Grid.Column="1"
+              FontFamily="RobotoMedium"
+              FontSize="16"
+              HorizontalOptions="Start"
+              Text="Credit limit:"
+              VerticalOptions="Center" />
+
+            <!--  Min credit  -->
+            <HorizontalStackLayout
+              Grid.Row="1"
+              Grid.Column="1"
+              HorizontalOptions="Start"
+              VerticalOptions="Start">
+              <Label
+                FontSize="14"
+                Text="Min:"
+                VerticalOptions="Center" />
+              <Entry
+                Margin="10,0,0,0"
+                Text="{Binding MinCredit}"
+                VerticalOptions="Center"
+                WidthRequest="50" />
+            </HorizontalStackLayout>
+
+            <!--  Max credit  -->
+            <HorizontalStackLayout
+              Grid.Row="3"
+              Grid.Column="1"
+              HorizontalOptions="Start"
+              VerticalOptions="Start">
+              <Label
+                FontSize="14"
+                Text="Max:"
+                VerticalOptions="Center" />
+              <Entry
+                Margin="10,0,0,0"
+                Text="{Binding MaxCredit}"
+                VerticalOptions="Center"
+                WidthRequest="50" />
+            </HorizontalStackLayout>
+
+            <!--  Tuition Payment time range  -->
+            <Label
+              Grid.Row="0"
+              Grid.Column="2"
+              FontFamily="RobotoMedium"
+              FontSize="16"
+              HorizontalOptions="Start"
+              Text="Time range allowed for tuition payment"
+              VerticalOptions="Center" />
+
+            <!--  Start date  -->
+            <HorizontalStackLayout
+              Grid.Row="1"
+              Grid.Column="2"
+              HorizontalOptions="Start"
+              VerticalOptions="Start">
+              <Label
+                FontSize="14"
+                Text="From:"
+                VerticalOptions="Center" />
+              <DatePicker
+                Margin="10,0,0,0"
+                Date="{Binding StartDate}"
+                VerticalOptions="Center"
+                WidthRequest="120" />
+            </HorizontalStackLayout>
+
+            <!--  End date  -->
+            <HorizontalStackLayout
+              Grid.Row="3"
+              Grid.Column="2"
+              HorizontalOptions="Start"
+              VerticalOptions="Start">
+              <Label
+                FontSize="14"
+                Text="To:"
+                VerticalOptions="Center" />
+              <DatePicker
+                Margin="20,0,0,0"
+                Date="{Binding EndDate}"
+                VerticalOptions="Center"
+                WidthRequest="120" />
+            </HorizontalStackLayout>
+          </Grid>
+        </VerticalStackLayout>
+
+        <!--  To-left and to-right buttons  -->
+        <VerticalStackLayout
+          Grid.Row="1"
+          Grid.Column="1"
+          VerticalOptions="Center">
+          <ImageButton
+            Padding="8"
+            BackgroundColor="#509CDB"
+            CornerRadius="8"
+            HeightRequest="24"
+            HorizontalOptions="Center"
+            Source="vector_double_right.png"
+            ToolTipProperties.Text="Select subject"
+            WidthRequest="24">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#509CDB" />
+                    </VisualState.Setters>
+                  </VisualState>
+                  <VisualState x:Name="PointerOver">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#3F83BC" />
+                    </VisualState.Setters>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+          </ImageButton>
+          <ImageButton
+            Margin="0,20,0,0"
+            Padding="8"
+            BackgroundColor="#509CDB"
+            CornerRadius="8"
+            HeightRequest="24"
+            HorizontalOptions="Center"
+            Source="vector_double_left.png"
+            ToolTipProperties.Text="Unselect subject"
+            WidthRequest="24">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#509CDB" />
+                    </VisualState.Setters>
+                  </VisualState>
+                  <VisualState x:Name="PointerOver">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#3F83BC" />
+                    </VisualState.Setters>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+          </ImageButton>
+        </VerticalStackLayout>
+
+        <!--  Add available courses button  -->
+        <Border
+          Grid.Row="2"
+          Grid.ColumnSpan="3"
+          Padding="10"
+          BackgroundColor="#EFF3FA"
+          HeightRequest="45"
+          HorizontalOptions="Center"
+          StrokeShape="RoundRectangle 8,8,8,8"
+          VerticalOptions="Center">
+          <HorizontalStackLayout
+            Background="Transparent"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <Image
+              HeightRequest="24"
+              Source="vector_add.png"
+              VerticalOptions="Center"
+              WidthRequest="24" />
+            <Label
+              Margin="10,0,0,0"
+              FontFamily="RobotoMedium"
+              Text="Add available courses"
+              TextColor="#2671B1"
+              VerticalOptions="Center" />
+          </HorizontalStackLayout>
+
+          <VisualStateManager.VisualStateGroups>
+            <VisualStateGroupList>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateGroupList>
+          </VisualStateManager.VisualStateGroups>
+        </Border>
+      </Grid>
+    </ScrollView>
+  </Grid>
 </ContentPage>
