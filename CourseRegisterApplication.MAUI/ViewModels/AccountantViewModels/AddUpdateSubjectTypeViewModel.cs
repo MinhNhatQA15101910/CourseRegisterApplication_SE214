@@ -54,12 +54,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             await popup.CloseAsync();
         }
 
-        [RelayCommand(CanExecute = nameof(CanAddUpdateBranchExecuted))]
-        public async Task AddUpdateBranch()
+        [RelayCommand(CanExecute = nameof(CanAddUpdateSubjectTypeExecuted))]
+        public async Task AddUpdateSubjectType()
         {
             if (CommandName == "Add subject type")
             {
-                await AddBranch();
+                await AddSubjectType();
             }
             else if (CommandName == "Update subject type")
             {
@@ -67,7 +67,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
         }
 
-        public bool CanAddUpdateBranchExecuted()
+        public bool CanAddUpdateSubjectTypeExecuted()
         {
             bool isValidSubjectTypeName = true;
             bool isValidNumberOfPeriod = true;
@@ -133,7 +133,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         private async Task AddSubjectType()
         {
-            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to add this new subject type?", "Yes", "No");
+            /*var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to add this new subject type?", "Yes", "No");
             if (accept)
             {
                 var subjectTypeService = _serviceProvider.GetService<ISubjectTypeService>();
@@ -171,12 +171,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 {
                     await Application.Current.MainPage.DisplayAlert("Failed", "Add branch failed!", "OK");
                 }
-            }
+            }*/
         }
 
         private async Task UpdateBranch()
         {
-            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to update this branch?", "Yes", "No");
+            /*var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to update this branch?", "Yes", "No");
             if (accept)
             {
                 var branchService = _serviceProvider.GetService<IBranchService>();
@@ -214,7 +214,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 {
                     await Application.Current.MainPage.DisplayAlert("Failed", "Update branch failed!", "OK");
                 }
-            }
+            }*/
         }
         #endregion
     }
+}

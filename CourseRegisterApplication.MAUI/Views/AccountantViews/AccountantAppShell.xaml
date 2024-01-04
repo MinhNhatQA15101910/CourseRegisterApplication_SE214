@@ -135,7 +135,7 @@
     Title="Province, district"
     Icon="location_icon.png"
     Route="provincedistrict">
-    <ShellContent ContentTemplate="{DataTemplate local:ProvinceDistrictPage}" Route="details" />
+    <ShellContent ContentTemplate="{DataTemplate local:ProvinceDistrictManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Priority object"

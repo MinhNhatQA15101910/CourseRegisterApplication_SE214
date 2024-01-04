@@ -111,6 +111,9 @@
 	  <Compile Update="Views\AccountantViews\AddUpdateSubjectPopup.xaml.cs">
 	    <DependentUpon>AddUpdateSubjectPopup.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\AccountantViews\AddUpdateSubjectTypePopup.xaml.cs">
+	    <DependentUpon>AddUpdateSubjectTypePopup.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\AccountantViews\StudentManagementPage.xaml.cs">
 	    <DependentUpon>StudentManagementPage.xaml</DependentUpon>
 	  </Compile>
@@ -147,7 +150,7 @@
 	  <MauiXaml Update="Views\AccountantViews\AccountantDashboardPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AccountantViews\AppUpdateSubjectTypePopup.xaml">
+	  <MauiXaml Update="Views\AccountantViews\AddUpdateSubjectTypePopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\BranchManagementPage.xaml">

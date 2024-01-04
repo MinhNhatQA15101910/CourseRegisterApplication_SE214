@@ -1,5 +1,6 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views;
+using CourseRegisterApplication.MAUI.Views.AccountantViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
@@ -121,6 +122,30 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
             
         }
+
+        [RelayCommand]
+        public async Task DisplayAddSubjectTypePopup()
+        {
+            var addUpdateSubjectTypePopup = _serviceProvider.GetService<AddUpdateSubjectTypePopup>();
+            var addUpdateSubjectTypeViewModel = _serviceProvider.GetService<AddUpdateSubjectTypeViewModel>();
+
+            addUpdateSubjectTypeViewModel.CommandName = "Add subject type";
+
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateSubjectTypePopup);
+        }
+
+        [RelayCommand]
+        public async Task DisplayUpdateSubjectPopup()
+        {
+            var addUpdateSubjectTypePopup = _serviceProvider.GetService<AddUpdateSubjectTypePopup>();
+            var addUpdateSubjectTypeViewModel = _serviceProvider.GetService<AddUpdateSubjectTypeViewModel>();
+
+            addUpdateSubjectTypeViewModel.SubjectTypeId = selectedSubjectTypeId;
+            addUpdateSubjectTypeViewModel.CommandName = "Update subject type";
+
+            await Application.Current.MainPage.ShowPopupAsync(addUpdateSubjectTypePopup);
+        }
+
 
         #endregion
 

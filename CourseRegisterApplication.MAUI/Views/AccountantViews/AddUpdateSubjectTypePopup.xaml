@@ -40,89 +40,54 @@
         Margin="50,50,0,0"
         FontFamily="RobotoMedium"
         FontSize="16"
-        Text="Branch ID:" />
+        Text="Subject type name:" />
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
-        Text="{Binding BranchSpecificId}"
+        Text="{Binding SubjectTypeName}"
         WidthRequest="300" />
       <Label
         Margin="50,0,0,0"
         FontSize="12"
-        Text="{Binding BranchSpecificIdMessageText}"
-        TextColor="{Binding BranchSpecificIdColor}" />
+        Text="{Binding SubjectTypeNameMessageText}"
+        TextColor="{Binding SubjectTypeNameColor}" />
 
       <Label
         Margin="50,20,0,0"
         FontFamily="RobotoMedium"
         FontSize="16"
-        Text="Branch Name:" />
+        Text="Number of Period:" />
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
-        Text="{Binding BranchName}"
+        Text="{Binding NumberOfPeriod}"
         WidthRequest="300" />
       <Label
         Margin="50,0,0,0"
         FontSize="12"
-        Text="{Binding BranchNameMessageText}"
-        TextColor="{Binding BranchNameColor}" />
+        Text="{Binding NumberOfPeriodMessageText}"
+        TextColor="{Binding NumberOfPeriodColor}" />
 
       <Label
         Margin="50,20,0,0"
         FontFamily="RobotoMedium"
         FontSize="16"
-        Text="Department Name:" />
-      <Grid>
-        <Picker
-          HeightRequest="50"
-          HorizontalOptions="Center"
-          ItemDisplayBinding="{Binding DepartmentName}"
-          ItemsSource="{Binding DepartmentList}"
-          SelectedItem="{Binding SelectedDepartment}"
-          VerticalOptions="Center"
-          WidthRequest="300" />
-
-        <ImageButton
-          Margin="0,0,5,0"
-          Padding="12"
-          BackgroundColor="#EFF3FA"
-          Command="{Binding DisplayAddDepartmentPopupCommand}"
-          CornerRadius="8"
-          HeightRequest="12"
-          HorizontalOptions="End"
-          Source="vector_add_small.png"
-          ToolTipProperties.Text="Add Department"
-          VerticalOptions="Center"
-          WidthRequest="12">
-          <VisualStateManager.VisualStateGroups>
-            <VisualStateGroupList>
-              <VisualStateGroup x:Name="CommonStates">
-                <VisualState x:Name="Normal">
-                  <VisualState.Setters>
-                    <Setter Property="BackgroundColor" Value="#EFF3FA" />
-                  </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="PointerOver">
-                  <VisualState.Setters>
-                    <Setter Property="BackgroundColor" Value="#B9D8F2" />
-                  </VisualState.Setters>
-                </VisualState>
-              </VisualStateGroup>
-            </VisualStateGroupList>
-          </VisualStateManager.VisualStateGroups>
-        </ImageButton>
-      </Grid>
+        Text="Subject type fee:" />
+      <Entry
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        Text="{Binding SubjectTypeFee}"
+        WidthRequest="300" />
       <Label
         Margin="50,0,0,0"
         FontSize="12"
-        Text="{Binding DepartmentMessageText}"
-        TextColor="{Binding DepartmentColor}" />
+        Text="{Binding SubjectTypeFeeMessageText}"
+        TextColor="{Binding SubjectTypeFeeColor}" />
 
       <Button
         Margin="0,20,0,0"
         BackgroundColor="#EFF3FA"
-        Command="{Binding AddUpdateBranchCommand}"
+        Command="{Binding AddUpdateSubjectTypeCommand}"
         FontFamily="RobotoMedium"
         FontSize="15"
         HeightRequest="50"

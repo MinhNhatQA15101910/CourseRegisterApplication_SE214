@@ -9,7 +9,7 @@
   NavigationPage.HasNavigationBar="False"
   Shell.FlyoutBehavior="Flyout">
 
-  <Grid RowDefinitions="Auto, *">
+  <Grid RowDefinitions="Auto, *, Auto">
     <contentViews:NavigationTopBar
       Grid.Row="0"
       DescriptionText="Can view, confirm course registration"
@@ -21,7 +21,11 @@
       VerticalOptions="Start" />
 
     <ScrollView Grid.Row="1">
-      <VerticalStackLayout Padding="20,0,0,0" Spacing="40">
+      <VerticalStackLayout
+        Padding="20,20,0,0"
+        BackgroundColor="Beige"
+        HorizontalOptions="Fill"
+        Spacing="40">
         <HorizontalStackLayout>
           <Label
             Margin="0,0,10,0"
@@ -55,7 +59,7 @@
                   FontFamily="RobotoRegular"
                   FontSize="14"
                   HeightRequest="50"
-                  Placeholder="Search for a student by name, email or id"
+                  Placeholder="Search form by Form ID, Student ID"
                   PlaceholderColor="#8A8A8A"
                   Text="{Binding SearchFilter}"
                   TextColor="#8A8A8A"
@@ -64,8 +68,14 @@
             </HorizontalStackLayout>
           </Border>
         </HorizontalStackLayout>
-        <Grid ColumnDefinitions="5*, 5*">
-          <VerticalStackLayout Grid.Column="0">
+        <Grid
+          ColumnDefinitions="5*, 1, 5*"
+          RowDefinitions="*, Auto"
+          VerticalOptions="Fill">
+          <VerticalStackLayout
+            Grid.Row="0"
+            Grid.Column="0"
+            VerticalOptions="Fill">
             <Label
               FontFamily="RobotoBold"
               FontSize="Title"
@@ -76,7 +86,7 @@
               ColumnDefinitions="2*, 2*, 2*, 2*, 2*"
               ColumnSpacing="40"
               HeightRequest="40"
-              HorizontalOptions="Start"
+              HorizontalOptions="Fill"
               VerticalOptions="Center">
 
               <Label
@@ -115,10 +125,297 @@
                 Text="State"
                 VerticalOptions="Center" />
             </Grid>
+
+            <CollectionView>
+              <CollectionView.ItemTemplate>
+                <DataTemplate>
+                  <Grid
+                    ColumnDefinitions="2*, 2*, 2*, 2*, 2*"
+                    ColumnSpacing="40"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Center">
+                    <Label
+                      Grid.Column="0"
+                      FontFamily="RobotoRegular"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding FormID}"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="1"
+                      FontFamily="RobotoRegular"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding StudentID}"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="2"
+                      FontFamily="RobotoRegular"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding SemesterID}"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="3"
+                      FontFamily="RobotoRegular"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding CreatedDate}"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="4"
+                      FontFamily="RobotoRegular"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding State}"
+                      VerticalOptions="Center" />
+
+                  </Grid>
+                </DataTemplate>
+              </CollectionView.ItemTemplate>
+            </CollectionView>
           </VerticalStackLayout>
+
+          <Grid Grid.Column="1" BackgroundColor="#509CDB" />
+
+          <VerticalStackLayout Grid.Row="0" Grid.Column="2">
+            <Grid
+              Margin="30"
+              ColumnDefinitions="3*, 3*, 3*"
+              ColumnSpacing="80"
+              HorizontalOptions="CenterAndExpand"
+              RowDefinitions="Auto, *"
+              RowSpacing="20"
+              VerticalOptions="CenterAndExpand">
+
+              <VerticalStackLayout Grid.Row="0" Grid.Column="0">
+                <Label
+                  FontAttributes="Bold"
+                  FontFamily="RobotoMedidum"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="Form ID"
+                  TextColor="#1A1A1A" />
+                <Label
+                  FontFamily="RobotoRegular"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="{Binding FormID}"
+                  TextColor="#A7A7A7" />
+              </VerticalStackLayout>
+
+              <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                <Label
+                  FontAttributes="Bold"
+                  FontFamily="RobotoMedidum"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="Student ID"
+                  TextColor="#1A1A1A" />
+                <Label
+                  FontFamily="RobotoRegular"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="{Binding StudentID}"
+                  TextColor="#A7A7A7" />
+              </VerticalStackLayout>
+
+              <VerticalStackLayout Grid.Row="0" Grid.Column="2">
+                <Label
+                  FontAttributes="Bold"
+                  FontFamily="RobotoMedidum"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="Student name"
+                  TextColor="#1A1A1A" />
+                <Label
+                  FontFamily="RobotoRegular"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="{Binding StudentName}"
+                  TextColor="#A7A7A7" />
+              </VerticalStackLayout>
+
+              <VerticalStackLayout Grid.Row="1" Grid.Column="0">
+                <Label
+                  FontAttributes="Bold"
+                  FontFamily="RobotoMedidum"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="Term"
+                  TextColor="#1A1A1A" />
+                <Label
+                  FontFamily="RobotoRegular"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="{Binding Term}"
+                  TextColor="#A7A7A7" />
+              </VerticalStackLayout>
+
+              <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+                <Label
+                  FontAttributes="Bold"
+                  FontFamily="RobotoMedidum"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="Year"
+                  TextColor="#1A1A1A" />
+                <Label
+                  FontFamily="RobotoRegular"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="{Binding Year}"
+                  TextColor="#A7A7A7" />
+              </VerticalStackLayout>
+
+              <VerticalStackLayout Grid.Row="1" Grid.Column="2">
+                <Label
+                  FontAttributes="Bold"
+                  FontFamily="RobotoMedidum"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="Create date"
+                  TextColor="#1A1A1A" />
+                <Label
+                  FontFamily="RobotoRegular"
+                  FontSize="14"
+                  HorizontalOptions="Start"
+                  Text="{Binding CreatedDate}"
+                  TextColor="#A7A7A7" />
+              </VerticalStackLayout>
+
+
+            </Grid>
+
+            <Label
+              Margin="0,20,0,0"
+              FontFamily="RobotoBold"
+              FontSize="Title"
+              Text="Subject registration list" />
+
+            <Grid
+              ColumnDefinitions="*, 3*, 2*, 2*"
+              ColumnSpacing="40"
+              HeightRequest="40"
+              HorizontalOptions="Fill"
+              VerticalOptions="Center">
+
+              <Label
+                Grid.Column="0"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Subject ID"
+                VerticalOptions="Center" />
+
+              <Label
+                Grid.Column="1"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Subject name"
+                VerticalOptions="Center" />
+
+              <Label
+                Grid.Column="2"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Subject Type"
+                VerticalOptions="Center" />
+
+              <Label
+                Grid.Column="3"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Number of periods"
+                VerticalOptions="Center" />
+            </Grid>
+
+            <CollectionView>
+              <CollectionView.ItemTemplate>
+                <DataTemplate>
+                  <Grid
+                    ColumnDefinitions="*, 3*, 2*, 2*"
+                    ColumnSpacing="40"
+                    HeightRequest="40"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Center">
+                    <Label
+                      Grid.Column="0"
+                      FontFamily="RobotoRegular"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding SubjectID}"
+                      VerticalOptions="Center" />
+
+                    <Label
+                      Grid.Column="1"
+                      FontFamily="RobotoRegular"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding SubjectName}"
+                      VerticalOptions="Center" />
+
+                    <Label
+                      Grid.Column="2"
+                      FontFamily="RobotoRegular"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding SubjectType}"
+                      VerticalOptions="Center" />
+
+                    <Label
+                      Grid.Column="3"
+                      FontFamily="RobotoRegular"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding NumberOfPeriods}"
+                      VerticalOptions="Center" />
+
+                  </Grid>
+                </DataTemplate>
+              </CollectionView.ItemTemplate>
+            </CollectionView>
+
+          </VerticalStackLayout>
+
+
+
         </Grid>
       </VerticalStackLayout>
     </ScrollView>
-
+    <Button
+      Grid.Row="2"
+      Grid.ColumnSpan="3"
+      Margin="0,0,0,20"
+      Padding="5"
+      BackgroundColor="#2D88D4"
+      Command="{Binding AddStudentCommand}"
+      CornerRadius="10"
+      FontAttributes="Bold"
+      FontSize="16"
+      HeightRequest="40"
+      IsEnabled="True"
+      Text="Confirm"
+      WidthRequest="200">
+      <VisualStateManager.VisualStateGroups>
+        <VisualStateGroupList>
+          <VisualStateGroup x:Name="CommonStates">
+            <VisualState x:Name="Normal">
+              <VisualState.Setters>
+                <Setter Property="BackgroundColor" Value="#509CDB" />
+              </VisualState.Setters>
+            </VisualState>
+            <VisualState x:Name="PointerOver">
+              <VisualState.Setters>
+                <Setter Property="BackgroundColor" Value="#3F83BC" />
+              </VisualState.Setters>
+            </VisualState>
+          </VisualStateGroup>
+        </VisualStateGroupList>
+      </VisualStateManager.VisualStateGroups>
+    </Button>
   </Grid>
 </ContentPage>
