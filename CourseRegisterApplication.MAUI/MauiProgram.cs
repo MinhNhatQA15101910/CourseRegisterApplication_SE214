@@ -75,6 +75,10 @@ namespace CourseRegisterApplication.MAUI
 			builder.Services.AddScoped<StudyProgramViewModel>();
 			builder.Services.AddScoped<SubjectManagementViewModel>();
 			builder.Services.AddScoped<TuitionCollectionViewModel>();
+			builder.Services.AddScoped<AddUpdateSubjectViewModel>();
+            builder.Services.AddScoped<CourseConfirmationViewModel>();
+            builder.Services.AddScoped<SubjectTypeManagementViewModel>();
+            builder.Services.AddScoped<AddUpdateSubjectTypeViewModel>();
             builder.Services.AddScoped<CourseRegistrationViewModel>(); 
             builder.Services.AddScoped<CourseRegisTrationInfoViewModel>(); 
             builder.Services.AddScoped<TuitionInfoViewModel>();
@@ -120,6 +124,10 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<AddUpdateDistrictPopup>();
             builder.Services.AddScoped<StudentManagementPage>();
             builder.Services.AddScoped<AddStudentPage>();
+            builder.Services.AddScoped<AddUpdateSubjectPopup>();
+            builder.Services.AddScoped<CourseConfirmationPage>();
+            builder.Services.AddScoped<SubjectTypeManagementPage>();
+            builder.Services.AddScoped<AddUpdateSubjectTypePopup>();
             builder.Services.AddScoped<CourseRegistrationPage>(); 
             builder.Services.AddScoped<CourseRegistrationInfoPage>();
             builder.Services.AddScoped<TuitionInfoPage>();
@@ -137,6 +145,12 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<IStudentPriorityTypeService, StudentPriorityTypeService>();
             builder.Services.AddScoped<IProvinceService, ProvinceService>();
             builder.Services.AddScoped<IDistrictService, DistrictService>();
+            builder.Services.AddScoped<ISubjectService, SubjectService>();
+            builder.Services.AddScoped<ISubjectTypeService, SubjectTypeService>();
+            builder.Services.AddScoped<IAvailableCoursesService, AvailableCoursesService>();
+            builder.Services.AddScoped<ICourseRegistrationDetailService, CourseRegistrationDetailService>();
+
+			return builder.Build();
             builder.Services.AddScoped<ISubjectService, SubjectService>();
             builder.Services.AddScoped<ISubjectTypeService, SubjectTypeService>();
             builder.Services.AddScoped<ISemesterService, SemesterService>();

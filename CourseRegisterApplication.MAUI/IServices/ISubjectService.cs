@@ -13,5 +13,6 @@ namespace CourseRegisterApplication.MAUI.IServices
         Task<Subject> CreateSubject(Subject subject);
         Task<bool> DeleteSubject(int subjectId);
         Task<bool> UpdateSubject(int subjectId, Subject subject);
+
     }
 }

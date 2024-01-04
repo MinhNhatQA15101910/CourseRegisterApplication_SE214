@@ -132,7 +132,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         private string email;
 
         [ObservableProperty]
-        private Gender gender;
+        private string gender;
 
         [ObservableProperty]
         private string branch;
@@ -179,7 +179,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                 {
                     FullName = "Trương Bá Cường",
                     StudentSpecificId = "SV21520013",
-                    Gender = Gender.Male,
+                    Gender = Shared.Gender.Male,
                     Branch = new Branch
                     {
                         BranchName = "Kỹ thuật phần mềm",
@@ -195,7 +195,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                 {
                     FullName = "Đôn Khánh Duy",
                     StudentSpecificId = "SV21520032",
-                    Gender = Gender.Male,
+                    Gender = Shared.Gender.Male,
                     Branch = new Branch
                     {
                         BranchName = "Công nghệ thông tin",
@@ -210,7 +210,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                 {
                     FullName = "Nguyễn Thị Phương",
                     StudentSpecificId = "SV21520135",
-                    Gender = Gender.Female,
+                    Gender = Shared.Gender.Female,
                     Branch = new Branch
                     {
                         BranchName = "Công nghệ thông tin",
@@ -226,7 +226,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     FullName = "Huỳnh Bá Anh Quân",
                     StudentSpecificId = "SV21520136",
                     DateOfBirth = new DateTime(2003, 05, 15),
-                    Gender = Gender.Male,
+                    Gender = Shared.Gender.Male,
                     Branch = new Branch
                     {
                         BranchName = "Kỹ thuật phần mềm",
@@ -242,7 +242,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     FullName = "Võ Thanh Bình",
                     StudentSpecificId = "SV21520007",
                     DateOfBirth = new DateTime(2003, 02, 10),
-                    Gender = Gender.Male,
+                    Gender = Shared.Gender.Male,
                     Branch = new Branch
                     {
                         BranchName = "Khoa học máy tính",
@@ -336,7 +336,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             FullName = student.FullName;
             StudentSpecificId = student.StudentSpecificId;
             Email = student.StudentSpecificId.Substring(2) + "@gm.uit.edu.vn";
-            Gender = student.Gender;
+            Gender = student.Gender.ToString();
             DateOfBirth = student.DateOfBirth.ToString("dd/MM/yyyy");
             Branch = student.Branch.BranchName;
             Department = student.Branch.Department.DepartmentName;

@@ -48,6 +48,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="IServices\ISubjectService - Copy.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Fonts\Roboto-Thin.ttf" />
 	  <None Remove="Resources\Images\admin_icon.png" />
 	  <None Remove="Resources\Images\admin_image_1.svg" />
@@ -109,6 +113,12 @@
 	  <Compile Update="Views\AccountantViews\AccountantDashboardPage.xaml.cs">
 	    <DependentUpon>AccountantDashboardPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\AccountantViews\AddUpdateSubjectPopup.xaml.cs">
+	    <DependentUpon>AddUpdateSubjectPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\AccountantViews\AddUpdateSubjectTypePopup.xaml.cs">
+	    <DependentUpon>AddUpdateSubjectTypePopup.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\AccountantViews\CurriculumManagementPage.xaml.cs">
 	    <DependentUpon>CurriculumManagementPage.xaml</DependentUpon>
 	  </Compile>
@@ -148,7 +158,13 @@
 	  <MauiXaml Update="Views\AccountantViews\AccountantDashboardPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\AddUpdateSubjectTypePopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\BranchManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\CourseConfirmationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\CourseManagementPage.xaml">
@@ -194,6 +210,10 @@
 	  <MauiXaml Update="Views\AccountantViews\TuitionCollectionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\SubjectTypeManagementPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AccountantViews\TuitionCollectionPage.xaml">
 	  <MauiXaml Update="Views\AccountantViews\ProvinceDistrictManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

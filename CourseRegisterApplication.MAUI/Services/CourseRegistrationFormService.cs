@@ -12,6 +12,21 @@ namespace CourseRegisterApplication.MAUI.Services
             _httpClient = httpClient;
         }
 
+        public async Task<List<CourseRegistrationForm>> GetAllCourseRegistrationForm()
+        {
+            string apiUrl = GlobalConfig.COURSE_REGISTRATION_FORM_BASE_URL;
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var courseRegistrationForms = JsonConvert.DeserializeObject<List<CourseRegistrationForm>>(jsonResponse);
+                return courseRegistrationForms;
+            }
+
+            return null;
+        }
+
         public async Task<CourseRegistrationForm> CreateCourseRegistrationForm(CourseRegistrationForm courseRegistrationForm)
         {
             string apiUrl = GlobalConfig.COURSE_REGISTRATION_FORM_BASE_URL;

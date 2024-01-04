@@ -36,7 +36,7 @@
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CourseRegistrationDetail>> GetCRDByCRFId(int crfId)
+        public async Task<ActionResult<IEnumerable<CourseRegistrationDetail>>> GetCRDByCRFId(int crfId)
         {
             try
             {
@@ -45,14 +45,14 @@
                     return new NotFoundResult();
                 }
 
-                var courseRegistrationDetail = await _context.CourseRegistrationDetails.Where(crd => crd.CourseRegistrationFormId == crfId).FirstOrDefaultAsync();
+                var courseRegistrationDetails = await _context.CourseRegistrationDetails.Where(crd => crd.CourseRegistrationFormId == crfId).ToListAsync();
 
-                if (courseRegistrationDetail == null)
+                if (courseRegistrationDetails == null)
                 {
                     return NotFound("No course registration detail of that Id found!");
                 }
 
-                return Ok(courseRegistrationDetail);
+                return Ok(courseRegistrationDetails);
             }
             catch (Exception ex)
             {

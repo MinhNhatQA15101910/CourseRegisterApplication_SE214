@@ -89,7 +89,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
     }
     #endregion
 
-
     #region Main ViewModel
     public partial class StudentManagementViewModel : ObservableObject, IStudentRequester
     {
@@ -567,7 +566,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             return false;
         }
 
-        string RemoveAccents(string input)
+        static string RemoveAccents(string input)
         {
             string normalizedString = input.Normalize(NormalizationForm.FormD);
             StringBuilder stringBuilder = new StringBuilder();
@@ -586,13 +585,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         void SearchStudentsByName(string newValue)
         {
-            string normalizedValue = RemoveAccents(newValue);
+            string normalizedValue = StudentManagementViewModel.RemoveAccents(newValue);
 
             string pattern = string.Join(".*", normalizedValue.Select(c => Regex.Escape(c.ToString())));
             Regex regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
             StudentAccountList = primaryStudentAccountList
-                .Where(a => regex.IsMatch(RemoveAccents(a.FullName)))
+                .Where(a => regex.IsMatch(StudentManagementViewModel.RemoveAccents(a.FullName)))
                 .OrderBy(a => a.FullName)
                 .ToObservableCollection();
         }
