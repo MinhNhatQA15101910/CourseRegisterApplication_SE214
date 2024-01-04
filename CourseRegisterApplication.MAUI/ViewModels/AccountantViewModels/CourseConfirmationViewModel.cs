@@ -103,7 +103,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [ObservableProperty]
         private int selectedFormId = -1;
 
-        [ObservableProperty] private ObservableCollection<string> courseRegisFormFilterOptions = new() { "Form ID", "Student ID", "Created date" };
+        [ObservableProperty] private ObservableCollection<string> courseRegisFormFilterOptions = new() { "Form ID", "Student ID" };
 
         [ObservableProperty] private string selectedCourseRegisFormFilterOption = "Form ID";
 
@@ -140,10 +140,34 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         public async Task GetCourseRegisForm()
         {
             var courseRegisFormService = _serviceProvider.GetService<ICourseRegistrationFormService>();
-            var courseRegisFormList = await courseRegisFormService.GetAllCourseRegistrationForm;
+            var courseRegisFormList = await courseRegisFormService.GetAllCourseRegistrationForm();
 
             ReloadCourseRegisFormDisplay(courseRegisFormList);
         }
+
+        /*[RelayCommand]
+        public async Task ConfirmCourseRegisForm()
+        {
+           
+            var courseRegisFormService = _serviceProvider.GetService<ICourseRegistrationFormService>();
+            var courseRegisForm = await courseRegisFormService;
+
+            courseRegisForm.State = CourseRegistrationFormState.Confirmed;
+            courseRegisForm.CreatedDate = DateTime.Now;
+
+            var result = await courseRegisFormService.UpdateCourseRegistrationForm(courseRegisForm);
+
+            if (result)
+            {
+                await Application.Current.MainPage.DisplayAlert("Success", "Confirm course registration form successfully", "OK");
+                await GetCourseRegisForm();
+                ClearProperty();
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Confirm course registration form failed", "OK");
+            }
+        }*/
         #endregion
 
         #region Property Changed
@@ -158,15 +182,27 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 case "Student ID":
                     CourseRegisFormDisplayList = primaryCourseRegisFormDisplayList.OrderBy(p => p.StudentId).ToObservableCollection();
                     break;
-                case "Created date":
-                    CourseRegisFormDisplayList = primaryCourseRegisFormDisplayList.OrderBy(p => p.CreatedDate).ToObservableCollection();
-                    break;
             }
 
             SearchCourseRegisFormFilter = "";
             ReloadCourseRegisFormBackground();
 
+            ClearProperty();
+        }
 
+        partial void OnSearchCourseRegisFormFilterChanged(string value)
+        {
+            switch (value)
+            {
+                case "Form ID":
+                    CourseRegisFormDisplayList = primaryCourseRegisFormDisplayList.Where(p => p.SpecificId.ToLower().Contains(SearchCourseRegisFormFilter.ToLower())).ToObservableCollection();
+                    break;
+                case "Student ID":
+                    CourseRegisFormDisplayList = primaryCourseRegisFormDisplayList.Where(p => p.StudentId.ToString().ToLower().Contains(SearchCourseRegisFormFilter.ToLower())).ToObservableCollection();
+                    break;
+            }
+
+            ReloadCourseRegisFormBackground();
         }
 
         #endregion
@@ -195,6 +231,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
                 CourseRegisFormDisplayList = primaryCourseRegisFormDisplayList.OrderBy(p => p.SpecificId).ToObservableCollection();
                 ReloadCourseRegisFormBackground();
+
+
             }
         }
 
@@ -224,6 +262,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
                 CourseRegisDetailDisplayList = primaryCourseRegisDetailDisplayList.OrderBy(p => p.CourseRegisFormId).ToObservableCollection();
                 ReloadCourseRegisDetailBackground();
+
+                
             }
         }
 

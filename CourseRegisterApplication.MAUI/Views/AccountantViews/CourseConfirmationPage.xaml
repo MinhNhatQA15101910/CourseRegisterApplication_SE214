@@ -22,8 +22,7 @@
 
     <ScrollView Grid.Row="1">
       <VerticalStackLayout
-        Padding="20,20,0,0"
-        BackgroundColor="Beige"
+        Padding="20,20,20,0"
         HorizontalOptions="Fill"
         Spacing="40">
         <HorizontalStackLayout>
@@ -75,6 +74,7 @@
           <VerticalStackLayout
             Grid.Row="0"
             Grid.Column="0"
+            HeightRequest="540"
             VerticalOptions="Fill">
             <Label
               FontFamily="RobotoBold"
@@ -178,7 +178,10 @@
 
           <Grid Grid.Column="1" BackgroundColor="#509CDB" />
 
-          <VerticalStackLayout Grid.Row="0" Grid.Column="2">
+          <VerticalStackLayout
+            Grid.Row="0"
+            Grid.Column="2"
+            Margin="20,0,0,0">
             <Grid
               Margin="30"
               ColumnDefinitions="3*, 3*, 3*"
