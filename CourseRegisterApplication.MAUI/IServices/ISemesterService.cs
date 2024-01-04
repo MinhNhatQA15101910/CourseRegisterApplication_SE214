@@ -4,5 +4,6 @@
     {
         Task<List<Semester>> GetAllSemester();
         Task<Semester> GetSemesterByNameAndYear(string name, int year);
+        Task<Semester> GetSemesterById(int semesterId);
     }
 }
