@@ -1,4 +1,5 @@
-﻿using CourseRegisterApplication.MAUI.IServices;
+﻿using AVFoundation;
+using CourseRegisterApplication.MAUI.IServices;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
@@ -21,6 +22,21 @@ namespace CourseRegisterApplication.MAUI.Services
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 var semesters = JsonConvert.DeserializeObject<List<Semester>>(jsonResponse);
                 return semesters;
+            }
+
+            return null;
+        }
+
+        public async Task<Semester> GetSemesterById(int semesterId)
+        {
+            string apiUrl = $"{GlobalConfig.SEMESTER_BASE_URL}";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var semesters = JsonConvert.DeserializeObject<List<Semester>>(jsonResponse);
+                return semesters.Where(s => s.Id == semesterId).FirstOrDefault();
             }
 
             return null;

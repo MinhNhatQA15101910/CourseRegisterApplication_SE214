@@ -51,7 +51,7 @@ namespace CourseRegisterApplication.MAUI.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<CourseRegistrationDetail> GetCRDByCRFId(int crfId)
+        public async Task<List<CourseRegistrationDetail>> GetCRDByCRFId(int crfId)
         {
             string apiUrl = $"{GlobalConfig.COURSE_REGISTRATION_DETAIL_BASE_URL}{crfId}";
 
@@ -59,7 +59,7 @@ namespace CourseRegisterApplication.MAUI.Services
             if (response.IsSuccessStatusCode)
             {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<CourseRegistrationDetail>(jsonResponse);
+                return JsonConvert.DeserializeObject<List<CourseRegistrationDetail>>(jsonResponse);
             }
 
             return null;

@@ -24,14 +24,14 @@ namespace CourseRegisterApplication.Server.Controllers
                     return new NotFoundResult();
                 }
 
-                var courseRegistrationForm = await _context.CourseRegistrationForms.ToListAsync();
+                var courseRegistrationForms = await _context.CourseRegistrationForms.ToListAsync();
 
-                if (courseRegistrationForm == null)
+                if (courseRegistrationForms == null)
                 {
                     return NotFound("No course registration form found!");
                 }
 
-                return Ok(courseRegistrationForm);
+                return Ok(courseRegistrationForms);
             } catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex}");
