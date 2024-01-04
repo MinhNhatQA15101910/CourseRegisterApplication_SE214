@@ -1,4 +1,6 @@
-﻿namespace CourseRegisterApplication.Server.Controllers
+﻿using CourseRegisterApplication.Shared;
+
+namespace CourseRegisterApplication.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -9,6 +11,11 @@
         public TuitionFeeReceiptsController(CourseRegisterManagementDbContext context)
         {
             _context = context;
+        }
+
+        private bool TuitionFeeReceiptExists(int id)
+        {
+            return (_context.TuitionFeeReceipts?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         [HttpGet]
@@ -33,6 +40,48 @@
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<TuitionFeeReceipt>> CreateTuitionFeeReceipt(TuitionFeeReceipt tuitionFeeReceipt)
+        {
+            if (_context.TuitionFeeReceipts == null)
+            {
+                return Problem("Entity set 'CourseRegisterManagementDbContext.TuitionFeeReceipts'  is null.");
+            }
+            _context.TuitionFeeReceipts.Add(tuitionFeeReceipt);
+            await _context.SaveChangesAsync();
+
+            return Ok(tuitionFeeReceipt);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateSubjectType(int id, TuitionFeeReceipt tuitionFeeReceipt)
+        {
+            if (id != tuitionFeeReceipt.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(tuitionFeeReceipt).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TuitionFeeReceiptExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
     }
 }
