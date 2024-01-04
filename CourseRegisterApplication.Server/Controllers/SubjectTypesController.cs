@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using CourseRegisterApplication.Shared;
+using System.Net;
 
 namespace CourseRegisterApplication.Server.Controllers
 {
@@ -11,6 +12,11 @@ namespace CourseRegisterApplication.Server.Controllers
         public SubjectTypesController(CourseRegisterManagementDbContext context)
         {
             _context = context;
+        }
+
+        private bool SubjectTypeExists(int id)
+        {
+            return (_context.SubjectTypes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         [HttpGet]
@@ -40,7 +46,7 @@ namespace CourseRegisterApplication.Server.Controllers
 
         
         [HttpGet("{subjectTypeId}")]
-        public async Task<ActionResult<IEnumerable<SubjectType>>> GetAllSubjectTypeById(int subjectTypeId)
+        public async Task<ActionResult<SubjectType>> GetAllSubjectTypeById(int subjectTypeId)
         {
             try
             {
@@ -49,20 +55,81 @@ namespace CourseRegisterApplication.Server.Controllers
                     return new NotFoundResult();
                 }
 
-                var subjectTypes = await _context.SubjectTypes.Where(st => st.Id == subjectTypeId).FirstOrDefaultAsync();
+                var subjectType = await _context.SubjectTypes.Where(st => st.Id == subjectTypeId).FirstOrDefaultAsync();
 
-                if (subjectTypes == null)
+                if (subjectType == null)
                 {
                     return NotFound("No subject type found!");
                 }
 
-                return Ok(subjectTypes);
+                return Ok(subjectType);
 
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<SubjectType>> CreateSubjectType(SubjectType subjectType)
+        {
+            if (_context.SubjectTypes == null)
+            {
+                return Problem("Entity set 'CourseRegisterManagementDbContext.SubjectTypes'  is null.");
+            }
+            _context.SubjectTypes.Add(subjectType);
+            await _context.SaveChangesAsync();
+
+            return Ok(subjectType);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateSubjectType(int id, SubjectType subjectType)
+        {
+            if (id != subjectType.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(subjectType).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SubjectTypeExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSubjectType(int id)
+        {
+            if (_context.SubjectTypes == null)
+            {
+                return NotFound();
+            }
+            var subjectType = await _context.SubjectTypes.FindAsync(id);
+            if (subjectType == null)
+            {
+                return NotFound();
+            }
+
+            _context.SubjectTypes.Remove(subjectType);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }
