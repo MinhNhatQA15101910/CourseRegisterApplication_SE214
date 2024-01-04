@@ -7,10 +7,10 @@ using System.Text.RegularExpressions;
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
 
-    public partial class SubjectDisplay: ObservableObject
+    public partial class SubjectManagementDisplay: ObservableObject
     {
         #region Properties
-        public ISubjectRequester SubjectRequester { get; set; }
+        public ISubjectDisplayRequester SubjectRequester { get; set; }
 
         public int SubjectId { get; set; }
 
@@ -45,13 +45,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #endregion
     }
 
-    public interface ISubjectRequester
+    public interface ISubjectDisplayRequester
     {
         void ReloadItemsBackground();
-        void DisplaySubjectInformation(SubjectDisplay subjectDisplay);
+        void DisplaySubjectInformation(SubjectManagementDisplay subjectDisplay);
     }
 
-    public partial class SubjectManagementViewModel : ObservableObject, ISubjectRequester
+    public partial class SubjectManagementViewModel : ObservableObject, ISubjectDisplayRequester
     {
 
         #region Services
@@ -60,9 +60,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #endregion
 
         #region Properties
-        private readonly List<SubjectDisplay> primarySubjectDisplayList = new();
+        private readonly List<SubjectManagementDisplay> primarySubjectDisplayList = new();
 
-        [ObservableProperty] private ObservableCollection<SubjectDisplay> subjectDisplayList = new();
+        [ObservableProperty] private ObservableCollection<SubjectManagementDisplay> subjectDisplayList = new();
 
         [ObservableProperty] private ObservableCollection<string> filterOptions = new() { "ID", "Name", "Type" };
 
@@ -85,7 +85,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         [ObservableProperty] private string numberOfCredit;
 
-        public ISubjectRequester SubjectRequester { get; set; }
+        public ISubjectDisplayRequester SubjectRequester { get; set; }
         #endregion
 
         #region Constructor
@@ -112,7 +112,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         public async Task GetAllSubject()
         {
             var subjectService = _serviceProvider.GetService<ISubjectService>();
-            var subjectList = await subjectService.GetAllSubject();
+            var subjectList = await subjectService.GetAllSubjects();
 
             await ReloadSubjectDisplays(subjectList);
         }
@@ -263,7 +263,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
         }
 
-        public void DisplaySubjectInformation(SubjectDisplay SubjectDisplay)
+        public void DisplaySubjectInformation(SubjectManagementDisplay SubjectDisplay)
         {
             selectedSubjectId = SubjectDisplay.SubjectId;
             SubjectSpecificId = SubjectDisplay.SpecificId;

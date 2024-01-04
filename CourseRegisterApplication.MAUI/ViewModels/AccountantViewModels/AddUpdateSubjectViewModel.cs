@@ -149,7 +149,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             if (accept)
             {
                 var subjectService = _serviceProvider.GetService<ISubjectService>();
-                var subjects = await subjectService.GetAllSubject();
+                var subjects = await subjectService.GetAllSubjects();
 
                 //Check if there is any subject with the same subject specific id
                 var sameSpecifcIdSubject = subjects.Where(x => x.SubjectSpecificId.ToLower() == SubjectSpecificId.ToLower());
@@ -197,7 +197,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             if (accept)
             {
                 var subjectService = _serviceProvider.GetService<ISubjectService>();
-                var subjects = await subjectService.GetAllSubject();
+                var subjects = await subjectService.GetAllSubjects();
 
                 //Check if there is any subject with the same subject specific id
                 var sameSpecifcIdSubject = subjects.Where(x => x.SubjectSpecificId.ToLower() == SubjectSpecificId.ToLower());

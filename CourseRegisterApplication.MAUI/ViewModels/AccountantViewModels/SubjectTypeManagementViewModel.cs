@@ -106,7 +106,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             bool accept = await Application.Current.MainPage.DisplayAlert("Question?", "Do you want to delete this subject type?", "Yes", "No");
             if (accept)
             {
-                var subjectList = await subjectService.GetAllSubject();
+                var subjectList = await subjectService.GetAllSubjects();
                 subjectList = subjectList.Where(s => s.SubjectTypeId == selectedSubjectTypeId).ToList();
                 if (subjectList.Count > 0)
                 {

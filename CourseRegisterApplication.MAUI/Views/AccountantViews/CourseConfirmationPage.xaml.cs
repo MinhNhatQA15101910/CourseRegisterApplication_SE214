@@ -14,6 +14,6 @@ public partial class CourseConfirmationPage : ContentPage
 	{
         base.OnAppearing();
 
-        //(BindingContext as CourseConfirmationViewModel).GetCourseRegistrationFormsCommand.Execute(null);
+        (BindingContext as CourseConfirmationViewModel).GetCourseRegisFormCommand.Execute(null);
     }
 }

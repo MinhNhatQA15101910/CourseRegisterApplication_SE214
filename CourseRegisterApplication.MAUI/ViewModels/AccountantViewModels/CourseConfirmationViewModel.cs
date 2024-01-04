@@ -139,7 +139,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task GetCourseRegisForm()
         {
-            var courseRegisFormService = _serviceProvider.GetService<ICourseRegistrationFormService>();
+            var courseRegisFormService = _serviceProvider.GetRequiredService<ICourseRegistrationFormService>();
             var courseRegisFormList = await courseRegisFormService.GetAllCourseRegistrationForm();
 
             ReloadCourseRegisFormDisplay(courseRegisFormList);

@@ -448,12 +448,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             
         }
 
-        public void ChooseSubject(SubjectDisplay subjectDisplay)
-        {
-            selectedSubjectId = subjectDisplay.SubjectID;
-            selectedSubjectId2 = null;
-            ReloadItemsBackground2();
-        }
 
         public void ReloadItemsBackground2()
         {
@@ -506,6 +500,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
                 }
             }
+        }
+
+        public void ChooseSubject(Displays.SubjectDisplay subjectDisplay)
+        {
+            selectedSubjectId = subjectDisplay.SubjectID;
+            selectedSubjectId2 = null;
+            ReloadItemsBackground2();
         }
         #endregion
     }
