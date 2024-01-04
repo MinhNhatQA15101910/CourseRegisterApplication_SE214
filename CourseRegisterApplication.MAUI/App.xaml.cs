@@ -6,7 +6,7 @@ namespace CourseRegisterApplication.MAUI
 {
     public partial class App : Application
     {
-        public App(AccountantAppShell page)
+        public App(LoginPage page)
         {
             InitializeComponent();
 

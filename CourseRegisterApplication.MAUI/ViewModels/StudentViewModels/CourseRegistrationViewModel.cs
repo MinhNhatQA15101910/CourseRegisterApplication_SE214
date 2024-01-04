@@ -344,6 +344,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                             item.NumberOfCredits * item2.LessonsCharge)
                         .Sum();
 
+                    courseRegistrationForm.TotalCharge= TotalPrice;
+                    courseRegistrationForm.CreatedDate = DateTime.Now;
+                    await _courseRegistrationFormService.UpdateCourseRegistrationForm(courseRegistrationForm.Id, courseRegistrationForm);
 
                     await GetCurrentSubjectList(thisStudent.Id, thisSemester.Id);
                     ReloadSubjectDisplays(currentSubjectList);

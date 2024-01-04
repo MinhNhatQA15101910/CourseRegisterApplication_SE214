@@ -130,7 +130,8 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<AddUpdateSubjectTypePopup>();
             builder.Services.AddScoped<CourseRegistrationPage>(); 
             builder.Services.AddScoped<CourseRegistrationInfoPage>();
-            builder.Services.AddScoped<TuitionInfoPage>();
+            builder.Services.AddScoped<TuitionInfoPage>(); 
+            builder.Services.AddScoped<PaymentPopup>();
 
             // Services
             builder.Services.AddSingleton<HttpClient>();
@@ -149,8 +150,6 @@ namespace CourseRegisterApplication.MAUI
             builder.Services.AddScoped<ISubjectTypeService, SubjectTypeService>();
             builder.Services.AddScoped<IAvailableCoursesService, AvailableCoursesService>();
             builder.Services.AddScoped<ICourseRegistrationDetailService, CourseRegistrationDetailService>();
-
-			return builder.Build();
             builder.Services.AddScoped<ISubjectService, SubjectService>();
             builder.Services.AddScoped<ISubjectTypeService, SubjectTypeService>();
             builder.Services.AddScoped<ISemesterService, SemesterService>();

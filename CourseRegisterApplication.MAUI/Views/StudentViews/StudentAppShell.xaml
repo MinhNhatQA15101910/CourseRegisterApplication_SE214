@@ -80,8 +80,8 @@
   <FlyoutItem
     Title="Tuition payment"
     Icon="bank.png"
-    Route="tuitionpayment">
-    <ShellContent ContentTemplate="{DataTemplate local:TuitionPaymentPage}" Route="details" />
+    Route="tuitioninfo">
+    <ShellContent ContentTemplate="{DataTemplate local:TuitionInfoPage}" Route="details" />
   </FlyoutItem>
 
   <Shell.ItemTemplate>

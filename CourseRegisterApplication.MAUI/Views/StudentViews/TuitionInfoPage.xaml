@@ -5,14 +5,11 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
   Title="TuitionInfoPage">
-  <Shell.BackButtonBehavior>
-    <BackButtonBehavior IsEnabled="False" IsVisible="False" />
-  </Shell.BackButtonBehavior>
   <Grid RowDefinitions="Auto,*">
     <contentViews:NavigationTopBar
       Grid.Row="0"
       DescriptionText=" "
-      IsBackVisible="True"
+      IsBackVisible="False"
       IsControlVisible="True"
       IsTitleVisible="True"
       LogoutCommand="{Binding LogoutCommand}"
@@ -92,7 +89,7 @@
             <CollectionView
               Grid.Row="2"
               Grid.Column="0"
-              HeightRequest="400"
+              HeightRequest="360"
               ItemsSource="{Binding CourseRegistrationDisplayList}"
               VerticalScrollBarVisibility="Always">
               <CollectionView.ItemTemplate>
@@ -254,7 +251,7 @@
                     <Image
                       Margin="8,0,0,0"
                       HeightRequest="14"
-                      Source="sgv_info_circle.png"
+                      Source="svg_info_circle.png"
                       WidthRequest="14" 
                       ToolTipProperties.Text="{Binding ToolTipRealityTuition}"/>
                   </HorizontalStackLayout>
@@ -283,6 +280,40 @@
             </Grid>
           </Grid>
         </Grid>
+        <HorizontalStackLayout Margin="0,48,0,0" HorizontalOptions="Center">
+          <Grid HorizontalOptions="Center">
+            <Button
+              Margin="12,0,0,0"
+              BackgroundColor="#EFF3FA"
+              CornerRadius="10"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HeightRequest="40"
+              HorizontalOptions="Center"
+              Text="Make a payment"
+              TextColor="#2671B1"
+              Command="{Binding DisplayPaymentPopupCommand}"
+              WidthRequest="160">
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Button>
+          </Grid>
+        </HorizontalStackLayout>
+
       </StackLayout>
     </ScrollView>
   </Grid>

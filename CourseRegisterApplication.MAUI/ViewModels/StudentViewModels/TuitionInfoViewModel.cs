@@ -1,6 +1,7 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.ViewModels.Displays;
 using CourseRegisterApplication.MAUI.Views;
+using CourseRegisterApplication.MAUI.Views.StudentViews;
 using CourseRegisterApplication.Shared;
 using Microsoft.Maui.ApplicationModel;
 using System;
@@ -17,9 +18,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         private readonly IServiceProvider _serviceProvider;
         private readonly ITuitionFeeReceiptService _tuitionFeeReceiptService;
         private readonly ICourseRegistrationFormService _courseRegistrationFormService;
-        private readonly ICourseRegistrationDetailService _courseRegistrationDetailService;
-        private readonly ISubjectService _subjectService;
-        private readonly ISubjectTypeService _subjectTypeService;
         private readonly ISemesterService _semesterService;
         private readonly IStudentService _studentService;
         private readonly IPriorityTypeService _priorityTypeService;
@@ -32,9 +30,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
             _serviceProvider = serviceProvider;
             _tuitionFeeReceiptService = _serviceProvider.GetRequiredService<ITuitionFeeReceiptService>();
             _courseRegistrationFormService = _serviceProvider.GetRequiredService<ICourseRegistrationFormService>();
-            _courseRegistrationDetailService = _serviceProvider.GetRequiredService<ICourseRegistrationDetailService>();
-            _subjectService = _serviceProvider.GetRequiredService<ISubjectService>();
-            _subjectTypeService = _serviceProvider.GetRequiredService<ISubjectTypeService>();
             _semesterService = _serviceProvider.GetRequiredService<ISemesterService>();
             _studentService = _serviceProvider.GetRequiredService<IStudentService>();
             _priorityTypeService = _serviceProvider.GetRequiredService<IPriorityTypeService>();
@@ -76,12 +71,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         private string toolTipRealityTuition; 
 
         [ObservableProperty]
-        private bool isVisibleTuitionInfo;
+        private bool isVisibleTuitionInfo; 
+
+        [ObservableProperty]
+        private string chargeNumber;
 
         List<Student> studentList = new List<Student>();
         List<PriorityType> priorityTypeList = new List<PriorityType>();
         List<StudentPriorityType> studentPriorityTypeList = new List<StudentPriorityType>();
-        List<Subject> subjectList = new List<Subject>();
         List<Semester> semesterList = new List<Semester>();
         List<CourseRegistrationForm> courseRegistrationFormList = new List<CourseRegistrationForm>();
         List<TuitionFeeReceipt> tuitionFeeReceiptList = new List<TuitionFeeReceipt>();
@@ -101,12 +98,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         }
 
         [RelayCommand]
-        public async Task NavigateBack()
-        {
-            await Shell.Current.GoToAsync("..", true);
-        }
-
-        [RelayCommand]
         public async Task GetSetUp()
         {
             studentList = await _studentService.GetStudents();
@@ -115,7 +106,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
             {
                 courseRegistrationFormList = await _courseRegistrationFormService.GetCourseRegistrationFormByStudentId(thisStudent.Id);
                 tuitionFeeReceiptList=await _tuitionFeeReceiptService.GetAllTuitionFeeReceipt();
-                subjectList = await _subjectService.GetAllSubjects();
                 semesterList = await _semesterService.GetAllSemester();
                 priorityTypeList = await _priorityTypeService.GetAllPriorityType();
                 studentPriorityTypeList = await _studentPriorityTypeService.GetStudentPriorityTypesByStudentId(thisStudent.Id);
@@ -125,7 +115,42 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
             }
         }
 
+        [RelayCommand]
+        public async Task DisplayPaymentPopup()
+        {
+            var paymentPopup = _serviceProvider.GetService<PaymentPopup>();
+            await Application.Current.MainPage.ShowPopupAsync(paymentPopup);
+        }
+
+        [RelayCommand]
+        public async Task ClosePopup()
+        {
+            Popup popup = _serviceProvider.GetService<PaymentPopup>();
+            await popup.CloseAsync();
+        }
+
+        [RelayCommand]
+        public async Task PaymentButton()
+        
+        {
+            if (double.TryParse(ChargeNumber.ToString(), out double chargeValue) && chargeValue > 0)
+            {
+                TuitionFeeReceipt tuitionFeeReceipt = new TuitionFeeReceipt
+                {
+                    Charge = chargeValue,
+                    CreatedDate = DateTime.Now,
+                    CourseRegistrationFormId = selectedCourseRegistrationId,
+                    State = TuitionFeeReceiptState.Pending
+                };
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Invalid charge value format", "Cancel");
+            }
+
+        }
         #endregion
+
         #region Property Chaged
         public async Task ChooseCourseRegistration(CourseRegistrationDisplay courseRegistrationDisplay)
         {
@@ -139,23 +164,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 CurrentCourseRegistrationId = courseRegistrationDisplay.CourseRegistrationId;
                 CurrentLastPaidTuition = GetLastPaidTuition(selectedCourseRegistrationId);
 
-                List<CourseRegistrationDetail> currentCRDList = (await _courseRegistrationDetailService.GetAllCRD())
-                .Where(c => c.CourseRegistrationFormId == selectedCourseRegistrationId).ToList();
-
-                List<Subject> currentSubjectList = subjectList
-                .Where(item2 => currentCRDList.Exists(item => item.SubjectId == item2.Id)).ToList();
-
-                double totalTuition = 0;
-                foreach (var item in currentSubjectList)
+                foreach (var item in courseRegistrationFormList)
                 {
-                    var currentSubjectType = await _subjectTypeService.GetSubjectTypeById(item.SubjectTypeId);
-                    if (currentSubjectType != null)
+                    if (item.Id == selectedCourseRegistrationId)
                     {
-                        totalTuition += item.NumberOfCredits * currentSubjectType.LessonsCharge;
+                        CurrentTotalTuition = item.TotalCharge;
                     }
                 }
-                CurrentTotalTuition = totalTuition;
-
+                
                 PriorityType maxPriorityType = priorityTypeList
                 .Where(item => studentPriorityTypeList.Exists(c => c.PriorityTypeId == item.Id))
                 .OrderByDescending(item => item.TuitionDiscountRate)
@@ -163,7 +179,11 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 if (maxPriorityType != null)
                 {
                     CurrentRealityTution = CurrentTotalTuition * (1 - maxPriorityType.TuitionDiscountRate);
-                    ToolTipRealityTuition = maxPriorityType.TuitionDiscountRate * 100 + "% discount for priority subjects: " + maxPriorityType.PriorityName;
+                    int roundValue = (int)Math.Round(CurrentRealityTution);
+                    int roundPercent = (int)Math.Round(maxPriorityType.TuitionDiscountRate * 100);
+                    CurrentRealityTution = roundValue;
+
+                    ToolTipRealityTuition = roundPercent + "% discount for priority subjects: " + maxPriorityType.PriorityName;
                 }
 
                 CurrentPaidTuition = thisTuitionFeeReceiptList.Sum(item => item.Charge);
@@ -183,6 +203,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 primaryCourseRegistrationDisplayList.AddRange(
                 from item in courseRegistrationFormList
                 join item2 in semesterList on item.SemesterId equals item2.Id
+                //where item.State == CourseRegistrationFormState.Confirmed
                 select new CourseRegistrationDisplay
                 {
                     CourseRegistrationRequester = this,
@@ -194,7 +215,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 });
 
                 CourseRegistrationDisplayList = primaryCourseRegistrationDisplayList
-                    .Where(d => !string.IsNullOrEmpty(d.LastPaidTuitionDate))
                     .OrderBy(d => d.CourseRegistrationId).ToObservableCollection();
                 ReloadCourseRegistrationItemsBackground();
             }

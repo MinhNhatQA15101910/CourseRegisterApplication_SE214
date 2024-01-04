@@ -140,11 +140,5 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
             await Shell.Current.GoToAsync(nameof(CourseRegistrationInfoPage), true);
         }
 
-        [RelayCommand]
-        public async Task TuitionInfoButton()
-        {
-            await Shell.Current.GoToAsync(nameof(TuitionInfoPage), true);
-        }
-
     }
 }

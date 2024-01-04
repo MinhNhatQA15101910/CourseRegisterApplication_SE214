@@ -227,37 +227,6 @@
               </VisualStateManager.VisualStateGroups>
             </Button>
           </Grid>
-          <Grid HorizontalOptions="Center">
-            <Button
-              Margin="12,0,0,0"
-              BackgroundColor="#EFF3FA"
-              CornerRadius="10"
-              FontFamily="RobotoMedium"
-              FontSize="14"
-              HeightRequest="40"
-              HorizontalOptions="Center"
-              Text="Tuition info"
-              TextColor="#2671B1"
-              Command="{Binding TuitionInfoButtonCommand}"
-              WidthRequest="160">
-              <VisualStateManager.VisualStateGroups>
-                <VisualStateGroupList>
-                  <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="Normal">
-                      <VisualState.Setters>
-                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
-                      </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="PointerOver">
-                      <VisualState.Setters>
-                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
-                      </VisualState.Setters>
-                    </VisualState>
-                  </VisualStateGroup>
-                </VisualStateGroupList>
-              </VisualStateManager.VisualStateGroups>
-            </Button>
-          </Grid>
         </HorizontalStackLayout>
       </StackLayout>
     </ScrollView>
