@@ -69,31 +69,6 @@ namespace CourseRegisterApplication.Server.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CourseRegistrationForm>> GetCourseRegistrationFormById(int id)
-        {
-            try
-            {
-                if (_context.CourseRegistrationForms == null)
-                {
-                    return new NotFoundResult();
-                }
-
-                var courseRegistrationForm = await _context.CourseRegistrationForms.Where(crf => crf.Id == id).FirstOrDefaultAsync();
-
-                if (courseRegistrationForm == null)
-                {
-                    return NotFound("No course registration form of that id found!");
-                }
-
-                return Ok(courseRegistrationForm);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex}");
-            }
-        }
-
         [HttpPost]
         public async Task<ActionResult<CourseRegistrationForm>> CreateCourseRegistrationForm(CourseRegistrationForm courseRegistrationForm)
         {

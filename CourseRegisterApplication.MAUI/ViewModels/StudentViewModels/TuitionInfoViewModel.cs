@@ -83,7 +83,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         List<CourseRegistrationForm> courseRegistrationFormList = new List<CourseRegistrationForm>();
         List<TuitionFeeReceipt> tuitionFeeReceiptList = new List<TuitionFeeReceipt>();
 
-        int selectedCourseRegistrationId;
+        int selectedCourseRegistrationId=0;
         #endregion
 
         #region Command
@@ -118,8 +118,17 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         [RelayCommand]
         public async Task DisplayPaymentPopup()
         {
-            var paymentPopup = _serviceProvider.GetService<PaymentPopup>();
-            await Application.Current.MainPage.ShowPopupAsync(paymentPopup);
+            if (IsVisibleTuitionInfo)
+            {
+                var paymentPopup = _serviceProvider.GetService<PaymentPopup>();
+                await Application.Current.MainPage.ShowPopupAsync(paymentPopup);
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "You have not selected the course registration form yet.", "Cancel");
+
+            }
+            
         }
 
         [RelayCommand]
@@ -131,23 +140,30 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 
         [RelayCommand]
         public async Task PaymentButton()
-        
         {
             if (double.TryParse(ChargeNumber.ToString(), out double chargeValue) && chargeValue > 0)
             {
                 TuitionFeeReceipt tuitionFeeReceipt = new TuitionFeeReceipt
                 {
+                    TuitionFeeReceiptSpecificId = selectedCourseRegistrationId + DateTime.Now.ToString("HHmmssddMMyyyy"),
                     Charge = chargeValue,
                     CreatedDate = DateTime.Now,
                     CourseRegistrationFormId = selectedCourseRegistrationId,
                     State = TuitionFeeReceiptState.Pending
                 };
+                await _tuitionFeeReceiptService.CreateTuitionFeeReceipt(tuitionFeeReceipt);
+                Popup popup = _serviceProvider.GetService<PaymentPopup>();
+                await popup.CloseAsync();
+                await Application.Current.MainPage.DisplayAlert("Successfully", "You have successfully paid your tuition fees.", "Okay");
+                CurrentPaidTuition += tuitionFeeReceipt.Charge;
+                CurrentRemainTution -= tuitionFeeReceipt.Charge;
+                if (CurrentRemainTution < 0) CurrentRemainTution = 0;
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Invalid charge value format", "Cancel");
-            }
+                await Application.Current.MainPage.DisplayAlert("Error", "Invalid charge value format, please try again.", "Cancel");
 
+            }
         }
         #endregion
 
@@ -203,7 +219,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 primaryCourseRegistrationDisplayList.AddRange(
                 from item in courseRegistrationFormList
                 join item2 in semesterList on item.SemesterId equals item2.Id
-                //where item.State == CourseRegistrationFormState.Confirmed
+                where item.State == CourseRegistrationFormState.Confirmed
                 select new CourseRegistrationDisplay
                 {
                     CourseRegistrationRequester = this,

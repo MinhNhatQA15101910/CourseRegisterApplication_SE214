@@ -200,13 +200,13 @@
                     FontSize="14"
                     HorizontalOptions="Start"
                     Text="Paid tuition"
-                    TextColor="#007D3A" />
+                    TextColor="#1A1A1A" />
                   <Label
                     Margin="0,4,0,0"
                     FontSize="16"
                     HorizontalOptions="Start"
                     Text="{Binding CurrentPaidTuition}"
-                    TextColor="{Binding CurrentPaidTutionColor, FallbackValue='#A7A7A7'}" />
+                    TextColor="#007D3A" />
                 </StackLayout>
               </StackLayout>
             </Grid>
