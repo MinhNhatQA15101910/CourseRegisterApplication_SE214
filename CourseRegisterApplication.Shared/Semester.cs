@@ -17,6 +17,7 @@
         public int MinimumCredits { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Maximum credits is required!"), Range(minimum: 0, maximum: 40, ErrorMessage = "Out of range!")]
         [CustomValidation(typeof(Semester), "ValidateCredits")]
+        public bool IsEnded { get; set; }
         public int MaximumCredits { get; set; }
 
         public static ValidationResult ValidateRegistrationDate(Semester semester)

@@ -395,6 +395,7 @@
                             EndRegistrationDate = DateTime.ParseExact(semesterData[3].Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture),
                             MinimumCredits = int.Parse(semesterData[4].Trim()),
                             MaximumCredits = int.Parse(semesterData[5].Trim()),
+                            IsEnded = bool.Parse(semesterData[6].Trim())
                         });
                     }
 

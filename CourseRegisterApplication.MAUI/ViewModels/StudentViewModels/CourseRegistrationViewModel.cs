@@ -129,18 +129,25 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                     IsVisbleCourseRegistration = false;
                     UnableNotificationText = "The course registration has ended on " + thisSemester.EndRegistrationDate.ToString("dd/MM/yyyy") + ", Please wait to register for the next semester.";
                 }
+                else if (thisSemester.IsEnded)
+                {
+                    IsVisbleUnableCourseRegistration = true;
+                    IsVisbleCourseRegistration = false;
+                    UnableNotificationText = "The course registration has ended, Please wait to register for the next semester.";
+                }
                 else
                 {
                     await GetAvailableCourseBySemesterId(thisSemester.Id);
                     thisStudent = studentList.Find(item => item.StudentSpecificId == GlobalConfig.CurrentUser.Username);
                     await GetCourseRegistrationFormByStudentIdAndSemesterId(thisStudent.Id, thisSemester.Id);
-                    if(courseRegistrationForm.State==CourseRegistrationFormState.Confirmed)
+
+                    if (courseRegistrationForm != null && courseRegistrationForm.State == CourseRegistrationFormState.Confirmed)
                     {
                         IsVisbleUnableCourseRegistration = true;
                         IsVisbleCourseRegistration = false;
                         UnableNotificationText = "Your course registration form has been confirmed.";
                     }
-                    else if(courseRegistrationForm.State == CourseRegistrationFormState.Expired)
+                    else if (courseRegistrationForm != null && courseRegistrationForm.State == CourseRegistrationFormState.Expired)
                     {
                         IsVisbleUnableCourseRegistration = true;
                         IsVisbleCourseRegistration = false;
@@ -286,6 +293,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                         cRF.SemesterId = thisSemester.Id;
                         cRF.CourseRegistrationFormSpecificId = "CRF" + cRF.Id;
                         cRF.State = CourseRegistrationFormState.Pending;
+                        cRF.TotalCharge = 0;
                         await _courseRegistrationFormService.CreateCourseRegistrationForm(cRF);
                         await GetCourseRegistrationFormByStudentIdAndSemesterId(cRF.StudentId, cRF.SemesterId);
                         CheckedButtontext();
@@ -321,6 +329,22 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                     {
                         await _courseRegistrationDetailService.CreateCourseRegistrationDetail(item);
                     }
+                    List<CourseRegistrationDetail> cRD = await _courseRegistrationDetailService.GetAllCRD();
+
+                    List<CourseRegistrationDetail> currentCRD = cRD
+                        .Where(item => item.CourseRegistrationFormId == courseRegistrationForm.Id)
+                        .ToList();
+
+                    List<Subject> currentSubject = currentCRD
+                        .Join(subjectList, item => item.SubjectId, item2 => item2.Id, (item, item2) => item2)
+                        .ToList();
+
+                    double TotalPrice = currentSubject
+                        .Join(subjectTypeList, item => item.SubjectTypeId, item2 => item2.Id, (item, item2) =>
+                            item.NumberOfCredits * item2.LessonsCharge)
+                        .Sum();
+
+
                     await GetCurrentSubjectList(thisStudent.Id, thisSemester.Id);
                     ReloadSubjectDisplays(currentSubjectList);
                     CheckedSubjectDisplayList2();
@@ -363,12 +387,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         {
             currentSubjectList.Clear();
             await GetCourseRegistrationFormByStudentIdAndSemesterId(studentId, semesterId);
-            List<CourseRegistrationDetail> courseRegistrationDetailList = await _courseRegistrationDetailService.GetAllCRD();
-            var curentCRDList = courseRegistrationDetailList.Where(item => item.CourseRegistrationFormId == courseRegistrationForm.Id).ToList();
-            currentSubjectList.AddRange(
-               from item in curentCRDList
-               join item2 in subjectList on item.SubjectId equals item2.Id
-               select item2);
+            if(courseRegistrationForm!=null)
+            {
+                List<CourseRegistrationDetail> courseRegistrationDetailList = await _courseRegistrationDetailService.GetAllCRD();
+                var curentCRDList = courseRegistrationDetailList.Where(item => item.CourseRegistrationFormId == courseRegistrationForm.Id).ToList();
+                currentSubjectList.AddRange(
+                   from item in curentCRDList
+                   join item2 in subjectList on item.SubjectId equals item2.Id
+                   select item2);
+            }
         }
 
         public async Task GetAllSubjects()
