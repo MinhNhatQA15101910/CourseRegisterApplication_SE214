@@ -54,5 +54,14 @@ namespace CourseRegisterApplication.MAUI.Services
 
             return null;
         }
+
+        public async Task<bool> DeleteAvailaleCourse(int semesterId, int subjectId)
+        {
+            string apiUrl = $"{GlobalConfig.AVAILABLE_COURSE_BASE_URL}{semesterId}/{subjectId}";
+
+            var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
+
+            return response.IsSuccessStatusCode;
+        }
     }
 }

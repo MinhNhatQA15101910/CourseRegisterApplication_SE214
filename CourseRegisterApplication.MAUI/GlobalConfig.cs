@@ -18,6 +18,7 @@
         public const string COURSE_REGISTRATION_DETAIL_BASE_URL = "https://localhost:7182/api/CourseRegistrationDetails/";
         public const string AVAILABLE_COURSE_BASE_URL = "https://localhost:7182/api/AvailableCourses/";
         public const string COURSE_REGISTRATION_FORM_BASE_URL = "https://localhost:7182/api/CourseRegistrationForms/";
+        public const string TUITION_FEE_RECEIPT_BASE_URL = "https://localhost:7182/api/TuitionFeeReceipts/";
         #endregion
 
         public static User CurrentUser { get; set; } = new User();
