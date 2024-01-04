@@ -39,6 +39,7 @@
           <SearchBar
             Margin="20,0,0,0"
             Placeholder="Search for a subject by its ID or name"
+            Text="{Binding SearchFilter}"
             VerticalOptions="End"
             WidthRequest="600" />
         </HorizontalStackLayout>
@@ -57,6 +58,9 @@
             HeightRequest="45"
             StrokeShape="RoundRectangle 8,8,8,8"
             VerticalOptions="Center">
+            <Border.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding EndSemesterCommand}" />
+            </Border.GestureRecognizers>
             <HorizontalStackLayout
               Background="Transparent"
               HorizontalOptions="Center"
@@ -376,21 +380,27 @@
               VerticalOptions="Center" />
 
             <!--  Min credit  -->
-            <HorizontalStackLayout
+            <VerticalStackLayout
               Grid.Row="1"
               Grid.Column="1"
               HorizontalOptions="Start"
               VerticalOptions="Start">
+              <HorizontalStackLayout>
+                <Label
+                  FontSize="14"
+                  Text="Min:"
+                  VerticalOptions="Center" />
+                <Entry
+                  Margin="10,0,0,0"
+                  Text="{Binding MinCredit}"
+                  VerticalOptions="Center"
+                  WidthRequest="50" />
+              </HorizontalStackLayout>
               <Label
-                FontSize="14"
-                Text="Min:"
-                VerticalOptions="Center" />
-              <Entry
-                Margin="10,0,0,0"
-                Text="{Binding MinCredit}"
-                VerticalOptions="Center"
-                WidthRequest="50" />
-            </HorizontalStackLayout>
+                FontSize="12"
+                Text="{Binding MinCreditMessageText}"
+                TextColor="{Binding MinCreditColor}" />
+            </VerticalStackLayout>
 
             <!--  Max credit  -->
             <HorizontalStackLayout
@@ -463,6 +473,7 @@
           <ImageButton
             Padding="8"
             BackgroundColor="#509CDB"
+            Command="{Binding SelectSubjectCommand}"
             CornerRadius="8"
             HeightRequest="24"
             HorizontalOptions="Center"
@@ -490,6 +501,7 @@
             Margin="0,20,0,0"
             Padding="8"
             BackgroundColor="#509CDB"
+            Command="{Binding UnselectSubjectCommand}"
             CornerRadius="8"
             HeightRequest="24"
             HorizontalOptions="Center"
@@ -525,6 +537,9 @@
           HorizontalOptions="Center"
           StrokeShape="RoundRectangle 8,8,8,8"
           VerticalOptions="Center">
+          <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding AddUpdateSemesterCommand}" />
+          </Border.GestureRecognizers>
           <HorizontalStackLayout
             Background="Transparent"
             HorizontalOptions="Center"
@@ -537,7 +552,7 @@
             <Label
               Margin="10,0,0,0"
               FontFamily="RobotoMedium"
-              Text="Add available courses"
+              Text="{Binding CommandName}"
               TextColor="#2671B1"
               VerticalOptions="Center" />
           </HorizontalStackLayout>

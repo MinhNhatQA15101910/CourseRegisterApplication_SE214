@@ -14,6 +14,7 @@
         public const string PRIORITY_TYPE_BASE_URL = "https://localhost:7182/api/PriorityTypes/";
         public const string SEMESTER_BASE_URL = "https://localhost:7182/api/Semesters/";
         public const string SUBJECT_BASE_URL = "https://localhost:7182/api/Subjects/";
+        public const string AVAILABLE_COURSE_BASE_URL = "https://localhost:7182/api/AvailableCourses/";
         #endregion
 
         public static User CurrentUser { get; set; } = new User();
