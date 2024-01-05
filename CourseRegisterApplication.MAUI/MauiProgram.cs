@@ -79,6 +79,8 @@ public static class MauiProgram
         builder.Services.AddScoped<CourseConfirmationViewModel>();
         builder.Services.AddScoped<AddUpdateSubjectViewModel>();
         builder.Services.AddScoped<AddUpdateSubjectTypeViewModel>();
+        builder.Services.AddScoped<CurriculumManagementViewModel>();
+        builder.Services.AddScoped<UpdateCurriculumViewModel>();
         #endregion
         #endregion
 
@@ -120,6 +122,7 @@ public static class MauiProgram
         builder.Services.AddScoped<CourseConfirmationPage>();
         builder.Services.AddScoped<AddUpdateSubjectPopup>();
         builder.Services.AddScoped<AddUpdateSubjectTypePopup>();
+        builder.Services.AddScoped<UpdateCurriculumPage>();
         #endregion
 
         #region Student

@@ -63,7 +63,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
             else if (CommandName == "Update subject type")
             {
-                await UpdateBranch();
+                await UpdateSubjectType();
             }
         }
 
@@ -71,6 +71,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         {
             bool isValidSubjectTypeName = true;
             bool isValidNumberOfPeriod = true;
+            bool isValidSubjectTypeFee = true;
 
             // Validate Subject Type Name
             if (string.IsNullOrEmpty(SubjectTypeName))
@@ -92,13 +93,38 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 NumberOfPeriodMessageText = "Number of period cannot be empty.";
                 isValidNumberOfPeriod = false;
             }
+            else if (!int.TryParse(NumberOfPeriod.Trim(), out int numberOfPeriodValue) || numberOfPeriodValue < 0)
+            {
+                NumberOfPeriodColor = Color.FromArgb("#BF1D28");
+                NumberOfPeriodMessageText = "Number of period is invalid.";
+                isValidNumberOfPeriod = false;
+            }
             else
             {
                 NumberOfPeriodColor = Color.FromArgb("#007D3A");
                 NumberOfPeriodMessageText = "Valid number of period.";
             }
 
-            return isValidSubjectTypeName && isValidNumberOfPeriod;
+            // Validate subject type fee
+            if (string.IsNullOrEmpty(SubjectTypeFee))
+            {
+                SubjectTypeFeeColor = Color.FromArgb("#BF1D28");
+                SubjectTypeFeeMessageText = "Subject type fee cannot be empty.";
+                isValidNumberOfPeriod = false;
+            }
+            else if (!double.TryParse(SubjectTypeFee.Trim(), out double subjectTypeFeeValue) || subjectTypeFeeValue < 0)
+            {
+                SubjectTypeFeeColor = Color.FromArgb("#BF1D28");
+                SubjectTypeFeeMessageText = "Subject type fee is invalid.";
+                isValidNumberOfPeriod = false;
+            }
+            else
+            {
+                SubjectTypeFeeColor = Color.FromArgb("#007D3A");
+                SubjectTypeFeeMessageText = "Valid subject type fee.";
+            }
+
+            return isValidSubjectTypeName && isValidNumberOfPeriod && isValidSubjectTypeFee;
         }
 
         #endregion
@@ -133,88 +159,85 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         private async Task AddSubjectType()
         {
-            /*var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to add this new subject type?", "Yes", "No");
+            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to add this new subject type?", "Yes", "No");
             if (accept)
             {
                 var subjectTypeService = _serviceProvider.GetService<ISubjectTypeService>();
                 var subjectTypes = await subjectTypeService.GetAllSubjectType();
 
-                // Check if there is any branch in the database with the same BranchSpecificId
-                var sameSpecifcIdBranches = subjectTypes.Where(b => b.BranchSpecificId.ToLower() == BranchSpecificId.ToLower());
-                if (sameSpecifcIdBranches.Any())
+                // Check if there is any subject in the database with the same Subject Name
+                var sameNameSubjectType = subjectTypes.Where(st => st.Name.ToLower() == SubjectTypeName.Trim().ToLower());
+                if (sameNameSubjectType.Any())
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this branch because there is another branch with the same Id!", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this subject type because there is another subject type with the same name!", "OK");
                     return;
                 }
 
-                // Check if there is any branch in the database with the same BranchName
-                var sameNameBranches = subjectTypes.Where(b => b.BranchName.ToLower() == BranchName.ToLower());
-                if (sameNameBranches.Any())
+                // Add subject type
+                var subjectType = await subjectTypeService.CreateSubjectType(new()
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot add this branch because there is another branch with the same name!", "OK");
-                    return;
-                }
+                    Name = SubjectTypeName.Trim(),
+                    NumberOfLessons = int.Parse(NumberOfPeriod.Trim()),
+                    LessonsCharge = double.Parse(SubjectTypeFee.Trim())
+                });
 
-                // Add branch
-                var branch = await subjectTypeService.AddBranch(new() { BranchSpecificId = BranchSpecificId.Trim(), BranchName = BranchName.Trim(), DepartmentId = SelectedDepartment.Id });
-                if (branch != null)
+                if (subjectType != null)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Success", "Add branch successfully!", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Success", "Add subject type successfully!", "OK");
 
-                    // Reset branches list in the BranchManagementPage
-                    BranchManagementViewModel branchManagementViewModel = _serviceProvider.GetService<BranchManagementViewModel>();
-                    branchManagementViewModel.GetBranchesCommand.Execute(null);
+                    // Reset subject type list in the SubjectTypeManagementPage
+                    SubjectTypeManagementViewModel subjectTypeManagementViewModel = _serviceProvider.GetService<SubjectTypeManagementViewModel>();
+                    subjectTypeManagementViewModel.GetAllSubjectTypeCommand.Execute(null);
 
                     ClearState();
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Failed", "Add branch failed!", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Failed", "Add subject type failed!", "OK");
                 }
-            }*/
+            }
         }
 
-        private async Task UpdateBranch()
+        private async Task UpdateSubjectType()
         {
-            /*var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to update this branch?", "Yes", "No");
+            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to update this subject type?", "Yes", "No");
             if (accept)
             {
-                var branchService = _serviceProvider.GetService<IBranchService>();
-                var branches = await branchService.GetAllBranches();
+                var subjectTypeService = _serviceProvider.GetService<ISubjectTypeService>();
+                var subjectTypes = await subjectTypeService.GetAllSubjectType();
 
-                // Check if there is any branch in the database with the same BranchSpecificId with the updated one.
-                var sameSpecifcIdBranches = branches.Where(b => b.BranchSpecificId.ToLower() == BranchSpecificId.ToLower() && b.Id != BranchId);
-                if (sameSpecifcIdBranches.Any())
+                // Check if there is any subject type in the database with the same Name
+                var sameNameSubjectTypes = subjectTypes.Where(st => st.Name.ToLower() == SubjectTypeName.Trim().ToLower() && st.Id != SubjectTypeId);
+                if (sameNameSubjectTypes.Any())
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot update this branch because there is another branch with the same Id!", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot update this subject type because there is another subject type with the same name!", "OK");
                     return;
                 }
 
-                // Check if there is any branch in the database with the same BranchName
-                var sameNameBranches = branches.Where(b => b.BranchName.ToLower() == BranchName.ToLower() && b.Id != BranchId);
-                if (sameNameBranches.Any())
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot update this branch because there is another branch with the same name!", "OK");
-                    return;
-                }
+                // Update subject type
+                var success = await subjectTypeService.UpdateSubjectType(SubjectTypeId, new() 
+                { 
+                    Id = SubjectTypeId,
+                    Name = SubjectTypeName.Trim(),
+                    NumberOfLessons = int.Parse(NumberOfPeriod.Trim()),
+                    LessonsCharge = double.Parse(SubjectTypeFee.Trim())
+                });
 
-                // Update branch
-                var success = await branchService.UpdateBranch(BranchId, new() { Id = BranchId, BranchSpecificId = BranchSpecificId.Trim(), BranchName = BranchName.Trim(), DepartmentId = SelectedDepartment.Id });
                 if (success)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Success", "Update branch successfully!", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Success", "Update subject type successfully!", "OK");
 
-                    // Reset branches list in the BranchManagementPage
-                    BranchManagementViewModel branchManagementViewModel = _serviceProvider.GetService<BranchManagementViewModel>();
-                    branchManagementViewModel.GetBranchesCommand.Execute(null);
+                    // Reset subject type list in the SubjectTypeManagementPage
+                    SubjectTypeManagementViewModel subjectTypeManagementViewModel = _serviceProvider.GetService<SubjectTypeManagementViewModel>();
+                    subjectTypeManagementViewModel.GetAllSubjectTypeCommand.Execute(null);
 
                     ClosePopupCommand.Execute(null);
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Failed", "Update branch failed!", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Failed", "Update subject type failed!", "OK");
                 }
-            }*/
+            }
         }
         #endregion
     }

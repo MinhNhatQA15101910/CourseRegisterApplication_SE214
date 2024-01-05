@@ -5,10 +5,12 @@ namespace CourseRegisterApplication.MAUI.Services
     public class SubjectTypeService : ISubjectTypeService
     {
         private readonly HttpClient _httpClient;
+        private readonly ISubjectService _subjectService;
 
-        public SubjectTypeService(HttpClient httpClient)
+        public SubjectTypeService(HttpClient httpClient, ISubjectService subjectService)
         {
             _httpClient = httpClient;
+            _subjectService = subjectService;
         }
 
         public async Task<List<SubjectType>> GetAllSubjectType()
@@ -63,7 +65,25 @@ namespace CourseRegisterApplication.MAUI.Services
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
 
-            return response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode)
+            {
+                var subjectsBelongToSubjectType = await _subjectService.GetSubjectsBySubjectTypeIdAsync(id);
+                foreach (Subject subject in subjectsBelongToSubjectType)
+                {
+                    subject.TotalLessons = subject.NumberOfCredits * subjectType.NumberOfLessons;
+                    subject.TotalCharge = subject.NumberOfCredits * subjectType.LessonsCharge;
+
+                    bool result = await _subjectService.UpdateSubject(subject.Id, subject);
+                    if (!result)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
         }
         public async Task<bool> DeleteSubjectType(int id)
         {
