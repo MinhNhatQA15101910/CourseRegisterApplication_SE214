@@ -45,6 +45,7 @@
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
+        Placeholder="Department ID"
         Text="{Binding DepartmentSpecificId}"
         WidthRequest="300" />
       <Label
@@ -61,6 +62,7 @@
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
+        Placeholder="Department Name"
         Text="{Binding DepartmentName}"
         WidthRequest="300" />
       <Label
@@ -72,7 +74,7 @@
       <Button
         Margin="0,20,0,0"
         BackgroundColor="#EFF3FA"
-        Command="{Binding AddUpdateDeparmentCommand}"
+        Command="{Binding AddUpdateDepartmentCommand}"
         FontFamily="RobotoMedium"
         FontSize="15"
         HeightRequest="50"

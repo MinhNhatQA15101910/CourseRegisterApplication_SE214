@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.AddUpdateSubjectPopup"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+  CanBeDismissedByTappingOutsideOfPopup="False"
+  HorizontalOptions="Center"
+  VerticalOptions="Center"
+  Color="White">
+
+  <Frame
+    Padding="0"
+    BackgroundColor="White"
+    BorderColor="#4F4F4F"
+    CornerRadius="16"
+    HeightRequest="600"
+    WidthRequest="400">
+    <VerticalStackLayout>
+      <Grid Padding="5" HeightRequest="50">
+        <Label
+          FontFamily="RobotoMedium"
+          FontSize="20"
+          HorizontalOptions="Center"
+          Text="{Binding CommandName}"
+          VerticalOptions="Center" />
+        <Image
+          BackgroundColor="#FFFFFF"
+          HeightRequest="20"
+          HorizontalOptions="End"
+          Source="vector_close.png"
+          VerticalOptions="Center"
+          WidthRequest="20">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ClosePopupCommand}" />
+          </Image.GestureRecognizers>
+        </Image>
+      </Grid>
+
+      <Label
+        Margin="50,50,0,0"
+        FontFamily="RobotoMedium"
+        FontSize="16"
+        Text="Subject ID:" />
+      <Entry
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        Text="{Binding SubjectSpecificId}"
+        WidthRequest="300" />
+      <Label
+        Margin="50,0,0,0"
+        FontSize="12"
+        Text="{Binding SubjectSpecificIdMessageText}"
+        TextColor="{Binding SubjectSpecificIdColor}" />
+
+      <Label
+        Margin="50,20,0,0"
+        FontFamily="RobotoMedium"
+        FontSize="16"
+        Text="Subject Name:" />
+      <Entry
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        Text="{Binding SubjectName}"
+        WidthRequest="300" />
+      <Label
+        Margin="50,0,0,0"
+        FontSize="12"
+        Text="{Binding SubjectNameMessageText}"
+        TextColor="{Binding SubjectNameColor}" />
+
+      <Label
+        Margin="50,20,0,0"
+        FontFamily="RobotoMedium"
+        FontSize="16"
+        Text="Subject Type:" />
+      <Picker
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        ItemsSource="{Binding SubjectTypesList}"
+        ItemDisplayBinding="{Binding Name}"
+        SelectedItem="{Binding SelectedSubjectType}"
+        WidthRequest="300" />
+
+      <Label
+        Margin="50,20,0,0"
+        FontFamily="RobotoMedium"
+        FontSize="16"
+        Text="Number of periods:" />
+      <Entry
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        Text="{Binding NumberOfCredit}"
+        WidthRequest="300" />
+      <Label
+        Margin="50,0,0,0"
+        FontSize="12"
+        Text="{Binding TotalLessonMessageText}"
+        TextColor="{Binding TotalLessonColor}" />
+
+      <Button
+        Margin="0,20,0,0"
+        BackgroundColor="#EFF3FA"
+        Command="{Binding AddUpdateSubjectCommand}"
+        FontFamily="RobotoMedium"
+        FontSize="15"
+        HeightRequest="50"
+        HorizontalOptions="Center"
+        Text="{Binding CommandName}"
+        TextColor="#2671B1"
+        WidthRequest="160">
+        <VisualStateManager.VisualStateGroups>
+          <VisualStateGroupList>
+            <VisualStateGroup x:Name="CommonStates">
+              <VisualState x:Name="Normal">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                </VisualState.Setters>
+              </VisualState>
+              <VisualState x:Name="PointerOver">
+                <VisualState.Setters>
+                  <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                </VisualState.Setters>
+              </VisualState>
+            </VisualStateGroup>
+          </VisualStateGroupList>
+        </VisualStateManager.VisualStateGroups>
+      </Button>
+    </VerticalStackLayout>
+  </Frame>
+</mct:Popup>

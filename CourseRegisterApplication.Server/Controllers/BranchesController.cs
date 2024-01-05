@@ -11,9 +11,8 @@
             _context = context;
         }
 
-        // GET: api/Branches
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Branch>>> GetBranches()
+        public async Task<ActionResult<IEnumerable<Branch>>> GetAllBranches()
         {
             if (_context.Branches == null)
             {
@@ -46,8 +45,6 @@
             return result;
         }
 
-        // PUT: api/Branches/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBranch(int id, Branch branch)
         {
@@ -77,8 +74,6 @@
             return NoContent();
         }
 
-        // POST: api/Branches
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Branch>> PostBranch(Branch branch)
         {
@@ -92,7 +87,6 @@
             return Ok(branch);
         }
 
-        // DELETE: api/Branches/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBranch(int id)
         {
@@ -101,7 +95,7 @@
                 return NotFound();
             }
             var branch = await _context.Branches.FindAsync(id);
-            if (branch == null)
+            if (branch == null)    
             {
                 return NotFound();
             }

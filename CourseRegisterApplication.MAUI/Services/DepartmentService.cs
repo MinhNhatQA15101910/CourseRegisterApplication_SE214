@@ -1,76 +1,75 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 
-namespace CourseRegisterApplication.MAUI.Services
+namespace CourseRegisterApplication.MAUI.Services;
+
+public class DepartmentService : IDepartmentService
 {
-    public class DepartmentService : IDepartmentService
+    private readonly HttpClient _httpClient;
+
+    public DepartmentService(HttpClient httpClient)
     {
-        private readonly HttpClient _httpClient;
+        _httpClient = httpClient;
+    }
 
-        public DepartmentService(HttpClient httpClient)
+    public async Task<Department> AddDepartment(Department department)
+    {
+        string apiUrl = GlobalConfig.DEPARTMENT_BASE_URL;
+
+        var json = JsonConvert.SerializeObject(department);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync(new Uri(apiUrl), content);
+
+        if (response.IsSuccessStatusCode)
         {
-            _httpClient = httpClient;
+            return department;
         }
 
-        public async Task<Department> AddDepartment(Department department)
+        return null;
+    }
+
+    public async Task<bool> DeleteDepartment(int departmentId)
+    {
+        string apiUrl = $"{GlobalConfig.DEPARTMENT_BASE_URL}{departmentId}";
+        var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
+
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<List<Department>> GetAllDepartments()
+    {
+        var response = await _httpClient.GetAsync(new Uri(GlobalConfig.DEPARTMENT_BASE_URL));
+        if (response.IsSuccessStatusCode)
         {
-            string apiUrl = GlobalConfig.DEPARTMENT_BASE_URL;
-
-            var json = JsonConvert.SerializeObject(department);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync(new Uri(apiUrl), content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return department;
-            }
-
-            return null;
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            var departmentList = JsonConvert.DeserializeObject<List<Department>>(jsonResponse);
+            return departmentList.ToList();
         }
 
-        public async Task<bool> DeleteDepartment(int departmentId)
-        {
-            string apiUrl = $"{GlobalConfig.DEPARTMENT_BASE_URL}{departmentId}";
-            var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
+        return null;
+    }
 
-            return response.IsSuccessStatusCode;
+    public async Task<Department> GetDepartmentById(int departmentId)
+    {
+        string apiUrl = $"{GlobalConfig.DEPARTMENT_BASE_URL}{departmentId}";
+
+        var response = await _httpClient.GetAsync(new Uri(apiUrl));
+        if (response.IsSuccessStatusCode)
+        {
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Department>(jsonResponse);
         }
 
-        public async Task<List<Department>> GetAllDepartments()
-        {
-            var response = await _httpClient.GetAsync(new Uri(GlobalConfig.DEPARTMENT_BASE_URL));
-            if (response.IsSuccessStatusCode)
-            {
-                string jsonResponse = await response.Content.ReadAsStringAsync();
-                var departmentList = JsonConvert.DeserializeObject<List<Department>>(jsonResponse);
-                return departmentList.ToList();
-            }
+        return null;
+    }
 
-            return null;
-        }
+    public async Task<bool> UpdateDepartment(int departmentId, Department department)
+    {
+        string apiUrl = $"{GlobalConfig.DEPARTMENT_BASE_URL}{departmentId}";
 
-        public async Task<Department> GetDepartmentById(int departmentId)
-        {
-            string apiUrl = $"{GlobalConfig.DEPARTMENT_BASE_URL}{departmentId}";
+        var json = JsonConvert.SerializeObject(department);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
 
-            var response = await _httpClient.GetAsync(new Uri(apiUrl));
-            if (response.IsSuccessStatusCode)
-            {
-                string jsonResponse = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<Department>(jsonResponse);
-            }
-
-            return null;
-        }
-
-        public async Task<bool> UpdateDepartment(int departmentId, Department department)
-        {
-            string apiUrl = $"{GlobalConfig.DEPARTMENT_BASE_URL}{departmentId}";
-
-            var json = JsonConvert.SerializeObject(department);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
-
-            return response.IsSuccessStatusCode;
-        }
+        return response.IsSuccessStatusCode;
     }
 }

@@ -8,7 +8,6 @@
   xmlns:mauiToolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
   NavigationPage.HasNavigationBar="False"
   Shell.FlyoutBehavior="Flyout">
-
   <Grid RowDefinitions="Auto,*">
     <contentViews:NavigationTopBar
       Grid.Row="0"
@@ -20,22 +19,54 @@
       TitleText="Student account management page"
       VerticalOptions="Start" />
     <ScrollView Grid.Row="1">
-      <Grid RowDefinitions="Auto, 600, *">
+      <Grid RowDefinitions="Auto,600,*">
         <Grid Grid.Row="0" Margin="100,48,0,0">
           <Grid Grid.Row="1" ColumnDefinitions="7*,3*">
-            <HorizontalStackLayout HorizontalOptions="Start">
-              <Picker
-                Title="Choose a filter"
-                ItemsSource="{Binding FilterOptions}"
-                SelectedItem="{Binding SelectedFilterOption}" />
+            <HorizontalStackLayout HorizontalOptions="Start" VerticalOptions="Center">
+              <HorizontalStackLayout
+                Margin="16,0,0,0"
+                HeightRequest="50"
+                VerticalOptions="Center">
+                <HorizontalStackLayout.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding OpenFilterPopupCommand}" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label
+                  Margin="16,0,0,0"
+                  Text="Add filter"
+                  TextColor="#C4C4C4"
+                  VerticalOptions="Center" />
+                <Image
+                  Margin="16,0,16,0"
+                  HeightRequest="16"
+                  Source="down_arrow.png"
+                  TranslationY="6"
+                  VerticalOptions="Center" />
+                <VisualStateManager.VisualStateGroups>
+                  <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                      <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="Transparent" />
+                        </VisualState.Setters>
+                      </VisualState>
+                      <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                          <Setter Property="BackgroundColor" Value="#FCFAFA" />
+                        </VisualState.Setters>
+                      </VisualState>
+                    </VisualStateGroup>
+                  </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+              </HorizontalStackLayout>
               <Border
-                Margin="20,20,0,0"
+                Margin="20,0,0,0"
                 BackgroundColor="#FCFAFA"
                 HeightRequest="50"
                 StrokeShape="RoundRectangle 0,5,0,5"
                 StrokeThickness="0"
+                VerticalOptions="Center"
                 WidthRequest="500">
-                <HorizontalStackLayout>
+                <HorizontalStackLayout VerticalOptions="Center">
                   <Image
                     Margin="16,0,8,0"
                     HeightRequest="16"
@@ -44,6 +75,7 @@
                     BackgroundColor="#FCFAFA"
                     HeightRequest="50"
                     StrokeThickness="0"
+                    VerticalOptions="Center"
                     WidthRequest="500">
                     <Entry
                       FontFamily="RobotoRegular"
@@ -53,6 +85,7 @@
                       PlaceholderColor="#8A8A8A"
                       Text="{Binding SearchFilter}"
                       TextColor="#8A8A8A"
+                      VerticalOptions="Center"
                       WidthRequest="520" />
                   </Border>
                 </HorizontalStackLayout>
@@ -101,7 +134,7 @@
               FontFamily="RobotoMedium"
               FontSize="16"
               HorizontalOptions="Start"
-              Text="Activate status"
+              Text="Active status"
               VerticalOptions="Center" />
           </Grid>
 
@@ -110,6 +143,9 @@
             Grid.Column="0"
             ItemsSource="{Binding StudentAccountList}"
             VerticalScrollBarVisibility="Always">
+            <CollectionView.ItemsLayout>
+              <LinearItemsLayout Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
               <DataTemplate>
                 <Grid
@@ -280,6 +316,7 @@
                 Command="{Binding SaveChangesCommand}"
                 CornerRadius="10"
                 FontAttributes="Bold"
+                FontFamily="RobotoRegular"
                 FontSize="14"
                 HeightRequest="40"
                 HorizontalOptions="Center"
@@ -311,6 +348,7 @@
                 Command="{Binding CancelCommand}"
                 CornerRadius="10"
                 FontAttributes="Bold"
+                FontFamily="RobotoRegular"
                 FontSize="14"
                 HeightRequest="40"
                 HorizontalOptions="End"

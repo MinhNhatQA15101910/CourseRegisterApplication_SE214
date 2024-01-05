@@ -72,16 +72,16 @@
     <ShellContent ContentTemplate="{DataTemplate local:StudentInfomationPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
-    Title="Course register"
+    Title="Course Registration"
     Icon="book.png"
-    Route="courseregister">
-    <ShellContent ContentTemplate="{DataTemplate local:CourseRegisterPage}" Route="details" />
+    Route="courseregistration">
+    <ShellContent ContentTemplate="{DataTemplate local:CourseRegistrationPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Tuition payment"
     Icon="bank.png"
-    Route="tuitionpayment">
-    <ShellContent ContentTemplate="{DataTemplate local:TuitionPaymentPage}" Route="details" />
+    Route="tuitioninfo">
+    <ShellContent ContentTemplate="{DataTemplate local:TuitionInfoPage}" Route="details" />
   </FlyoutItem>
 
   <Shell.ItemTemplate>

@@ -8,6 +8,8 @@
         [Required(AllowEmptyStrings = false, ErrorMessage = "Date is required!"), DataType(DataType.DateTime, ErrorMessage = "Date time is not valid!")]
         public DateTime CreatedDate { get; set; }
         public CourseRegistrationFormState State { get; set; }
+        public double TotalCharge { get; set; }
+        public double TotalChargeWithDiscount { get; set; }
 
         [ForeignKey("Student")]
         public int StudentId { get; set; }

@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.StudentViews.TuitionInfoPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  Title="TuitionInfoPage">
+  <Grid RowDefinitions="Auto,*">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText=" "
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      NavigateBackCommand="{Binding NavigateBackCommand}"
+      TitleText=" "
+      VerticalOptions="Start" />
+    <ScrollView Grid.Row="1">
+      <StackLayout>
+        <Label
+          Grid.Row="0"
+          Grid.Column="0"
+          Margin="0,24,0,0"
+          FontFamily="RobotoBold"
+          FontSize="24"
+          HorizontalOptions="Center"
+          Text="Tuition infomation" />
+        <Grid
+          Margin="100,50,100,0"
+          ColumnDefinitions="*, auto, *"
+          RowDefinitions="auto, *">
+          <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,24,0,0"
+            FontFamily="RobotoBold"
+            FontSize="20"
+            Text="Student’s course register list" />
+          <Grid Grid.Row="0" Grid.Column="1">
+            <BoxView
+              Margin="50,24,50,0"
+              BackgroundColor="#509CDB"
+              HorizontalOptions="Center"
+              WidthRequest="1.5"
+              Color="#509CDB" />
+          </Grid>
+          <Grid
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,20,0,0"
+            RowDefinitions="Auto, *"
+            VerticalOptions="Start">
+            <Grid
+              Grid.Row="0"
+              BackgroundColor="Transparent"
+              ColumnDefinitions="*, *, *, *, *"
+              HeightRequest="40"
+              VerticalOptions="Center">
+              <Label
+                Grid.Column="0"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Semester"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="1"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="School year"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="2"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Create date"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="3"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Status"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="4"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Last paid tuition"
+                VerticalOptions="Center" />
+            </Grid>
+            <CollectionView
+              Grid.Row="2"
+              Grid.Column="0"
+              HeightRequest="360"
+              ItemsSource="{Binding CourseRegistrationDisplayList}"
+              VerticalScrollBarVisibility="Always">
+              <CollectionView.ItemTemplate>
+                <DataTemplate>
+                  <Grid
+                    Padding="12,16,0,16"
+                    BackgroundColor="{Binding CourseRegistrationBackgroundColor}"
+                    ColumnDefinitions="*, *, *, *, *"
+                    VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                      <TapGestureRecognizer Command="{Binding ChooseCourseRegistrationCommand}" />
+                    </Grid.GestureRecognizers>
+                    <Label
+                      Grid.Column="0"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding CourseRegistrationSemester}"
+                      TextColor="#4F4F4F"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="1"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding CourseRegistrationSchoolYear}"
+                      TextColor="#4F4F4F"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="2"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding CourseRegistrationCreateDate}"
+                      TextColor="#4F4F4F"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="3"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding CourseRegistrationStatus}"
+                      TextColor="{Binding StatusTextColor, FallbackValue='#4F4F4F'}"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="4"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding LastPaidTuitionDate}"
+                      TextColor="#4F4F4F"
+                      VerticalOptions="Center" />
+
+                  </Grid>
+                </DataTemplate>
+              </CollectionView.ItemTemplate>
+            </CollectionView>
+          </Grid>
+          <Grid Grid.Row="1" Grid.Column="1">
+            <BoxView
+              Margin="50,0,50,0"
+              BackgroundColor="#509CDB"
+              HorizontalOptions="Center"
+              WidthRequest="1.5"
+              Color="#509CDB" />
+          </Grid>
+          <Grid
+            Grid.Row="1"
+            Grid.Column="2"
+            Margin="0,36,0,0"
+            ColumnDefinitions="*, *"
+            IsVisible="{Binding IsVisibleTuitionInfo}"
+            VerticalOptions="Start">
+            <Grid Grid.Column="0">
+              <StackLayout>
+                <StackLayout>
+                  <Label
+                    FontFamily="RobotoMedium"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="Semester"
+                    TextColor="#1A1A1A" />
+                  <Label
+                    Margin="0,4,0,0"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text="{Binding CurrentSemester}"
+                    TextColor="#A7A7A7" />
+                </StackLayout>
+                <StackLayout Margin="0,36,0,0">
+                  <Label
+                    FontFamily="RobotoMedium"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="Course registration ID"
+                    TextColor="#1A1A1A" />
+                  <Label
+                    Margin="0,4,0,0"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text="{Binding CurrentCourseRegistrationId}"
+                    TextColor="#A7A7A7" />
+                </StackLayout>
+                <StackLayout Margin="0,36,0,0">
+                  <Label
+                    FontFamily="RobotoMedium"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="Total tuition"
+                    TextColor="#1A1A1A" />
+                  <Label
+                    Margin="0,4,0,0"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text="{Binding CurrentTotalTuition}"
+                    TextColor="#A7A7A7" />
+                </StackLayout>
+                <StackLayout Margin="0,36,0,0">
+                  <Label
+                    FontFamily="RobotoMedium"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="Paid tuition"
+                    TextColor="#1A1A1A" />
+                  <Label
+                    Margin="0,4,0,0"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text="{Binding CurrentPaidTuition}"
+                    TextColor="#007D3A" />
+                </StackLayout>
+              </StackLayout>
+            </Grid>
+            <Grid Grid.Column="1">
+              <StackLayout>
+                <StackLayout>
+                  <Label
+                    FontFamily="RobotoMedium"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="School year"
+                    TextColor="#1A1A1A" />
+                  <Label
+                    Margin="0,4,0,0"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text="{Binding CurrentSchoolYear}"
+                    TextColor="#A7A7A7" />
+                </StackLayout>
+                <StackLayout Margin="0,36,0,0">
+                  <Label
+                    FontFamily="RobotoMedium"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="Last paid tuition"
+                    TextColor="#1A1A1A" />
+                  <Label
+                    Margin="0,4,0,0"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text="{Binding CurrentLastPaidTuition}"
+                    TextColor="#A7A7A7" />
+                </StackLayout>
+                <StackLayout Margin="0,36,0,0">
+                  <HorizontalStackLayout>
+                    <Label
+                      FontFamily="RobotoMedium"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="Reality tuition"
+                      TextColor="#1A1A1A" />
+                    <Image
+                      Margin="8,0,0,0"
+                      HeightRequest="14"
+                      Source="svg_info_circle.png"
+                      ToolTipProperties.Text="{Binding ToolTipRealityTuition}"
+                      WidthRequest="14" />
+                  </HorizontalStackLayout>
+                  <Label
+                    Margin="0,4,0,0"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text="{Binding CurrentRealityTution}"
+                    TextColor="#A7A7A7" />
+                </StackLayout>
+                <StackLayout Margin="0,36,0,0">
+                  <Label
+                    FontFamily="RobotoMedium"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="Remain tuition"
+                    TextColor="#1A1A1A" />
+                  <Label
+                    Margin="0,4,0,0"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text="{Binding CurrentRemainTution}"
+                    TextColor="#BF1D28" />
+                </StackLayout>
+              </StackLayout>
+            </Grid>
+          </Grid>
+        </Grid>
+        <HorizontalStackLayout Margin="0,48,0,0" HorizontalOptions="Center">
+          <Grid HorizontalOptions="Center">
+            <Button
+              Margin="12,0,0,0"
+              BackgroundColor="#EFF3FA"
+              Command="{Binding DisplayPaymentPopupCommand}"
+              CornerRadius="10"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HeightRequest="40"
+              HorizontalOptions="Center"
+              IsVisible="{Binding IsVisibleButton}"
+              Text="Make a payment"
+              TextColor="#2671B1"
+              WidthRequest="160">
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#EFF3FA" />
+                      </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="#B9D8F2" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Button>
+          </Grid>
+        </HorizontalStackLayout>
+
+      </StackLayout>
+    </ScrollView>
+  </Grid>
+</ContentPage>

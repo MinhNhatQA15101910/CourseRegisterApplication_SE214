@@ -7,12 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseRegisterApplication.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseRegisterApplication.Server", "CourseRegisterApplication.Server\CourseRegisterApplication.Server.csproj", "{34E036E5-1C77-445F-890A-C59F0B641F20}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseRegisterApplication.MAUI", "CourseRegisterApplication.MAUI\CourseRegisterApplication.MAUI.csproj", "{DDD2E8C7-87AD-4DC1-9EBE-52897DE30AA5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3BC2D234-9B3B-4894-ADF4-2B74DE9A3635}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseRegisterApplication.MAUI", "CourseRegisterApplication.MAUI\CourseRegisterApplication.MAUI.csproj", "{05A6D2EA-E9F6-41C0-907F-757F0F6D7649}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,12 +25,12 @@ Global
 		{34E036E5-1C77-445F-890A-C59F0B641F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34E036E5-1C77-445F-890A-C59F0B641F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34E036E5-1C77-445F-890A-C59F0B641F20}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DDD2E8C7-87AD-4DC1-9EBE-52897DE30AA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDD2E8C7-87AD-4DC1-9EBE-52897DE30AA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDD2E8C7-87AD-4DC1-9EBE-52897DE30AA5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{DDD2E8C7-87AD-4DC1-9EBE-52897DE30AA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDD2E8C7-87AD-4DC1-9EBE-52897DE30AA5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DDD2E8C7-87AD-4DC1-9EBE-52897DE30AA5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{05A6D2EA-E9F6-41C0-907F-757F0F6D7649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05A6D2EA-E9F6-41C0-907F-757F0F6D7649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05A6D2EA-E9F6-41C0-907F-757F0F6D7649}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{05A6D2EA-E9F6-41C0-907F-757F0F6D7649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05A6D2EA-E9F6-41C0-907F-757F0F6D7649}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05A6D2EA-E9F6-41C0-907F-757F0F6D7649}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

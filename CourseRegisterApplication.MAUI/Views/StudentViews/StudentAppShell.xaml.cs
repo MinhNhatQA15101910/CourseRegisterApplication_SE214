@@ -10,8 +10,9 @@ public partial class StudentAppShell : Shell
 		BindingContext = studentAppShellViewModel;
 
 		Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
-	}
-	protected override void OnAppearing()
+        Routing.RegisterRoute(nameof(CourseRegistrationInfoPage), typeof(CourseRegistrationInfoPage));
+    }
+    protected override void OnAppearing()
 	{
 		base.OnAppearing();
 

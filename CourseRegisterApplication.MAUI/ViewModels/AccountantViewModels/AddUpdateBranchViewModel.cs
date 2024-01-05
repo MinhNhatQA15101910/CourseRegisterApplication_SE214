@@ -198,11 +198,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "Add branch successfully!", "OK");
 
-                    // Reset branches list in the BranchManagementPage
+                    // Reload branches list in the BranchManagementPage
                     BranchManagementViewModel branchManagementViewModel = _serviceProvider.GetService<BranchManagementViewModel>();
                     branchManagementViewModel.GetBranchesCommand.Execute(null);
 
                     ClearState();
+
+                    // Reload branch list in AddUpdateStudentPage
+                    AddUpdateStudentViewModel addUpdateStudentViewModel = _serviceProvider.GetService<AddUpdateStudentViewModel>();
+                    await addUpdateStudentViewModel.ReloadBranchList();
                 }
                 else
                 {

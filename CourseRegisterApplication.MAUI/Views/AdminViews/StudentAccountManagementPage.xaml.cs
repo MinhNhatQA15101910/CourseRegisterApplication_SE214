@@ -14,7 +14,7 @@ public partial class StudentAccountManagementPage : ContentPage
     {
         base.OnAppearing();
 
-		(BindingContext as StudentAccountManagementViewModel).GetStudentAccountCommand.Execute(null);
+        (BindingContext as StudentAccountManagementViewModel).ResetAccountInformation();
+        (BindingContext as StudentAccountManagementViewModel).GetStudentAccountsCommand.Execute(null);
     }
-
 }

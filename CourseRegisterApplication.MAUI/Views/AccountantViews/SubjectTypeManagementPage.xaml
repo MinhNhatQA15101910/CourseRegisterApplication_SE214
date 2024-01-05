@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.SubjectTypeManagementPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:accountantViewModels="clr-namespace:CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  NavigationPage.HasNavigationBar="False"
+  Shell.FlyoutBehavior="Flyout">
+
+  <Grid RowDefinitions="Auto, *">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="Can add, update, delete subjects"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="Subjects Management Page"
+      VerticalOptions="Start" />
+
+    <ScrollView Grid.Row="1">
+
+      <Grid ColumnDefinitions="6*, 4*" RowDefinitions="2*, 8*">
+
+        <VerticalStackLayout
+          Grid.Row="1"
+          Grid.Column="0"
+          Padding="150,0,0,0"
+          HorizontalOptions="Start"
+          Spacing="20">
+    <Label
+            FontFamily="RobotoBold"
+            FontSize="20"
+            Text="Subject type list" />
+
+          <Grid RowDefinitions="Auto, *" RowSpacing="20">
+            <Grid
+              Grid.Row="0"
+              ColumnDefinitions="4*, 3*, 3*"
+              ColumnSpacing="100"
+              RowDefinitions="Auto, *">
+              <Label
+                Grid.Column="0"
+                FontFamily="RobotoMedium"
+                FontSize="16"
+                HorizontalOptions="Start"
+                Text="Subject type name" />
+
+              <Label
+                Grid.Column="1"
+                FontFamily="RobotoMedium"
+                FontSize="16"
+                HorizontalOptions="Start"
+                Text="Number of period" />
+
+              <Label
+                Grid.Column="2"
+                FontFamily="RobotoMedium"
+                FontSize="16"
+                HorizontalOptions="Start"
+                Text="Subject type fee" />
+            </Grid>
+
+            <CollectionView
+              Grid.Row="1"
+              HeightRequest="400"
+              ItemsSource="{Binding SubjectTypeDisplayList}"
+              MaximumHeightRequest="600"
+              VerticalOptions="Center">
+              <CollectionView.ItemTemplate>
+                <DataTemplate>
+                  <Grid
+                    BackgroundColor="{Binding BackgroundColor}"
+                    ColumnDefinitions="4*, 3*, 3*"
+                    HeightRequest="40"
+                    VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                      <TapGestureRecognizer Command="{Binding SelectSubjectTypeCommand}" />
+                    </Grid.GestureRecognizers>
+
+                    <Label
+                      Grid.Column="0"
+                      FontFamily="RobotoRegular"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding Name}"
+                      VerticalOptions="Center" />
+
+                    <Label
+                      Grid.Column="1"
+                      FontFamily="RobotoRegular"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding NumberOfLessons}"
+                      VerticalOptions="Center" />
+
+                    <Label
+                      Grid.Column="2"
+                      FontFamily="RobotoRegular"
+                      FontSize="14"
+                      HorizontalOptions="Start"
+                      Text="{Binding LessonsCharge}"
+                      VerticalOptions="Center" />
+                  </Grid>
+                </DataTemplate>
+              </CollectionView.ItemTemplate>
+            </CollectionView>
+
+          </Grid>
+
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+          Grid.Row="1"
+          Grid.Column="1"
+          Margin="0,50,0,0"
+      HorizontalOptions="Center"
+          Spacing="20">
+          <Grid
+            ColumnDefinitions="*,Auto"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            VerticalOptions="Center">
+            <Grid.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding OpenAddUpdateSubjectTypePopupCommand}" />
+            </Grid.GestureRecognizers>
+            <Frame
+              Grid.Column="0"
+              Padding="0"
+              BorderColor="Transparent"
+              HasShadow="False"
+              HeightRequest="30"
+              IsClippedToBounds="True"
+              VerticalOptions="Center"
+              WidthRequest="30">
+              <Image Aspect="AspectFit" Source="vector_add.png" />
+            </Frame>
+            <Label
+              Grid.Column="1"
+              Margin="8,0,0,0"
+              FontAttributes="Bold"
+              FontFamily="RobotoRegular"
+              FontSize="20"
+              Text="Add a subject type"
+              TextColor="#4F4F4F"
+              VerticalOptions="Center" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="Transparent" />
+                    </VisualState.Setters>
+                  </VisualState>
+                  <VisualState x:Name="PointerOver">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#FCFAFA" />
+                    </VisualState.Setters>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+
+          <Grid
+            ColumnDefinitions="*,Auto"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            VerticalOptions="Center">
+            <Grid.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding OpenAddUpdateSubjectTypePopupCommand}" />
+            </Grid.GestureRecognizers>
+            <Frame
+              Grid.Column="0"
+              Padding="0"
+              BorderColor="Transparent"
+              HasShadow="False"
+              HeightRequest="30"
+              IsClippedToBounds="True"
+              VerticalOptions="Center"
+              WidthRequest="30">
+              <Image Aspect="AspectFit" Source="vector_update.png" />
+            </Frame>
+            <Label
+              Grid.Column="1"
+              Margin="8,0,0,0"
+              FontAttributes="Bold"
+              FontFamily="RobotoRegular"
+              FontSize="20"
+              Text="Update a subject type"
+              TextColor="#4F4F4F"
+              VerticalOptions="Center" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="Transparent" />
+                    </VisualState.Setters>
+                  </VisualState>
+                  <VisualState x:Name="PointerOver">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#FCFAFA" />
+                    </VisualState.Setters>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+
+          <Grid
+            ColumnDefinitions="*,Auto"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            VerticalOptions="Center">
+            <Grid.GestureRecognizers>
+              <TapGestureRecognizer Command="{Binding OpenAddUpdateSubjectTypePopupCommand}" />
+            </Grid.GestureRecognizers>
+            <Frame
+              Grid.Column="0"
+              Padding="0"
+              BorderColor="Transparent"
+              HasShadow="False"
+              HeightRequest="30"
+              IsClippedToBounds="True"
+              VerticalOptions="Center"
+              WidthRequest="30">
+              <Image Aspect="AspectFit" Source="vector_delete.png" />
+            </Frame>
+            <Label
+              Grid.Column="1"
+              Margin="8,0,0,0"
+              FontAttributes="Bold"
+              FontFamily="RobotoRegular"
+              FontSize="20"
+              Text="Delete a subject type"
+              TextColor="#4F4F4F"
+      VerticalOptions="Center" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="Transparent" />
+                    </VisualState.Setters>
+                  </VisualState>
+                  <VisualState x:Name="PointerOver">
+                    <VisualState.Setters>
+                      <Setter Property="BackgroundColor" Value="#FCFAFA" />
+                    </VisualState.Setters>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+  </VerticalStackLayout>
+      </Grid>
+
+    </ScrollView>
+  </Grid>
+</ContentPage>
