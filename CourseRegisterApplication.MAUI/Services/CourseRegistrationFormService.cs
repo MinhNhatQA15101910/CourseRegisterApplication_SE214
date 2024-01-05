@@ -105,7 +105,22 @@ namespace CourseRegisterApplication.MAUI.Services
             {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 var courseRegistrationForms = JsonConvert.DeserializeObject<List<CourseRegistrationForm>>(jsonResponse);
-                return courseRegistrationForms.Where(crf => crf.StudentId == studentId && crf.SemesterId == semesterId).FirstOrDefault();
+                return courseRegistrationForms.Find(crf => crf.StudentId == studentId && crf.SemesterId == semesterId);
+            }
+
+            return null;
+        }
+
+        public async Task<List<CourseRegistrationForm>> GetAllCourseRegistrationFormsWithPendingState()
+        {
+            string apiUrl = $"{GlobalConfig.COURSE_REGISTRATION_FORM_BASE_URL}pendingState";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var courseRegistrationForms = JsonConvert.DeserializeObject<List<CourseRegistrationForm>>(jsonResponse);
+                return courseRegistrationForms;
             }
 
             return null;

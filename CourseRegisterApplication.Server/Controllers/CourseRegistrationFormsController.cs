@@ -1,7 +1,4 @@
-﻿using CourseRegisterApplication.Shared;
-using System.Runtime.InteropServices;
-
-namespace CourseRegisterApplication.Server.Controllers
+﻿namespace CourseRegisterApplication.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,6 +17,31 @@ namespace CourseRegisterApplication.Server.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult<IEnumerable<CourseRegistrationForm>>> GetAllCourseRegistrationFormsWithPendingState()
+        {
+            try
+            {
+                if (_context.CourseRegistrationForms == null)
+                {
+                    return new NotFoundResult();
+                }
+
+                var courseRegistrationForms = await _context.CourseRegistrationForms.Where(crf => crf.State == CourseRegistrationFormState.Pending).ToListAsync();
+
+                if (courseRegistrationForms == null)
+                {
+                    return NotFound("No course registration form found!");
+                }
+
+                return Ok(courseRegistrationForms);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+        }
+
+        [HttpGet("pendingState")]
         public async Task<ActionResult<IEnumerable<CourseRegistrationForm>>> GetAllCourseRegistrationFormsWithPendingState()
         {
             try
@@ -76,6 +98,8 @@ namespace CourseRegisterApplication.Server.Controllers
             {
                 return Problem("Entity set 'CourseRegisterManagementDbContext.CourseRegistrationForm'  is null.");
             }
+
+            courseRegistrationForm.CourseRegistrationFormSpecificId = $"CRF{_context.CourseRegistrationForms.Count() + 1}";
             _context.CourseRegistrationForms.Add(courseRegistrationForm);
             await _context.SaveChangesAsync();
 

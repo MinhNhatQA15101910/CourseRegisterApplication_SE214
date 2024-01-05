@@ -97,6 +97,7 @@ public static class MauiProgram
         builder.Services.AddScoped<AddManagerAccountPage>();
         builder.Services.AddScoped<FilterManagerAccountPopup>();
         builder.Services.AddScoped<FilterStudentAccountPopup>();
+        builder.Services.AddScoped<CourseRegistrationPage>();
         #endregion
 
         #region Accountant
