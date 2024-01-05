@@ -1,7 +1,4 @@
-﻿using CourseRegisterApplication.Shared;
-using System.Runtime.InteropServices;
-
-namespace CourseRegisterApplication.Server.Controllers
+﻿namespace CourseRegisterApplication.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -76,6 +73,8 @@ namespace CourseRegisterApplication.Server.Controllers
             {
                 return Problem("Entity set 'CourseRegisterManagementDbContext.CourseRegistrationForm'  is null.");
             }
+
+            courseRegistrationForm.CourseRegistrationFormSpecificId = $"CRF{_context.CourseRegistrationForms.Count() + 1}";
             _context.CourseRegistrationForms.Add(courseRegistrationForm);
             await _context.SaveChangesAsync();
 

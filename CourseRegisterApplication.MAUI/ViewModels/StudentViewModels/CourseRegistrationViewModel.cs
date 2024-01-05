@@ -330,6 +330,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                     {
                         await _courseRegistrationDetailService.CreateCourseRegistrationDetail(item);
                     }
+
+                    await Application.Current.MainPage.DisplayAlert("Success", "Confirm course registration successfully!", "OK");
+
                     List<CourseRegistrationDetail> cRD = await _courseRegistrationDetailService.GetAllCRD();
 
                     List<CourseRegistrationDetail> currentCRD = cRD
