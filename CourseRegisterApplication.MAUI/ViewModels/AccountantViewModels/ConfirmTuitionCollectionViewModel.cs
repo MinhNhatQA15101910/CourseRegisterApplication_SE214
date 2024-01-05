@@ -111,6 +111,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         private readonly List<TuitionFormDisplay> primaryTuitionFormDisplaysList = new();
 
+        [ObservableProperty] private ObservableCollection<string> tutionFormFilterOptions = new() { "Tution ID", "Course ID", "Student ID", "State" };
+
+        [ObservableProperty] private string selectedTutionFormFilterOption = "Tution ID";
+
+        [ObservableProperty] private string searchTutionFormFilter;
+
         public bool isVisible = false;
 
         #endregion
@@ -167,11 +173,56 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Confirm tuition fee receipt form failed", "OK");
             }
+            GetTuitionFormListCommand.Execute(null);
         }
 
         #endregion
 
         #region Property Changed
+
+        partial void OnSelectedTutionFormFilterOptionChanged(string value)
+        {
+            switch (value)
+            {
+                case "Tution ID":
+                    TuitionFormDisplaysList = primaryTuitionFormDisplaysList.OrderBy(p => p.SpecificId).ToObservableCollection();
+                    break;
+                case "Course ID":
+                    TuitionFormDisplaysList = primaryTuitionFormDisplaysList.OrderBy(p => p.CourseRegisFormId).ToObservableCollection();
+                    break;
+                case "Student ID":
+                    TuitionFormDisplaysList = primaryTuitionFormDisplaysList.OrderBy(p => p.StudentID).ToObservableCollection();
+                    break;
+                case "State":
+                    TuitionFormDisplaysList = primaryTuitionFormDisplaysList.OrderBy(p => p.State).ToObservableCollection();
+                    break;
+            }
+
+            SearchTutionFormFilter = "";
+            ReloadTuitionFormBackground();
+
+            ClearProperty();
+        }
+
+        partial void OnSearchTutionFormFilterChanged(string value)
+        {
+            switch (value) 
+            { 
+            case "Tution ID":
+                TuitionFormDisplaysList = primaryTuitionFormDisplaysList.Where(p => p.SpecificId.ToLower().Contains(SearchTutionFormFilter.ToLower())).ToObservableCollection();
+                break;
+            case "Course ID":
+                TuitionFormDisplaysList = primaryTuitionFormDisplaysList.Where(p => p.CourseRegisFormId.ToString().Contains(SearchTutionFormFilter.ToLower())).ToObservableCollection();
+                break;
+            case "Student ID":
+                TuitionFormDisplaysList = primaryTuitionFormDisplaysList.Where(p => p.StudentID.ToString().Contains(SearchTutionFormFilter.ToLower())).ToObservableCollection();
+                break;
+            case "State":
+                TuitionFormDisplaysList = primaryTuitionFormDisplaysList.Where(p => p.State.ToString().Contains(SearchTutionFormFilter.ToLower())).ToObservableCollection();
+                break;
+            }
+        }
+
         #endregion
 
         #region Helper
@@ -215,9 +266,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
             var courseRegisFormService = _serviceProvider.GetService<ICourseRegistrationFormService>();
             var semesterService = _serviceProvider.GetService<ISemesterService>();
+            var studentService = _serviceProvider.GetService<IStudentService>();
 
             var courseRegisForm = await courseRegisFormService.GetCourseRegistrationFormById(tuitionFormDisplay.CourseRegisFormId);
             var semester = await semesterService.GetSemesterById(courseRegisForm.SemesterId);
+            var studentList = await studentService.GetAllStudents();
+
+            var student = studentList.Where(p => p.Id == courseRegisForm.StudentId).FirstOrDefault();
 
             SelectedTuitionFormID = tuitionFormDisplay.ID;
 
@@ -227,7 +282,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
             SelectedTuitionFormStudentID = courseRegisForm.StudentId;
 
-            SelectedTuitionFormStudentName = courseRegisForm.Student.FullName;
+            SelectedTuitionFormStudentName = student.FullName;
 
             SelectedTuitionFormCreatedDate = tuitionFormDisplay.CreatedDate;
 

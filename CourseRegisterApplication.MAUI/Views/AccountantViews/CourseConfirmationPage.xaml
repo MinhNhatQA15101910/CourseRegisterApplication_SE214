@@ -362,7 +362,7 @@
                       FontFamily="RobotoRegular"
                       FontSize="14"
                       HorizontalOptions="Start"
-                      Text="{Binding SubjectID}"
+                      Text="{Binding SubjectId}"
                       VerticalOptions="Center" />
 
                     <Label
@@ -386,7 +386,7 @@
                       FontFamily="RobotoRegular"
                       FontSize="14"
                       HorizontalOptions="Start"
-                      Text="{Binding NumberOfPeriods}"
+                      Text="{Binding NumberOfPeriod}"
                       VerticalOptions="Center" />
 
                   </Grid>
