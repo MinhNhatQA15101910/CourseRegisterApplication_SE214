@@ -4,10 +4,8 @@ using CourseRegisterApplication.MAUI.Views.AccountantViews;
 using CourseRegisterApplication.MAUI.ViewModels.Displays;
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
-    
     public partial class CurriculumManagementViewModel : ObservableObject, ISubjectRequester
     {
-
         #region Services
         private readonly IServiceProvider _serviceProvider;
         private readonly ISubjectService _subjectService;
@@ -21,7 +19,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         private List<Branch> branchList = new();
         private int selectedBranchID;
         private int selectedSemester;
-        private string selectedSubjectId;
         private List<Subject> subjectList = new();
         private List<Curriculum> curriculumList = new();
         private List<Subject> currentSubjectList = new();
@@ -110,6 +107,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 {
                     await _curriculumService.DeleteCurriculum(item.BranchId, item.SubjectId);
                 }
+
+                await Application.Current.MainPage.DisplayAlert("Success", "Delete curriculum successfully!", "Ok");
+
                 await GetAllCurriculums();
                 GetSubjectList(selectedBranchID, selectedSemester);
                 ReloadSubjectDisplays(currentSubjectList);
@@ -246,7 +246,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         public void ChooseSubject(SubjectDisplay subjectDisplay)
         {
-            selectedSubjectId = subjectDisplay.SubjectID;
+            // Do nothing
         }
         #endregion
     }

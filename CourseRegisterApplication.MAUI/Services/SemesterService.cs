@@ -84,7 +84,7 @@ namespace CourseRegisterApplication.MAUI.Services
             {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 var semesters = JsonConvert.DeserializeObject<List<Semester>>(jsonResponse);
-                return semesters.FirstOrDefault(s => s.Id == semesterId);
+                return semesters.Find(s => s.Id == semesterId);
             }
 
             return null;
