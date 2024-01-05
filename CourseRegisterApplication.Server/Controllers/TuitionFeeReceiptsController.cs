@@ -50,6 +50,8 @@ namespace CourseRegisterApplication.Server.Controllers
             {
                 return Problem("Entity set 'CourseRegisterManagementDbContext.TuitionFeeReceipts'  is null.");
             }
+
+            tuitionFeeReceipt.TuitionFeeReceiptSpecificId = $"TFR{_context.TuitionFeeReceipts.Count() + 1}";
             _context.TuitionFeeReceipts.Add(tuitionFeeReceipt);
             await _context.SaveChangesAsync();
 

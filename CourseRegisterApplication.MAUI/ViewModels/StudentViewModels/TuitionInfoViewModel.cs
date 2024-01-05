@@ -2,13 +2,6 @@
 using CourseRegisterApplication.MAUI.ViewModels.Displays;
 using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.StudentViews;
-using CourseRegisterApplication.Shared;
-using Microsoft.Maui.ApplicationModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 {
@@ -212,6 +205,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
             }
         }
         #endregion
+
         #region Helper
         public void ReloadCourseRegistrationDisplays(List<CourseRegistrationForm> courseRegistrationFormList)
         {

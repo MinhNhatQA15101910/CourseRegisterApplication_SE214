@@ -35,7 +35,7 @@
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{crfId}")]
         public async Task<ActionResult<IEnumerable<CourseRegistrationDetail>>> GetCRDByCRFId(int crfId)
         {
             try
