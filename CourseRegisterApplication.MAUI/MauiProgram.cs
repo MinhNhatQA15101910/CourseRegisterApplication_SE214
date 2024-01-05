@@ -53,6 +53,9 @@ public static class MauiProgram
         builder.Services.AddScoped<StudentAppShellViewModel>();
         builder.Services.AddScoped<StudentDashboardViewModel>();
         builder.Services.AddScoped<StudentInfomationViewModel>();
+        builder.Services.AddScoped<CourseRegistrationViewModel>();
+        builder.Services.AddScoped<CourseRegisTrationInfoViewModel>();
+        builder.Services.AddScoped<TuitionInfoViewModel>();
         #endregion
 
         #region Accountant
@@ -123,6 +126,10 @@ public static class MauiProgram
         builder.Services.AddScoped<StudentAppShell>();
         builder.Services.AddScoped<StudentDashboardPage>();
         builder.Services.AddScoped<StudentInfomationPage>();
+        builder.Services.AddScoped<CourseRegistrationPage>();
+        builder.Services.AddScoped<CourseRegistrationInfoPage>();
+        builder.Services.AddScoped<TuitionInfoPage>();
+        builder.Services.AddScoped<PaymentPopup>();
         #endregion
         #endregion
 
@@ -143,6 +150,7 @@ public static class MauiProgram
         builder.Services.AddScoped<ISubjectTypeService, SubjectTypeService>();
         builder.Services.AddScoped<ICourseRegistrationFormService, CourseRegistrationFormService>();
         builder.Services.AddScoped<ICourseRegistrationDetailService, CourseRegistrationDetailService>();
+        builder.Services.AddScoped<ITuitionFeeReceiptService, TuitionFeeReceiptService>();
         #endregion
 
         return builder.Build();

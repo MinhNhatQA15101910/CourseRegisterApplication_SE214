@@ -20,7 +20,7 @@ namespace CourseRegisterApplication.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CourseRegistrationForm>>> GetAllCourseRegistrationForm()
+        public async Task<ActionResult<IEnumerable<CourseRegistrationForm>>> GetAllCourseRegistrationFormsWithPendingState()
         {
             try
             {
@@ -29,7 +29,7 @@ namespace CourseRegisterApplication.Server.Controllers
                     return new NotFoundResult();
                 }
 
-                var courseRegistrationForms = await _context.CourseRegistrationForms.ToListAsync();
+                var courseRegistrationForms = await _context.CourseRegistrationForms.Where(crf => crf.State == CourseRegistrationFormState.Pending).ToListAsync();
 
                 if (courseRegistrationForms == null)
                 {
