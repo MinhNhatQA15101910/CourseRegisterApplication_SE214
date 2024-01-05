@@ -36,7 +36,8 @@ namespace CourseRegisterApplication.Server.Controllers
                 }
 
                 return Ok(tuitionFeeReceipts);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }

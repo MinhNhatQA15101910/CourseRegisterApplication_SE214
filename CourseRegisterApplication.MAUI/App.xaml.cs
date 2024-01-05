@@ -7,7 +7,6 @@ namespace CourseRegisterApplication.MAUI
         public App(LoginPage page)
         {
             InitializeComponent();
-
             MainPage = page;
         }
     }

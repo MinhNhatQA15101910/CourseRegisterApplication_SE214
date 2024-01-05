@@ -64,8 +64,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels
 				Username = "";
 				Password = "";
 				GlobalConfig.CurrentUser = user;
-
-				await Application.Current.MainPage.DisplayAlert("Success!", "Login Successfully", "OK");
+				UsernameMessageColor = Color.FromArgb("#FFFFFF");
+                PasswordMessageColor = Color.FromArgb("#FFFFFF");
+                await Application.Current.MainPage.DisplayAlert("Success!", "Login Successfully", "OK");
 
 				switch (user.Role)
 				{

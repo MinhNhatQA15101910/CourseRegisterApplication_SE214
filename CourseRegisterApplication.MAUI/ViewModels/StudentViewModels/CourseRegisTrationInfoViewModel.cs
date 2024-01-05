@@ -1,5 +1,6 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.ViewModels.Displays;
+using CourseRegisterApplication.MAUI.Views.StudentViews;
 using CourseRegisterApplication.MAUI.Views;
 using System;
 using System.Collections.Generic;
@@ -95,11 +96,11 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         }
         #endregion
 
-        #region Property Changed
-        #endregion
+            #region Property Changed
+            #endregion
 
-        #region Helper
-        public void ReloadCourseRegistrationItemsBackground()
+            #region Helper
+            public void ReloadCourseRegistrationItemsBackground()
         {
             if (CourseRegistrationDisplayList != null && CourseRegistrationDisplayList.Count > 0)
             {

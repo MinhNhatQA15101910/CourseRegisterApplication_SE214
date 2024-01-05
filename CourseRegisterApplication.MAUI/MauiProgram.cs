@@ -97,6 +97,7 @@ public static class MauiProgram
         builder.Services.AddScoped<AddManagerAccountPage>();
         builder.Services.AddScoped<FilterManagerAccountPopup>();
         builder.Services.AddScoped<FilterStudentAccountPopup>();
+        builder.Services.AddScoped<CourseRegistrationPage>();
         #endregion
 
         #region Accountant
@@ -138,6 +139,7 @@ public static class MauiProgram
 
         #region Services
         builder.Services.AddSingleton<HttpClient>();
+        builder.Services.AddScoped<ITuitionFeeReceiptService, TuitionFeeReceiptService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IStudentService, StudentService>();
         builder.Services.AddScoped<IDepartmentService, DepartmentService>();
