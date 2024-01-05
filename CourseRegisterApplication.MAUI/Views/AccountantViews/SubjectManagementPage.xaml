@@ -115,7 +115,6 @@
             Grid.Column="0"
             HeightRequest="400"
             ItemsSource="{Binding SubjectDisplayList}"
-            MaximumHeightRequest="600"
             VerticalScrollBarVisibility="Always">
             <CollectionView.ItemTemplate>
               <DataTemplate>
@@ -172,12 +171,12 @@
 
           <VerticalStackLayout
             Padding="40"
+            BackgroundColor="#FCFAFA"
             HeightRequest="280"
-            WidthRequest="400"
-            MinimumWidthRequest="200"
-            BackgroundColor="#EFF3FA"
             HorizontalOptions="CenterAndExpand"
-            VerticalOptions="CenterAndExpand">
+            MinimumWidthRequest="200"
+            VerticalOptions="CenterAndExpand"
+            WidthRequest="400">
 
             <Label
               Margin="0,0,0,50"

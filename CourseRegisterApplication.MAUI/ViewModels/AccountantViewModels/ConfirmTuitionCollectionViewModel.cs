@@ -1,4 +1,5 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
+using CourseRegisterApplication.MAUI.Services;
 using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AccountantViews;
 using CourseRegisterApplication.Shared;
@@ -18,7 +19,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         private string specificId;
 
         [ObservableProperty]
-        private DateTime createdDate;
+        private string createdDate;
 
         [ObservableProperty]
         private TuitionFeeReceiptState state;
@@ -27,7 +28,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         private double charge;
 
         [ObservableProperty]
-        private int studentID;
+        private string studentID;
 
         [ObservableProperty]
         private int courseRegisFormId;
@@ -75,6 +76,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
     {
         #region Services
         private readonly IServiceProvider _serviceProvider;
+        private readonly IStudentService _studentService;
         #endregion
 
         #region Properties
@@ -89,13 +91,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         private int selectedTuitionFormCourseRegisFormID;
 
         [ObservableProperty]
-        private int selectedTuitionFormStudentID;
+        private string selectedTuitionFormStudentID;
 
         [ObservableProperty]
         private string selectedTuitionFormStudentName;
 
         [ObservableProperty]
-        private DateTime selectedTuitionFormCreatedDate;
+        private string selectedTuitionFormCreatedDate;
 
         [ObservableProperty]
         private double selectedTuitionFormCharge;
@@ -125,6 +127,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         public ConfirmTuitionCollectionViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+            _studentService=_serviceProvider.GetService<IStudentService>();
         }
         #endregion
 
@@ -145,7 +148,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         {
             var tuitionReceiptService = _serviceProvider.GetService<ITuitionFeeReceiptService>();
             var tuitionFormList = await tuitionReceiptService.GetAllTuitionFeeReceipt();
-
+            tuitionFormList = tuitionFormList.Where(c=>c.State==TuitionFeeReceiptState.Pending).ToList();
             await ReloadTuitionFormDisplaysList(tuitionFormList);
         }
 
@@ -238,27 +241,42 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 foreach(var tuitionFeeReceipt in tuitionFeeReceiptsList)
                 {
                     var courseRegisForm = await courseRegisFormService.GetCourseRegistrationFormById(tuitionFeeReceipt.CourseRegistrationFormId);
+                    var studentList = await _studentService.GetAllStudents();
                     var semester = await semesterService.GetSemesterById(courseRegisForm.SemesterId);
-
-                    primaryTuitionFormDisplaysList.Add(new()
+                    foreach(var item in studentList) 
                     {
-                        TuitionFormRequester = this,
-                        ID = tuitionFeeReceipt.Id,
-                        SpecificId = tuitionFeeReceipt.TuitionFeeReceiptSpecificId,
-                        CreatedDate = tuitionFeeReceipt.CreatedDate,
-                        State = tuitionFeeReceipt.State,
-                        Charge = tuitionFeeReceipt.Charge,
-                        StudentID = courseRegisForm.StudentId,
-                        TuitionSemester = semester.SemesterName.ToString(),
-                        TuitionSchoolYear = semester.Year,
-                        CourseRegisFormId = tuitionFeeReceipt.CourseRegistrationFormId
-                    });
+                        if (item.Id == courseRegisForm.StudentId)
+                        {
+                            primaryTuitionFormDisplaysList.Add(new()
+                            {
+                                TuitionFormRequester = this,
+                                ID = tuitionFeeReceipt.Id,
+                                SpecificId = tuitionFeeReceipt.TuitionFeeReceiptSpecificId,
+                                CreatedDate = tuitionFeeReceipt.CreatedDate.ToString("dd/MM/yyyy"),
+                                State = tuitionFeeReceipt.State,
+                                Charge = tuitionFeeReceipt.Charge,
+                                StudentID = item.StudentSpecificId,
+                                TuitionSemester = GetSemesterName(semester.SemesterName.ToString()),
+                                TuitionSchoolYear = semester.Year,
+                                CourseRegisFormId = tuitionFeeReceipt.CourseRegistrationFormId
+                            });
+                        }
+                    }
+                    
                 }
 
                 TuitionFormDisplaysList = primaryTuitionFormDisplaysList.OrderBy(p => p.SpecificId).ToObservableCollection();
                 ReloadTuitionFormBackground();
             }
         }
+
+        public string GetSemesterName(string semesterName)
+        {
+            if (semesterName == "FirstSemester") return "Học kỳ I";
+            else if (semesterName == "SecondSemester") return "Học kỳ II";
+            else return "Học kỳ hè";
+        }
+
 
         public async Task DisplayInfomation(TuitionFormDisplay tuitionFormDisplay)
         {
@@ -280,7 +298,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
             SelectedTuitionFormCourseRegisFormID = tuitionFormDisplay.CourseRegisFormId;
 
-            SelectedTuitionFormStudentID = courseRegisForm.StudentId;
+            SelectedTuitionFormStudentID = student.StudentSpecificId;
 
             SelectedTuitionFormStudentName = student.FullName;
 
@@ -309,9 +327,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
             SelectedTuitionFormCourseRegisFormID = -1;
 
-            SelectedTuitionFormStudentID = -1;
+            SelectedTuitionFormStudentID = "";
 
-            SelectedTuitionFormCreatedDate = DateTime.Today;
+            SelectedTuitionFormCreatedDate = "";
 
             SelectedTuitionFormCharge = 0;
 

@@ -16,7 +16,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         private string specificId;
 
         [ObservableProperty]
-        private DateTime createdDate;
+        private string createdDate;
 
         [ObservableProperty]
         private CourseRegistrationFormState state;
@@ -113,7 +113,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         private string selectedFormStudentName;
 
         [ObservableProperty]
-        private DateTime selectedFormCreatedDate;
+        private string selectedFormCreatedDate;
 
         [ObservableProperty]
         private string selectedFormState;
@@ -165,7 +165,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         {
             var courseRegisFormService = _serviceProvider.GetRequiredService<ICourseRegistrationFormService>();
             var courseRegisFormList = await courseRegisFormService.GetAllCourseRegistrationFormsWithPendingState();
-
+            courseRegisFormList = courseRegisFormList.Where(c => c.State == CourseRegistrationFormState.Pending).ToList();
             ReloadCourseRegisFormDisplay(courseRegisFormList);
         }
 
@@ -177,23 +177,27 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             var courseRegisForm = await courseRegisFormService.GetAllCourseRegistrationFormsWithPendingState();
 
             var selectCourseRegisForm = courseRegisForm.Where(p => p.Id == SelectedFormId).FirstOrDefault();
-
-            selectCourseRegisForm.State = CourseRegistrationFormState.Confirmed;
-            selectCourseRegisForm.CreatedDate = DateTime.Now;
-
-            var result = await courseRegisFormService.UpdateCourseRegistrationForm(SelectedFormId ,selectCourseRegisForm);
-
-            if (result)
+            if (selectCourseRegisForm != null)
             {
-                await Application.Current.MainPage.DisplayAlert("Success", "Confirm course registration form successfully", "OK");
-                await GetCourseRegisForm();
-                ClearProperty();
+                selectCourseRegisForm.State = CourseRegistrationFormState.Confirmed;
+                selectCourseRegisForm.CreatedDate = DateTime.Now;
+
+                var result = await courseRegisFormService.UpdateCourseRegistrationForm(SelectedFormId, selectCourseRegisForm);
+
+                if (result)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", "Confirm course registration form successfully", "OK");
+                    await GetCourseRegisForm();
+                    ClearProperty();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Confirm course registration form failed", "OK");
+                }
+                GetCourseRegisFormCommand.Execute(null);
+                CourseRegisDetailDisplayList = null;
             }
-            else
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", "Confirm course registration form failed", "OK");
-            }
-            GetCourseRegisFormCommand.Execute(null);
+            
         }
         #endregion
 
@@ -239,7 +243,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         private void ReloadCourseRegisFormDisplay(List<CourseRegistrationForm> courseRegisFormList)
         {
             var courseRegisFormService = _serviceProvider.GetService<ICourseRegistrationFormService>();
-
+            CourseRegisFormDisplayList = null;
             primaryCourseRegisFormDisplayList.Clear();
 
             if(courseRegisFormList.Count > 0)
@@ -251,7 +255,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                         CourseRegisFormRequester = this,
                         ID = courseRegisForm.Id,
                         SpecificId = courseRegisForm.CourseRegistrationFormSpecificId,
-                        CreatedDate = courseRegisForm.CreatedDate,
+                        CreatedDate = courseRegisForm.CreatedDate.ToString("dd/MM/yyyy"),
                         State = courseRegisForm.State,
                         StudentId = courseRegisForm.StudentId,
                         SemesterId = courseRegisForm.SemesterId,
@@ -276,7 +280,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         private async Task ReloadCourseRegisDetailDisplay(List<CourseRegistrationDetail> courseRegisDetailList)
         {
             primaryCourseRegisDetailDisplayList.Clear();
-
+            CourseRegisDetailDisplayList = null;
             var subjectService = _serviceProvider.GetService<ISubjectService>();
             var subjectTypeService = _serviceProvider.GetService<ISubjectTypeService>();
 
@@ -351,7 +355,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             SelectedFormSpecificId = "";
             SelectedFormStudentId = "";
             SelectedFormStudentName = "";
-            //SelectedFormCreatedDate = "";
+            SelectedFormCreatedDate = "";
             SelectedFormState = "";
             SelectedFormSemesterName = "";
         }

@@ -21,7 +21,7 @@
         <HorizontalStackLayout
           Grid.Row="0"
           Grid.Column="0"
-          Margin="100,30,0,0"
+          Margin="50,24,0,0"
           VerticalOptions="Center">
           <Label
             Margin="0,0,10,0"
@@ -68,15 +68,14 @@
         <Grid
           Grid.Row="1"
           Grid.Column="0"
-          Margin="100,20,0,80"
+          Margin="50,24,24,0"
           RowDefinitions="Auto, *"
           VerticalOptions="Start">
           <Grid
             Grid.Row="0"
             BackgroundColor="Transparent"
             ColumnDefinitions="2.5*,2*,3.5*,2*"
-            HeightRequest="40"
-            VerticalOptions="Center">
+            HeightRequest="40">
             <Label
               Grid.Column="0"
               FontFamily="RobotoMedium"
@@ -121,8 +120,7 @@
               <DataTemplate>
                 <Grid
                   BackgroundColor="{Binding BackgroundColor}"
-                  ColumnDefinitions="2.5*,2*,3.5*, 2*"
-                  VerticalOptions="Center">
+                  ColumnDefinitions="2.5*,2*,3.5*, 2*">
                   <Grid.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ChooseStudentCommand}" />
                   </Grid.GestureRecognizers>
@@ -183,12 +181,12 @@
         <Button
           Grid.Row="2"
           Grid.Column="0"
-          Margin="0,0,0,50"
+          Margin="0,0,0,24"
           Command="{Binding NavigateToAddStudentPageCommand}"
           FontFamily="RobotoMedium"
           FontSize="14"
           HeightRequest="40"
-          HorizontalOptions="End"
+          HorizontalOptions="Center"
           Text="Add a student"
           TextColor="#2671B1"
           WidthRequest="200">
@@ -214,7 +212,7 @@
           Grid.Row="0"
           Grid.RowSpan="2"
           Grid.Column="1"
-          Margin="50,0,0,0">
+          Margin="24,0,50,0">
           <Frame
             Margin="20,50,20,20"
             Padding="0"
@@ -311,7 +309,7 @@
                 Text="Department"
                 TextColor="#1A1A1A" />
               <Label
-                FontSize="13"
+                FontSize="14"
                 HorizontalOptions="Start"
                 Text="{Binding DepartmentName}"
                 TextColor="#A7A7A7" />
@@ -324,7 +322,7 @@
                 Text="Branch"
                 TextColor="#1A1A1A" />
               <Label
-                FontSize="13"
+                FontSize="14"
                 HorizontalOptions="Start"
                 Text="{Binding BranchName}"
                 TextColor="#A7A7A7" />
@@ -337,7 +335,7 @@
                 Text="Date of birth"
                 TextColor="#1A1A1A" />
               <Label
-                FontSize="13"
+                FontSize="14"
                 HorizontalOptions="Start"
                 Text="{Binding DateOfBirth}"
                 TextColor="#A7A7A7" />
@@ -350,7 +348,7 @@
                 Text="Gender"
                 TextColor="#1A1A1A" />
               <Label
-                FontSize="13"
+                FontSize="14"
                 HorizontalOptions="Start"
                 Text="{Binding Gender}"
                 TextColor="#A7A7A7" />
@@ -363,7 +361,7 @@
                 Text="Age"
                 TextColor="#1A1A1A" />
               <Label
-                FontSize="13"
+                FontSize="14"
                 HorizontalOptions="Start"
                 Text="{Binding Age}"
                 TextColor="#A7A7A7" />
@@ -376,7 +374,7 @@
                 Text="Address"
                 TextColor="#1A1A1A" />
               <Label
-                FontSize="13"
+                FontSize="14"
                 HorizontalOptions="Start"
                 Text="{Binding Address}"
                 TextColor="#A7A7A7" />
@@ -389,7 +387,7 @@
                 Text="Email"
                 TextColor="#1A1A1A" />
               <Label
-                FontSize="13"
+                FontSize="14"
                 HorizontalOptions="Start"
                 Text="{Binding Email}"
                 TextColor="#A7A7A7" />

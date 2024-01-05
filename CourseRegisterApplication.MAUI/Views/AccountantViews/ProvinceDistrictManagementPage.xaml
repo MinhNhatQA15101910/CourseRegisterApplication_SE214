@@ -36,17 +36,37 @@
           ItemsSource="{Binding ProvinceFilterOptions}"
           SelectedItem="{Binding SelectedProvinceFilterOption}"
           VerticalOptions="Center" />
-
-        <SearchBar
-          Margin="20,0,0,0"
+        <Border
+          Grid.Column="1"
+          Margin="16,0,0,0"
           BackgroundColor="#FCFAFA"
-          FontFamily="Roboto"
-          FontSize="14"
-          Placeholder="Search for a province by its province code or name"
-          Text="{Binding SearchProvinceFilter}"
-          TextColor="Black"
-          VerticalOptions="Center"
-          WidthRequest="500" />
+          HeightRequest="50"
+          StrokeShape="RoundRectangle 0,5,0,5"
+          StrokeThickness="0"
+          VerticalOptions="Center">
+          <Grid ColumnDefinitions="auto,*">
+            <Image
+              Grid.Column="0"
+              Margin="16,0,8,0"
+              HeightRequest="16"
+              Source="search_icon.png" />
+            <Border
+              Grid.Column="1"
+              BackgroundColor="#FCFAFA"
+              HeightRequest="50"
+              StrokeThickness="0">
+              <Entry
+                FontFamily="RobotoRegular"
+                FontSize="14"
+                HeightRequest="52"
+                HorizontalOptions="Fill"
+                Placeholder="Search for a province by its province code or name"
+                PlaceholderColor="#8A8A8A"
+                Text="{Binding SearchProvinceFilter}"
+                TextColor="#8A8A8A" />
+            </Border>
+          </Grid>
+        </Border>
       </HorizontalStackLayout>
 
       <!--  Filter and SearchBar of District  -->
@@ -62,17 +82,37 @@
           ItemsSource="{Binding DistrictFilterOptions}"
           SelectedItem="{Binding SelectedDistrictFilterOption}"
           VerticalOptions="Center" />
-
-        <SearchBar
-          Margin="20,0,20,0"
+        <Border
+          Grid.Column="1"
+          Margin="16,0,0,0"
           BackgroundColor="#FCFAFA"
-          FontFamily="Roboto"
-          FontSize="14"
-          Placeholder="Search for a district by its district code, name or its province name"
-          Text="{Binding SearchDistrictFilter}"
-          TextColor="Black"
-          VerticalOptions="Center"
-          WidthRequest="500" />
+          HeightRequest="50"
+          StrokeShape="RoundRectangle 0,5,0,5"
+          StrokeThickness="0"
+          VerticalOptions="Center">
+          <Grid ColumnDefinitions="auto,*">
+            <Image
+              Grid.Column="0"
+              Margin="16,0,8,0"
+              HeightRequest="16"
+              Source="search_icon.png" />
+            <Border
+              Grid.Column="1"
+              BackgroundColor="#FCFAFA"
+              HeightRequest="50"
+              StrokeThickness="0">
+              <Entry
+                FontFamily="RobotoRegular"
+                FontSize="14"
+                HeightRequest="52"
+                HorizontalOptions="Fill"
+                Placeholder="Search for a district by its district code, name or its province name"
+                PlaceholderColor="#8A8A8A"
+                Text="{Binding SearchDistrictFilter}"
+                TextColor="#8A8A8A" />
+            </Border>
+          </Grid>
+        </Border>
       </HorizontalStackLayout>
 
       <!--  Splitter  -->

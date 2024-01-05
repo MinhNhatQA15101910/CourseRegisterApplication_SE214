@@ -21,60 +21,47 @@
       VerticalOptions="Start" />
 
     <ScrollView Grid.Row="1">
-      <VerticalStackLayout
-        Padding="20,20,20,0"
-        HorizontalOptions="Fill"
-        Spacing="40">
-        <HorizontalStackLayout>
-          <Label
-            Margin="0,0,10,0"
-            FontFamily="RobotoRegular"
-            FontSize="14"
-            Text="Filter by:"
-            TextColor="#8A8A8A"
-            VerticalOptions="Center" />
-          <Picker
-            ItemsSource="{Binding FilterOptions}"
-            SelectedItem="{Binding SelectedFilterOption}"
-            VerticalOptions="Center" />
-          <Border
-            Margin="20,0,0,0"
-            BackgroundColor="#FCFAFA"
-            HeightRequest="50"
-            StrokeShape="RoundRectangle 0,5,0,5"
-            StrokeThickness="0"
-            WidthRequest="500">
-            <HorizontalStackLayout>
-              <Image
-                Margin="16,0,8,0"
-                HeightRequest="16"
-                Source="search_icon.png" />
-              <Border
-                BackgroundColor="#FCFAFA"
-                HeightRequest="50"
-                StrokeThickness="0"
-                WidthRequest="500">
-                <Entry
-                  FontFamily="RobotoRegular"
-                  FontSize="14"
+      <Grid
+        Margin="50,24,50,0"
+        ColumnDefinitions="*,auto,*"
+        HorizontalOptions="Fill">
+        <StackLayout Grid.Column="0" Margin="0,24,0,0">
+          <HorizontalStackLayout>
+            <Border
+              Margin="0,0,0,0"
+              BackgroundColor="#FCFAFA"
+              HeightRequest="50"
+              StrokeShape="RoundRectangle 0,5,0,5"
+              StrokeThickness="0"
+              WidthRequest="500">
+              <HorizontalStackLayout>
+                <Image
+                  Margin="16,0,8,0"
+                  HeightRequest="16"
+                  Source="search_icon.png" />
+                <Border
+                  BackgroundColor="#FCFAFA"
                   HeightRequest="50"
-                  Placeholder="Search form by Form ID, Student ID"
-                  PlaceholderColor="#8A8A8A"
-                  Text="{Binding SearchFilter}"
-                  TextColor="#8A8A8A"
-                  WidthRequest="500" />
-              </Border>
-            </HorizontalStackLayout>
-          </Border>
-        </HorizontalStackLayout>
-        <Grid
-          ColumnDefinitions="5*, 1, 5*"
-          RowDefinitions="*, Auto"
-          VerticalOptions="Fill">
+                  StrokeThickness="0"
+                  WidthRequest="500">
+                  <Entry
+                    FontFamily="RobotoRegular"
+                    FontSize="14"
+                    HeightRequest="50"
+                    Placeholder="Search form by Form ID, Student ID"
+                    PlaceholderColor="#8A8A8A"
+                    Text="{Binding SearchFilter}"
+                    TextColor="#8A8A8A"
+                    WidthRequest="500" />
+                </Border>
+              </HorizontalStackLayout>
+            </Border>
+          </HorizontalStackLayout>
           <VerticalStackLayout
             Grid.Row="0"
             Grid.Column="0"
-            HeightRequest="500"
+            Margin="0,24,0,0"
+            HeightRequest="400"
             VerticalOptions="Fill">
             <Label
               FontFamily="RobotoBold"
@@ -129,13 +116,13 @@
             <CollectionView
               HeightRequest="400"
               ItemsSource="{Binding CourseRegisFormDisplayList}"
-              MaximumHeightRequest="600"
               VerticalScrollBarVisibility="Always">
               <CollectionView.ItemTemplate>
                 <DataTemplate>
                   <Grid
-                    ColumnDefinitions="2*, 2*, 2*, 2*, 2*"
+                    Padding="12,16,0,16"
                     BackgroundColor="{Binding BackgroundColor}"
+                    ColumnDefinitions="2*, 2*, 2*, 2*, 2*"
                     ColumnSpacing="40"
                     HorizontalOptions="Fill"
                     VerticalOptions="Center">
@@ -177,234 +164,239 @@
                       HorizontalOptions="Start"
                       Text="{Binding State}"
                       VerticalOptions="Center" />
-
                   </Grid>
                 </DataTemplate>
               </CollectionView.ItemTemplate>
             </CollectionView>
           </VerticalStackLayout>
+        </StackLayout>
 
-          <Grid Grid.Column="1" BackgroundColor="#509CDB" />
+        <BoxView
+          Grid.Column="1"
+          Margin="48,0,24,0"
+          WidthRequest="1.5"
+          Color="#509CDB" />
 
-          <VerticalStackLayout
-            Grid.Row="0"
-            Grid.Column="2"
-            Margin="20,0,0,0">
-            <Grid
-              Margin="30"
-              ColumnDefinitions="3*, 3*, 3*"
-              ColumnSpacing="80"
-              HorizontalOptions="CenterAndExpand"
-              RowDefinitions="Auto, *"
-              RowSpacing="20"
-              VerticalOptions="CenterAndExpand">
+        <VerticalStackLayout Grid.Column="2" Margin="0,24,0,0">
+          <Grid
+            Padding="24"
+            BackgroundColor="#FCFAFA"
+            ColumnDefinitions="*, *, *"
+            HorizontalOptions="FillAndExpand"
+            RowDefinitions="*, *"
+            VerticalOptions="FillAndExpand">
 
-              <VerticalStackLayout Grid.Row="0" Grid.Column="0">
-                <Label
-                  FontAttributes="Bold"
-                  FontFamily="RobotoMedidum"
-                  FontSize="14"
-                  HorizontalOptions="Start"
-                  Text="Form ID"
-                  TextColor="#1A1A1A" />
-                <Label
-                  FontFamily="RobotoRegular"
-                  FontSize="14"
-                  HorizontalOptions="Start"
-                  Text="{Binding SelectedFormSpecificId}"
-                  TextColor="#A7A7A7" />
-              </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="0" Grid.Column="0">
+              <Label
+                FontAttributes="Bold"
+                FontFamily="RobotoMedidum"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Form ID"
+                TextColor="#1A1A1A" />
+              <Label
+                Margin="0,4,0,0"
+                FontFamily="RobotoRegular"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="{Binding SelectedFormSpecificId}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
 
-              <VerticalStackLayout Grid.Row="0" Grid.Column="1">
-                <Label
-                  FontAttributes="Bold"
-                  FontFamily="RobotoMedidum"
-                  FontSize="14"
-                  HorizontalOptions="Start"
-                  Text="Student ID"
-                  TextColor="#1A1A1A" />
-                <Label
-                  FontFamily="RobotoRegular"
-                  FontSize="14"
-                  HorizontalOptions="Start"
-                  Text="{Binding SelectedFormStudentId}"
-                  TextColor="#A7A7A7" />
-              </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+              <Label
+                FontAttributes="Bold"
+                FontFamily="RobotoMedidum"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Student ID"
+                TextColor="#1A1A1A" />
+              <Label
+                Margin="0,4,0,0"
+                FontFamily="RobotoRegular"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="{Binding SelectedFormStudentId}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
 
-              <VerticalStackLayout Grid.Row="0" Grid.Column="2">
-                <Label
-                  FontAttributes="Bold"
-                  FontFamily="RobotoMedidum"
-                  FontSize="14"
-                  HorizontalOptions="Start"
-                  Text="Student name"
-                  TextColor="#1A1A1A" />
-                <Label
-                  FontFamily="RobotoRegular"
-                  FontSize="14"
-                  HorizontalOptions="Start"
-                  Text="{Binding SelectedFormStudentName}"
-                  TextColor="#A7A7A7" />
-              </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="0" Grid.Column="2">
+              <Label
+                FontAttributes="Bold"
+                FontFamily="RobotoMedidum"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Student name"
+                TextColor="#1A1A1A" />
+              <Label
+                Margin="0,4,0,0"
+                FontFamily="RobotoRegular"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="{Binding SelectedFormStudentName}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
 
-              <VerticalStackLayout Grid.Row="1" Grid.Column="0">
-                <Label
-                  FontAttributes="Bold"
-                  FontFamily="RobotoMedidum"
-                  FontSize="14"
-                  HorizontalOptions="Start"
-                  Text="Term"
-                  TextColor="#1A1A1A" />
-                <Label
-                  FontFamily="RobotoRegular"
-                  FontSize="14"
-                  HorizontalOptions="Start"
-                  Text="{Binding SelectedFormSemesterName}"
-                  TextColor="#A7A7A7" />
-              </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="1" Grid.Column="0">
+              <Label
+                Margin="0,16,0,0"
+                FontAttributes="Bold"
+                FontFamily="RobotoMedidum"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Term"
+                TextColor="#1A1A1A" />
+              <Label
+                Margin="0,4,0,0"
+                FontFamily="RobotoRegular"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="{Binding SelectedFormSemesterName}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
 
-              <VerticalStackLayout Grid.Row="1" Grid.Column="1">
-                <Label
-                  FontAttributes="Bold"
-                  FontFamily="RobotoMedidum"
-                  FontSize="14"
-                  HorizontalOptions="Start"
-                  Text="Year"
-                  TextColor="#1A1A1A" />
-                <Label
-                  FontFamily="RobotoRegular"
-                  FontSize="14"
-                  HorizontalOptions="Start"
-                  Text="{Binding SelectedFormSemesterYear}"
-                  TextColor="#A7A7A7" />
-              </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+              <Label
+                Margin="0,16,0,0"
+                FontAttributes="Bold"
+                FontFamily="RobotoMedidum"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Year"
+                TextColor="#1A1A1A" />
+              <Label
+                Margin="0,4,0,0"
+                FontFamily="RobotoRegular"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="{Binding SelectedFormSemesterYear}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
 
-              <VerticalStackLayout Grid.Row="1" Grid.Column="2">
-                <Label
-                  FontAttributes="Bold"
-                  FontFamily="RobotoMedidum"
-                  FontSize="14"
-                  HorizontalOptions="Start"
-                  Text="Create date"
-                  TextColor="#1A1A1A" />
-                <Label
-                  FontFamily="RobotoRegular"
-                  FontSize="14"
-                  HorizontalOptions="Start"
-                  Text="{Binding SelectedFormCreatedDate}"
-                  TextColor="#A7A7A7" />
-              </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="1" Grid.Column="2">
+              <Label
+                Margin="0,16,0,0"
+                FontAttributes="Bold"
+                FontFamily="RobotoMedidum"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="Create date"
+                TextColor="#1A1A1A" />
+              <Label
+                Margin="0,4,0,0"
+                FontFamily="RobotoRegular"
+                FontSize="14"
+                HorizontalOptions="Start"
+                Text="{Binding SelectedFormCreatedDate}"
+                TextColor="#A7A7A7" />
+            </VerticalStackLayout>
 
 
-            </Grid>
+          </Grid>
+
+          <Label
+            Margin="0,20,0,0"
+            FontFamily="RobotoBold"
+            FontSize="Title"
+            Text="Subject registration list" />
+
+          <Grid
+            ColumnDefinitions="*, 3*, 2*, 2*"
+            ColumnSpacing="40"
+            HeightRequest="40"
+            HorizontalOptions="Fill"
+            VerticalOptions="Center">
 
             <Label
-              Margin="0,20,0,0"
-              FontFamily="RobotoBold"
-              FontSize="Title"
-              Text="Subject registration list" />
+              Grid.Column="0"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Subject ID"
+              VerticalOptions="Center" />
 
-            <Grid
-              ColumnDefinitions="*, 3*, 2*, 2*"
-              ColumnSpacing="40"
-              HeightRequest="40"
-              HorizontalOptions="Fill"
-              VerticalOptions="Center">
+            <Label
+              Grid.Column="1"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Subject name"
+              VerticalOptions="Center" />
 
-              <Label
-                Grid.Column="0"
-                FontFamily="RobotoMedium"
-                FontSize="14"
-                HorizontalOptions="Start"
-                Text="Subject ID"
-                VerticalOptions="Center" />
+            <Label
+              Grid.Column="2"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Subject Type"
+              VerticalOptions="Center" />
 
-              <Label
-                Grid.Column="1"
-                FontFamily="RobotoMedium"
-                FontSize="14"
-                HorizontalOptions="Start"
-                Text="Subject name"
-                VerticalOptions="Center" />
+            <Label
+              Grid.Column="3"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Number of periods"
+              VerticalOptions="Center" />
+          </Grid>
 
-              <Label
-                Grid.Column="2"
-                FontFamily="RobotoMedium"
-                FontSize="14"
-                HorizontalOptions="Start"
-                Text="Subject Type"
-                VerticalOptions="Center" />
+          <CollectionView
+            HeightRequest="300"
+            ItemsSource="{Binding CourseRegisDetailDisplayList}"
+            MaximumHeightRequest="400"
+            VerticalScrollBarVisibility="Always">
+            <CollectionView.ItemTemplate>
+              <DataTemplate>
+                <Grid
+                  ColumnDefinitions="*, 3*, 2*, 2*"
+                  ColumnSpacing="40"
+                  HeightRequest="40"
+                  HorizontalOptions="Fill"
+                  VerticalOptions="Center">
+                  <Label
+                    Grid.Column="0"
+                    FontFamily="RobotoRegular"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SubjectId}"
+                    VerticalOptions="Center" />
 
-              <Label
-                Grid.Column="3"
-                FontFamily="RobotoMedium"
-                FontSize="14"
-                HorizontalOptions="Start"
-                Text="Number of periods"
-                VerticalOptions="Center" />
-            </Grid>
+                  <Label
+                    Grid.Column="1"
+                    FontFamily="RobotoRegular"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SubjectName}"
+                    VerticalOptions="Center" />
 
-            <CollectionView
-              HeightRequest="300"
-              ItemsSource="{Binding CourseRegisDetailDisplayList}"
-              MaximumHeightRequest="400"
-              VerticalScrollBarVisibility="Always">
-              <CollectionView.ItemTemplate>
-                <DataTemplate>
-                  <Grid
-                    ColumnDefinitions="*, 3*, 2*, 2*"
-                    ColumnSpacing="40"
-                    HeightRequest="40"
-                    HorizontalOptions="Fill"
-                    VerticalOptions="Center">
-                    <Label
-                      Grid.Column="0"
-                      FontFamily="RobotoRegular"
-                      FontSize="14"
-                      HorizontalOptions="Start"
-                      Text="{Binding SubjectId}"
-                      VerticalOptions="Center" />
+                  <Label
+                    Grid.Column="2"
+                    FontFamily="RobotoRegular"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SubjectType}"
+                    VerticalOptions="Center" />
 
-                    <Label
-                      Grid.Column="1"
-                      FontFamily="RobotoRegular"
-                      FontSize="14"
-                      HorizontalOptions="Start"
-                      Text="{Binding SubjectName}"
-                      VerticalOptions="Center" />
+                  <Label
+                    Grid.Column="3"
+                    FontFamily="RobotoRegular"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding NumberOfPeriod}"
+                    VerticalOptions="Center" />
 
-                    <Label
-                      Grid.Column="2"
-                      FontFamily="RobotoRegular"
-                      FontSize="14"
-                      HorizontalOptions="Start"
-                      Text="{Binding SubjectType}"
-                      VerticalOptions="Center" />
+                </Grid>
+              </DataTemplate>
+            </CollectionView.ItemTemplate>
+          </CollectionView>
 
-                    <Label
-                      Grid.Column="3"
-                      FontFamily="RobotoRegular"
-                      FontSize="14"
-                      HorizontalOptions="Start"
-                      Text="{Binding NumberOfPeriod}"
-                      VerticalOptions="Center" />
-
-                  </Grid>
-                </DataTemplate>
-              </CollectionView.ItemTemplate>
-            </CollectionView>
-
-          </VerticalStackLayout>
-
-
-
-        </Grid>
-      </VerticalStackLayout>
+        </VerticalStackLayout>
+      </Grid>
     </ScrollView>
     <Button
       Grid.Row="2"
       Grid.ColumnSpan="3"
-      Margin="0,0,0,20"
+      Margin="0,24,0,24"
       Padding="5"
       BackgroundColor="#2D88D4"
       Command="{Binding ConfirmCourseRegisFormCommand}"

@@ -23,6 +23,7 @@
 
     <ScrollView Grid.Row="1" BackgroundColor="White">
       <Grid
+        Margin="50,0,50,0"
         ColumnDefinitions="*,*,*,*"
         ColumnSpacing="100"
         HorizontalOptions="FillAndExpand"
@@ -32,11 +33,10 @@
         <Label
           Grid.Row="0"
           Grid.ColumnSpan="4"
-          FontFamily="RobotoMedium"
-          FontSize="Header"
+          FontFamily="RobotoBold"
+          FontSize="24"
           HorizontalOptions="Center"
-          Text="Student Information"
-          TextColor="#4F4F4F" />
+          Text="Student Information" />
 
         <VerticalStackLayout
           Grid.Row="1"
@@ -45,11 +45,20 @@
           Spacing="20"
           WidthRequest="200">
           <Frame
+            Margin="0,0,0,0"
+            Padding="0"
             CornerRadius="125"
             HeightRequest="250"
+            HorizontalOptions="Center"
             IsClippedToBounds="True"
             WidthRequest="250">
-            <Image Aspect="AspectFill" Source="{Binding ImageUrl}" />
+            <Image
+              Aspect="AspectFill"
+              HeightRequest="250"
+              HorizontalOptions="Center"
+              Source="{Binding ImageUrl}"
+              VerticalOptions="Center"
+              WidthRequest="250" />
           </Frame>
           <Button
             Margin="0,5,0,0"
@@ -92,13 +101,24 @@
               FontSize="16"
               Text="Student ID:"
               TextColor="#000000" />
-            <Entry
-              Margin="50,0,0,0"
-              FontFamily="RobotoRegular"
-              HeightRequest="50"
-              Placeholder="Enter student ID"
-              Text="{Binding StudentSpecificId}"
-              WidthRequest="250" />
+            <Frame
+              Margin="50,4,0,0"
+              Padding="0"
+              BackgroundColor="Transparent"
+              BorderColor="#A7A7A7"
+              CornerRadius="5"
+              HeightRequest="40"
+              HorizontalOptions="FillAndExpand"
+              WidthRequest="250">
+              <Entry
+                FontFamily="OpenSans-Semibold"
+                FontSize="14"
+                HorizontalOptions="FillAndExpand"
+                Placeholder="Enter student ID"
+                Text="{Binding StudentSpecificId}"
+                VerticalOptions="Center"
+                WidthRequest="250" />
+            </Frame>
             <Label
               FontSize="12"
               Text="{Binding StudentSpecificIdMessageText}"
@@ -110,13 +130,24 @@
               FontSize="16"
               Text="Student name:"
               TextColor="#000000" />
-            <Entry
-              Margin="50,0,0,0"
-              FontFamily="RobotoRegular"
-              HeightRequest="50"
-              Placeholder="Enter student name"
-              Text="{Binding StudentName}"
-              WidthRequest="250" />
+            <Frame
+              Margin="50,4,0,0"
+              Padding="0"
+              BackgroundColor="Transparent"
+              BorderColor="#A7A7A7"
+              CornerRadius="5"
+              HeightRequest="40"
+              HorizontalOptions="FillAndExpand"
+              WidthRequest="250">
+              <Entry
+                FontFamily="OpenSans-Semibold"
+                FontSize="14"
+                HorizontalOptions="FillAndExpand"
+                Placeholder="Enter student name"
+                Text="{Binding StudentName}"
+                VerticalOptions="Center"
+                WidthRequest="250" />
+            </Frame>
             <Label
               FontSize="12"
               Text="{Binding StudentNameMessageText}"
@@ -128,13 +159,23 @@
               FontSize="16"
               Text="Gender:"
               TextColor="#000000" />
-            <Picker
-              Margin="50,0,0,0"
-              FontFamily="RobotoRegular"
-              HeightRequest="50"
-              ItemsSource="{Binding GenderList}"
-              SelectedItem="{Binding SelectedGender}"
-              WidthRequest="250" />
+            <Frame
+              Margin="50,4,0,0"
+              Padding="0"
+              BackgroundColor="Transparent"
+              BorderColor="#A7A7A7"
+              CornerRadius="5"
+              HeightRequest="40"
+              HorizontalOptions="FillAndExpand"
+              WidthRequest="250">
+              <Picker
+                Margin="0,0,0,0"
+                FontFamily="RobotoRegular"
+                HeightRequest="40"
+                ItemsSource="{Binding GenderList}"
+                SelectedItem="{Binding SelectedGender}"
+                WidthRequest="250" />
+            </Frame>
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
@@ -142,15 +183,23 @@
               FontSize="16"
               Text="Date of birth:"
               TextColor="#000000" />
-
-            <DatePicker
-              Margin="50,0,0,0"
-              Date="{Binding DateOfBirth}"
-              FontFamily="RobotoRegular"
-              Format="dd/MM/yyyy"
-              HeightRequest="50"
-              TextColor="#000000"
-              WidthRequest="250" />
+            <Frame
+              Margin="50,4,0,0"
+              Padding="0"
+              BackgroundColor="Transparent"
+              BorderColor="#A7A7A7"
+              CornerRadius="5"
+              HeightRequest="40"
+              HorizontalOptions="FillAndExpand"
+              WidthRequest="250">
+              <DatePicker
+                Date="{Binding DateOfBirth}"
+                FontFamily="RobotoRegular"
+                Format="dd/MM/yyyy"
+                HeightRequest="40"
+                TextColor="#000000"
+                WidthRequest="250" />
+            </Frame>
           </VerticalStackLayout>
         </VerticalStackLayout>
 
@@ -167,13 +216,23 @@
               Text="Province:"
               TextColor="#000000" />
             <HorizontalStackLayout>
-              <Picker
-                FontFamily="RobotoRegular"
-                HeightRequest="50"
-                ItemDisplayBinding="{Binding ProvinceName}"
-                ItemsSource="{Binding ProvinceList}"
-                SelectedItem="{Binding SelectedProvince}"
-                WidthRequest="250" />
+              <Frame
+                Margin="0,4,0,0"
+                Padding="0"
+                BackgroundColor="Transparent"
+                BorderColor="#A7A7A7"
+                CornerRadius="5"
+                HeightRequest="40"
+                HorizontalOptions="FillAndExpand"
+                WidthRequest="250">
+                <Picker
+                  FontFamily="RobotoRegular"
+                  HeightRequest="40"
+                  ItemDisplayBinding="{Binding ProvinceName}"
+                  ItemsSource="{Binding ProvinceList}"
+                  SelectedItem="{Binding SelectedProvince}"
+                  WidthRequest="250" />
+              </Frame>
               <ImageButton
                 Margin="10,0,0,0"
                 Padding="16"
@@ -206,19 +265,30 @@
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
-              Margin="0,10,0,0"
+              Margin="0,14,0,0"
               FontFamily="RobotoMedium"
               FontSize="16"
               Text="District:"
               TextColor="#000000" />
             <HorizontalStackLayout>
-              <Picker
-                FontFamily="RobotoRegular"
-                HeightRequest="50"
-                ItemDisplayBinding="{Binding DistrictName}"
-                ItemsSource="{Binding DistrictList}"
-                SelectedItem="{Binding SelectedDistrict}"
-                WidthRequest="250" />
+              <Frame
+                Margin="0,4,0,0"
+                Padding="0"
+                BackgroundColor="Transparent"
+                BorderColor="#A7A7A7"
+                CornerRadius="5"
+                HeightRequest="40"
+                HorizontalOptions="FillAndExpand"
+                WidthRequest="250">
+                <Picker
+                  FontFamily="RobotoRegular"
+                  HeightRequest="40"
+                  ItemDisplayBinding="{Binding DistrictName}"
+                  ItemsSource="{Binding DistrictList}"
+                  SelectedItem="{Binding SelectedDistrict}"
+                  WidthRequest="250" />
+              </Frame>
+
               <ImageButton
                 Margin="10,0,0,0"
                 Padding="16"
@@ -251,19 +321,30 @@
           </VerticalStackLayout>
           <VerticalStackLayout>
             <Label
-              Margin="0,10,0,0"
+              Margin="0,14,0,0"
               FontFamily="RobotoMedium"
               FontSize="16"
               Text="Department:"
               TextColor="#000000" />
             <HorizontalStackLayout>
-              <Picker
-                FontFamily="RobotoRegular"
-                HeightRequest="50"
-                ItemDisplayBinding="{Binding DepartmentName}"
-                ItemsSource="{Binding DepartmentList}"
-                SelectedItem="{Binding SelectedDepartment}"
-                WidthRequest="250" />
+              <Frame
+                Margin="0,4,0,0"
+                Padding="0"
+                BackgroundColor="Transparent"
+                BorderColor="#A7A7A7"
+                CornerRadius="5"
+                HeightRequest="40"
+                HorizontalOptions="FillAndExpand"
+                WidthRequest="250">
+                <Picker
+                  FontFamily="RobotoRegular"
+                  HeightRequest="40"
+                  ItemDisplayBinding="{Binding DepartmentName}"
+                  ItemsSource="{Binding DepartmentList}"
+                  SelectedItem="{Binding SelectedDepartment}"
+                  WidthRequest="250" />
+              </Frame>
+
               <ImageButton
                 Margin="10,0,0,0"
                 Padding="16"
@@ -302,13 +383,24 @@
               Text="Branch:"
               TextColor="#000000" />
             <HorizontalStackLayout>
-              <Picker
-                FontFamily="RobotoRegular"
-                HeightRequest="50"
-                ItemDisplayBinding="{Binding BranchName}"
-                ItemsSource="{Binding BranchList}"
-                SelectedItem="{Binding SelectedBranch}"
-                WidthRequest="250" />
+              <Frame
+                Margin="0,4,0,0"
+                Padding="0"
+                BackgroundColor="Transparent"
+                BorderColor="#A7A7A7"
+                CornerRadius="5"
+                HeightRequest="40"
+                HorizontalOptions="FillAndExpand"
+                WidthRequest="250">
+                <Picker
+                  FontFamily="RobotoRegular"
+                  HeightRequest="40"
+                  ItemDisplayBinding="{Binding BranchName}"
+                  ItemsSource="{Binding BranchList}"
+                  SelectedItem="{Binding SelectedBranch}"
+                  WidthRequest="250" />
+              </Frame>
+
               <ImageButton
                 Margin="10,0,0,0"
                 Padding="16"
@@ -353,13 +445,25 @@
               HorizontalOptions="Start"
               Text="Email:"
               TextColor="#000000" />
-            <Entry
-              FontFamily="RobotoRegular"
-              HeightRequest="50"
-              HorizontalOptions="Start"
-              Placeholder="Enter the mail"
-              Text="{Binding Email}"
-              WidthRequest="250" />
+            <Frame
+              Margin="0,4,0,0"
+              Padding="0"
+              BackgroundColor="Transparent"
+              BorderColor="#A7A7A7"
+              CornerRadius="5"
+              HeightRequest="40"
+              HorizontalOptions="StartAndExpand"
+              WidthRequest="250">
+              <Entry
+                FontFamily="OpenSans-Semibold"
+                FontSize="14"
+                HorizontalOptions="FillAndExpand"
+                Placeholder="Enter the mail"
+                Text="{Binding Email}"
+                VerticalOptions="Center"
+                WidthRequest="250" />
+            </Frame>
+
             <Label
               FontSize="12"
               HorizontalOptions="Start"
@@ -374,14 +478,25 @@
               Text="Priority type:"
               TextColor="#000000" />
             <HorizontalStackLayout>
-              <Picker
-                FontFamily="RobotoRegular"
-                HeightRequest="50"
-                HorizontalOptions="Start"
-                ItemDisplayBinding="{Binding PriorityName}"
-                ItemsSource="{Binding PriorityTypeList}"
-                SelectedItem="{Binding SelectedPriorityType}"
-                WidthRequest="250" />
+              <Frame
+                Margin="0,4,0,0"
+                Padding="0"
+                BackgroundColor="Transparent"
+                BorderColor="#A7A7A7"
+                CornerRadius="5"
+                HeightRequest="40"
+                HorizontalOptions="FillAndExpand"
+                WidthRequest="250">
+                <Picker
+                  FontFamily="RobotoRegular"
+                  HeightRequest="40"
+                  HorizontalOptions="Start"
+                  ItemDisplayBinding="{Binding PriorityName}"
+                  ItemsSource="{Binding PriorityTypeList}"
+                  SelectedItem="{Binding SelectedPriorityType}"
+                  WidthRequest="250" />
+              </Frame>
+
               <ImageButton
                 Margin="10,0,0,0"
                 Padding="16"
@@ -413,10 +528,10 @@
             </HorizontalStackLayout>
             <Image
               Margin="-25,10,0,0"
-              HeightRequest="24"
+              HeightRequest="20"
               HorizontalOptions="Center"
               Source="vector_double_down.png"
-              WidthRequest="24">
+              WidthRequest="20">
               <Image.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding SelectPriorityTypeCommand}" />
               </Image.GestureRecognizers>
