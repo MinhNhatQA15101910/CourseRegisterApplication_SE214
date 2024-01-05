@@ -29,7 +29,7 @@ public class AvailableCourseService : IAvailableCourseService
 
     public async Task<bool> DeleteAvailableCoursesBySemesterIdAsync(int semesterId)
     {
-        string apiUrl = $"{GlobalConfig.SEMESTER_BASE_URL}semesterId/{semesterId}";
+        string apiUrl = $"{GlobalConfig.AVAILABLE_COURSE_BASE_URL}semesterId/{semesterId}";
         var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
 
         return response.IsSuccessStatusCode;

@@ -342,7 +342,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [RelayCommand]
         public async Task DisplayAddPriorityTypePopup()
         {
-            // TODO: Display Add Priority Type Popup to add new priority type.
+            await Application.Current.MainPage.DisplayAlert("Information", "This feature hasn't been developed yet!", "Ok");
         }
 
         private bool CanDisplayAddDistrictPopupCommandExecuted()
