@@ -134,7 +134,7 @@
               FontFamily="RobotoMedium"
               FontSize="16"
               HorizontalOptions="Start"
-              Text="Activate status"
+              Text="Active status"
               VerticalOptions="Center" />
           </Grid>
 

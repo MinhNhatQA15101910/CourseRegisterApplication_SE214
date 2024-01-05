@@ -22,9 +22,19 @@ namespace CourseRegisterApplication.MAUI.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<Student>> GetAllStudents()
+        public async Task<List<Student>> GetAllStudents()
         {
-            throw new NotImplementedException();
+            string apiUrl = GlobalConfig.STUDENT_BASE_URL;
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var studentList = JsonConvert.DeserializeObject<List<Student>>(jsonResponse);
+                return studentList;
+            }
+
+            return null;
         }
 
         public Task<List<Student>> GetFullInformationOfAllStudents()
@@ -40,21 +50,6 @@ namespace CourseRegisterApplication.MAUI.Services
         public Task<Student> GetStudentBySpecificId(string studentSpecificId)
         {
             throw new NotImplementedException();
-        }
-
-        public async Task<List<Student>> GetStudents()
-        {
-            string apiUrl = GlobalConfig.STUDENT_BASE_URL;
-
-            var response = await _httpClient.GetAsync(new Uri(apiUrl));
-            if (response.IsSuccessStatusCode)
-            {
-                string jsonResponse = await response.Content.ReadAsStringAsync();
-                var studentList = JsonConvert.DeserializeObject<List<Student>>(jsonResponse);
-                return studentList;
-            }
-
-            return null;
         }
 
         public async Task<List<Student>> GetStudentsByBranchId(int branchId)

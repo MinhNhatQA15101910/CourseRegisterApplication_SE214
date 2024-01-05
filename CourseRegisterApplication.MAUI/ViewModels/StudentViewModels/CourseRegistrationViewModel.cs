@@ -1,8 +1,6 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels;
 using CourseRegisterApplication.MAUI.ViewModels.Displays;
 using CourseRegisterApplication.MAUI.Views;
-using System;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 {
