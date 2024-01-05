@@ -34,13 +34,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         #region Commands
         [RelayCommand]
-        public void DisplayCourseRegisFormInfomation()
+        public void DisplayCourseRegisDetailInfomation()
         {
             CourseRegisFormRequester.ReloadCourseRegisFormBackground();
 
             BackgroundColor = Color.FromArgb("#B9D8F2");
 
             CourseRegisFormRequester.DisplayInformation(this);
+
+            CourseRegisFormRequester.DisplayCourseRegisDetailList(this);
         }
         #endregion
     }
@@ -55,6 +57,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         [ObservableProperty]
         private int subjectId;
+
+        [ObservableProperty]
+        private string subjectName;
+
+        [ObservableProperty]
+        private string subjectType;
+
+        [ObservableProperty]
+        private int numberOfPeriod;
 
         [ObservableProperty]
         private Color backgroundColor;
@@ -262,20 +273,29 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
         }
 
-        private void ReloadCourseRegisDetailDisplay(List<CourseRegistrationDetail> courseRegisDetailList)
+        private async Task ReloadCourseRegisDetailDisplay(List<CourseRegistrationDetail> courseRegisDetailList)
         {
             primaryCourseRegisDetailDisplayList.Clear();
+
+            var subjectService = _serviceProvider.GetService<ISubjectService>();
+            var subjectTypeService = _serviceProvider.GetService<ISubjectTypeService>();
 
             if (courseRegisDetailList.Count > 0)
             {
                 foreach (var courseRegisDetail in courseRegisDetailList)
                 {
+                    var subject = await subjectService.GetSubjectById(courseRegisDetail.SubjectId);
+                    var subjectType = await subjectTypeService.GetSubjectTypeById(subject.SubjectTypeId);
+
                     primaryCourseRegisDetailDisplayList.Add(new()
                     {
                         CourseRegisDetailRequester = this,
                         CourseRegisFormId = courseRegisDetail.CourseRegistrationFormId,
                         SubjectId = courseRegisDetail.SubjectId,
-                    });
+                        SubjectName = subject.Name,
+                        SubjectType = subjectType.Name,
+                        NumberOfPeriod = subject.TotalLessons
+                    }) ;
                 }
 
                 CourseRegisDetailDisplayList = primaryCourseRegisDetailDisplayList.OrderBy(p => p.CourseRegisFormId).ToObservableCollection();
@@ -319,9 +339,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             SelectedFormId = courseRegisFormDisplay.ID;
 
             var courseRegisDetailService = _serviceProvider.GetService<ICourseRegistrationDetailService>();
-            var courseRegisDetailList = await courseRegisDetailService.GetCRDByCRFId(courseRegisFormDisplay.ID);
+            var courseRegisDetailList = await courseRegisDetailService.GetCRDByCRFId(SelectedFormId);
 
-            ReloadCourseRegisDetailDisplay(courseRegisDetailList);
+            await ReloadCourseRegisDetailDisplay(courseRegisDetailList);
 
         }
 

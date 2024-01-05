@@ -76,7 +76,6 @@
           VerticalOptions="Start">
           <Grid
             Grid.Row="0"
-            BackgroundColor="Cyan"
             ColumnDefinitions="*, *, *, *, *, *, *"
             HeightRequest="40"
             VerticalOptions="Center">
@@ -146,14 +145,14 @@
                   HeightRequest="40"
                   VerticalOptions="Center">
                   <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding DisplayInformationCommand}" />
+                    <TapGestureRecognizer Command="{Binding DisplayInfomationCommand}" />
                   </Grid.GestureRecognizers>
 
                   <Label
                     Grid.Column="0"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding SelectedTuitionFormSpecificID}"
+                    Text="{Binding SpecificId}"
                     TextColor="#4F4F4F"
                     VerticalOptions="Center" />
 
@@ -161,7 +160,7 @@
                     Grid.Column="1"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding SelectedTuitionFormCourseRegisFormID}"
+                    Text="{Binding CourseRegisFormId}"
                     TextColor="#4F4F4F"
                     VerticalOptions="Center" />
 
@@ -169,7 +168,7 @@
                     Grid.Column="2"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding SelectedTuitionFormStudentID}"
+                    Text="{Binding StudentID}"
                     TextColor="#4F4F4F"
                     VerticalOptions="Center" />
 
@@ -177,28 +176,28 @@
                     Grid.Column="3"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding SelectedTuitionSemester}"
+                    Text="{Binding TuitionSemester}"
                     VerticalOptions="Center" />
 
                   <Label
                     Grid.Column="4"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding SelectedTuitionSchoolYear}"
+                    Text="{Binding TuitionSchoolYear}"
                     VerticalOptions="Center" />
 
                   <Label
                     Grid.Column="5"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding SelectedTuitionFormCreatedDate}"
+                    Text="{Binding CreatedDate}"
                     VerticalOptions="Center" />
 
                   <Label
                     Grid.Column="6"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding SelectedTuitionFormCharge}"
+                    Text="{Binding Charge}"
                     VerticalOptions="Center" />
 
                 </Grid>
@@ -210,7 +209,6 @@
         <Grid
           Grid.Row="1"
           Grid.Column="1"
-          BackgroundColor="Beige"
           ColumnDefinitions="5*, 5*"
           ColumnSpacing="70"
           HorizontalOptions="CenterAndExpand"
@@ -339,7 +337,7 @@
       Margin="0,0,0,20"
       Padding="5"
       BackgroundColor="#2D88D4"
-      Command="{Binding AddStudentCommand}"
+      Command="{Binding TuitionConfirmCommand}"
       CornerRadius="10"
       FontAttributes="Bold"
       FontSize="16"

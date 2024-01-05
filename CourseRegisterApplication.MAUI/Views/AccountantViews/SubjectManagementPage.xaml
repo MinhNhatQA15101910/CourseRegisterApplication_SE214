@@ -167,11 +167,14 @@
         <VerticalStackLayout
           Grid.Row="1"
           Grid.Column="1"
-          HorizontalOptions="CenterAndExpand"
-          VerticalOptions="CenterAndExpand">
+          HorizontalOptions="Center"
+          VerticalOptions="Center">
 
           <VerticalStackLayout
             Padding="40"
+            HeightRequest="280"
+            WidthRequest="400"
+            MinimumWidthRequest="200"
             BackgroundColor="#EFF3FA"
             HorizontalOptions="CenterAndExpand"
             VerticalOptions="CenterAndExpand">
