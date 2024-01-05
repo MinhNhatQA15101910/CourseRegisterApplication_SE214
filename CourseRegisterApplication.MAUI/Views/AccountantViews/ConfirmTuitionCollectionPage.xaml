@@ -153,7 +153,7 @@
                     Grid.Column="0"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding SelectedTuitionFormSpecificID}"
+                    Text="{Binding SpecificId}"
                     TextColor="#4F4F4F"
                     VerticalOptions="Center" />
 
@@ -161,7 +161,7 @@
                     Grid.Column="1"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding SelectedTuitionFormCourseRegisFormID}"
+                    Text="{Binding CourseRegisFormId}"
                     TextColor="#4F4F4F"
                     VerticalOptions="Center" />
 
@@ -191,14 +191,14 @@
                     Grid.Column="5"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding SelectedTuitionFormCreatedDate}"
+                    Text="{Binding CreatedDate}"
                     VerticalOptions="Center" />
 
                   <Label
                     Grid.Column="6"
                     FontSize="14"
                     HorizontalOptions="Start"
-                    Text="{Binding SelectedTuitionFormCharge}"
+                    Text="{Binding Charge}"
                     VerticalOptions="Center" />
 
                 </Grid>

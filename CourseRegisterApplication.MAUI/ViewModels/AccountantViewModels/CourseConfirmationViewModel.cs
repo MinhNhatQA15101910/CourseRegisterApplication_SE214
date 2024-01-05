@@ -34,13 +34,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         #region Commands
         [RelayCommand]
-        public void DisplayCourseRegisFormInfomation()
+        public void DisplayCourseRegisDetailInfomation()
         {
             CourseRegisFormRequester.ReloadCourseRegisFormBackground();
 
             BackgroundColor = Color.FromArgb("#B9D8F2");
 
             CourseRegisFormRequester.DisplayInformation(this);
+
+            CourseRegisFormRequester.DisplayCourseRegisDetailList(this);
         }
         #endregion
     }

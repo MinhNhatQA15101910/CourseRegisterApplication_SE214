@@ -140,7 +140,7 @@
                     HorizontalOptions="Fill"
                     VerticalOptions="Center">
                     <Grid.GestureRecognizers>
-                      <TapGestureRecognizer Command="{Binding DisplayCourseRegisFormInfomationCommand}" />
+                      <TapGestureRecognizer Command="{Binding DisplayCourseRegisDetailInfomationCommand}" />
                     </Grid.GestureRecognizers>
                     <Label
                       Grid.Column="0"

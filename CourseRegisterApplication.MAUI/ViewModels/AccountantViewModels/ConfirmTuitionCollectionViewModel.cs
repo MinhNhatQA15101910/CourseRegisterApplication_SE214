@@ -27,7 +27,16 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         private double charge;
 
         [ObservableProperty]
+        private int studentID;
+
+        [ObservableProperty]
         private int courseRegisFormId;
+
+        [ObservableProperty]
+        private string tuitionSemester;
+
+        [ObservableProperty]
+        private int tuitionSchoolYear;
 
         [ObservableProperty]
         private Color backgroundColor;
@@ -131,7 +140,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             var tuitionReceiptService = _serviceProvider.GetService<ITuitionFeeReceiptService>();
             var tuitionFormList = await tuitionReceiptService.GetAllTuitionFeeReceipt();
 
-            ReloadTuitionFormDisplaysList(tuitionFormList);
+            await ReloadTuitionFormDisplaysList(tuitionFormList);
         }
 
         [RelayCommand]
@@ -167,14 +176,19 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         #region Helper
 
-        private void ReloadTuitionFormDisplaysList(List<TuitionFeeReceipt> tuitionFeeReceiptsList)
+        private async Task ReloadTuitionFormDisplaysList(List<TuitionFeeReceipt> tuitionFeeReceiptsList)
         {
             primaryTuitionFormDisplaysList.Clear();
-            
+            var courseRegisFormService = _serviceProvider.GetService<ICourseRegistrationFormService>();
+            var semesterService = _serviceProvider.GetService<ISemesterService>();
+
             if(tuitionFeeReceiptsList.Count > 0)
             {
                 foreach(var tuitionFeeReceipt in tuitionFeeReceiptsList)
                 {
+                    var courseRegisForm = await courseRegisFormService.GetCourseRegistrationFormById(tuitionFeeReceipt.CourseRegistrationFormId);
+                    var semester = await semesterService.GetSemesterById(courseRegisForm.SemesterId);
+
                     primaryTuitionFormDisplaysList.Add(new()
                     {
                         TuitionFormRequester = this,
@@ -183,6 +197,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                         CreatedDate = tuitionFeeReceipt.CreatedDate,
                         State = tuitionFeeReceipt.State,
                         Charge = tuitionFeeReceipt.Charge,
+                        StudentID = courseRegisForm.StudentId,
+                        TuitionSemester = semester.SemesterName.ToString(),
+                        TuitionSchoolYear = semester.Year,
                         CourseRegisFormId = tuitionFeeReceipt.CourseRegistrationFormId
                     });
                 }
