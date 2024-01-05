@@ -3,11 +3,366 @@
   x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.ConfirmTuitionCollectionPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  Title="ConfirmTuitionCollectionPage">
-  <VerticalStackLayout>
-    <Label
-      HorizontalOptions="Center"
-      Text="Welcome to .NET MAUI!"
-      VerticalOptions="Center" />
-  </VerticalStackLayout>
+  xmlns:accountantViewModels="clr-namespace:CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels"
+  xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
+  NavigationPage.HasNavigationBar="False"
+  Shell.FlyoutBehavior="Flyout">
+
+  <Grid RowDefinitions="Auto, *, Auto">
+    <contentViews:NavigationTopBar
+      Grid.Row="0"
+      DescriptionText="Can confirm tuition payment"
+      IsBackVisible="False"
+      IsControlVisible="True"
+      IsTitleVisible="True"
+      LogoutCommand="{Binding LogoutCommand}"
+      TitleText="Tuition Confirmation Page"
+      VerticalOptions="Start" />
+
+    <ScrollView Grid.Row="1">
+      <Grid ColumnDefinitions="6*, 4*" RowDefinitions="0.5*, 8*, 1.5*">
+        <HorizontalStackLayout
+          Grid.Row="0"
+          Grid.Column="0"
+          Margin="100,0,0,0"
+          VerticalOptions="Center">
+          <Label
+            Margin="0,0,10,0"
+            FontFamily="RobotoRegular"
+            FontSize="14"
+            Text="Filter by:"
+            TextColor="#8A8A8A"
+            VerticalOptions="Center" />
+          <Picker
+            ItemsSource="{Binding FilterOptions}"
+            SelectedItem="{Binding SelectedFilterOption}"
+            VerticalOptions="Center" />
+          <Border
+            Margin="20,0,0,0"
+            BackgroundColor="#FCFAFA"
+            HeightRequest="50"
+            StrokeShape="RoundRectangle 0,5,0,5"
+            StrokeThickness="0"
+            WidthRequest="500">
+            <HorizontalStackLayout>
+              <Image
+                Margin="16,0,8,0"
+                HeightRequest="16"
+                Source="search_icon.png" />
+              <Border
+                BackgroundColor="#FCFAFA"
+                HeightRequest="50"
+                StrokeThickness="0"
+                WidthRequest="500">
+                <Entry
+                  FontFamily="RobotoRegular"
+                  FontSize="14"
+                  HeightRequest="50"
+                  Placeholder="Search tuition form"
+                  PlaceholderColor="#8A8A8A"
+                  Text="{Binding SearchFilter}"
+                  TextColor="#8A8A8A"
+                  WidthRequest="520" />
+              </Border>
+            </HorizontalStackLayout>
+          </Border>
+        </HorizontalStackLayout>
+
+        <Grid
+          Grid.Row="1"
+          Grid.Column="0"
+          Margin="20,20,0,0"
+          RowDefinitions="Auto, *"
+          VerticalOptions="Start">
+          <Grid
+            Grid.Row="0"
+            BackgroundColor="Cyan"
+            ColumnDefinitions="*, *, *, *, *, *, *"
+            HeightRequest="40"
+            VerticalOptions="Center">
+            <Label
+              Grid.Column="0"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Tuition ID"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="1"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Course ID"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="2"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Student ID"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="3"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Term"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="4"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="School year"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="5"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Payment date"
+              VerticalOptions="Center" />
+            <Label
+              Grid.Column="6"
+              FontFamily="RobotoMedium"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Paid amount"
+              VerticalOptions="Center" />
+          </Grid>
+
+          <CollectionView
+            Grid.Row="1"
+            Grid.Column="0"
+            HeightRequest="400"
+            ItemsSource="{Binding TuitionFormDisplaysList}"
+            MaximumHeightRequest="600"
+            VerticalScrollBarVisibility="Always">
+            <CollectionView.ItemTemplate>
+              <DataTemplate>
+                <Grid
+                  BackgroundColor="{Binding BackgroundColor}"
+                  ColumnDefinitions="*, *, *, *, *, *, *"
+                  HeightRequest="40"
+                  VerticalOptions="Center">
+                  <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DisplayInformationCommand}" />
+                  </Grid.GestureRecognizers>
+
+                  <Label
+                    Grid.Column="0"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SelectedTuitionFormSpecificID}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+
+                  <Label
+                    Grid.Column="1"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SelectedTuitionFormCourseRegisFormID}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+
+                  <Label
+                    Grid.Column="2"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SelectedTuitionFormStudentID}"
+                    TextColor="#4F4F4F"
+                    VerticalOptions="Center" />
+
+                  <Label
+                    Grid.Column="3"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SelectedTuitionSemester}"
+                    VerticalOptions="Center" />
+
+                  <Label
+                    Grid.Column="4"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SelectedTuitionSchoolYear}"
+                    VerticalOptions="Center" />
+
+                  <Label
+                    Grid.Column="5"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SelectedTuitionFormCreatedDate}"
+                    VerticalOptions="Center" />
+
+                  <Label
+                    Grid.Column="6"
+                    FontSize="14"
+                    HorizontalOptions="Start"
+                    Text="{Binding SelectedTuitionFormCharge}"
+                    VerticalOptions="Center" />
+
+                </Grid>
+              </DataTemplate>
+            </CollectionView.ItemTemplate>
+          </CollectionView>
+        </Grid>
+
+        <Grid
+          Grid.Row="1"
+          Grid.Column="1"
+          BackgroundColor="Beige"
+          ColumnDefinitions="5*, 5*"
+          ColumnSpacing="70"
+          HorizontalOptions="CenterAndExpand"
+          RowDefinitions="2.5*, 2.5*, 2.5*, 2.5*"
+          RowSpacing="30"
+          VerticalOptions="CenterAndExpand">
+
+          <VerticalStackLayout Grid.Row="0" Grid.Column="0">
+            <Label
+              FontFamily="RobotoBold"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Tuition ID"
+              TextColor="#1A1A1A" />
+            <Label
+              FontSize="13"
+              HorizontalOptions="Start"
+              Text="{Binding SelectedTuitionFormSpecificID}"
+              TextColor="#A7A7A7" />
+          </VerticalStackLayout>
+          <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+            <Label
+              FontFamily="RobotoBold"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Course ID"
+              TextColor="#1A1A1A" />
+            <Label
+              FontSize="13"
+              HorizontalOptions="Start"
+              IsVisible="{Binding IsVisible}"
+              Text="{Binding SelectedTuitionFormCourseRegisFormID}"
+              TextColor="#A7A7A7" />
+          </VerticalStackLayout>
+
+          <VerticalStackLayout Grid.Row="1" Grid.Column="0">
+            <Label
+              FontFamily="RobotoBold"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Student ID"
+              TextColor="#1A1A1A" />
+            <Label
+              FontSize="13"
+              HorizontalOptions="Start"
+              IsVisible="{Binding IsVisible}"
+              Text="{Binding SelectedTuitionFormStudentID}"
+              TextColor="#A7A7A7" />
+          </VerticalStackLayout>
+          <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+            <Label
+              FontFamily="RobotoBold"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Student name"
+              TextColor="#1A1A1A" />
+            <Label
+              FontSize="13"
+              HorizontalOptions="Start"
+              Text="{Binding SelectedTuitionFormStudentName}"
+              TextColor="#A7A7A7" />
+          </VerticalStackLayout>
+
+          <VerticalStackLayout Grid.Row="2" Grid.Column="0">
+            <Label
+              FontFamily="RobotoBold"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Semester"
+              TextColor="#1A1A1A" />
+            <Label
+              FontSize="13"
+              HorizontalOptions="Start"
+              Text="{Binding SelectedTuitionSemester}"
+              TextColor="#A7A7A7" />
+          </VerticalStackLayout>
+          <VerticalStackLayout Grid.Row="2" Grid.Column="1">
+            <Label
+              FontFamily="RobotoBold"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Year"
+              TextColor="#1A1A1A" />
+            <Label
+              FontSize="13"
+              HorizontalOptions="Start"
+              IsVisible="{Binding IsVisible}"
+              Text="{Binding SelectedTuitionSchoolYear}"
+              TextColor="#A7A7A7" />
+          </VerticalStackLayout>
+
+          <VerticalStackLayout Grid.Row="3" Grid.Column="0">
+            <Label
+              FontFamily="RobotoBold"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Payment date"
+              TextColor="#1A1A1A" />
+            <Label
+              FontSize="13"
+              HorizontalOptions="Start"
+              IsVisible="{Binding IsVisible}"
+              Text="{Binding SelectedTuitionFormCreatedDate}"
+              TextColor="#A7A7A7" />
+          </VerticalStackLayout>
+          <VerticalStackLayout Grid.Row="3" Grid.Column="1">
+            <Label
+              FontFamily="RobotoBold"
+              FontSize="14"
+              HorizontalOptions="Start"
+              Text="Paid amount"
+              TextColor="#1A1A1A" />
+            <Label
+              FontSize="13"
+              HorizontalOptions="Start"
+              Text="{Binding SelectedTuitionFormStudentName}"
+              TextColor="#A7A7A7" />
+          </VerticalStackLayout>
+        </Grid>
+      </Grid>
+    </ScrollView>
+
+    <Button
+      Grid.Row="2"
+      Grid.ColumnSpan="3"
+      Margin="0,0,0,20"
+      Padding="5"
+      BackgroundColor="#2D88D4"
+      Command="{Binding AddStudentCommand}"
+      CornerRadius="10"
+      FontAttributes="Bold"
+      FontSize="16"
+      HeightRequest="40"
+      IsEnabled="True"
+      Text="Confirm"
+      WidthRequest="200">
+      <VisualStateManager.VisualStateGroups>
+        <VisualStateGroupList>
+          <VisualStateGroup x:Name="CommonStates">
+            <VisualState x:Name="Normal">
+              <VisualState.Setters>
+                <Setter Property="BackgroundColor" Value="#509CDB" />
+              </VisualState.Setters>
+            </VisualState>
+            <VisualState x:Name="PointerOver">
+              <VisualState.Setters>
+                <Setter Property="BackgroundColor" Value="#3F83BC" />
+              </VisualState.Setters>
+            </VisualState>
+          </VisualStateGroup>
+        </VisualStateGroupList>
+      </VisualStateManager.VisualStateGroups>
+    </Button>
+  </Grid>
 </ContentPage>

@@ -1,9 +1,9 @@
-﻿using CourseRegisterApplication.MAUI.Views;
-using CourseRegisterApplication.MAUI.IServices;
+﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.ViewModels.Displays;
+using CourseRegisterApplication.MAUI.Views;
+
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
-
     public partial class UpdateCurriculumViewModel : ObservableObject, ISubjectRequester, ISubjectRequester2
     {
         #region Services
@@ -243,6 +243,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 {
                     await _curriculumService.AddCurriculum(item);
                 }
+
+                await Application.Current.MainPage.DisplayAlert("Success", "Update curriculum successfully!", "Ok");
+
                 SearchFilter = "";
                 await GetAllCurriculums();
                 GetSubjectList(selectedBranchID, selectedSemester);

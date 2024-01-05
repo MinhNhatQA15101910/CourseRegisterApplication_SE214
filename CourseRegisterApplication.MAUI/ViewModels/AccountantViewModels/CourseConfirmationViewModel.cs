@@ -33,9 +33,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #endregion
 
         #region Commands
+        [RelayCommand]
+        public void DisplayCourseRegisFormInfomation()
+        {
+            CourseRegisFormRequester.ReloadCourseRegisFormBackground();
 
+            BackgroundColor = Color.FromArgb("#B9D8F2");
 
-
+            CourseRegisFormRequester.DisplayInformation(this);
+        }
         #endregion
     }
 
@@ -55,6 +61,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #endregion
 
         #region Commands
+        [RelayCommand]
+        public void DisplayInfomation()
+        {
+            CourseRegisDetailRequester.ReloadCourseRegisDetailBackground();
+
+            BackgroundColor = Color.FromArgb("#B9D8F2");
+        }
         #endregion
     }
 
@@ -62,7 +75,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
     public interface ICourseRegisFormRequester
     {
         void DisplayCourseRegisDetailList(CourseRegisFormDisplay courseRegisFormDisplay);
-        void DisplayInformation(CourseRegisFormDisplay courseRegisFormDisplay);
+        Task DisplayInformation(CourseRegisFormDisplay courseRegisFormDisplay);
         void ReloadCourseRegisFormBackground();
     }
 
@@ -140,22 +153,24 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         public async Task GetCourseRegisForm()
         {
             var courseRegisFormService = _serviceProvider.GetRequiredService<ICourseRegistrationFormService>();
-            var courseRegisFormList = await courseRegisFormService.GetAllCourseRegistrationForm();
+            var courseRegisFormList = await courseRegisFormService.GetAllCourseRegistrationFormsWithPendingState();
 
             ReloadCourseRegisFormDisplay(courseRegisFormList);
         }
 
-        /*[RelayCommand]
+        [RelayCommand]
         public async Task ConfirmCourseRegisForm()
         {
-           
+
             var courseRegisFormService = _serviceProvider.GetService<ICourseRegistrationFormService>();
-            var courseRegisForm = await courseRegisFormService;
+            var courseRegisForm = await courseRegisFormService.GetAllCourseRegistrationFormsWithPendingState();
 
-            courseRegisForm.State = CourseRegistrationFormState.Confirmed;
-            courseRegisForm.CreatedDate = DateTime.Now;
+            var selectCourseRegisForm = courseRegisForm.Where(p => p.Id == SelectedFormId).FirstOrDefault();
 
-            var result = await courseRegisFormService.UpdateCourseRegistrationForm(courseRegisForm);
+            selectCourseRegisForm.State = CourseRegistrationFormState.Confirmed;
+            selectCourseRegisForm.CreatedDate = DateTime.Now;
+
+            var result = await courseRegisFormService.UpdateCourseRegistrationForm(SelectedFormId ,selectCourseRegisForm);
 
             if (result)
             {
@@ -167,7 +182,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Confirm course registration form failed", "OK");
             }
-        }*/
+            GetCourseRegisFormCommand.Execute(null);
+        }
         #endregion
 
         #region Property Changed
@@ -211,6 +227,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         private void ReloadCourseRegisFormDisplay(List<CourseRegistrationForm> courseRegisFormList)
         {
+            var courseRegisFormService = _serviceProvider.GetService<ICourseRegistrationFormService>();
+
             primaryCourseRegisFormDisplayList.Clear();
 
             if(courseRegisFormList.Count > 0)
@@ -267,15 +285,25 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
         }
 
-        public void DisplayInformation(CourseRegisFormDisplay courseRegisFormDisplay)
+        public async Task DisplayInformation(CourseRegisFormDisplay courseRegisFormDisplay)
         {
+            var studentService = _serviceProvider.GetService<IStudentService>();
+            var semesterService = _serviceProvider.GetService<ISemesterService>();
+
+            var studentList = await studentService.GetAllStudents();
+            var selectedStudent = studentList.Where(p => p.Id == courseRegisFormDisplay.StudentId).FirstOrDefault();
+
+            var selectedSemester = await semesterService.GetSemesterById(courseRegisFormDisplay.SemesterId);
+
+            SelectedFormId = courseRegisFormDisplay.ID;
             SelectedFormSpecificId = courseRegisFormDisplay.SpecificId;
-            SelectedFormStudentId = courseRegisFormDisplay.StudentId.ToString();
+            SelectedFormStudentId = selectedStudent.StudentSpecificId;
             SelectedFormCreatedDate = courseRegisFormDisplay.CreatedDate;
             SelectedFormState = courseRegisFormDisplay.State.ToString();
-            SelectedFormSemesterName = courseRegisFormDisplay.SemesterId.ToString();
-            SelectedFormSemesterYear = courseRegisFormDisplay.SemesterId.ToString().Substring(0, 4);
-            SelectedFormStudentName = courseRegisFormDisplay.StudentId.ToString();
+            SelectedFormSemesterName = selectedSemester.SemesterName.ToString();
+            SelectedFormSemesterYear = selectedSemester.Year.ToString();
+            SelectedFormStudentName = selectedStudent.FullName;
+
         }
 
         public void ReloadCourseRegisDetailBackground()

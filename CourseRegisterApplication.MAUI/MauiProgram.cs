@@ -51,13 +51,11 @@ public static class MauiProgram
 
         #region Student
         builder.Services.AddScoped<StudentAppShellViewModel>();
-        builder.Services.AddScoped<StudentDashboardViewModel>(); 
-        builder.Services.AddScoped<StudentInfomationViewModel>(); 
-        builder.Services.AddScoped<CourseRegisTrationInfoViewModel>();
+        builder.Services.AddScoped<StudentDashboardViewModel>();
+        builder.Services.AddScoped<StudentInfomationViewModel>();
         builder.Services.AddScoped<CourseRegistrationViewModel>();
+        builder.Services.AddScoped<CourseRegisTrationInfoViewModel>();
         builder.Services.AddScoped<TuitionInfoViewModel>();
-
-
         #endregion
 
         #region Accountant
@@ -81,6 +79,8 @@ public static class MauiProgram
         builder.Services.AddScoped<CourseConfirmationViewModel>();
         builder.Services.AddScoped<AddUpdateSubjectViewModel>();
         builder.Services.AddScoped<AddUpdateSubjectTypeViewModel>();
+        builder.Services.AddScoped<CurriculumManagementViewModel>();
+        builder.Services.AddScoped<UpdateCurriculumViewModel>();
         #endregion
         #endregion
 
@@ -122,20 +122,17 @@ public static class MauiProgram
         builder.Services.AddScoped<CourseConfirmationPage>();
         builder.Services.AddScoped<AddUpdateSubjectPopup>();
         builder.Services.AddScoped<AddUpdateSubjectTypePopup>();
+        builder.Services.AddScoped<UpdateCurriculumPage>();
         #endregion
 
         #region Student
         builder.Services.AddScoped<StudentAppShell>();
         builder.Services.AddScoped<StudentDashboardPage>();
-        builder.Services.AddScoped<StudentInfomationPage>(); 
-        builder.Services.AddScoped<CourseRegistrationInfoPage>();
+        builder.Services.AddScoped<StudentInfomationPage>();
         builder.Services.AddScoped<CourseRegistrationPage>();
-        builder.Services.AddScoped<PaymentPopup>();
+        builder.Services.AddScoped<CourseRegistrationInfoPage>();
         builder.Services.AddScoped<TuitionInfoPage>();
-
-
-
-
+        builder.Services.AddScoped<PaymentPopup>();
         #endregion
         #endregion
 
@@ -157,6 +154,7 @@ public static class MauiProgram
         builder.Services.AddScoped<ISubjectTypeService, SubjectTypeService>();
         builder.Services.AddScoped<ICourseRegistrationFormService, CourseRegistrationFormService>();
         builder.Services.AddScoped<ICourseRegistrationDetailService, CourseRegistrationDetailService>();
+        builder.Services.AddScoped<ITuitionFeeReceiptService, TuitionFeeReceiptService>();
         #endregion
 
         return builder.Build();

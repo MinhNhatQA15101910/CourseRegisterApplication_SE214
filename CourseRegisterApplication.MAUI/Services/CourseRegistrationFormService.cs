@@ -11,7 +11,7 @@ namespace CourseRegisterApplication.MAUI.Services
             _httpClient = httpClient;
         }
 
-        public async Task<List<CourseRegistrationForm>> GetAllCourseRegistrationForm()
+        public async Task<List<CourseRegistrationForm>> GetAllCourseRegistrationFormsWithPendingState()
         {
             string apiUrl = GlobalConfig.COURSE_REGISTRATION_FORM_BASE_URL;
 

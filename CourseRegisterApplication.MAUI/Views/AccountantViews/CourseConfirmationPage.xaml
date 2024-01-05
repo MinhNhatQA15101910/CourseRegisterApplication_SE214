@@ -74,7 +74,7 @@
           <VerticalStackLayout
             Grid.Row="0"
             Grid.Column="0"
-            HeightRequest="540"
+            HeightRequest="500"
             VerticalOptions="Fill">
             <Label
               FontFamily="RobotoBold"
@@ -126,34 +126,42 @@
                 VerticalOptions="Center" />
             </Grid>
 
-            <CollectionView>
+            <CollectionView
+              HeightRequest="400"
+              ItemsSource="{Binding CourseRegisFormDisplayList}"
+              MaximumHeightRequest="600"
+              VerticalScrollBarVisibility="Always">
               <CollectionView.ItemTemplate>
                 <DataTemplate>
                   <Grid
                     ColumnDefinitions="2*, 2*, 2*, 2*, 2*"
+                    BackgroundColor="{Binding BackgroundColor}"
                     ColumnSpacing="40"
                     HorizontalOptions="Fill"
                     VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                      <TapGestureRecognizer Command="{Binding DisplayCourseRegisFormInfomationCommand}" />
+                    </Grid.GestureRecognizers>
                     <Label
                       Grid.Column="0"
                       FontFamily="RobotoRegular"
                       FontSize="14"
                       HorizontalOptions="Start"
-                      Text="{Binding FormID}"
+                      Text="{Binding SpecificId}"
                       VerticalOptions="Center" />
                     <Label
                       Grid.Column="1"
                       FontFamily="RobotoRegular"
                       FontSize="14"
                       HorizontalOptions="Start"
-                      Text="{Binding StudentID}"
+                      Text="{Binding StudentId}"
                       VerticalOptions="Center" />
                     <Label
                       Grid.Column="2"
                       FontFamily="RobotoRegular"
                       FontSize="14"
                       HorizontalOptions="Start"
-                      Text="{Binding SemesterID}"
+                      Text="{Binding SemesterId}"
                       VerticalOptions="Center" />
                     <Label
                       Grid.Column="3"
@@ -203,7 +211,7 @@
                   FontFamily="RobotoRegular"
                   FontSize="14"
                   HorizontalOptions="Start"
-                  Text="{Binding FormID}"
+                  Text="{Binding SelectedFormSpecificId}"
                   TextColor="#A7A7A7" />
               </VerticalStackLayout>
 
@@ -219,7 +227,7 @@
                   FontFamily="RobotoRegular"
                   FontSize="14"
                   HorizontalOptions="Start"
-                  Text="{Binding StudentID}"
+                  Text="{Binding SelectedFormStudentId}"
                   TextColor="#A7A7A7" />
               </VerticalStackLayout>
 
@@ -235,7 +243,7 @@
                   FontFamily="RobotoRegular"
                   FontSize="14"
                   HorizontalOptions="Start"
-                  Text="{Binding StudentName}"
+                  Text="{Binding SelectedFormStudentName}"
                   TextColor="#A7A7A7" />
               </VerticalStackLayout>
 
@@ -251,7 +259,7 @@
                   FontFamily="RobotoRegular"
                   FontSize="14"
                   HorizontalOptions="Start"
-                  Text="{Binding Term}"
+                  Text="{Binding SelectedFormSemesterName}"
                   TextColor="#A7A7A7" />
               </VerticalStackLayout>
 
@@ -267,7 +275,7 @@
                   FontFamily="RobotoRegular"
                   FontSize="14"
                   HorizontalOptions="Start"
-                  Text="{Binding Year}"
+                  Text="{Binding SelectedFormSemesterYear}"
                   TextColor="#A7A7A7" />
               </VerticalStackLayout>
 
@@ -283,7 +291,7 @@
                   FontFamily="RobotoRegular"
                   FontSize="14"
                   HorizontalOptions="Start"
-                  Text="{Binding CreatedDate}"
+                  Text="{Binding SelectedFormCreatedDate}"
                   TextColor="#A7A7A7" />
               </VerticalStackLayout>
 
@@ -336,7 +344,11 @@
                 VerticalOptions="Center" />
             </Grid>
 
-            <CollectionView>
+            <CollectionView
+              HeightRequest="300"
+              ItemsSource="{Binding CourseRegisDetailDisplayList}"
+              MaximumHeightRequest="400"
+              VerticalScrollBarVisibility="Always">
               <CollectionView.ItemTemplate>
                 <DataTemplate>
                   <Grid
@@ -395,7 +407,7 @@
       Margin="0,0,0,20"
       Padding="5"
       BackgroundColor="#2D88D4"
-      Command="{Binding AddStudentCommand}"
+      Command="{Binding ConfirmCourseRegisFormCommand}"
       CornerRadius="10"
       FontAttributes="Bold"
       FontSize="16"
