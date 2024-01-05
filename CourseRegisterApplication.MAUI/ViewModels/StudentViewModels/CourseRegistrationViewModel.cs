@@ -14,6 +14,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         private readonly ISubjectTypeService _subjectTypeService;
         private readonly ISemesterService _semesterService;
         private readonly IStudentService _studentService;
+        private readonly IPriorityTypeService _priorityTypeService;
+        private readonly IStudentPriorityTypeService _studentPriorityTypeService;
         private readonly IAvailableCourseService _availableCourseService;
         private readonly ICourseRegistrationFormService _courseRegistrationFormService;
         private readonly ICourseRegistrationDetailService _courseRegistrationDetailService;
@@ -23,13 +25,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         public CourseRegistrationViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _subjectService = _serviceProvider.GetRequiredService<ISubjectService>();
-            _subjectTypeService = _serviceProvider.GetRequiredService<ISubjectTypeService>();
-            _semesterService = _serviceProvider.GetRequiredService<ISemesterService>();
-            _studentService = _serviceProvider.GetRequiredService<IStudentService>();
+            _subjectService = _serviceProvider.GetService<ISubjectService>();
+            _subjectTypeService = _serviceProvider.GetService<ISubjectTypeService>();
+            _semesterService = _serviceProvider.GetService<ISemesterService>();
+            _studentService = _serviceProvider.GetService<IStudentService>();
+            _priorityTypeService = _serviceProvider.GetService<IPriorityTypeService>();
+            _studentPriorityTypeService = _serviceProvider.GetService<IStudentPriorityTypeService>();
             _availableCourseService = _serviceProvider.GetService<IAvailableCourseService>();
-            _courseRegistrationFormService = _serviceProvider.GetRequiredService<ICourseRegistrationFormService>();
-            _courseRegistrationDetailService = _serviceProvider.GetRequiredService<ICourseRegistrationDetailService>();
+            _courseRegistrationFormService = _serviceProvider.GetService<ICourseRegistrationFormService>();
+            _courseRegistrationDetailService = _serviceProvider.GetService<ICourseRegistrationDetailService>();
 
         }
         #endregion
@@ -293,7 +297,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                         cRF.SemesterId = thisSemester.Id;
                         cRF.CourseRegistrationFormSpecificId = "CRF" + cRF.Id;
                         cRF.State = CourseRegistrationFormState.Pending;
-                        cRF.TotalCharge = 0;
                         await _courseRegistrationFormService.CreateCourseRegistrationForm(cRF);
                         await GetCourseRegistrationFormByStudentIdAndSemesterId(cRF.StudentId, cRF.SemesterId);
                         CheckedButtontext();
@@ -345,6 +348,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                         .Sum();
 
                     courseRegistrationForm.TotalCharge= TotalPrice;
+
+                    List<StudentPriorityType> studentPriorityTypeList = await _studentPriorityTypeService.GetStudentPriorityTypesByStudentId(thisStudent.Id);
+                    List<PriorityType> priorityTypeList = await _priorityTypeService.GetAllPriorityType();
+                    PriorityType maxPriorityType = priorityTypeList
+                    .Where(item => studentPriorityTypeList.Exists(c => c.PriorityTypeId == item.Id))
+                    .OrderByDescending(item => item.TuitionDiscountRate)
+                    .FirstOrDefault();
+                    courseRegistrationForm.TotalChargeWithDiscount = TotalPrice * (1 - maxPriorityType.TuitionDiscountRate);
+
                     courseRegistrationForm.CreatedDate = DateTime.Now;
                     await _courseRegistrationFormService.UpdateCourseRegistrationForm(courseRegistrationForm.Id, courseRegistrationForm);
 

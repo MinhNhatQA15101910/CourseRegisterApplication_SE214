@@ -74,7 +74,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         private bool isVisibleTuitionInfo; 
 
         [ObservableProperty]
-        private string chargeNumber;
+        private string chargeNumber; 
+
+        [ObservableProperty]
+        private bool isVisibleButton;
 
         List<Student> studentList = new List<Student>();
         List<PriorityType> priorityTypeList = new List<PriorityType>();
@@ -184,7 +187,9 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 {
                     if (item.Id == selectedCourseRegistrationId)
                     {
+                        IsVisibleButton = (item.State == CourseRegistrationFormState.Confirmed);
                         CurrentTotalTuition = item.TotalCharge;
+                        CurrentRealityTution = item.TotalChargeWithDiscount;
                     }
                 }
                 
@@ -194,7 +199,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 .FirstOrDefault();
                 if (maxPriorityType != null)
                 {
-                    CurrentRealityTution = CurrentTotalTuition * (1 - maxPriorityType.TuitionDiscountRate);
                     int roundValue = (int)Math.Round(CurrentRealityTution);
                     int roundPercent = (int)Math.Round(maxPriorityType.TuitionDiscountRate * 100);
                     CurrentRealityTution = roundValue;
@@ -219,7 +223,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 primaryCourseRegistrationDisplayList.AddRange(
                 from item in courseRegistrationFormList
                 join item2 in semesterList on item.SemesterId equals item2.Id
-                where item.State == CourseRegistrationFormState.Confirmed
                 select new CourseRegistrationDisplay
                 {
                     CourseRegistrationRequester = this,
@@ -229,7 +232,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                     CourseRegistrationCreateDate = item.CreatedDate.ToString("dd/MM/yyyy"),
                     LastPaidTuitionDate = GetLastPaidTuition(item.Id)
                 });
-
                 CourseRegistrationDisplayList = primaryCourseRegistrationDisplayList
                     .OrderBy(d => d.CourseRegistrationId).ToObservableCollection();
                 ReloadCourseRegistrationItemsBackground();

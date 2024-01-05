@@ -283,6 +283,7 @@
         <HorizontalStackLayout Margin="0,48,0,0" HorizontalOptions="Center">
           <Grid HorizontalOptions="Center">
             <Button
+              IsVisible="{Binding IsVisibleButton}"
               Margin="12,0,0,0"
               BackgroundColor="#EFF3FA"
               CornerRadius="10"
