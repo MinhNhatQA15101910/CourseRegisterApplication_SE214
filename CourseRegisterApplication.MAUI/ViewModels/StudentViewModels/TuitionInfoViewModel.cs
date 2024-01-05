@@ -218,7 +218,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
             primaryCourseRegistrationDisplayList.Clear();
             CourseRegistrationDisplayList = null;
 
-            if (courseRegistrationFormList!=null)
+            if (courseRegistrationFormList.Count > 0)
             {
                 primaryCourseRegistrationDisplayList.AddRange(
                 from item in courseRegistrationFormList
