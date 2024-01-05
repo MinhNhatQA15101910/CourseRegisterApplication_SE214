@@ -75,15 +75,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(DeleteSubjectCommand))]
         [NotifyCanExecuteChangedFor(nameof(DisplayUpdateSubjectPopupCommand))]
-        private string subjectSpecificId;
+        private string selectedSubjectSpecificId;
 
-        [ObservableProperty] private string subjectName = "Subject:";
+        [ObservableProperty] private string selectedSubjectName;
 
-        [ObservableProperty] private string subjectType;
+        [ObservableProperty] private string selectedSubjectType;
 
-        [ObservableProperty] private string totalLesson;
+        [ObservableProperty] private string selectedTotalLesson;
 
-        [ObservableProperty] private string numberOfCredit;
+        [ObservableProperty] private string selectedNumberOfCredit;
 
         public ISubjectRequester SubjectRequester { get; set; }
         #endregion
@@ -173,7 +173,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             await Application.Current.MainPage.ShowPopupAsync(addSubjectPopup);
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanDeleteUpdateSubjectExecuted))]
         public async Task DisplayUpdateSubjectPopup()
         {
             var addUpdateSubjectPopup = _serviceProvider.GetService<AddUpdateSubjectPopup>();
@@ -187,7 +187,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         public bool CanDeleteUpdateSubjectExecuted()
         {
-            return !string.IsNullOrEmpty(SubjectSpecificId);
+            return !string.IsNullOrEmpty(SelectedSubjectSpecificId);
         }
         #endregion
 
@@ -208,7 +208,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
             SearchFilter = "";
             ReloadItemsBackground();
-            ResetSubjectInformation();
+            ResetDisplaySubjectInformation();
         }
 
         partial void OnSearchFilterChanged(string oldValue, string newValue)
@@ -251,7 +251,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
                 SubjectDisplayList = primarySubjectDisplayList.OrderBy(b => b.SpecificId).ToObservableCollection();
                 ReloadItemsBackground();
-                ResetSubjectInformation();
+                ResetDisplaySubjectInformation();
             }
         }
 
@@ -263,24 +263,27 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
         }
 
-        public void DisplaySubjectInformation(SubjectDisplay SubjectDisplay)
+        public void DisplaySubjectInformation(SubjectDisplay subjectDisplay)
         {
-            selectedSubjectId = SubjectDisplay.SubjectId;
-            SubjectSpecificId = SubjectDisplay.SpecificId;
-            SubjectName = SubjectDisplay.Name;
-            TotalLesson = SubjectDisplay.TotalLessons.ToString();
-            SubjectType = SubjectDisplay.TypeName;
-            NumberOfCredit = SubjectDisplay.NumberOfCredits.ToString();
+            selectedSubjectId = subjectDisplay.SubjectId;
+            SelectedSubjectSpecificId = subjectDisplay.SpecificId;
+            SelectedSubjectName = subjectDisplay.Name;
+            SelectedTotalLesson = subjectDisplay.TotalLessons.ToString();
+            SelectedSubjectType = subjectDisplay.TypeName;
+            SelectedNumberOfCredit = subjectDisplay.NumberOfCredits.ToString();
         }
 
-        private void ResetSubjectInformation()
+        private void ResetDisplaySubjectInformation()
         {
-            selectedSubjectId = -1;
-            SubjectSpecificId = "";
-            SubjectName = "";
-            TotalLesson = "";
-            SubjectType = "";
-            NumberOfCredit = "";
+            DisplaySubjectInformation(new SubjectDisplay()
+            {
+                SubjectId = 0,
+                SpecificId = "",
+                Name = "",
+                TypeName = "",
+                TotalLessons = 0,
+                NumberOfCredits = 0
+            });
         }
 
         static string RemoveAccents(string input)

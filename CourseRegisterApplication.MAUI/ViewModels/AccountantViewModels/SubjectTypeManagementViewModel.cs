@@ -135,7 +135,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         }
 
         [RelayCommand]
-        public async Task DisplayUpdateSubjectPopup()
+        public async Task DisplayUpdateSubjectTypePopup()
         {
             var addUpdateSubjectTypePopup = _serviceProvider.GetService<AddUpdateSubjectTypePopup>();
             var addUpdateSubjectTypeViewModel = _serviceProvider.GetService<AddUpdateSubjectTypeViewModel>();

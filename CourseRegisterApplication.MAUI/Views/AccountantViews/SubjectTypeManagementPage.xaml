@@ -73,6 +73,7 @@
                   <Grid
                     BackgroundColor="{Binding BackgroundColor}"
                     ColumnDefinitions="4*, 3*, 3*"
+                    ColumnSpacing="100"
                     HeightRequest="40"
                     VerticalOptions="Center">
                     <Grid.GestureRecognizers>
@@ -123,7 +124,7 @@
             HorizontalOptions="Start"
             VerticalOptions="Center">
             <Grid.GestureRecognizers>
-              <TapGestureRecognizer Command="{Binding OpenAddUpdateSubjectTypePopupCommand}" />
+              <TapGestureRecognizer Command="{Binding DisplayAddSubjectTypePopupCommand}" />
             </Grid.GestureRecognizers>
             <Frame
               Grid.Column="0"
@@ -169,7 +170,7 @@
             HorizontalOptions="Start"
             VerticalOptions="Center">
             <Grid.GestureRecognizers>
-              <TapGestureRecognizer Command="{Binding OpenAddUpdateSubjectTypePopupCommand}" />
+              <TapGestureRecognizer Command="{Binding DisplayUpdateSubjectTypePopupCommand}" />
             </Grid.GestureRecognizers>
             <Frame
               Grid.Column="0"
@@ -215,7 +216,7 @@
             HorizontalOptions="Start"
             VerticalOptions="Center">
             <Grid.GestureRecognizers>
-              <TapGestureRecognizer Command="{Binding OpenAddUpdateSubjectTypePopupCommand}" />
+              <TapGestureRecognizer Command="{Binding DeleteSubjectTypeCommand}" />
             </Grid.GestureRecognizers>
             <Frame
               Grid.Column="0"

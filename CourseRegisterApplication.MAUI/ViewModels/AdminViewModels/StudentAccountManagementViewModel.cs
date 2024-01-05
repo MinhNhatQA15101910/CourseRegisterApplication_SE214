@@ -259,7 +259,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             ReloadStudentAccountList(studentList);
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanSaveCancelChanges))]
         public async Task Cancel()
         {
             bool result = await Application.Current.MainPage.DisplayAlert("Question?", "Do you want to reverse changes?", "Yes", "No");
@@ -269,7 +269,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             }
         }
 
-        [RelayCommand(CanExecute = nameof(CanSaveChanges))]
+        [RelayCommand(CanExecute = nameof(CanSaveCancelChanges))]
         public async Task SaveChanges()
         {
             // Filter accounts need to be updated
@@ -312,7 +312,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             }
         }
 
-        public bool CanSaveChanges()
+        public bool CanSaveCancelChanges()
         {
             var account = primaryStudentAccountList.Find(a => a.PrimaryStatus != a.ActivateStatus);
 

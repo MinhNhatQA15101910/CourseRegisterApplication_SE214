@@ -77,6 +77,7 @@
       <Picker
         HeightRequest="50"
         HorizontalOptions="Center"
+        FontSize="16"
         ItemsSource="{Binding SubjectTypesList}"
         ItemDisplayBinding="{Binding Name}"
         SelectedItem="{Binding SelectedSubjectType}"
