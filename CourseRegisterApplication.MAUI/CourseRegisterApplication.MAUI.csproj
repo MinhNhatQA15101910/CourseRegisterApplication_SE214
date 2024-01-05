@@ -193,6 +193,8 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\ConfirmCourseRegistrationPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\CourseConfirmationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -206,6 +208,8 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\SubjectTypeManagementPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\CurriculumManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -239,8 +243,9 @@
 	  <MauiXaml Update="Views\AccountantViews\DepartmentManagementPage.xaml">
 		<Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AccountantViews\ConfirmTuitionCollectionPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
+		  <MauiXaml Update="Views\AccountantViews\ConfirmTuitionCollectionPage.xaml">
+			  <Generator>MSBuild:Compile</Generator>
+		  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\DepartmentManagementPage.xaml" />
 	  <MauiXaml Update="Views\AccountantViews\TuitionCollectionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
@@ -255,6 +260,8 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AdminViews\AddManagerAccountPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\UpdateCurriculumPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -1,5 +1,4 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using CourseRegisterApplication.Shared;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
@@ -25,6 +24,16 @@ namespace CourseRegisterApplication.MAUI.Services
             }
 
             return null;
+        }
+
+        public Task<IEnumerable<PriorityType>> GetAllPriorityTypesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<PriorityType>> GetPriorityTypesFromStudentIdAsync(int studentId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

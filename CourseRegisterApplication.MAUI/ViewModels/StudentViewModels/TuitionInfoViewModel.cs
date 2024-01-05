@@ -103,7 +103,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
         [RelayCommand]
         public async Task GetSetUp()
         {
-            studentList = await _studentService.GetStudents();
+            studentList = await _studentService.GetAllStudents();
             Student thisStudent = studentList.Find(item => item.StudentSpecificId == GlobalConfig.CurrentUser.Username);
             if (thisStudent != null)
             {

@@ -1,46 +1,42 @@
-﻿using CourseRegisterApplication.Shared;
-using System.Security.Permissions;
-
-namespace CourseRegisterApplication.Server.Controllers
+﻿namespace CourseRegisterApplication.Server.Controllers
 {
-[Route("api/[controller]")]
-[ApiController]
-public class SubjectsController : ControllerBase
-{
-    private readonly CourseRegisterManagementDbContext _context;
-
-    public SubjectsController(CourseRegisterManagementDbContext context)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class SubjectsController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly CourseRegisterManagementDbContext _context;
+
+        public SubjectsController(CourseRegisterManagementDbContext context)
+        {
+            _context = context;
+        }
 
         private bool SubjectExists(int id)
         {
             return (_context.Subjects?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        // GET: api/Subjects
-    [HttpGet]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Subject>>> GetAllSubject()
-    {
+        {
             try
             {
-        if (_context.Subjects == null)
-        {
+                if (_context.Subjects == null)
+                {
                     return new NotFoundResult();
-        }
-        
+                }
+
                 var subjects = await _context.Subjects.ToListAsync();
 
                 if (subjects == null)
                 {
                     return NotFound("No subjects found!");
-    }
+                }
 
                 return Ok(subjects);
             }
             catch (Exception ex)
-    {
+            {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
         }
@@ -52,10 +48,10 @@ public class SubjectsController : ControllerBase
         {
             try
             {
-        if (_context.Subjects == null)
-        {
+                if (_context.Subjects == null)
+                {
                     return new NotFoundResult();
-        }
+                }
 
                 var subject = await _context.Subjects.Where(s => s.Id == id).FirstOrDefaultAsync();
 
@@ -70,15 +66,15 @@ public class SubjectsController : ControllerBase
             {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
-    }
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSubject(int id, Subject subject)
-    {
-            if (id != subject.Id)
         {
+            if (id != subject.Id)
+            {
                 return BadRequest();
-        }
+            }
 
             _context.Entry(subject).State = EntityState.Modified;
 
@@ -91,20 +87,20 @@ public class SubjectsController : ControllerBase
                 if (!SubjectExists(id))
                 {
                     return NotFound();
-    }
+                }
                 else
-    {
+                {
                     return StatusCode(500, "Concurrency issue occurred");
                 }
             }
             return NoContent();
-    }
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSubject(int id)
-    {
-        if (_context.Subjects == null)
         {
+            if (_context.Subjects == null)
+            {
                 return new NotFoundResult();
             }
 
@@ -112,8 +108,8 @@ public class SubjectsController : ControllerBase
 
             if (subject == null)
             {
-            return NotFound();
-        }
+                return NotFound();
+            }
 
             _context.Subjects.Remove(subject);
             await _context.SaveChangesAsync();
@@ -121,6 +117,5 @@ public class SubjectsController : ControllerBase
             return NoContent();
         }
 
-        return Ok(subjectList);
     }
 }

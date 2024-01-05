@@ -11,6 +11,11 @@ namespace CourseRegisterApplication.MAUI.Services
             _httpClient = httpClient;
         }
 
+        public Task<Semester> AddSemesterAsync(Semester semester, List<int> subjectIds)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<Semester>> GetAllSemester()
         {
             string apiUrl = $"{GlobalConfig.SEMESTER_BASE_URL}";
@@ -24,6 +29,11 @@ namespace CourseRegisterApplication.MAUI.Services
             }
 
             return null;
+        }
+
+        public Task<Semester> GetCurrentSemesterAsync()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Semester> GetSemesterById(int semesterId)
@@ -54,6 +64,16 @@ namespace CourseRegisterApplication.MAUI.Services
             }
 
             return null;
+        }
+
+        public Task<bool> UpdateSemesterAsync(int semesterId, Semester semester)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateSemesterAsync(int semesterId, Semester semester, List<int> subjectIds)
+        {
+            throw new NotImplementedException();
         }
     }
 }

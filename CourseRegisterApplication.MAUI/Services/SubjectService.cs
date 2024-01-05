@@ -1,10 +1,4 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using CourseRegisterApplication.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
@@ -81,5 +75,29 @@ namespace CourseRegisterApplication.MAUI.Services
             return response.IsSuccessStatusCode;
         }
 
+        public Task<IEnumerable<Subject>> GetAllSubjectsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Subject>> GetSubjectsForFirstSemesterAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Subject>> GetSubjectsForSecondSemesterAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Subject>> GetSubjectsForSummerSemesterAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Subject>> GetSubjectsBySemesterIdAsync(int semesterId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

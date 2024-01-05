@@ -420,7 +420,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 
         public async Task GetAllStudents()
         {
-            studentList = await _studentService.GetStudents();
+            studentList = await _studentService.GetAllStudents();
         }
 
         public async Task GetSubjectType()

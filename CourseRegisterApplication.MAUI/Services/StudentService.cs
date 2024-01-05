@@ -1,5 +1,4 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using CourseRegisterApplication.Shared;
 
 namespace CourseRegisterApplication.MAUI.Services
 {
@@ -14,6 +13,31 @@ namespace CourseRegisterApplication.MAUI.Services
             
 
         public Task<Student> AddStudent(Student student)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Student> AddStudent(Student student, List<PriorityType> priorityTypes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Student>> GetAllStudents()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Student>> GetFullInformationOfAllStudents()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Student> GetFullInformationOfStudentBySpecificId(string studentSpecificId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Student> GetStudentBySpecificId(string studentSpecificId)
         {
             throw new NotImplementedException();
         }
@@ -61,6 +85,16 @@ namespace CourseRegisterApplication.MAUI.Services
             }
 
             return null;
+        }
+
+        public Task<bool> UpdateImageUrl(Student student, string newImageUrl)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateStudent(int studentId, Student student, List<PriorityType> priorityTypes)
+        {
+            throw new NotImplementedException();
         }
     }
 }
