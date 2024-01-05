@@ -51,8 +51,13 @@ public static class MauiProgram
 
         #region Student
         builder.Services.AddScoped<StudentAppShellViewModel>();
-        builder.Services.AddScoped<StudentDashboardViewModel>();
-        builder.Services.AddScoped<StudentInfomationViewModel>();
+        builder.Services.AddScoped<StudentDashboardViewModel>(); 
+        builder.Services.AddScoped<StudentInfomationViewModel>(); 
+        builder.Services.AddScoped<CourseRegisTrationInfoViewModel>();
+        builder.Services.AddScoped<CourseRegistrationViewModel>();
+        builder.Services.AddScoped<TuitionInfoViewModel>();
+
+
         #endregion
 
         #region Accountant
@@ -122,12 +127,21 @@ public static class MauiProgram
         #region Student
         builder.Services.AddScoped<StudentAppShell>();
         builder.Services.AddScoped<StudentDashboardPage>();
-        builder.Services.AddScoped<StudentInfomationPage>();
+        builder.Services.AddScoped<StudentInfomationPage>(); 
+        builder.Services.AddScoped<CourseRegistrationInfoPage>();
+        builder.Services.AddScoped<CourseRegistrationPage>();
+        builder.Services.AddScoped<PaymentPopup>();
+        builder.Services.AddScoped<TuitionInfoPage>();
+
+
+
+
         #endregion
         #endregion
 
         #region Services
         builder.Services.AddSingleton<HttpClient>();
+        builder.Services.AddScoped<ITuitionFeeReceiptService, TuitionFeeReceiptService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IStudentService, StudentService>();
         builder.Services.AddScoped<IDepartmentService, DepartmentService>();

@@ -120,6 +120,12 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 }
             }
         }
+
+        [RelayCommand]
+        public async Task CourseRegistrationInfoButton()
+        {
+            await Shell.Current.GoToAsync(nameof(CourseRegistrationInfoPage), true);
+        }
         #endregion
     }
 }
