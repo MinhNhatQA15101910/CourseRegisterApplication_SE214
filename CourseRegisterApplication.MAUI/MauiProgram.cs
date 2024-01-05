@@ -67,13 +67,15 @@ public static class MauiProgram
         builder.Services.AddScoped<AddUpdateDistrictViewModel>();
         builder.Services.AddScoped<StudentManagementViewModel>();
         builder.Services.AddScoped<AddUpdateStudentViewModel>();
-        builder.Services.AddScoped<ConfirmCourseRegistrationViewModel>();
         builder.Services.AddScoped<ConfirmTuitionCollectionViewModel>();
         builder.Services.AddScoped<SubjectTypeManagementViewModel>();
         builder.Services.AddScoped<AvailableCourseManagementViewModel>();
         builder.Services.AddScoped<PriorityTypeManagementViewModel>();
         builder.Services.AddScoped<UnpayTuitionStudentsReportViewModel>();
         builder.Services.AddScoped<SubjectManagementViewModel>();
+        builder.Services.AddScoped<CourseConfirmationViewModel>();
+        builder.Services.AddScoped<AddUpdateSubjectViewModel>();
+        builder.Services.AddScoped<AddUpdateSubjectTypeViewModel>();
         #endregion
         #endregion
 
@@ -97,7 +99,6 @@ public static class MauiProgram
         builder.Services.AddScoped<AddUpdateDepartmentPopup>();
         builder.Services.AddScoped<AccountantDashboardPage>();
         builder.Services.AddScoped<BranchManagementPage>();
-        builder.Services.AddScoped<ConfirmCourseRegistrationPage>();
         builder.Services.AddScoped<SubjectTypeManagementPage>();
         builder.Services.AddScoped<DepartmentManagementPage>();
         builder.Services.AddScoped<AvailableCourseManagementPage>();
@@ -113,6 +114,9 @@ public static class MauiProgram
         builder.Services.AddScoped<AddUpdateDistrictPopup>();
         builder.Services.AddScoped<StudentManagementPage>();
         builder.Services.AddScoped<AddUpdateStudentPage>();
+        builder.Services.AddScoped<CourseConfirmationPage>();
+        builder.Services.AddScoped<AddUpdateSubjectPopup>();
+        builder.Services.AddScoped<AddUpdateSubjectTypePopup>();
         #endregion
 
         #region Student
@@ -136,6 +140,9 @@ public static class MauiProgram
         builder.Services.AddScoped<ISemesterService, SemesterService>();
         builder.Services.AddScoped<ISubjectService, SubjectService>();
         builder.Services.AddScoped<IAvailableCourseService, AvailableCourseService>();
+        builder.Services.AddScoped<ISubjectTypeService, SubjectTypeService>();
+        builder.Services.AddScoped<ICourseRegistrationFormService, CourseRegistrationFormService>();
+        builder.Services.AddScoped<ICourseRegistrationDetailService, CourseRegistrationDetailService>();
         #endregion
 
         return builder.Build();

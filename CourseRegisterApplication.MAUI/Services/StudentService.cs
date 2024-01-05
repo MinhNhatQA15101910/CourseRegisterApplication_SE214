@@ -187,10 +187,10 @@ namespace CourseRegisterApplication.MAUI.Services
 
                     priorityTypes.Add(priorityType);
 
-                    priorityType = priorityTypes.First(pt => pt.Id == 1);
-                    if (priorityType.Id == 1)
+                    var temp = priorityTypes.Where(pt => pt.Id == 1);
+                    if (temp.Any())
                     {
-                        priorityTypes.Remove(priorityType);
+                        priorityTypes.Remove(temp.ElementAt(0));
                     }
                 }
 

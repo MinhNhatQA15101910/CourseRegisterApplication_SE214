@@ -33,11 +33,11 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         [ObservableProperty] private string subjectNameMessageText;
 
-        [ObservableProperty] private string totalLesson;
+        [ObservableProperty] private string numberOfCredit;
 
-        [ObservableProperty] private Color totalLessonColor;
+        [ObservableProperty] private Color numberOfCreditColor;
 
-        [ObservableProperty] private string totalLessonMessageText;
+        [ObservableProperty] private string numberOfCreditMessageText;
 
         [ObservableProperty] private SubjectType selectedSubjectType = null;
 
@@ -127,7 +127,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                     var subject = await subjectService.GetSubjectById(SubjectId);
                     SubjectSpecificId = subject.SubjectSpecificId;
                     SubjectName = subject.Name;
-                    TotalLesson = subject.TotalLessons.ToString();
+                    NumberOfCredit = subject.NumberOfCredits.ToString();
                     SelectedSubjectType = SubjectTypesList.First(x => x.Id == subject.SubjectTypeId);
                 }
             }
@@ -140,7 +140,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             SubjectSpecificId = "";
             SubjectName = "";
             SelectedSubjectType = null;
-            TotalLesson = "";
+            NumberOfCredit = "";
         }
 
         private async Task AddSubject()
@@ -173,7 +173,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                     SubjectSpecificId = SubjectSpecificId.Trim(),
                     Name = SubjectName.Trim(),
                     SubjectTypeId = SelectedSubjectType.Id,
-                    TotalLessons = int.Parse(TotalLesson)
+                    NumberOfCredits = int.Parse(NumberOfCredit)
                 });
                 if (subject != null)
                 {
@@ -221,7 +221,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                     SubjectSpecificId = SubjectSpecificId.Trim(),
                     Name = SubjectName.Trim(),
                     SubjectTypeId = SelectedSubjectType.Id,
-                    TotalLessons = int.Parse(TotalLesson)
+                    TotalLessons = int.Parse(NumberOfCredit)
                 });
                 if (success)
                 {

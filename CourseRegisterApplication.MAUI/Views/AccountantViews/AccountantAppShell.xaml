@@ -78,40 +78,28 @@
     <ShellContent ContentTemplate="{DataTemplate local:SubjectManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
-    Title="C"
-    Icon="book.png"
-    Route="studyprogram">
-    <ShellContent ContentTemplate="{DataTemplate local:CurriculumManagementPage}" Route="details" />
-  </FlyoutItem>
-  <FlyoutItem
     Title="Curriculum management"
     Icon="book.png"
     Route="curriculummanagement">
+    <ShellContent ContentTemplate="{DataTemplate local:CurriculumManagementPage}" Route="details" />
+  </FlyoutItem>
+  <FlyoutItem
+    Title="Available courses management"
+    Icon="book.png"
+    Route="availablecourse">
     <ShellContent ContentTemplate="{DataTemplate local:AvailableCourseManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
-    Title="Course registration"
+    Title="Course confirm"
     Icon="bank.png"
-    Route="coursemanagement">
-    <ShellContent ContentTemplate="{DataTemplate local:ConfirmCourseRegistrationPage}" Route="details" />
+    Route="courseconfirmmanagement">
+    <ShellContent ContentTemplate="{DataTemplate local:CourseConfirmationPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Subject type management"
     Icon="book.png"
     Route="subjectype">
     <ShellContent ContentTemplate="{DataTemplate local:SubjectTypeManagementPage}" Route="details" />
-  </FlyoutItem>
-  <FlyoutItem
-    Title="Course registration confirm"
-    Icon="book.png"
-    Route="courseconfirm">
-    <ShellContent ContentTemplate="{DataTemplate local:CourseConfirmationPage}" Route="details" />
-  </FlyoutItem>
-  <FlyoutItem
-    Title="Tuition collection"
-    Icon="bank.png"
-    Route="tuitioncollection">
-    <ShellContent ContentTemplate="{DataTemplate local:ConfirmCourseRegistrationPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Statistic"

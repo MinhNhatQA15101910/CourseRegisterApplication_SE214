@@ -90,7 +90,7 @@
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
-        Text="{Binding TotalLesson}"
+        Text="{Binding NumberOfCredit}"
         WidthRequest="300" />
       <Label
         Margin="50,0,0,0"

@@ -68,6 +68,19 @@
             }
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Subject>> CreateSubject(Subject subject)
+        {
+            if (_context.Subjects == null)
+            {
+                return Problem("Entity set 'CourseRegisterManagementDbContext.Subjects'  is null.");
+            }
+            _context.Subjects.Add(subject);
+            await _context.SaveChangesAsync();
+
+            return Ok(subject);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSubject(int id, Subject subject)
         {

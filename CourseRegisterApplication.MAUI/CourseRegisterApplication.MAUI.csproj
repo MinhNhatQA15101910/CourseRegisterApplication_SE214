@@ -116,9 +116,6 @@
 	  <Compile Update="Views\AccountantViews\AddUpdateStudentPage.xaml.cs">
 	    <DependentUpon>AddUpdateStudentPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\AccountantViews\ConfirmCourseRegistrationPage.xaml.cs">
-	    <DependentUpon>ConfirmCourseRegistrationPage.xaml</DependentUpon>
-	  </Compile>
 	  <Compile Update="Views\AccountantViews\AvailableCourseManagementPage.xaml.cs">
 	    <DependentUpon>AvailableCourseManagementPage.xaml</DependentUpon>
 	  </Compile>
@@ -191,9 +188,6 @@
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\BranchManagementPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\AccountantViews\ConfirmCourseRegistrationPage.xaml">
-		  <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AccountantViews\CourseConfirmationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
