@@ -17,7 +17,7 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CourseRegistrationForm>>> GetAllCourseRegistrationFormsWithPendingState()
+        public async Task<ActionResult<IEnumerable<CourseRegistrationForm>>> GetAllCourseRegistrationForm()
         {
             try
             {
@@ -26,7 +26,7 @@
                     return new NotFoundResult();
                 }
 
-                var courseRegistrationForms = await _context.CourseRegistrationForms.Where(crf => crf.State == CourseRegistrationFormState.Pending).ToListAsync();
+                var courseRegistrationForms = await _context.CourseRegistrationForms.ToListAsync();
 
                 if (courseRegistrationForms == null)
                 {
