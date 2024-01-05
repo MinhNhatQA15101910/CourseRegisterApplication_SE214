@@ -14,5 +14,5 @@ public partial class SubjectTypeManagementPage : ContentPage
 	{
         base.OnAppearing();
         (BindingContext as SubjectTypeManagementViewModel).GetAllSubjectTypeCommand.Execute(null);
-    }
+	}
 }

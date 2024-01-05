@@ -1,16 +1,25 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views;
-using System.Globalization;
-using System.Text.RegularExpressions;
+using CourseRegisterApplication.MAUI.Views.AdminViews;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
 {
+    #region Enums
+    public enum StudentAccountSortType
+    {
+        StudentNameAZ,
+        StudentNameZA,
+        StudentIdAZ,
+        StudentIdZA,
+        EmailAZ,
+        EmailZA
+    }
+    #endregion
+
     #region Displays
     public partial class StudentDisplay : ObservableObject
     {
         #region Properties
-        public int Index { get; set; }
-
         [ObservableProperty]
         private string studentSpecificId;
 
@@ -30,10 +39,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         private string email;
 
         [ObservableProperty]
-        private Branch branch;
+        private string branchName;
 
         [ObservableProperty]
-        private string department;
+        private string departmentName;
 
         [ObservableProperty]
         private Color backgroundColor;
@@ -56,20 +65,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             StudentRequester.ResetItemBackgrounds();
             BackgroundColor = Color.FromArgb("#B9D8F2");
 
-            StudentRequester.DisplayStudentAccountInformation(new Student
-            {
-                FullName = FullName,
-                StudentSpecificId = StudentSpecificId,
-                Gender = Gender,
-                Branch = Branch,
-                DateOfBirth = DateOfBirth,
-            });
+            StudentRequester.DisplayStudentAccountInformation(this);
         }
         #endregion
 
         partial void OnActivateStatusChanged(bool oldValue, bool newValue)
         {
-            if(newValue != PrimaryStatus)
+            if (newValue != PrimaryStatus)
             {
                 CheckBoxColor = Color.FromArgb("#DE3226");
             }
@@ -90,7 +92,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
     #region IRequesters
     public interface IStudentRequester
     {
-        void DisplayStudentAccountInformation(Student student);
+        void DisplayStudentAccountInformation(StudentDisplay studentDisplay);
         void ResetItemBackgrounds();
         void NotifyCanSaveChanges();
     }
@@ -101,17 +103,15 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
     {
         #region Services
         private readonly IServiceProvider _serviceProvider;
-        private readonly IStudentService _studentService;
-        private readonly IUserService _userService;
         #endregion
 
         #region Properties
+        private readonly List<StudentDisplay> originalPrimaryStudentAccountList = new();
+
         private List<StudentDisplay> primaryStudentAccountList = new();
 
         [ObservableProperty]
         private ObservableCollection<StudentDisplay> studentAccountList = new();
-
-        public ObservableCollection<string> FilterOptions { get; set; } = new() { "Name", "Student ID" };
 
         [ObservableProperty]
         private string avatarUri = "blank_avatar.jpg";
@@ -141,19 +141,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         private string department;
 
         [ObservableProperty]
-        private string selectedFilterOption = "Name";
-
-        [ObservableProperty]
         private string searchFilter = "";
-
         #endregion
 
         #region Constructor
         public StudentAccountManagementViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _studentService = serviceProvider.GetService<IStudentService>();
-            _userService = serviceProvider.GetService<IUserService>();
         }
         #endregion
 
@@ -169,94 +163,19 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         }
 
         [RelayCommand]
-        public void GetStudentAccount()
+        public async Task OpenFilterPopup()
         {
-            //var studentList = await _studentService.GetStudents();
+            var filterStudentAccountPopup = _serviceProvider.GetService<FilterStudentAccountPopup>();
+            await Application.Current.MainPage.ShowPopupAsync(filterStudentAccountPopup);
+        }
 
-            List<Student> studentList = new()
-            {
-                new()
-                {
-                    FullName = "Trương Bá Cường",
-                    StudentSpecificId = "SV21520013",
-                    Gender = Shared.Gender.Male,
-                    Branch = new Branch
-                    {
-                        BranchName = "Kỹ thuật phần mềm",
-                        BranchSpecificId = "KTPM",
-                        Department = new Department
-                        {
-                            DepartmentName = "Công nghệ phần mềm",
-                            DepartmentSpecificId = "CNPM",
-                        }
-                    },
-                },
-                new()
-                {
-                    FullName = "Đôn Khánh Duy",
-                    StudentSpecificId = "SV21520032",
-                    Gender = Shared.Gender.Male,
-                    Branch = new Branch
-                    {
-                        BranchName = "Công nghệ thông tin",
-                        BranchSpecificId = "CNTT",
-                        Department = new Department
-                        {
-                            DepartmentName = "Công nghệ thông tin",
-                            DepartmentSpecificId = "CNTT",
-                        }
-                    },
-                },new()
-                {
-                    FullName = "Nguyễn Thị Phương",
-                    StudentSpecificId = "SV21520135",
-                    Gender = Shared.Gender.Female,
-                    Branch = new Branch
-                    {
-                        BranchName = "Công nghệ thông tin",
-                        BranchSpecificId = "CNTT",
-                        Department = new Department
-                        {
-                            DepartmentName = "Công nghệ thông tin",
-                            DepartmentSpecificId = "CNTT",
-                        }
-                    },
-                },new()
-                {
-                    FullName = "Huỳnh Bá Anh Quân",
-                    StudentSpecificId = "SV21520136",
-                    DateOfBirth = new DateTime(2003, 05, 15),
-                    Gender = Shared.Gender.Male,
-                    Branch = new Branch
-                    {
-                        BranchName = "Kỹ thuật phần mềm",
-                        BranchSpecificId = "KTPM",
-                        Department = new Department
-                        {
-                            DepartmentName = "Công nghệ phần mềm",
-                            DepartmentSpecificId = "CNPM",
-                        }
-                    },
-                },new()
-                {
-                    FullName = "Võ Thanh Bình",
-                    StudentSpecificId = "SV21520007",
-                    DateOfBirth = new DateTime(2003, 02, 10),
-                    Gender = Shared.Gender.Male,
-                    Branch = new Branch
-                    {
-                        BranchName = "Khoa học máy tính",
-                        BranchSpecificId = "KHMT",
-                        Department = new Department
-                        {
-                            DepartmentName = "Khoa học máy tính",
-                            DepartmentSpecificId = "KHMT",
-                        }
-                    },
-                },
-            };
+        [RelayCommand]
+        public async Task GetStudentAccounts()
+        {
+            IStudentService studentService = _serviceProvider.GetService<IStudentService>();
+            List<Student> studentList = await studentService.GetAllStudents();
             
-            ReloadStudentAccountList(studentList);
+            await ReloadStudentAccountList(studentList);
         }
 
         [RelayCommand]
@@ -265,7 +184,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             bool result = await Application.Current.MainPage.DisplayAlert("Question?", "Do you want to reverse changes?", "Yes", "No");
             if (result)
             {
-                getStudentAccountCommand.Execute(null);
+                GetStudentAccountsCommand.Execute(null);
             }
         }
 
@@ -273,9 +192,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
         public async Task SaveChanges()
         {
             // Filter accounts need to be updated
-            var studentUserList = _userService.GetStudentUsers();
+            IUserService userService = _serviceProvider.GetService<IUserService>();
+            List<User> studentUserList = await userService.GetStudentUsers();
             List<StudentDisplay> accountsNeedToBeUpdated = StudentAccountList.Where(a => a.ActivateStatus != a.PrimaryStatus).ToList();
-            var accept = await  Application.Current.MainPage.DisplayAlert("Question", "Do you want to change Active Status for these students?", "Yes", "No");
+            bool accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to change Active Status for these students?", "Yes", "No");
             if (accept)
             {
                 foreach (var account in accountsNeedToBeUpdated)
@@ -286,14 +206,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                         User newUser = new()
                         {
                             Username = account.StudentSpecificId,
-                            //Password = Helpers.EncryptData(Helpers.GeneratePassword()),
-                            Password = "12345678",
+                            Password = Helpers.EncryptData("12345678"),
                             Email = account.Email,
                             Role = Role.Student,
                         };
 
                         // Add new user to database
-                        User user = await _userService.AddUser(newUser);
+                        User user = await userService.AddUser(newUser);
                         if(user == null)
                         {
                             await Application.Current.MainPage.DisplayAlert("Error", "Error occurred!", "OK");
@@ -303,20 +222,21 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
                     else
                     {
                         // Delete user from database
-                        User deleteUser = studentUserList.Result.Find(u => u.Username == account.StudentSpecificId);
-                        await _userService.DeleteUser(deleteUser.Id);
+                        User deletedUser = studentUserList.Find(u => u.Username == account.StudentSpecificId);
+                        await userService.DeleteUser(deletedUser.Id);
                     }
                 }
                 await Application.Current.MainPage.DisplayAlert("Success", "Changes have been saved", "OK");
-                getStudentAccountCommand.Execute(null);
+
+                GetStudentAccountsCommand.Execute(null);
             }
         }
 
         public bool CanSaveChanges()
         {
-            var account = primaryStudentAccountList.Find(a => a.PrimaryStatus != a.ActivateStatus);
+            var account = originalPrimaryStudentAccountList.Find(a => a.PrimaryStatus != a.ActivateStatus);
 
-            return (account != null);
+            return account != null;
         }
 
         #endregion
@@ -330,108 +250,91 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             }
         }
 
-        public void DisplayStudentAccountInformation(Student student)
+        public void DisplayStudentAccountInformation(StudentDisplay studentDisplay)
         {
-            AvatarUri = "profile_avatar.jpg";
-            FullName = student.FullName;
-            StudentSpecificId = student.StudentSpecificId;
-            Email = student.StudentSpecificId.Substring(2) + "@gm.uit.edu.vn";
-            Gender = student.Gender.ToString();
-            DateOfBirth = student.DateOfBirth.ToString("dd/MM/yyyy");
-            Branch = student.Branch.BranchName;
-            Department = student.Branch.Department.DepartmentName;
+            AvatarUri = studentDisplay.Avatar;
+            FullName = studentDisplay.FullName;
+            StudentSpecificId = studentDisplay.StudentSpecificId;
+            Email = studentDisplay.Email;
+            Gender = (studentDisplay.Gender == Shared.Gender.Male) ? "Male" : "Female";
+            DateOfBirth = studentDisplay.DateOfBirth.ToString("dd/MM/yyyy");
+            Branch = studentDisplay.BranchName;
+            Department = studentDisplay.DepartmentName;
         }
         #endregion
 
         #region Property Changed
-        partial void OnSelectedFilterOptionChanged(string oldValue, string newValue)
+        partial void OnSearchFilterChanged(string value)
         {
-            if (oldValue != newValue)
-            {             
-                switch (newValue)
-                {
-                    case "Name":
-                        StudentAccountList = primaryStudentAccountList.OrderBy(a => a.FullName).ToObservableCollection();
-                        break;
-                    case "Student ID":
-                        StudentAccountList = primaryStudentAccountList.OrderBy(a => a.StudentSpecificId).ToObservableCollection();
-                        break;
-                }
-
-                SearchFilter = "";
-                ResetItemBackgrounds();
-                ResetAccountInformation();
-            }
-        }
-
-        partial void OnSearchFilterChanged(string oldValue, string newValue)
-        {
-            
-            switch (SelectedFilterOption)
-            {
-                case "Name":
-                    SearchStudentsByName(newValue);
-                    break;
-                case "Student ID":
-                    StudentAccountList = primaryStudentAccountList.Where(a => a.StudentSpecificId.Contains(newValue)).OrderBy(a => a.StudentSpecificId).ToObservableCollection();
-                    break;
-            }
+            StudentAccountList = primaryStudentAccountList
+                .Where(a => a.FullName.ToLower().Contains(value.ToLower()) ||
+                            a.StudentSpecificId.ToLower().Contains(value.ToLower()) ||
+                            a.Email.ToLower().Contains(value.ToLower()))
+                .ToObservableCollection();
 
             ResetItemBackgrounds();
             ResetAccountInformation();
-
         }
         #endregion
 
         #region Helpers
-        private async void ReloadStudentAccountList(List<Student> accountList)
+        private async Task ReloadStudentAccountList(List<Student> accountList)
         {
-            primaryStudentAccountList.Clear();
+            originalPrimaryStudentAccountList.Clear();
 
             if (accountList.Count > 0)
             {
-                for(int i = 0; i < accountList.Count; i++)
+                IBranchService branchService = _serviceProvider.GetService<IBranchService>();
+                IDepartmentService departmentService = _serviceProvider.GetService<IDepartmentService>();
+
+                foreach (var account in accountList)
                 {
-                    primaryStudentAccountList.Add(new StudentDisplay
+                    Branch accountBranch = await branchService.GetBranchById(account.BranchId);
+                    Department accountDepartment = await departmentService.GetDepartmentById(accountBranch.DepartmentId);
+
+                    originalPrimaryStudentAccountList.Add(new StudentDisplay
                     {
-                        FullName = accountList[i].FullName,
-                        StudentSpecificId = accountList[i].StudentSpecificId,
-                        Email = accountList[i].StudentSpecificId.Substring(2) + "@gm.uit.edu.vn",
-                        Gender = accountList[i].Gender,
-                        DateOfBirth = accountList[i].DateOfBirth,
-                        Branch = accountList[i].Branch,
-                        Department = accountList[i].Branch.Department.DepartmentName,
-                        Avatar = "profile_avatar.jpg",
-                        ActivateStatus = await IsStudentHasAccount(accountList[i]),
-                        PrimaryStatus = await IsStudentHasAccount(accountList[i]),
+                        FullName = account.FullName,
+                        StudentSpecificId = account.StudentSpecificId,
+                        Email = account.Email,
+                        Gender = account.Gender,
+                        DateOfBirth = account.DateOfBirth,
+                        BranchName = accountBranch.BranchName,
+                        DepartmentName = accountDepartment.DepartmentName,
+                        Avatar = account.ImageUrl,
+                        ActivateStatus = await IsStudentHasAccount(account),
+                        PrimaryStatus = await IsStudentHasAccount(account),
                         CheckBoxColor = Color.FromArgb("#3189CC"),
                         BackgroundColor = Color.FromArgb("#EBF6FF"),
                         StudentRequester = this,
                     });
                 }
 
+                primaryStudentAccountList = originalPrimaryStudentAccountList;
                 StudentAccountList = primaryStudentAccountList.OrderBy(a => a.FullName).ToObservableCollection();
-                for (int i = 0; i < primaryStudentAccountList.Count; i++)
+                for (int i = 0; i < StudentAccountList.Count; i++)
                 {
                     StudentAccountList[i].BackgroundColor = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
                 }
             }
         }
 
-        private void ResetAccountInformation()
+        public void ResetAccountInformation()
         {
             AvatarUri = "blank_avatar.jpg";
             FullName = "";
             StudentSpecificId = "";
             Email = "";
+            Gender = "";
             Department = "";
             DateOfBirth = null;
-            Branch = null;
+            Branch = "";
         }
 
         private async Task<bool> IsStudentHasAccount(Student student)
         {
-            List<User> userList = await _userService.GetStudentUsers();
+            IUserService userService = _serviceProvider.GetService<IUserService>();
+            List<User> userList = await userService.GetStudentUsers();
             foreach (var user in userList)
             {
                 if (user.Username == student.StudentSpecificId)
@@ -443,39 +346,149 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AdminViewModels
             return false;
         }
 
-        string RemoveAccents(string input)
-        {
-            string normalizedString = input.Normalize(NormalizationForm.FormD);
-            StringBuilder stringBuilder = new StringBuilder();
-
-            foreach (char c in normalizedString)
-            {
-                UnicodeCategory unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-                {
-                    stringBuilder.Append(c);
-                }
-            }
-
-            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
-        }
-
-        void SearchStudentsByName(string newValue)
-        {
-            string normalizedValue = RemoveAccents(newValue);
-
-            string pattern = string.Join(".*", normalizedValue.Select(c => Regex.Escape(c.ToString())));
-            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-            StudentAccountList = primaryStudentAccountList
-                .Where(a => regex.IsMatch(RemoveAccents(a.FullName)))
-                .OrderBy(a => a.FullName)
-                .ToObservableCollection();
-        }
-
         public void NotifyCanSaveChanges()
         {
             SaveChangesCommand.NotifyCanExecuteChanged();
+        }
+
+        public void UpdateSortList(StudentAccountSortType studentAccountSortType, string selectedActiveStatus)
+        {
+            switch (selectedActiveStatus)
+            {
+                case "All":
+                    switch (studentAccountSortType)
+                    {
+                        case StudentAccountSortType.StudentNameAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .OrderBy(a => a.FullName)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentNameZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .OrderByDescending(a => a.FullName)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentIdAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .OrderBy(a => a.StudentSpecificId)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentIdZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .OrderByDescending(a => a.StudentSpecificId)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.EmailAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .OrderBy(a => a.Email)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.EmailZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .OrderByDescending(a => a.Email)
+                                .ToList();
+                            break;
+                    }
+
+                    StudentAccountList = primaryStudentAccountList.ToObservableCollection();
+
+                    break;
+                case "Enable":
+                    switch (studentAccountSortType)
+                    {
+                        case StudentAccountSortType.StudentNameAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => a.ActivateStatus)
+                                .OrderBy(a => a.FullName)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentNameZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => a.ActivateStatus)
+                                .OrderByDescending(a => a.FullName)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentIdAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => a.ActivateStatus)
+                                .OrderBy(a => a.StudentSpecificId)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentIdZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => a.ActivateStatus)
+                                .OrderByDescending(a => a.StudentSpecificId)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.EmailAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => a.ActivateStatus)
+                                .OrderBy(a => a.Email)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.EmailZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => a.ActivateStatus)
+                                .OrderByDescending(a => a.Email)
+                                .ToList();
+                            break;
+                    }
+
+                    StudentAccountList = primaryStudentAccountList.ToObservableCollection();
+
+                    break;
+                case "Disable":
+                    switch (studentAccountSortType)
+                    {
+                        case StudentAccountSortType.StudentNameAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => !a.ActivateStatus)
+                                .OrderBy(a => a.FullName)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentNameZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => !a.ActivateStatus)
+                                .OrderByDescending(a => a.FullName)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentIdAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => !a.ActivateStatus)
+                                .OrderBy(a => a.StudentSpecificId)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.StudentIdZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => !a.ActivateStatus)
+                                .OrderByDescending(a => a.StudentSpecificId)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.EmailAZ:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => !a.ActivateStatus)
+                                .OrderBy(a => a.Email)
+                                .ToList();
+                            break;
+                        case StudentAccountSortType.EmailZA:
+                            primaryStudentAccountList = originalPrimaryStudentAccountList
+                                .Where(a => !a.ActivateStatus)
+                                .OrderByDescending(a => a.Email)
+                                .ToList();
+                            break;
+                    }
+
+                    StudentAccountList = primaryStudentAccountList.ToObservableCollection();
+
+                    break;
+            }
+
+            // Clear Search Filter
+            SearchFilter = "";
+
+            // Reset list state
+            ResetItemBackgrounds();
+            ResetAccountInformation();
         }
 
         #endregion

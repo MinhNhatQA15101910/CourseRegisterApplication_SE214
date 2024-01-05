@@ -31,7 +31,7 @@
               RowDefinitions="Auto,*"
               WidthRequest="600">
               <Grid.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavigateToAdminAccountantAccountManagementCommand}" />
+                <TapGestureRecognizer Command="{Binding NavigateToManagerAccountManagementCommand}" />
               </Grid.GestureRecognizers>
               <Image HeightRequest="36" Source="admin_image_1.png" />
               <Label
@@ -73,7 +73,7 @@
               RowDefinitions="Auto,*"
               WidthRequest="600">
               <Grid.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavigateToAdminAccountantAccountManagementCommand}" />
+                <TapGestureRecognizer Command="{Binding NavigateToManagerAccountManagementCommand}" />
               </Grid.GestureRecognizers>
               <Image HeightRequest="36" Source="admin_image_2.png" />
               <Label
@@ -115,7 +115,7 @@
               RowDefinitions="Auto,*"
               WidthRequest="600">
               <Grid.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavigateToStudentManagementCommand}" />
+                <TapGestureRecognizer Command="{Binding NavigateToStudentAccountManagementCommand}" />
               </Grid.GestureRecognizers>
               <Image HeightRequest="36" Source="admin_image_3.png" />
               <Label

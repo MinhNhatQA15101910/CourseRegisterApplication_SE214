@@ -68,8 +68,8 @@
   <FlyoutItem
     Title="Manager account"
     Icon="student.png"
-    Route="adminaccountant">
-    <ShellContent ContentTemplate="{DataTemplate local:AdminAccountantAccountManagementPage}" Route="details" />
+    Route="manager">
+    <ShellContent ContentTemplate="{DataTemplate local:ManagerAccountManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
     Title="Student account"

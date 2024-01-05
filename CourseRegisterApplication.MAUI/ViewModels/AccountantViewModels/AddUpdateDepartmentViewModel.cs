@@ -14,14 +14,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         public int DepartmentId { get; set; }
 
-        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateDeparmentCommand))]
+        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateDepartmentCommand))]
         private string departmentSpecificId;
 
         [ObservableProperty] private string departmentSpecificIdMessageText;
 
         [ObservableProperty] private Color departmentSpecificIdColor;
 
-        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateDeparmentCommand))]
+        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateDepartmentCommand))]
         private string departmentName;
 
         [ObservableProperty] private string departmentNameMessageText;
@@ -47,7 +47,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         }
 
         [RelayCommand(CanExecute = nameof(CanAddUpdateDepartmentExecuted))]
-        public async Task AddUpdateDeparment()
+        public async Task AddUpdateDepartment()
         {
             if (CommandName == "Add department")
             {
@@ -133,13 +133,17 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "Add department successfully!", "OK");
 
-                    // Reset department list in the DepartmentManagementPage
+                    // Reload department list in the DepartmentManagementPage
                     DepartmentManagementViewModel departmentManagementViewModel = _serviceProvider.GetService<DepartmentManagementViewModel>();
                     departmentManagementViewModel.GetDepartmentsCommand.Execute(null);
 
-                    // Reset department list in the AddUpdateBranchPopup
+                    // Reload department list in the AddUpdateBranchPopup
                     var addUpdateBranchViewModel = _serviceProvider.GetService<AddUpdateBranchViewModel>();
                     await addUpdateBranchViewModel.GetDepartmentsCommand.ExecuteAsync(null);
+
+                    // Reload department list in AddUpdateStudentPage
+                    AddUpdateStudentViewModel addUpdateStudentViewModel = _serviceProvider.GetService<AddUpdateStudentViewModel>();
+                    await addUpdateStudentViewModel.ReloadDepartmentList();
 
                     ClearState();
                 }

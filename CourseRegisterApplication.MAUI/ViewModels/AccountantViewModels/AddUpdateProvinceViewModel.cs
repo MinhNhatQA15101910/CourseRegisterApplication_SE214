@@ -118,6 +118,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                     provinceDistrictManagementViewModel.ReloadDistrictDisplays(new());
                     provinceDistrictManagementViewModel.ClearProperties();
 
+                    // Reset province list in AddUpdateStudentPage
+                    AddUpdateStudentViewModel addUpdateStudentViewModel = _serviceProvider.GetService<AddUpdateStudentViewModel>();
+                    await addUpdateStudentViewModel.ReloadProvinceList();
+
                     ClearData();
                 }
                 else

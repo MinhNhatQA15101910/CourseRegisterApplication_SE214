@@ -44,6 +44,7 @@
       <Entry
         HeightRequest="50"
         HorizontalOptions="Center"
+        Placeholder="District Name"
         Text="{Binding DistrictName}"
         WidthRequest="300" />
       <Label
@@ -61,6 +62,7 @@
         HeightRequest="50"
         HorizontalOptions="Center"
         IsReadOnly="True"
+        Placeholder="Province Name"
         Text="{Binding ProvinceName}"
         WidthRequest="300" />
 

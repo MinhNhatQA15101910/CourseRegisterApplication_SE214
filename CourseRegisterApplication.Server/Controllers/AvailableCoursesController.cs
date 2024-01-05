@@ -4,37 +4,39 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CourseRegisterApplication.Server.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AvailableCoursesController : ControllerBase
-    {
-        private readonly CourseRegisterManagementDbContext _context;
+[Route("api/[controller]")]
+[ApiController]
+public class AvailableCoursesController : ControllerBase
+{
+    private readonly CourseRegisterManagementDbContext _context;
 
-        public AvailableCoursesController(CourseRegisterManagementDbContext context)
-        {
-            _context = context;
-        }
+    public AvailableCoursesController(CourseRegisterManagementDbContext context)
+    {
+        _context = context;
+    }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AvailableCourse>>> GetAllAvailableCourse()
-        {
+    {
             try
             {
-                if (_context.AvailableCourses == null)
-                {
+        if (_context.AvailableCourses == null)
+        {
                     return new NotFoundResult();
-                }
+        }
+        _context.AvailableCourses.Add(availableCourse);
+        await _context.SaveChangesAsync();
 
                 var availableCourses = await _context.AvailableCourses.ToListAsync();
 
                 if (availableCourses == null)
                 {
                     return NotFound("No available courses found!"); 
-                }
+    }
 
                 return Ok(availableCourses);
             } catch (Exception ex)
-            {
+        {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
         }
@@ -46,14 +48,14 @@ namespace CourseRegisterApplication.Server.Controllers
                 .FirstAsync(ac => ac.SemesterId == semesterId && ac.SubjectId == subjectId);
 
             if (availableCourse == null)
-            {
-                return NotFound();
-            }
+        {
+            return NotFound();
+        }
 
             _context.AvailableCourses.Remove(availableCourse);
-            await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        return NoContent();
     }
+}
 }

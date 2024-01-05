@@ -14,5 +14,5 @@ public partial class CurriculumManagementPage : ContentPage
         base.OnAppearing();
 
         (BindingContext as CurriculumManagementViewModel).GetFilterOptionCommand.Execute(null);
-    }
+	}
 }

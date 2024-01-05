@@ -8,12 +8,12 @@
   <Grid RowDefinitions="Auto,*">
     <contentViews:NavigationTopBar
       Grid.Row="0"
-      DescriptionText="{Binding DescriptionText, FallbackValue='Card description text.'}"
+      DescriptionText="View student information"
       IsBackVisible="False"
       IsControlVisible="True"
       IsTitleVisible="True"
       LogoutCommand="{Binding LogoutCommand}"
-      TitleText="{Binding TitleText, FallbackValue='Title text.'}"
+      TitleText="Student information page"
       VerticalOptions="Start" />
     <ScrollView Grid.Row="1">
       <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
@@ -28,7 +28,14 @@
               StrokeShape="RoundRectangle 1000,1000,1000,1000"
               StrokeThickness="0"
               WidthRequest="320">
-              <Image Aspect="AspectFill" Source="teacher_icon.png" />
+              <Image
+                Aspect="AspectFill"
+                Source="{Binding ImageUrl}"
+                ToolTipProperties.Text="Change Image">
+                <Image.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding ChooseAndUploadImageCommand}" />
+                </Image.GestureRecognizers>
+              </Image>
             </Border>
             <Label
               Margin="0,24,0,0"
@@ -95,7 +102,7 @@
                   Margin="0,4,0,0"
                   FontSize="16"
                   HorizontalOptions="Start"
-                  Text="{Binding StudentBranch}"
+                  Text="{Binding StudentBranchName}"
                   TextColor="#A7A7A7" />
               </StackLayout>
               <StackLayout Grid.Column="1">
@@ -109,7 +116,7 @@
                   Margin="0,4,0,0"
                   FontSize="16"
                   HorizontalOptions="Start"
-                  Text="{Binding StudentDepartment}"
+                  Text="{Binding StudentDepartmentName}"
                   TextColor="#A7A7A7" />
               </StackLayout>
             </Grid>
@@ -159,16 +166,16 @@
                       FontFamily="RobotoMedium"
                       FontSize="14"
                       HorizontalOptions="Start"
-                      Text="Priority object"
+                      Text="Priority types"
                       TextColor="#1A1A1A" />
-                    <StackLayout BindableLayout.ItemsSource="{Binding StudentPriorityObjectList}">
+                    <StackLayout BindableLayout.ItemsSource="{Binding StudentPriorityTypeList}">
                       <BindableLayout.ItemTemplate>
                         <DataTemplate>
                           <Label
                             Margin="0,4,0,0"
                             FontSize="16"
                             HorizontalOptions="Start"
-                            Text="{Binding}"
+                            Text="{Binding PriorityName}"
                             TextColor="#A7A7A7" />
                         </DataTemplate>
                       </BindableLayout.ItemTemplate>

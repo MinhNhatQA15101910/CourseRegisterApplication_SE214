@@ -3,12 +3,9 @@
   x:Class="CourseRegisterApplication.MAUI.Views.AccountantViews.StudentManagementPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:accountantViewModels="clr-namespace:CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels"
   xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
-  xmlns:mauiToolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
   NavigationPage.HasNavigationBar="False"
   Shell.FlyoutBehavior="Flyout">
-
   <Grid RowDefinitions="Auto,*">
     <contentViews:NavigationTopBar
       Grid.Row="0"
@@ -77,27 +74,27 @@
           <Grid
             Grid.Row="0"
             BackgroundColor="Transparent"
-            ColumnDefinitions="2.5*,2*,3.5*, 2*"
+            ColumnDefinitions="2.5*,2*,3.5*,2*"
             HeightRequest="40"
             VerticalOptions="Center">
             <Label
               Grid.Column="0"
               FontFamily="RobotoMedium"
-              FontSize="14"
+              FontSize="16"
               HorizontalOptions="Start"
               Text="Name"
               VerticalOptions="Center" />
             <Label
               Grid.Column="1"
               FontFamily="RobotoMedium"
-              FontSize="14"
+              FontSize="16"
               HorizontalOptions="Start"
               Text="Student ID"
               VerticalOptions="Center" />
             <Label
               Grid.Column="2"
               FontFamily="RobotoMedium"
-              FontSize="14"
+              FontSize="16"
               HorizontalOptions="Start"
               Text="Email Address"
               VerticalOptions="Center" />
@@ -106,17 +103,20 @@
               FontFamily="RobotoMedium"
               FontSize="14"
               HorizontalOptions="Start"
-              Text="Activate status"
+              Text="Active status"
               VerticalOptions="Center" />
           </Grid>
 
           <CollectionView
             Grid.Row="1"
             Grid.Column="0"
+            EmptyView="Please wait..."
             HeightRequest="400"
-            ItemsSource="{Binding StudentAccountList}"
-            MaximumHeightRequest="600"
+            ItemsSource="{Binding StudentList}"
             VerticalScrollBarVisibility="Always">
+            <CollectionView.ItemsLayout>
+              <LinearItemsLayout Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
               <DataTemplate>
                 <Grid
@@ -124,7 +124,7 @@
                   ColumnDefinitions="2.5*,2*,3.5*, 2*"
                   VerticalOptions="Center">
                   <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ChooseStudentAccountCommand}" />
+                    <TapGestureRecognizer Command="{Binding ChooseStudentCommand}" />
                   </Grid.GestureRecognizers>
                   <Grid
                     Grid.Column="0"
@@ -149,7 +149,6 @@
                         TextColor="#4F4F4F"
                         VerticalOptions="Center" />
                     </HorizontalStackLayout>
-
                   </Grid>
 
                   <Label
@@ -185,6 +184,7 @@
           Grid.Row="2"
           Grid.Column="0"
           Margin="0,0,0,50"
+          Command="{Binding NavigateToAddStudentPageCommand}"
           FontFamily="RobotoMedium"
           FontSize="14"
           HeightRequest="40"
@@ -241,6 +241,7 @@
               HorizontalOptions="Center"
               Spacing="30">
               <ImageButton
+                Padding="8"
                 Aspect="AspectFit"
                 BackgroundColor="#EFF3FA"
                 BorderColor="Black"
@@ -267,9 +268,11 @@
                 </VisualStateManager.VisualStateGroups>
               </ImageButton>
               <ImageButton
+                Padding="8"
                 Aspect="AspectFit"
                 BackgroundColor="#EFF3FA"
                 BorderColor="Black"
+                Command="{Binding NavigateToUpdateStudentPageCommand}"
                 CornerRadius="8"
                 HeightRequest="16"
                 Source="info_box.png"
@@ -310,7 +313,7 @@
               <Label
                 FontSize="13"
                 HorizontalOptions="Start"
-                Text="{Binding Department}"
+                Text="{Binding DepartmentName}"
                 TextColor="#A7A7A7" />
             </VerticalStackLayout>
             <VerticalStackLayout Grid.Row="0" Grid.Column="1">
@@ -323,7 +326,7 @@
               <Label
                 FontSize="13"
                 HorizontalOptions="Start"
-                Text="{Binding Branch}"
+                Text="{Binding BranchName}"
                 TextColor="#A7A7A7" />
             </VerticalStackLayout>
             <VerticalStackLayout Grid.Row="1" Grid.Column="0">

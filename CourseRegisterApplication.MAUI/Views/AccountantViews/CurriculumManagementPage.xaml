@@ -149,7 +149,7 @@
                     TextColor="#4F4F4F"
                     VerticalOptions="Center" />
 
-                  <Label
+    <Label
                     Grid.Column="3"
                     FontSize="14"
                     HorizontalOptions="Start"
@@ -164,7 +164,7 @@
         <Grid Grid.Row="1" Grid.Column="1">
           <StackLayout
             Margin="0,100,0,0"
-            HorizontalOptions="Center"
+      HorizontalOptions="Center"
             Spacing="24">
             <Button
               Command="{Binding UpdateCurriculumCommand}"

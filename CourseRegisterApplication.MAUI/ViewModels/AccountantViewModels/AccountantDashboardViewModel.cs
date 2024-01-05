@@ -1,13 +1,8 @@
 ﻿using CourseRegisterApplication.MAUI.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
-	public partial class AccountantDashboardViewModel : ObservableObject
+    public partial class AccountantDashboardViewModel : ObservableObject
 	{
 		#region Services
 		private readonly IServiceProvider _serviceProvider;
@@ -25,7 +20,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 		}
 		#endregion
 
-		#region Command
+		#region Commands
 		[RelayCommand]
 		public async Task Logout()
 		{
@@ -37,22 +32,22 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 		}
 
 		[RelayCommand]
-		public async Task NavigateToStudentManagementCommand()
+		public async Task NavigateToStudentManagement()
 		{
 			await Shell.Current.GoToAsync("//studentmanagement/details", true);
 		}
 
 		[RelayCommand]
-		public async Task NavigateToCourseManagementCommand()
+		public async Task NavigateToCourseManagement()
 		{
 			await Shell.Current.GoToAsync("//coursemanagement/details", true);
 		}
 
 		[RelayCommand]
-		public async Task NavigateToTutionCollectionCommand()
+		public async Task NavigateToTuitionCollection()
 		{
 			await Shell.Current.GoToAsync("//tuitioncollection/details", true);
 		}
-        #endregion
-    }
+		#endregion
+	}
 }

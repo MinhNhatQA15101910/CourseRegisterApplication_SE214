@@ -11,5 +11,6 @@ public partial class AccountantAppShell : Shell
 
 		Routing.RegisterRoute(nameof(ChangePasswordPage), typeof(ChangePasswordPage));
 		Routing.RegisterRoute(nameof(UpdateCurriculumPage), typeof(UpdateCurriculumPage));
+		Routing.RegisterRoute(nameof(AddUpdateStudentPage), typeof(AddUpdateStudentPage));
     }
 }

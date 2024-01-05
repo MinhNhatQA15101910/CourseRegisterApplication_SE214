@@ -180,7 +180,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         }
 
         public void GetSubjectTypeInformation(SubjectTypeDisplay subjectTypeDisplay)
-        {
+    {
             selectedSubjectTypeId = subjectTypeDisplay.Id;
         }
         #endregion

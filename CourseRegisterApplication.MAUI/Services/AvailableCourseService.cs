@@ -2,14 +2,14 @@
 
 namespace CourseRegisterApplication.MAUI.Services
 {
-    public class AvailableCourseService : IAvailableCourseService
-    {
-        private readonly HttpClient _httpClient;
+public class AvailableCourseService : IAvailableCourseService
+{
+    private readonly HttpClient _httpClient;
 
         public AvailableCourseService(HttpClient httpClient)
-        {
+    {
             _httpClient = httpClient;
-        }
+    }
 
         public async Task<List<AvailableCourse>> GetAllAvailableCourse()
         {
@@ -31,7 +31,7 @@ namespace CourseRegisterApplication.MAUI.Services
 
             var response = await _httpClient.GetAsync(new Uri(apiUrl));
             if (response.IsSuccessStatusCode)
-            {
+    {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 var availableCourse = JsonConvert.DeserializeObject<List<AvailableCourse>>(jsonResponse);
                 return availableCourse.Where(ac => ac.SemesterId == semesterId).ToList();
@@ -45,23 +45,23 @@ namespace CourseRegisterApplication.MAUI.Services
             string apiUrl = $"{GlobalConfig.AVAILABLE_COURSE_BASE_URL}";
 
             var response = await _httpClient.GetAsync(new Uri(apiUrl));
-            if (response.IsSuccessStatusCode)
-            {
+        if (response.IsSuccessStatusCode)
+        {
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 var availableCourse = JsonConvert.DeserializeObject<List<AvailableCourse>>(jsonResponse);
                 return availableCourse.Where(ac => ac.SubjectId == subjectId).ToList();
-            }
-
-            return null;
         }
+
+        return null;
+    }
 
         public async Task<bool> DeleteAvailaleCourse(int semesterId, int subjectId)
-        {
+    {
             string apiUrl = $"{GlobalConfig.AVAILABLE_COURSE_BASE_URL}{semesterId}/{subjectId}";
 
-            var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
+        var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
 
-            return response.IsSuccessStatusCode;
-        }
+        return response.IsSuccessStatusCode;
     }
+}
 }

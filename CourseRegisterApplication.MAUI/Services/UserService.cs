@@ -48,7 +48,7 @@ namespace CourseRegisterApplication.MAUI.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<List<User>> GetAdminAccountantUsers()
+        public async Task<List<User>> GetManagerUsers()
         {
             var response = await _httpClient.GetAsync(new Uri(GlobalConfig.USER_BASE_URL));
             if (response.IsSuccessStatusCode)
@@ -78,7 +78,7 @@ namespace CourseRegisterApplication.MAUI.Services
             return null;
         }
 
-        public async Task<List<User>> GetUsers()
+        public async Task<List<User>> GetAllUsers()
         {
             var response = await _httpClient.GetAsync(new Uri(GlobalConfig.USER_BASE_URL));
             if (response.IsSuccessStatusCode)
@@ -105,17 +105,6 @@ namespace CourseRegisterApplication.MAUI.Services
 			return null;
 		}
 
-        public async Task<bool> UpdateRole(int id, User user)
-        {
-            string apiUrl = $"{GlobalConfig.USER_BASE_URL}{id}";
-
-            var json = JsonConvert.SerializeObject(user);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
-
-            return response.IsSuccessStatusCode;
-        }
-
         public async Task<bool> UpdateRole(User user, Role role)
         {
             user.Role = role;
@@ -127,6 +116,20 @@ namespace CourseRegisterApplication.MAUI.Services
             var response = await _httpClient.PutAsync(new Uri(apiUrl), content);
 
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<User> GetUserByUsername(string username)
+        {
+            string apiUrl = $"{GlobalConfig.USER_BASE_URL}username/{username}";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<User>(jsonResponse);
+            }
+
+            return null;
         }
     }
 }

@@ -1,15 +1,15 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 
-namespace CourseRegisterApplication.MAUI.Services
-{
-    public class CurriculumService : ICurriculumService
-    {
-        private readonly HttpClient _httpClient;
+namespace CourseRegisterApplication.MAUI.Services;
 
-        public CurriculumService(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
+public class CurriculumService : ICurriculumService
+{
+    private readonly HttpClient _httpClient;
+
+    public CurriculumService(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+    }
 
         public async Task<List<Curriculum>> GetCurriculumsByBranchId(int branchId)
         {

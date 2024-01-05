@@ -38,6 +38,29 @@
             return user;
         }
 
+        [HttpGet("username/{username}")]
+        public async Task<ActionResult<User>> GetUserByUsername(string username)
+        {
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
+
+            var parameter = new SqlParameter("username", username);
+            var user = await _context.Users
+                .FromSqlRaw(
+                    "SELECT * FROM dbo.Users u " +
+                    "WHERE u.Username = @username",
+                    parameter)
+                .FirstAsync();
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+
         [HttpGet("{username}/{password}")]
         public async Task<ActionResult<User>> LoginUser(string username, string password)
         {

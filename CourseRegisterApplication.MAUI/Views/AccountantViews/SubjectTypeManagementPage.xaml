@@ -29,7 +29,7 @@
           Padding="150,0,0,0"
           HorizontalOptions="Start"
           Spacing="20">
-          <Label
+    <Label
             FontFamily="RobotoBold"
             FontSize="20"
             Text="Subject type list" />
@@ -115,7 +115,7 @@
           Grid.Row="1"
           Grid.Column="1"
           Margin="0,50,0,0"
-          HorizontalOptions="Center"
+      HorizontalOptions="Center"
           Spacing="20">
           <Grid
             ColumnDefinitions="*,Auto"
@@ -236,7 +236,7 @@
               FontSize="20"
               Text="Delete a subject type"
               TextColor="#4F4F4F"
-              VerticalOptions="Center" />
+      VerticalOptions="Center" />
             <VisualStateManager.VisualStateGroups>
               <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -254,7 +254,7 @@
               </VisualStateGroupList>
             </VisualStateManager.VisualStateGroups>
           </Grid>
-        </VerticalStackLayout>
+  </VerticalStackLayout>
       </Grid>
 
     </ScrollView>

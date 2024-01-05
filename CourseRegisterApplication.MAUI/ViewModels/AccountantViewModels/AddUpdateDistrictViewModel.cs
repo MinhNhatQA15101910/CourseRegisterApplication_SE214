@@ -121,7 +121,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "Add district successfully!", "OK");
 
-                    // Reset district list in the ProvinceDistrictManagementPage
+                    // Reload district list in the ProvinceDistrictManagementPage
                     var provinceDistrictManagementViewModel = _serviceProvider.GetService<ProvinceDistrictManagementViewModel>();
 
                     var districtList = await districtService.GetDistrictsByProvinceId(ProvinceId);
@@ -130,6 +130,10 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                     provinceDistrictManagementViewModel.ClearDistrictData();
 
                     ClearData();
+
+                    // Reload district list in AddUpdateStudentPage
+                    AddUpdateStudentViewModel addUpdateStudentViewModel = _serviceProvider.GetService<AddUpdateStudentViewModel>();
+                    await addUpdateStudentViewModel.ReloadDistrictList();
                 }
                 else
                 {
