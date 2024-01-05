@@ -1,13 +1,11 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views;
 using CourseRegisterApplication.MAUI.Views.AccountantViews;
-using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
-
-    public partial class SubjectManagementDisplay: ObservableObject
+    #region Displays
+    public partial class SubjectManagementDisplay : ObservableObject
     {
         #region Properties
         public ISubjectDisplayRequester SubjectRequester { get; set; }
@@ -44,16 +42,19 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         }
         #endregion
     }
+    #endregion
 
+    #region Requesters
     public interface ISubjectDisplayRequester
     {
         void ReloadItemsBackground();
         void DisplaySubjectInformation(SubjectManagementDisplay subjectDisplay);
     }
+    #endregion
 
+    #region Main ViewModel
     public partial class SubjectManagementViewModel : ObservableObject, ISubjectDisplayRequester
     {
-
         #region Services
         private readonly IServiceProvider _serviceProvider;
         private readonly ISubjectTypeService _subjectTypeService;
@@ -77,15 +78,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         [NotifyCanExecuteChangedFor(nameof(DisplayUpdateSubjectPopupCommand))]
         private string subjectSpecificId;
 
-        [ObservableProperty] private string subjectName = "Subject:";
+        [ObservableProperty] private string subjectName = "Subject Name:";
 
         [ObservableProperty] private string subjectType;
 
         [ObservableProperty] private string totalLesson;
 
         [ObservableProperty] private string numberOfCredit;
-
-        public ISubjectDisplayRequester SubjectRequester { get; set; }
         #endregion
 
         #region Constructor
@@ -236,14 +235,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             {
                 foreach (var subject in subjectList)
                 {
-                    var subjectType = await _subjectTypeService.GetSubjectTypeById(subject.SubjectTypeId);
+                    var subjectTypeFromDatabase = await _subjectTypeService.GetSubjectTypeById(subject.SubjectTypeId);
                     primarySubjectDisplayList.Add(new()
                     {
                         SubjectRequester = this,
                         SubjectId = subject.Id,
                         SpecificId = subject.SubjectSpecificId,
                         Name = subject.Name,
-                        TypeName = subjectType.Name,
+                        TypeName = subjectTypeFromDatabase.Name,
                         TotalLessons = subject.TotalLessons,
                         NumberOfCredits = subject.NumberOfCredits,
                     });
@@ -263,14 +262,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             }
         }
 
-        public void DisplaySubjectInformation(SubjectManagementDisplay SubjectDisplay)
+        public void DisplaySubjectInformation(SubjectManagementDisplay subjectDisplay)
         {
-            selectedSubjectId = SubjectDisplay.SubjectId;
-            SubjectSpecificId = SubjectDisplay.SpecificId;
-            SubjectName = SubjectDisplay.Name;
-            TotalLesson = SubjectDisplay.TotalLessons.ToString();
-            SubjectType = SubjectDisplay.TypeName;
-            NumberOfCredit = SubjectDisplay.NumberOfCredits.ToString();
+            selectedSubjectId = subjectDisplay.SubjectId;
+            SubjectSpecificId = subjectDisplay.SpecificId;
+            SubjectName = $"Subject Name: {subjectDisplay.Name}";
+            TotalLesson = subjectDisplay.TotalLessons.ToString();
+            SubjectType = subjectDisplay.TypeName;
+            NumberOfCredit = subjectDisplay.NumberOfCredits.ToString();
         }
 
         private void ResetSubjectInformation()
@@ -302,29 +301,30 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         void SearchSubjectByName(string newValue)
         {
-            string normalizedValue = SubjectManagementViewModel.RemoveAccents(newValue);
+            string normalizedValue = RemoveAccents(newValue);
 
             string pattern = string.Join(".*", normalizedValue.Select(c => Regex.Escape(c.ToString())));
             Regex regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
             SubjectDisplayList = primarySubjectDisplayList
-                .Where(a => regex.IsMatch(SubjectManagementViewModel.RemoveAccents(a.Name)))
+                .Where(a => regex.IsMatch(RemoveAccents(a.Name)))
                 .OrderBy(a => a.Name)
                 .ToObservableCollection();
         }
 
         void SearchSubjectByTypeName(string newValue)
         {
-            string normalizedValue = SubjectManagementViewModel.RemoveAccents(newValue);
+            string normalizedValue = RemoveAccents(newValue);
 
             string pattern = string.Join(".*", normalizedValue.Select(c => Regex.Escape(c.ToString())));
             Regex regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
             SubjectDisplayList = primarySubjectDisplayList
-                .Where(a => regex.IsMatch(SubjectManagementViewModel.RemoveAccents(a.TypeName)))
+                .Where(a => regex.IsMatch(RemoveAccents(a.TypeName)))
                 .OrderBy(a => a.Name)
                 .ToObservableCollection();
         }
         #endregion
     }
+    #endregion
 }

@@ -21,19 +21,22 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         [ObservableProperty] private string commandName;
 
-        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateSubjectCommand))] private string subjectSpecificId;
+        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateSubjectCommand))] 
+        private string subjectSpecificId;
 
         [ObservableProperty] private Color subjectSpecificIdColor;
 
         [ObservableProperty] private string subjectSpecificIdMessageText;
 
-        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateSubjectCommand))] private string subjectName;
+        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateSubjectCommand))] 
+        private string subjectName;
 
         [ObservableProperty] private Color subjectNameColor;
 
         [ObservableProperty] private string subjectNameMessageText;
 
-        [ObservableProperty] private string numberOfCredit;
+        [ObservableProperty, NotifyCanExecuteChangedFor(nameof(AddUpdateSubjectCommand))]
+        private string numberOfCredit;
 
         [ObservableProperty] private Color numberOfCreditColor;
 
@@ -80,6 +83,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         {
             bool isValidSubjectSpecificId = true;
             bool isValidSubjectName = true;
+            bool isValidCreditNumber = true;
 
             // Validate Subject ID
             if (string.IsNullOrEmpty(SubjectSpecificId))
@@ -107,7 +111,26 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 SubjectNameMessageText = "Valid Subject Name.";
             }
 
-            return isValidSubjectSpecificId && isValidSubjectName;
+            // Validate Credit Number
+            if (string.IsNullOrEmpty(NumberOfCredit))
+            {
+                NumberOfCreditColor = Color.FromArgb("#BF1D28");
+                NumberOfCreditMessageText = "Number of Credit cannot be empty.";
+                isValidCreditNumber = false;
+            }
+            else if (!int.TryParse(NumberOfCredit.Trim(), out int numberOfCreditValue) || numberOfCreditValue < 0)
+            {
+                NumberOfCreditColor = Color.FromArgb("#BF1D28");
+                NumberOfCreditMessageText = "Invalid number of Credit";
+                isValidCreditNumber = false;
+            }
+            else
+            {
+                NumberOfCreditColor = Color.FromArgb("#007D3A");
+                NumberOfCreditMessageText = "Valid Subject Name.";
+            }
+
+            return isValidSubjectSpecificId && isValidSubjectName && isValidCreditNumber;
         }
 
         #endregion
@@ -115,7 +138,6 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #region Property Change
         async partial void OnCommandNameChanged(string value)
         {
-           
             var subjectService = _serviceProvider.GetService<ISubjectService>();
 
             if (!string.IsNullOrEmpty(value))
@@ -137,6 +159,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #region Helper
         void ClearState()
         {
+            CommandName = "";
             SubjectSpecificId = "";
             SubjectName = "";
             SelectedSubjectType = null;
@@ -152,29 +175,24 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
                 var subjects = await subjectService.GetAllSubjects();
 
                 //Check if there is any subject with the same subject specific id
-                var sameSpecifcIdSubject = subjects.Where(x => x.SubjectSpecificId.ToLower() == SubjectSpecificId.ToLower());
+                var sameSpecifcIdSubject = subjects.Where(x => x.SubjectSpecificId.ToLower() == SubjectSpecificId.Trim().ToLower());
                 if(sameSpecifcIdSubject.Any())
                 {
                     await Application.Current.MainPage.DisplayAlert("Error", "There is already a subject with the same subject specific id.", "OK");
                     return;
                 }
 
-                //Check if there is any subject with the same subject name
-                var sameNameSubject = subjects.Where(x => x.Name.ToLower() == SubjectName.ToLower());
-                if (sameNameSubject.Any())
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "There is already a subject with the same subject name.", "OK");
-                    return;
-                }
-
-                //Add new subject
-                var subject = await subjectService.CreateSubject( new Subject()
+                // Add new subject
+                var subject = await subjectService.CreateSubject(new Subject()
                 {
                     SubjectSpecificId = SubjectSpecificId.Trim(),
                     Name = SubjectName.Trim(),
                     SubjectTypeId = SelectedSubjectType.Id,
-                    NumberOfCredits = int.Parse(NumberOfCredit)
+                    NumberOfCredits = int.Parse(NumberOfCredit),
+                    TotalCharge = SelectedSubjectType.LessonsCharge * int.Parse(NumberOfCredit),
+                    TotalLessons = SelectedSubjectType.NumberOfLessons * int.Parse(NumberOfCredit)
                 });
+
                 if (subject != null)
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "Add subject successfully!", "OK");
@@ -193,36 +211,32 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         private async Task UpdateSubject()
         {
-            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to Update this new subject?", "Yes", "No");
+            var accept = await Application.Current.MainPage.DisplayAlert("Question", "Do you want to Update this subject?", "Yes", "No");
             if (accept)
             {
                 var subjectService = _serviceProvider.GetService<ISubjectService>();
                 var subjects = await subjectService.GetAllSubjects();
 
                 //Check if there is any subject with the same subject specific id
-                var sameSpecifcIdSubject = subjects.Where(x => x.SubjectSpecificId.ToLower() == SubjectSpecificId.ToLower());
+                var sameSpecifcIdSubject = subjects.Where(x => x.SubjectSpecificId.ToLower() == SubjectSpecificId.Trim().ToLower() && x.Id != SubjectId);
                 if (sameSpecifcIdSubject.Any())
                 {
                     await Application.Current.MainPage.DisplayAlert("Error", "There is already a subject with the same subject specific id.", "OK");
                     return;
                 }
 
-                //Check if there is any subject with the same subject name
-                var sameNameSubject = subjects.Where(x => x.Name.ToLower() == SubjectName.ToLower());
-                if (sameNameSubject.Any())
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "There is already a subject with the same subject name.", "OK");
-                    return;
-                }
-
-                //Update new subject
+                // Update subject
                 var success = await subjectService.UpdateSubject(SubjectId, new Subject()
                 {
+                    Id = SubjectId,
                     SubjectSpecificId = SubjectSpecificId.Trim(),
                     Name = SubjectName.Trim(),
                     SubjectTypeId = SelectedSubjectType.Id,
-                    TotalLessons = int.Parse(NumberOfCredit)
+                    NumberOfCredits = int.Parse(NumberOfCredit),
+                    TotalCharge = SelectedSubjectType.LessonsCharge * int.Parse(NumberOfCredit),
+                    TotalLessons = SelectedSubjectType.NumberOfLessons * int.Parse(NumberOfCredit)
                 });
+
                 if (success)
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "Update subject successfully!", "OK");

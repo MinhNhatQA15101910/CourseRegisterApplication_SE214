@@ -7,38 +7,34 @@
   xmlns:contentViews="clr-namespace:CourseRegisterApplication.MAUI.ContentViews"
   NavigationPage.HasNavigationBar="False"
   Shell.FlyoutBehavior="Flyout">
-
-  <Grid RowDefinitions="Auto, *">
+  <Grid RowDefinitions="Auto,*">
     <contentViews:NavigationTopBar
       Grid.Row="0"
-      DescriptionText="Can add, update, delete subjects"
+      DescriptionText="Can add, update, delete subject types"
       IsBackVisible="False"
       IsControlVisible="True"
       IsTitleVisible="True"
       LogoutCommand="{Binding LogoutCommand}"
-      TitleText="Subjects Management Page"
+      TitleText="Subject Types Management Page"
       VerticalOptions="Start" />
 
     <ScrollView Grid.Row="1">
-
-      <Grid ColumnDefinitions="6*, 4*" RowDefinitions="2*, 8*">
-
+      <Grid ColumnDefinitions="3*,2*" RowDefinitions="*,4*">
         <VerticalStackLayout
           Grid.Row="1"
           Grid.Column="0"
           Padding="150,0,0,0"
           HorizontalOptions="Start"
-          Spacing="20">
-    <Label
+          Spacing="20"
+          WidthRequest="800">
+          <Label
             FontFamily="RobotoBold"
             FontSize="20"
             Text="Subject type list" />
-
-          <Grid RowDefinitions="Auto, *" RowSpacing="20">
+          <Grid RowDefinitions="Auto,*" RowSpacing="20">
             <Grid
               Grid.Row="0"
-              ColumnDefinitions="4*, 3*, 3*"
-              ColumnSpacing="100"
+              ColumnDefinitions="4*,3*,3*"
               RowDefinitions="Auto, *">
               <Label
                 Grid.Column="0"
@@ -61,7 +57,6 @@
                 HorizontalOptions="Start"
                 Text="Subject type fee" />
             </Grid>
-
             <CollectionView
               Grid.Row="1"
               HeightRequest="400"
@@ -72,7 +67,7 @@
                 <DataTemplate>
                   <Grid
                     BackgroundColor="{Binding BackgroundColor}"
-                    ColumnDefinitions="4*, 3*, 3*"
+                    ColumnDefinitions="4*,3*,3*"
                     HeightRequest="40"
                     VerticalOptions="Center">
                     <Grid.GestureRecognizers>
@@ -86,7 +81,6 @@
                       HorizontalOptions="Start"
                       Text="{Binding Name}"
                       VerticalOptions="Center" />
-
                     <Label
                       Grid.Column="1"
                       FontFamily="RobotoRegular"
@@ -94,7 +88,6 @@
                       HorizontalOptions="Start"
                       Text="{Binding NumberOfLessons}"
                       VerticalOptions="Center" />
-
                     <Label
                       Grid.Column="2"
                       FontFamily="RobotoRegular"
@@ -106,16 +99,14 @@
                 </DataTemplate>
               </CollectionView.ItemTemplate>
             </CollectionView>
-
           </Grid>
-
         </VerticalStackLayout>
 
         <VerticalStackLayout
           Grid.Row="1"
           Grid.Column="1"
           Margin="0,50,0,0"
-      HorizontalOptions="Center"
+          HorizontalOptions="Center"
           Spacing="20">
           <Grid
             ColumnDefinitions="*,Auto"
@@ -123,7 +114,7 @@
             HorizontalOptions="Start"
             VerticalOptions="Center">
             <Grid.GestureRecognizers>
-              <TapGestureRecognizer Command="{Binding OpenAddUpdateSubjectTypePopupCommand}" />
+              <TapGestureRecognizer Command="{Binding DisplayAddSubjectTypePopupCommand}" />
             </Grid.GestureRecognizers>
             <Frame
               Grid.Column="0"
@@ -169,7 +160,7 @@
             HorizontalOptions="Start"
             VerticalOptions="Center">
             <Grid.GestureRecognizers>
-              <TapGestureRecognizer Command="{Binding OpenAddUpdateSubjectTypePopupCommand}" />
+              <TapGestureRecognizer Command="{Binding DisplayUpdateSubjectPopupCommand}" />
             </Grid.GestureRecognizers>
             <Frame
               Grid.Column="0"
@@ -215,7 +206,7 @@
             HorizontalOptions="Start"
             VerticalOptions="Center">
             <Grid.GestureRecognizers>
-              <TapGestureRecognizer Command="{Binding OpenAddUpdateSubjectTypePopupCommand}" />
+              <TapGestureRecognizer Command="{Binding DeleteSubjectTypeCommand}" />
             </Grid.GestureRecognizers>
             <Frame
               Grid.Column="0"
@@ -236,7 +227,7 @@
               FontSize="20"
               Text="Delete a subject type"
               TextColor="#4F4F4F"
-      VerticalOptions="Center" />
+              VerticalOptions="Center" />
             <VisualStateManager.VisualStateGroups>
               <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -254,7 +245,7 @@
               </VisualStateGroupList>
             </VisualStateManager.VisualStateGroups>
           </Grid>
-  </VerticalStackLayout>
+        </VerticalStackLayout>
       </Grid>
 
     </ScrollView>
