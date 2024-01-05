@@ -1,5 +1,6 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
 using CourseRegisterApplication.MAUI.Views;
+using CourseRegisterApplication.MAUI.Views.AccountantViews;
 
 namespace CourseRegisterApplication.MAUI
 {
@@ -8,7 +9,7 @@ namespace CourseRegisterApplication.MAUI
         private readonly ISemesterService _semesterService;
         private readonly ICourseRegistrationFormService _courseRegistrationFormService;
 
-        public App(LoginPage page, ICourseRegistrationFormService courseRegistrationFormService, ISemesterService semesterService)
+        public App(AccountantAppShell page, ICourseRegistrationFormService courseRegistrationFormService, ISemesterService semesterService)
         {
             InitializeComponent();
 

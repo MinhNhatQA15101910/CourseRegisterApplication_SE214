@@ -59,6 +59,9 @@ public partial class AvailableCourseManagementViewModel : ObservableObject, ISub
 {
     #region Services
     private readonly IServiceProvider _serviceProvider;
+    private readonly ICourseRegistrationFormService _courseRegistrationFormService;
+    private readonly ISemesterService _semesterService;
+
     #endregion
 
     #region Properties
@@ -106,6 +109,8 @@ public partial class AvailableCourseManagementViewModel : ObservableObject, ISub
     public AvailableCourseManagementViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
+        _courseRegistrationFormService = _serviceProvider.GetService<ICourseRegistrationFormService>();
+        _semesterService = _serviceProvider.GetService<ISemesterService>();
     }
     #endregion
 
@@ -332,6 +337,7 @@ public partial class AvailableCourseManagementViewModel : ObservableObject, ISub
             bool success = await semesterService.UpdateSemesterAsync(currentSemester.Id, currentSemester);
             if (success)
             {
+                await UpdateCourseRegistrationFormStateToExpired();
                 await Application.Current.MainPage.DisplayAlert("Success", "This semester has been ended!", "OK");
 
                 IsEnd = true;
@@ -630,6 +636,20 @@ public partial class AvailableCourseManagementViewModel : ObservableObject, ISub
         }
 
         return true;
+    }
+
+    private async Task UpdateCourseRegistrationFormStateToExpired()
+    {
+        List<CourseRegistrationForm> courseRegistrationFormList = await _courseRegistrationFormService.GetAllCourseRegistrationForm();
+        foreach (CourseRegistrationForm form in courseRegistrationFormList)
+        {
+            Semester semester = await _semesterService.GetSemesterById(form.SemesterId);
+            if (form.State != CourseRegistrationFormState.Expired && semester.EndRegistrationDate < DateTime.Now)
+            {
+                form.State = CourseRegistrationFormState.Expired;
+                await _courseRegistrationFormService.UpdateCourseRegistrationForm(form.Id, form);
+            }
+        }
     }
     #endregion
 }

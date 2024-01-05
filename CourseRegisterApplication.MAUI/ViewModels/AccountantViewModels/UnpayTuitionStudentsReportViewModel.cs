@@ -41,7 +41,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 
         #region Command
         [RelayCommand]
-        public void ChooseIStatistic()
+        public void ChooseStatistic()
         {
             StatisticRequester.ReloadStatictisItemsBackground();
             StatisticBackgroundColor = Color.FromArgb("#B9D8F2");
@@ -171,11 +171,24 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             if (oldValue != newValue && newValue != null)
             {
                 int currentSchoolYear = Int32.Parse(SelectedSchoolYearFilterOption);
+                string currentSemestername;
+                if (SelectedSemesterFilterOption == "Học kỳ I")
+                {
+                    currentSemestername = "FirstSemester";
+                }
+                else if (SelectedSemesterFilterOption == "Học kỳ II")
+                {
+                    currentSemestername = "SecondSemester";
+                }
+                else
+                {
+                    currentSemestername = "SummerSemester";
+                }
                 List<CourseRegistrationForm> currentCourseRegistrationFormList = courseRegistrationFormList
                     .Where(item =>
                         semesterList.Exists(item2 =>
                             item.SemesterId == item2.Id &&
-                            item2.SemesterName.ToString() == newValue &&
+                            item2.SemesterName.ToString() == currentSemestername &&
                             item2.Year == currentSchoolYear))
                     .ToList();
                 if (currentCourseRegistrationFormList.Count > 0)
@@ -197,14 +210,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             {
                 primaryStatisticDisplayList.AddRange(
                 from item in courseRegistrationFormList
-                join item2 in tuitionFeeReceiptList on item.Id equals item2.CourseRegistrationFormId
-                join item3 in studentList on item.StudentId equals item3.Id
+                join item2 in studentList on item.StudentId equals item2.Id
                 where item.State == CourseRegistrationFormState.Expired
                 select new StatisticDisplay
                 {
+                    StatisticRequester = this,
                     CRFId = item.Id,
-                    StudentID = item3.StudentSpecificId,
-                    StudentName = item3.FullName,
+                    StudentID = item2.StudentSpecificId,
+                    StudentName = item2.FullName,
                     TotalTuition = item.TotalCharge.ToString(),
                     ActualTuition = item.TotalChargeWithDiscount.ToString(),
                     PaidTuition = CalculatePaidTuition(item.Id).ToString(),
@@ -241,10 +254,14 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
         #endregion
         public void ReloadStatictisItemsBackground()
         {
-            for (int i = 0; i < StatisticDisplayList.Count; i++)
+            if (StatisticDisplayList != null)
             {
-                StatisticDisplayList[i].StatisticBackgroundColor = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
+                for (int i = 0; i < StatisticDisplayList.Count; i++)
+                {
+                    StatisticDisplayList[i].StatisticBackgroundColor = (i % 2 == 0) ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#EBF6FF");
+                }
             }
+            
         }
 
         public void ChooseStatistic(StatisticDisplay statisticDisplay)
