@@ -203,7 +203,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                     int roundPercent = (int)Math.Round(maxPriorityType.TuitionDiscountRate * 100);
                     CurrentRealityTution = roundValue;
 
-                    ToolTipRealityTuition = roundPercent + "% discount for priority subjects: " + maxPriorityType.PriorityName;
+                    ToolTipRealityTuition = roundPercent + "% discount for priority type: " + maxPriorityType.PriorityName;
                 }
 
                 CurrentPaidTuition = thisTuitionFeeReceiptList.Sum(item => item.Charge);
@@ -230,6 +230,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                     CourseRegistrationSemester = GetFormattedSemester(item2.SemesterName),
                     CourseRegistrationSchoolYear = item2.Year.ToString(),
                     CourseRegistrationCreateDate = item.CreatedDate.ToString("dd/MM/yyyy"),
+                    CourseRegistrationStatus = item.State.ToString(),
+                    StatusTextColor = GetFormattedColor(item.State),
                     LastPaidTuitionDate = GetLastPaidTuition(item.Id)
                 });
                 CourseRegistrationDisplayList = primaryCourseRegistrationDisplayList
@@ -246,6 +248,21 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
                 SemesterName.SummerSemester => "Học Kỳ hè",
                 _ => throw new NotImplementedException(),
             };
+        }
+        private Color GetFormattedColor(CourseRegistrationFormState courseRegistrationFormState)
+        {
+            if (courseRegistrationFormState == CourseRegistrationFormState.Expired)
+            {
+                return Color.FromArgb("#BF1D28");
+            }
+            else if (courseRegistrationFormState == CourseRegistrationFormState.Confirmed)
+            {
+                return Color.FromArgb("#007D3A");
+            }
+            else
+            {
+                return Color.FromArgb("#CC8100");
+            }
         }
         private string GetLastPaidTuition(int courseRegistrationFormId)
         {

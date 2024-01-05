@@ -54,7 +54,7 @@
             <Grid
               Grid.Row="0"
               BackgroundColor="Transparent"
-              ColumnDefinitions="*, *, *, *"
+              ColumnDefinitions="*, *, *, *, *"
               HeightRequest="40"
               VerticalOptions="Center">
               <Label
@@ -83,6 +83,13 @@
                 FontFamily="RobotoMedium"
                 FontSize="14"
                 HorizontalOptions="Start"
+                Text="Status"
+                VerticalOptions="Center" />
+              <Label
+                Grid.Column="4"
+                FontFamily="RobotoMedium"
+                FontSize="14"
+                HorizontalOptions="Start"
                 Text="Last paid tuition"
                 VerticalOptions="Center" />
             </Grid>
@@ -97,7 +104,7 @@
                   <Grid
                     Padding="12,16,0,16"
                     BackgroundColor="{Binding CourseRegistrationBackgroundColor}"
-                    ColumnDefinitions="*, *, *, *"
+                    ColumnDefinitions="*, *, *, *, *"
                     VerticalOptions="Center">
                     <Grid.GestureRecognizers>
                       <TapGestureRecognizer Command="{Binding ChooseCourseRegistrationCommand}" />
@@ -127,9 +134,17 @@
                       Grid.Column="3"
                       FontSize="14"
                       HorizontalOptions="Start"
+                      Text="{Binding CourseRegistrationStatus}"
+                      TextColor="{Binding StatusTextColor, FallbackValue='#4F4F4F'}"
+                      VerticalOptions="Center" />
+                    <Label
+                      Grid.Column="4"
+                      FontSize="14"
+                      HorizontalOptions="Start"
                       Text="{Binding LastPaidTuitionDate}"
                       TextColor="#4F4F4F"
                       VerticalOptions="Center" />
+
                   </Grid>
                 </DataTemplate>
               </CollectionView.ItemTemplate>
@@ -144,11 +159,11 @@
               Color="#509CDB" />
           </Grid>
           <Grid
-            IsVisible="{Binding IsVisibleTuitionInfo}"
             Grid.Row="1"
             Grid.Column="2"
             Margin="0,36,0,0"
             ColumnDefinitions="*, *"
+            IsVisible="{Binding IsVisibleTuitionInfo}"
             VerticalOptions="Start">
             <Grid Grid.Column="0">
               <StackLayout>
@@ -252,8 +267,8 @@
                       Margin="8,0,0,0"
                       HeightRequest="14"
                       Source="svg_info_circle.png"
-                      WidthRequest="14" 
-                      ToolTipProperties.Text="{Binding ToolTipRealityTuition}"/>
+                      ToolTipProperties.Text="{Binding ToolTipRealityTuition}"
+                      WidthRequest="14" />
                   </HorizontalStackLayout>
                   <Label
                     Margin="0,4,0,0"
@@ -283,17 +298,17 @@
         <HorizontalStackLayout Margin="0,48,0,0" HorizontalOptions="Center">
           <Grid HorizontalOptions="Center">
             <Button
-              IsVisible="{Binding IsVisibleButton}"
               Margin="12,0,0,0"
               BackgroundColor="#EFF3FA"
+              Command="{Binding DisplayPaymentPopupCommand}"
               CornerRadius="10"
               FontFamily="RobotoMedium"
               FontSize="14"
               HeightRequest="40"
               HorizontalOptions="Center"
+              IsVisible="{Binding IsVisibleButton}"
               Text="Make a payment"
               TextColor="#2671B1"
-              Command="{Binding DisplayPaymentPopupCommand}"
               WidthRequest="160">
               <VisualStateManager.VisualStateGroups>
                 <VisualStateGroupList>
