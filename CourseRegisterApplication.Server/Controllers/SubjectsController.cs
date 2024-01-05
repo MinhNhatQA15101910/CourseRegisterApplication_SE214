@@ -41,8 +41,6 @@
             }
         }
 
-
-
         [HttpGet("{id}")]
         public async Task<ActionResult<Subject>> GetSubjectById(int id)
         {
@@ -128,6 +126,25 @@
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpGet("subjectTypeId/{subjectTypeId}")]
+        public async Task<ActionResult<IEnumerable<Subject>>> GetSubjectsBySubjectTypeId(int subjectTypeId)
+        {
+            var parameter = new SqlParameter("subjectTypeId", subjectTypeId);
+            List<Subject> result = await _context.Subjects
+                    .FromSqlRaw(
+                        "SELECT * " +
+                        "FROM dbo.Subjects s " +
+                        "WHERE s.SubjectTypeId = @subjectTypeId",
+                        parameter)
+                    .ToListAsync();
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
 
     }

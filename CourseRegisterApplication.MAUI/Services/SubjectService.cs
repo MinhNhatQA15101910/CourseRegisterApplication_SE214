@@ -149,5 +149,20 @@ namespace CourseRegisterApplication.MAUI.Services
 
             return null;
         }
+
+        public async Task<IEnumerable<Subject>> GetSubjectsBySubjectTypeIdAsync(int subjectTypeId)
+        {
+            string apiUrl = $"{GlobalConfig.SUBJECT_BASE_URL}subjectTypeId/{subjectTypeId}";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var subjects = JsonConvert.DeserializeObject<List<Subject>>(jsonResponse);
+                return subjects;
+            }
+
+            return null;
+        }
     }
 }
