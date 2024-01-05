@@ -1,5 +1,4 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using CourseRegisterApplication.Shared;
 
 namespace CourseRegisterApplication.MAUI.Services
 {

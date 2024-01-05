@@ -64,14 +64,28 @@ namespace CourseRegisterApplication.MAUI.Services
             return response.IsSuccessStatusCode;
         }
 
-        public Task<AvailableCourse> AddAvailableCourseAsync(AvailableCourse availableCourse)
+        public async Task<AvailableCourse> AddAvailableCourseAsync(AvailableCourse availableCourse)
         {
-            throw new NotImplementedException();
+            string apiUrl = GlobalConfig.AVAILABLE_COURSE_BASE_URL;
+
+            var json = JsonConvert.SerializeObject(availableCourse);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(new Uri(apiUrl), content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return availableCourse;
+            }
+
+            return null;
         }
 
-        public Task<bool> DeleteAvailableCoursesBySemesterIdAsync(int semesterId)
+        public async Task<bool> DeleteAvailableCoursesBySemesterIdAsync(int semesterId)
         {
-            throw new NotImplementedException();
+            string apiUrl = $"{GlobalConfig.AVAILABLE_COURSE_BASE_URL}semesterId/{semesterId}";
+            var response = await _httpClient.DeleteAsync(new Uri(apiUrl)).ConfigureAwait(false);
+
+            return response.IsSuccessStatusCode;
         }
     }
 }

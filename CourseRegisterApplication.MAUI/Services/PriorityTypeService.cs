@@ -26,14 +26,34 @@ namespace CourseRegisterApplication.MAUI.Services
             return null;
         }
 
-        public Task<IEnumerable<PriorityType>> GetAllPriorityTypesAsync()
+        public async Task<IEnumerable<PriorityType>> GetAllPriorityTypesAsync()
         {
-            throw new NotImplementedException();
+            string apiUrl = $"{GlobalConfig.PRIORITY_TYPE_BASE_URL}";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var priorityTypeList = JsonConvert.DeserializeObject<List<PriorityType>>(jsonResponse);
+                return priorityTypeList;
+            }
+
+            return null;
         }
 
-        public Task<IEnumerable<PriorityType>> GetPriorityTypesFromStudentIdAsync(int studentId)
+        public async Task<IEnumerable<PriorityType>> GetPriorityTypesFromStudentIdAsync(int studentId)
         {
-            throw new NotImplementedException();
+            string apiUrl = $"{GlobalConfig.PRIORITY_TYPE_BASE_URL}studentId/{studentId}";
+
+            var response = await _httpClient.GetAsync(new Uri(apiUrl));
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                var priorityTypeList = JsonConvert.DeserializeObject<List<PriorityType>>(jsonResponse);
+                return priorityTypeList;
+            }
+
+            return null;
         }
     }
 }
