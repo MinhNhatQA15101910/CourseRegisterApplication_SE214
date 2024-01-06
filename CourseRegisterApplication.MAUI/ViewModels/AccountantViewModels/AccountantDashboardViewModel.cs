@@ -40,13 +40,13 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 		[RelayCommand]
 		public async Task NavigateToCourseManagement()
 		{
-			await Shell.Current.GoToAsync("//coursemanagement/details", true);
+			await Shell.Current.GoToAsync("//courseconfirmmanagement/details", true);
 		}
 
 		[RelayCommand]
 		public async Task NavigateToTuitionCollection()
 		{
-			await Shell.Current.GoToAsync("//tuitioncollection/details", true);
+			await Shell.Current.GoToAsync("//tuitionconfirm/details", true);
 		}
 		#endregion
 	}

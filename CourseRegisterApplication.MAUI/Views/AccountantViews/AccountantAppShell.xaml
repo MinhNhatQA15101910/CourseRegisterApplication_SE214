@@ -108,7 +108,7 @@
     <ShellContent ContentTemplate="{DataTemplate local:SubjectTypeManagementPage}" Route="details" />
   </FlyoutItem>
   <FlyoutItem
-    Title="Statistic"
+    Title="Report"
     Icon="chart.png"
     Route="statistic">
     <ShellContent ContentTemplate="{DataTemplate local:UnpayTuitionStudentsReportPage}" Route="details" />
@@ -130,18 +130,6 @@
     Icon="location_icon.png"
     Route="provincedistrict">
     <ShellContent ContentTemplate="{DataTemplate local:ProvinceDistrictManagementPage}" Route="details" />
-  </FlyoutItem>
-  <FlyoutItem
-    Title="Priority object"
-    Icon="student.png"
-    Route="priorityobject">
-    <ShellContent ContentTemplate="{DataTemplate local:PriorityTypeManagementPage}" Route="details" />
-  </FlyoutItem>
-  <FlyoutItem
-    Title="Credits, subject type"
-    Icon="book.png"
-    Route="creditssubjecttype">
-    <ShellContent ContentTemplate="{DataTemplate local:SubjectTypeManagementPage}" Route="details" />
   </FlyoutItem>
 
   <Shell.ItemTemplate>

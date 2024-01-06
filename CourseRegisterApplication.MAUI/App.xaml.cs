@@ -9,7 +9,7 @@ namespace CourseRegisterApplication.MAUI
         private readonly ISemesterService _semesterService;
         private readonly ICourseRegistrationFormService _courseRegistrationFormService;
 
-        public App(AccountantAppShell page, ICourseRegistrationFormService courseRegistrationFormService, ISemesterService semesterService)
+        public App(LoginPage page, ICourseRegistrationFormService courseRegistrationFormService, ISemesterService semesterService)
         {
             InitializeComponent();
 

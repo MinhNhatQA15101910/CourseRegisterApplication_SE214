@@ -8,13 +8,13 @@
   <Grid RowDefinitions="Auto,*">
     <contentViews:NavigationTopBar
       Grid.Row="0"
-      DescriptionText=" "
+      DescriptionText="View detail tuition payment"
       IsBackVisible="False"
       IsControlVisible="True"
       IsTitleVisible="True"
       LogoutCommand="{Binding LogoutCommand}"
       NavigateBackCommand="{Binding NavigateBackCommand}"
-      TitleText=" "
+      TitleText="Tuition payment page"
       VerticalOptions="Start" />
     <ScrollView Grid.Row="1">
       <StackLayout>

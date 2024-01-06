@@ -65,7 +65,7 @@ namespace CourseRegisterApplication.MAUI.ViewModels.StudentViewModels
 		[RelayCommand]
 		public async Task NavigateToTuitionPayment()
 		{
-			await Shell.Current.GoToAsync("//tuitionpayment/details", true);
+			await Shell.Current.GoToAsync("//tuitioninfo/details", true);
 		}
 	}
 }

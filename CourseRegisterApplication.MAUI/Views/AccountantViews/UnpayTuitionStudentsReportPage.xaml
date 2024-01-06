@@ -10,12 +10,12 @@
   <Grid RowDefinitions="Auto,*">
     <contentViews:NavigationTopBar
       Grid.Row="0"
-      DescriptionText="Can add, update, delete a study program"
+      DescriptionText="Statistic all unpaid payment student in specific semester and year"
       IsBackVisible="False"
       IsControlVisible="True"
       IsTitleVisible="True"
       LogoutCommand="{Binding LogoutCommand}"
-      TitleText="Curriculum management page"
+      TitleText="Unpaid student report page"
       VerticalOptions="Start" />
     <ScrollView Grid.Row="1">
       <Grid Grid.Row="1" RowDefinitions="0.5*, 8*, 1.5*">

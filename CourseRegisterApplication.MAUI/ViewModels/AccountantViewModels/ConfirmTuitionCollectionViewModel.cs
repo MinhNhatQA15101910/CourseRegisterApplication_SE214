@@ -1,8 +1,5 @@
 ﻿using CourseRegisterApplication.MAUI.IServices;
-using CourseRegisterApplication.MAUI.Services;
 using CourseRegisterApplication.MAUI.Views;
-using CourseRegisterApplication.MAUI.Views.AccountantViews;
-using CourseRegisterApplication.Shared;
 
 namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
 {
@@ -235,8 +232,8 @@ namespace CourseRegisterApplication.MAUI.ViewModels.AccountantViewModels
             primaryTuitionFormDisplaysList.Clear();
             var courseRegisFormService = _serviceProvider.GetService<ICourseRegistrationFormService>();
             var semesterService = _serviceProvider.GetService<ISemesterService>();
-
-            if(tuitionFeeReceiptsList.Count > 0)
+            TuitionFormDisplaysList.Clear();
+            if (tuitionFeeReceiptsList.Count > 0)
             {
                 foreach(var tuitionFeeReceipt in tuitionFeeReceiptsList)
                 {
